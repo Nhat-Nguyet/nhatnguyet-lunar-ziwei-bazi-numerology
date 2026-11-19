@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "Nhật Nguyệt: mã và dữ liệu mở về Tử Vi, Bát Tự, Thần số học"
+message: "Dữ liệu: Nhật Nguyệt (nhatnguyet.org). Khi dùng, xin trích dẫn như sau."
+type: software
+authors:
+  - name: "Nhật Nguyệt"
+    website: "https://nhatnguyet.org"
+repository-code: "https://github.com/Nhat-Nguyet/nhatnguyet"
+url: "https://nhatnguyet.org/ma-nguon-mo"
+license: MIT
+keywords:
+  - tu vi
+  - zi wei dou shu
+  - bazi
+  - numerology
+  - vietnamese lunar calendar
+  - chinese calendar
+  - open data

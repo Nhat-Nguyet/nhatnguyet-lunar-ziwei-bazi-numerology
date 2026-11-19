@@ -1,0 +1,53 @@
+{
+  "name": "@nhatnguyet/am-lich",
+  "version": "0.1.0",
+  "description": "Âm lịch Việt Nam, Trung Quốc, Hàn Quốc, Nhật Bản; can chi; 24 tiết khí tới phút; đối chiếu NASA, IMCCE. Nhật Nguyệt (nhatnguyet.org)",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/ma-nguon-mo",
+  "keywords": [
+    "am lich",
+    "lich am",
+    "lich van nien",
+    "lunar calendar",
+    "vietnamese lunar calendar",
+    "chinese calendar",
+    "农历",
+    "solar terms",
+    "can chi",
+    "tet"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "directory": "js/packages/am-lich"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

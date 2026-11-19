@@ -1,0 +1,55 @@
+{
+  "name": "@nhatnguyet/bat-tu",
+  "version": "0.1.0",
+  "description": "Lập lá số Bát Tự, Tứ Trụ (BaZi, Four Pillars): trụ tháng theo tiết khí, thập thần, tàng can, thần sát, đại vận. Nhật Nguyệt (nhatnguyet.org)",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/ma-nguon-mo",
+  "keywords": [
+    "bat tu",
+    "tu tru",
+    "bazi",
+    "four pillars of destiny",
+    "八字",
+    "四柱",
+    "chinese astrology",
+    "solar terms",
+    "vietnamese"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "directory": "js/packages/bat-tu"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

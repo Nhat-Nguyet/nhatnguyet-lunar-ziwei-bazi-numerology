@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nhatnguyet"
+version = "0.1.0"
+description = "Tử Vi, Bát Tự, Thần số học, âm lịch Việt Nam và Trung Quốc, lễ hội: Zi Wei Dou Shu, BaZi, numerology, lunar calendar. Nhật Nguyệt (nhatnguyet.org)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "Nhat Nguyet" }]
+keywords = ["tu vi", "zi wei dou shu", "bazi", "four pillars", "numerology", "than so hoc", "am lich", "lunar calendar", "vietnamese calendar", "chinese calendar", "solar terms", "festivals"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Natural Language :: Vietnamese",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://nhatnguyet.org/ma-nguon-mo"
+Repository = "https://github.com/Nhat-Nguyet/nhatnguyet"
+Documentation = "https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md"
+Issues = "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+
+[tool.setuptools.packages.find]
+include = ["nhatnguyet*"]
+
+[tool.setuptools.package-data]
+nhatnguyet = ["du_lieu/*.json"]

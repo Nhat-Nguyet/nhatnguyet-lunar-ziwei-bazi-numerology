@@ -1,0 +1,20 @@
+{
+  "name": "nhatnguyet-thu-vien-mo",
+  "private": true,
+  "description": "Không gian làm việc của thư viện mở Nhật Nguyệt (TypeScript).",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "node --conditions=source --test \"packages/*/test/**/*.test.ts\"",
+    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}
