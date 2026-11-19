@@ -9,8 +9,8 @@ jobs:
     name: TypeScript (17,291 test vectors)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: npm ci --ignore-scripts --no-audit --no-fund
@@ -27,17 +27,17 @@ jobs:
       matrix:
         node: [18, 20, 22, 24]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       # The build and the TypeScript tests need Node 22.18+; the built
       # packages (what npm ships) must run on every Node the READMEs promise.
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: js
       - run: npm run build
         working-directory: js
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - name: Every test vector, the English API, the CLI and the MCP server on the built packages
@@ -50,8 +50,8 @@ jobs:
       matrix:
         python: ["3.9", "3.13"]
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests
@@ -60,11 +60,11 @@ jobs:
     name: README code (local packages)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
       - name: The seven READMEs agree
@@ -79,11 +79,11 @@ jobs:
     name: Terminology and AI evaluation set follow the libraries
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
       - run: npm ci --ignore-scripts --no-audit --no-fund
@@ -96,8 +96,8 @@ jobs:
     name: API reference is up to date
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: npm ci --ignore-scripts --no-audit --no-fund
@@ -116,8 +116,8 @@ jobs:
     name: Versions agree
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: node .github/scripts/release-tools.mjs check
