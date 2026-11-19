@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <b>English</b> · <a href="./README.vi.md">Tiếng Việt</a> · <a href="./README.zh.md">中文</a>
+  <b>English</b> · <a href="./README.vi.md">Tiếng Việt</a> · <a href="./README.zh.md">中文</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.ko.md">한국어</a> · <a href="./README.fr.md">Français</a> · <a href="./README.th.md">ไทย</a>
   <br>
   <a href="https://nhatnguyet.org/en/ma-nguon-mo">Project page</a> ·
   <a href="https://nhatnguyet.org/en/du-lieu">Open data</a> ·
