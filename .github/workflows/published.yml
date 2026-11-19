@@ -42,15 +42,19 @@ jobs:
   readme:
     name: README on npm ${{ needs.version.outputs.version }}, Node ${{ matrix.node }}, Python ${{ matrix.python }}
     needs: version
-    runs-on: ubuntu-latest
+    # Python 3.9 is not built for Ubuntu 26.04 (ubuntu-latest), so that row
+    # pins Ubuntu 24.04.
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - node: 22
             python: "3.9"
+            os: ubuntu-24.04
           - node: 24
             python: "3.13"
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
