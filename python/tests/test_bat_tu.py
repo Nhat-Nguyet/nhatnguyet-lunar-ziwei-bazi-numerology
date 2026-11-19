@@ -6,7 +6,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from nhatnguyet import bat_tu  # noqa: E402
-from so_sanh import so_mon  # noqa: E402
+from so_sanh import doc_ca_kiem, so_mon  # noqa: E402
+from ba_ngon_ngu import do_ba_ngon_ngu, tom_tat_thieu  # noqa: E402
 
 
 def tinh(vao):
@@ -43,6 +44,16 @@ class TestBatTu(unittest.TestCase):
         self.assertEqual(bat_tu.thap_than_cua_can("Giáp", "Canh")["ten"], "Thất Sát")
         self.assertEqual(bat_tu.thap_than_cua_can("Giáp", "Tân")["ten"], "Chính Quan")
         self.assertEqual(len(bat_tu.all_thap_than()), 10)
+
+    def test_ba_thu_tieng(self):
+        # Mọi tên (sao, cung, cục, sáng tối, thuật ngữ) trên mọi lá của ca kiểm
+        # có bản chữ Hán, và bản tiếng Anh trừ tên giữ Hán Việt.
+        dem = {"tong": 0, "thieu": []}
+        for c in doc_ca_kiem("bat-tu")["ca"]:
+            do_ba_ngon_ngu(tinh(c["vao"]), dem)
+        print("\nbat-tu: %d tên, %d chỗ thiếu bản dịch" % (dem["tong"], len(dem["thieu"])))
+        self.assertGreater(dem["tong"], 0)
+        self.assertEqual(dem["thieu"], [], tom_tat_thieu(dem))
 
 
 if __name__ == "__main__":

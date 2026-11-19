@@ -63,3 +63,6 @@ export function leHoiTheoNgay(dd: number, mm: number, yyyy: number): LeHoi[] {
     return sd !== null && sd.day === dd && sd.month === mm;
   });
 }
+
+// Lớp API tiếng Anh (tham số đặt tên, kết quả theo lang).
+export * from "./en.ts";

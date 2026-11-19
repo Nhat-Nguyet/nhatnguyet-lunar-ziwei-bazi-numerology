@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nhat Nguyet: Zi Wei chart from a CDN</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0 auto; max-width: 760px; padding: 16px; }
+    form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin-bottom: 16px; }
+    label { display: grid; gap: 4px; font-size: 14px; }
+    input, select, button { font: inherit; min-height: 40px; padding: 4px 8px; }
+    #chart svg { width: 100%; height: auto; display: block; }
+    #error { color: #b91c3b; }
+  </style>
+</head>
+<body>
+  <h1>Zi Wei Dou Shu chart, no install</h1>
+  <p>Everything runs in this page; no data leaves the browser. Data: Nhat Nguyet (nhatnguyet.org)</p>
+  <form id="form">
+    <label>Birth date <input name="date" type="date" value="1990-09-19" required></label>
+    <label>Time <input name="time" type="time" value="20:00" required></label>
+    <label>Gender
+      <select name="gender"><option value="male">male</option><option value="female">female</option></select>
+    </label>
+    <label>Language
+      <select name="lang"><option>en</option><option>vi</option><option>zh</option></select>
+    </label>
+    <button>Draw</button>
+  </form>
+  <p id="error"></p>
+  <div id="chart"></div>
+
+  <script type="module">
+    // jsDelivr turns the npm package into one ES module (+esm); pin a version in production.
+    import { castZiWei, ziWeiSvg } from "https://cdn.jsdelivr.net/npm/@nhatnguyet/tu-vi/+esm";
+
+    const form = document.getElementById("form");
+    const draw = () => {
+      const f = new FormData(form);
+      try {
+        const chart = castZiWei({
+          date: f.get("date"),
+          time: f.get("time"),
+          gender: f.get("gender"),
+          lang: f.get("lang"),
+        });
+        const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+        document.getElementById("chart").innerHTML = ziWeiSvg(chart, { theme: dark ? "dark" : "light" });
+        document.getElementById("error").textContent = "";
+      } catch (e) {
+        document.getElementById("error").textContent = String(e.message || e);
+      }
+    };
+    form.addEventListener("submit", (e) => { e.preventDefault(); draw(); });
+    draw();
+  </script>
+</body>
+</html>

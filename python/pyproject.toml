@@ -5,24 +5,79 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "nhatnguyet"
 version = "0.1.0"
-description = "Tử Vi, Bát Tự, Thần số học, âm lịch Việt Nam và Trung Quốc, lễ hội: Zi Wei Dou Shu, BaZi, numerology, lunar calendar. Nhật Nguyệt (nhatnguyet.org)"
+description = "Vietnamese lunar calendar, Zi Wei Dou Shu (Purple Star Astrology), BaZi (Four Pillars), Pythagorean numerology and Vietnamese festivals in pure Python, no dependencies. Âm lịch, Tử Vi, Bát Tự; 紫微斗数, 八字, 农历."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 authors = [{ name = "Nhat Nguyet" }]
-keywords = ["tu vi", "zi wei dou shu", "bazi", "four pillars", "numerology", "than so hoc", "am lich", "lunar calendar", "vietnamese calendar", "chinese calendar", "solar terms", "festivals"]
+keywords = [
+    "lunar calendar",
+    "vietnamese calendar",
+    "vietnamese lunar calendar",
+    "chinese calendar",
+    "lunisolar calendar",
+    "solar terms",
+    "sexagenary cycle",
+    "lunar new year",
+    "tet",
+    "ziwei",
+    "zi wei dou shu",
+    "purple star astrology",
+    "chinese astrology",
+    "bazi",
+    "four pillars",
+    "four pillars of destiny",
+    "numerology",
+    "pythagorean numerology",
+    "life path number",
+    "vietnamese festivals",
+    "am lich",
+    "lich am",
+    "tu vi",
+    "bat tu",
+    "than so hoc",
+    "can chi",
+    "紫微斗数",
+    "八字",
+    "农历",
+    "干支",
+    "二十四节气",
+    "nhat nguyet",
+    "vietnam",
+]
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
     "Natural Language :: Vietnamese",
+    "Natural Language :: English",
+    "Natural Language :: Chinese (Simplified)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Internationalization",
+    "Topic :: Sociology :: History",
+    "Topic :: Religion",
 ]
 dependencies = []
 
+[project.scripts]
+nhatnguyet = "nhatnguyet.__main__:main"
+
 [project.urls]
-Homepage = "https://nhatnguyet.org/ma-nguon-mo"
+Homepage = "https://nhatnguyet.org/en/ma-nguon-mo"
 Repository = "https://github.com/Nhat-Nguyet/nhatnguyet"
-Documentation = "https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md"
+Documentation = "https://nhatnguyet.org/en/ma-nguon-mo"
+"Open data" = "https://nhatnguyet.org/en/du-lieu"
 Issues = "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
 
 [tool.setuptools.packages.find]

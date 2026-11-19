@@ -1,0 +1,1306 @@
+{
+ "nguon": "https://api.nhatnguyet.org/api/v1",
+ "sinhLuc": "2026-11-19",
+ "ca": [
+  {
+   "ngay": "2030-04-18",
+   "am": {
+    "day": 16,
+    "month": 3,
+    "year": 2030,
+    "leap": false
+   },
+   "canChiNgay": "Quý Mùi",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2031-01-23",
+    "soNgay": 280,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Hợi"
+   }
+  },
+  {
+   "ngay": "2098-09-19",
+   "am": {
+    "day": 25,
+    "month": 8,
+    "year": 2098,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Dần",
+   "tietKhi": "Bạch Lộ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2099-01-21",
+    "soNgay": 124,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Kỷ Mùi"
+   }
+  },
+  {
+   "ngay": "1935-11-20",
+   "am": {
+    "day": 25,
+    "month": 10,
+    "year": 1935,
+    "leap": false
+   },
+   "canChiNgay": "Canh Tý",
+   "tietKhi": "Lập Đông",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Mão",
+    "Ngọ",
+    "Thân",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1936-01-24",
+    "soNgay": 65,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Bính Tý"
+   }
+  },
+  {
+   "ngay": "2064-09-10",
+   "am": {
+    "day": 29,
+    "month": 7,
+    "year": 2064,
+    "leap": false
+   },
+   "canChiNgay": "Đinh Mùi",
+   "tietKhi": "Bạch Lộ",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2065-02-05",
+    "soNgay": 148,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Ất Dậu"
+   }
+  },
+  {
+   "ngay": "2058-03-17",
+   "am": {
+    "day": 23,
+    "month": 2,
+    "year": 2058,
+    "leap": false
+   },
+   "canChiNgay": "Mậu Dần",
+   "tietKhi": "Kinh Trập",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2059-02-12",
+    "soNgay": 332,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Kỷ Mão"
+   }
+  },
+  {
+   "ngay": "1947-03-23",
+   "am": {
+    "day": 2,
+    "month": 2,
+    "year": 1947,
+    "leap": true
+   },
+   "canChiNgay": "Tân Sửu",
+   "tietKhi": "Xuân Phân",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "1948-02-10",
+    "soNgay": 324,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Mậu Tý"
+   }
+  },
+  {
+   "ngay": "2073-11-04",
+   "am": {
+    "day": 5,
+    "month": 10,
+    "year": 2073,
+    "leap": false
+   },
+   "canChiNgay": "Kỷ Sửu",
+   "tietKhi": "Sương Giáng",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2074-01-27",
+    "soNgay": 84,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Ngọ"
+   }
+  },
+  {
+   "ngay": "1994-09-11",
+   "am": {
+    "day": 6,
+    "month": 8,
+    "year": 1994,
+    "leap": false
+   },
+   "canChiNgay": "Canh Tý",
+   "tietKhi": "Bạch Lộ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Mão",
+    "Ngọ",
+    "Thân",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1995-01-31",
+    "soNgay": 142,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Ất Hợi"
+   }
+  },
+  {
+   "ngay": "1956-05-26",
+   "am": {
+    "day": 17,
+    "month": 4,
+    "year": 1956,
+    "leap": false
+   },
+   "canChiNgay": "Quý Tỵ",
+   "tietKhi": "Tiểu Mãn",
+   "gioHoangDao": [
+    "Sửu",
+    "Thìn",
+    "Ngọ",
+    "Mùi",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "1957-01-31",
+    "soNgay": 250,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Đinh Dậu"
+   }
+  },
+  {
+   "ngay": "2073-06-13",
+   "am": {
+    "day": 8,
+    "month": 5,
+    "year": 2073,
+    "leap": false
+   },
+   "canChiNgay": "Ất Sửu",
+   "tietKhi": "Mang Chủng",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2074-01-27",
+    "soNgay": 228,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Ngọ"
+   }
+  },
+  {
+   "ngay": "2063-03-05",
+   "am": {
+    "day": 6,
+    "month": 2,
+    "year": 2063,
+    "leap": false
+   },
+   "canChiNgay": "Nhâm Thìn",
+   "tietKhi": "Vũ Thủy",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2064-02-17",
+    "soNgay": 349,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Thân"
+   }
+  },
+  {
+   "ngay": "1963-05-15",
+   "am": {
+    "day": 22,
+    "month": 4,
+    "year": 1963,
+    "leap": false
+   },
+   "canChiNgay": "Mậu Ngọ",
+   "tietKhi": "Lập Hạ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Mão",
+    "Ngọ",
+    "Thân",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1964-02-13",
+    "soNgay": 274,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Thìn"
+   }
+  },
+  {
+   "ngay": "2093-06-22",
+   "am": {
+    "day": 29,
+    "month": 5,
+    "year": 2093,
+    "leap": false
+   },
+   "canChiNgay": "Kỷ Mùi",
+   "tietKhi": "Hạ Chí",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2094-02-15",
+    "soNgay": 238,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Dần"
+   }
+  },
+  {
+   "ngay": "1945-06-25",
+   "am": {
+    "day": 16,
+    "month": 5,
+    "year": 1945,
+    "leap": false
+   },
+   "canChiNgay": "Ất Sửu",
+   "tietKhi": "Hạ Chí",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "1946-02-02",
+    "soNgay": 222,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Bính Tuất"
+   }
+  },
+  {
+   "ngay": "2063-04-16",
+   "am": {
+    "day": 18,
+    "month": 3,
+    "year": 2063,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Tuất",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2064-02-17",
+    "soNgay": 307,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Thân"
+   }
+  },
+  {
+   "ngay": "2068-09-04",
+   "am": {
+    "day": 8,
+    "month": 8,
+    "year": 2068,
+    "leap": false
+   },
+   "canChiNgay": "Nhâm Tuất",
+   "tietKhi": "Xử Thử",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2069-01-23",
+    "soNgay": 141,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Kỷ Sửu"
+   }
+  },
+  {
+   "ngay": "2017-02-20",
+   "am": {
+    "day": 24,
+    "month": 1,
+    "year": 2017,
+    "leap": false
+   },
+   "canChiNgay": "Mậu Dần",
+   "tietKhi": "Vũ Thủy",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2018-02-16",
+    "soNgay": 361,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Mậu Tuất"
+   }
+  },
+  {
+   "ngay": "1980-09-08",
+   "am": {
+    "day": 29,
+    "month": 7,
+    "year": 1980,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Thân",
+   "tietKhi": "Bạch Lộ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "1981-02-05",
+    "soNgay": 150,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Dậu"
+   }
+  },
+  {
+   "ngay": "1976-05-12",
+   "am": {
+    "day": 14,
+    "month": 4,
+    "year": 1976,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Tý",
+   "tietKhi": "Lập Hạ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Mão",
+    "Ngọ",
+    "Thân",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1977-02-18",
+    "soNgay": 282,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Đinh Tỵ"
+   }
+  },
+  {
+   "ngay": "2087-06-01",
+   "am": {
+    "day": 1,
+    "month": 5,
+    "year": 2087,
+    "leap": false
+   },
+   "canChiNgay": "Bính Dần",
+   "tietKhi": "Tiểu Mãn",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2088-01-24",
+    "soNgay": 237,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Mậu Thân"
+   }
+  },
+  {
+   "ngay": "1950-02-19",
+   "am": {
+    "day": 3,
+    "month": 1,
+    "year": 1950,
+    "leap": false
+   },
+   "canChiNgay": "Ất Dậu",
+   "tietKhi": "Lập Xuân",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1951-02-06",
+    "soNgay": 352,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Mão"
+   }
+  },
+  {
+   "ngay": "1902-04-08",
+   "am": {
+    "day": 1,
+    "month": 3,
+    "year": 1902,
+    "leap": false
+   },
+   "canChiNgay": "Tân Dậu",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1903-01-28",
+    "soNgay": 295,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Quý Mão"
+   }
+  },
+  {
+   "ngay": "1983-03-23",
+   "am": {
+    "day": 9,
+    "month": 2,
+    "year": 1983,
+    "leap": false
+   },
+   "canChiNgay": "Canh Tuất",
+   "tietKhi": "Xuân Phân",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "1984-02-02",
+    "soNgay": 316,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Tý"
+   }
+  },
+  {
+   "ngay": "1995-07-24",
+   "am": {
+    "day": 27,
+    "month": 6,
+    "year": 1995,
+    "leap": false
+   },
+   "canChiNgay": "Bính Thìn",
+   "tietKhi": "Đại Thử",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "1996-02-19",
+    "soNgay": 210,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Bính Tý"
+   }
+  },
+  {
+   "ngay": "2022-09-01",
+   "am": {
+    "day": 6,
+    "month": 8,
+    "year": 2022,
+    "leap": false
+   },
+   "canChiNgay": "Đinh Tỵ",
+   "tietKhi": "Xử Thử",
+   "gioHoangDao": [
+    "Sửu",
+    "Thìn",
+    "Ngọ",
+    "Mùi",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2023-01-22",
+    "soNgay": 143,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Quý Mão"
+   }
+  },
+  {
+   "ngay": "2010-06-15",
+   "am": {
+    "day": 4,
+    "month": 5,
+    "year": 2010,
+    "leap": false
+   },
+   "canChiNgay": "Bính Thân",
+   "tietKhi": "Mang Chủng",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2011-02-03",
+    "soNgay": 233,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Mão"
+   }
+  },
+  {
+   "ngay": "2032-04-14",
+   "am": {
+    "day": 5,
+    "month": 3,
+    "year": 2032,
+    "leap": false
+   },
+   "canChiNgay": "Canh Dần",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2033-01-31",
+    "soNgay": 292,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Quý Sửu"
+   }
+  },
+  {
+   "ngay": "2089-03-15",
+   "am": {
+    "day": 4,
+    "month": 2,
+    "year": 2089,
+    "leap": false
+   },
+   "canChiNgay": "Kỷ Mùi",
+   "tietKhi": "Kinh Trập",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2090-01-30",
+    "soNgay": 321,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Canh Tuất"
+   }
+  },
+  {
+   "ngay": "2080-08-01",
+   "am": {
+    "day": 16,
+    "month": 6,
+    "year": 2080,
+    "leap": false
+   },
+   "canChiNgay": "Tân Mão",
+   "tietKhi": "Đại Thử",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2081-02-09",
+    "soNgay": 192,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Sửu"
+   }
+  },
+  {
+   "ngay": "2027-08-12",
+   "am": {
+    "day": 11,
+    "month": 7,
+    "year": 2027,
+    "leap": false
+   },
+   "canChiNgay": "Quý Hợi",
+   "tietKhi": "Lập Thu",
+   "gioHoangDao": [
+    "Sửu",
+    "Thìn",
+    "Ngọ",
+    "Mùi",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2028-01-26",
+    "soNgay": 167,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Mậu Thân"
+   }
+  },
+  {
+   "ngay": "2060-09-08",
+   "am": {
+    "day": 14,
+    "month": 8,
+    "year": 2060,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Thân",
+   "tietKhi": "Bạch Lộ",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2061-01-21",
+    "soNgay": 135,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Tỵ"
+   }
+  },
+  {
+   "ngay": "2057-12-14",
+   "am": {
+    "day": 19,
+    "month": 11,
+    "year": 2057,
+    "leap": false
+   },
+   "canChiNgay": "Ất Tỵ",
+   "tietKhi": "Đại Tuyết",
+   "gioHoangDao": [
+    "Sửu",
+    "Thìn",
+    "Ngọ",
+    "Mùi",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2058-01-24",
+    "soNgay": 41,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Mậu Dần"
+   }
+  },
+  {
+   "ngay": "1938-07-19",
+   "am": {
+    "day": 22,
+    "month": 6,
+    "year": 1938,
+    "leap": false
+   },
+   "canChiNgay": "Nhâm Tý",
+   "tietKhi": "Tiểu Thử",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Mão",
+    "Ngọ",
+    "Thân",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1939-02-19",
+    "soNgay": 215,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Kỷ Mão"
+   }
+  },
+  {
+   "ngay": "2071-07-20",
+   "am": {
+    "day": 23,
+    "month": 6,
+    "year": 2071,
+    "leap": false
+   },
+   "canChiNgay": "Tân Mão",
+   "tietKhi": "Tiểu Thử",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2072-02-19",
+    "soNgay": 214,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Nhâm Thìn"
+   }
+  },
+  {
+   "ngay": "1918-12-03",
+   "am": {
+    "day": 1,
+    "month": 11,
+    "year": 1918,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Thân",
+   "tietKhi": "Tiểu Tuyết",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "1919-02-01",
+    "soNgay": 60,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Kỷ Mùi"
+   }
+  },
+  {
+   "ngay": "1949-06-23",
+   "am": {
+    "day": 27,
+    "month": 5,
+    "year": 1949,
+    "leap": false
+   },
+   "canChiNgay": "Giáp Thân",
+   "tietKhi": "Hạ Chí",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "1950-02-17",
+    "soNgay": 239,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Canh Dần"
+   }
+  },
+  {
+   "ngay": "1962-11-07",
+   "am": {
+    "day": 11,
+    "month": 10,
+    "year": 1962,
+    "leap": false
+   },
+   "canChiNgay": "Kỷ Dậu",
+   "tietKhi": "Sương Giáng",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1963-01-25",
+    "soNgay": 79,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Quý Mão"
+   }
+  },
+  {
+   "ngay": "2060-05-13",
+   "am": {
+    "day": 14,
+    "month": 4,
+    "year": 2060,
+    "leap": false
+   },
+   "canChiNgay": "Bính Tuất",
+   "tietKhi": "Lập Hạ",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2061-01-21",
+    "soNgay": 253,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Tỵ"
+   }
+  },
+  {
+   "ngay": "1902-04-20",
+   "am": {
+    "day": 13,
+    "month": 3,
+    "year": 1902,
+    "leap": false
+   },
+   "canChiNgay": "Quý Dậu",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "1903-01-28",
+    "soNgay": 283,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Quý Mão"
+   }
+  },
+  {
+   "ngay": "2064-10-28",
+   "am": {
+    "day": 19,
+    "month": 9,
+    "year": 2064,
+    "leap": false
+   },
+   "canChiNgay": "Ất Mùi",
+   "tietKhi": "Sương Giáng",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2065-02-05",
+    "soNgay": 100,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Ất Dậu"
+   }
+  },
+  {
+   "ngay": "2026-02-16",
+   "am": {
+    "day": 29,
+    "month": 12,
+    "year": 2025,
+    "leap": false
+   },
+   "canChiNgay": "Tân Dậu",
+   "tietKhi": "Lập Xuân",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2026-02-17",
+    "soNgay": 1,
+    "laMungMot": false,
+    "laGiaoThua": true,
+    "canChiNam": "Bính Ngọ"
+   }
+  },
+  {
+   "ngay": "2026-02-17",
+   "am": {
+    "day": 1,
+    "month": 1,
+    "year": 2026,
+    "leap": false
+   },
+   "canChiNgay": "Nhâm Tuất",
+   "tietKhi": "Lập Xuân",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2026-02-17",
+    "soNgay": 0,
+    "laMungMot": true,
+    "laGiaoThua": false,
+    "canChiNam": "Bính Ngọ"
+   }
+  },
+  {
+   "ngay": "2027-02-05",
+   "am": {
+    "day": 29,
+    "month": 12,
+    "year": 2026,
+    "leap": false
+   },
+   "canChiNgay": "Ất Mão",
+   "tietKhi": "Lập Xuân",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2027-02-06",
+    "soNgay": 1,
+    "laMungMot": false,
+    "laGiaoThua": true,
+    "canChiNam": "Đinh Mùi"
+   }
+  },
+  {
+   "ngay": "2027-02-06",
+   "am": {
+    "day": 1,
+    "month": 1,
+    "year": 2027,
+    "leap": false
+   },
+   "canChiNgay": "Bính Thìn",
+   "tietKhi": "Lập Xuân",
+   "gioHoangDao": [
+    "Dần",
+    "Thìn",
+    "Tỵ",
+    "Thân",
+    "Dậu",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2027-02-06",
+    "soNgay": 0,
+    "laMungMot": true,
+    "laGiaoThua": false,
+    "canChiNam": "Đinh Mùi"
+   }
+  },
+  {
+   "ngay": "2023-03-22",
+   "am": {
+    "day": 1,
+    "month": 2,
+    "year": 2023,
+    "leap": true
+   },
+   "canChiNgay": "Kỷ Mão",
+   "tietKhi": "Xuân Phân",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2024-02-10",
+    "soNgay": 325,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Thìn"
+   }
+  },
+  {
+   "ngay": "2023-04-19",
+   "am": {
+    "day": 29,
+    "month": 2,
+    "year": 2023,
+    "leap": true
+   },
+   "canChiNgay": "Đinh Mùi",
+   "tietKhi": "Thanh Minh",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2024-02-10",
+    "soNgay": 297,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Thìn"
+   }
+  },
+  {
+   "ngay": "2020-05-23",
+   "am": {
+    "day": 1,
+    "month": 4,
+    "year": 2020,
+    "leap": true
+   },
+   "canChiNgay": "Bính Dần",
+   "tietKhi": "Tiểu Mãn",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "2021-02-12",
+    "soNgay": 265,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Tân Sửu"
+   }
+  },
+  {
+   "ngay": "2033-12-22",
+   "am": {
+    "day": 1,
+    "month": 11,
+    "year": 2033,
+    "leap": true
+   },
+   "canChiNgay": "Đinh Mùi",
+   "tietKhi": "Đông Chí",
+   "gioHoangDao": [
+    "Dần",
+    "Mão",
+    "Tỵ",
+    "Thân",
+    "Tuất",
+    "Hợi"
+   ],
+   "tet": {
+    "ngay": "2034-02-19",
+    "soNgay": 59,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Giáp Dần"
+   }
+  },
+  {
+   "ngay": "1985-01-21",
+   "am": {
+    "day": 1,
+    "month": 1,
+    "year": 1985,
+    "leap": false
+   },
+   "canChiNgay": "Canh Thân",
+   "tietKhi": "Đại Hàn",
+   "gioHoangDao": [
+    "Tý",
+    "Sửu",
+    "Thìn",
+    "Tỵ",
+    "Mùi",
+    "Tuất"
+   ],
+   "tet": {
+    "ngay": "1985-01-21",
+    "soNgay": 0,
+    "laMungMot": true,
+    "laGiaoThua": false,
+    "canChiNam": "Ất Sửu"
+   }
+  },
+  {
+   "ngay": "2026-11-19",
+   "am": {
+    "day": 11,
+    "month": 10,
+    "year": 2026,
+    "leap": false
+   },
+   "canChiNgay": "Đinh Dậu",
+   "tietKhi": "Lập Đông",
+   "gioHoangDao": [
+    "Tý",
+    "Dần",
+    "Mão",
+    "Ngọ",
+    "Mùi",
+    "Dậu"
+   ],
+   "tet": {
+    "ngay": "2027-02-06",
+    "soNgay": 79,
+    "laMungMot": false,
+    "laGiaoThua": false,
+    "canChiNam": "Đinh Mùi"
+   }
+  }
+ ]
+}

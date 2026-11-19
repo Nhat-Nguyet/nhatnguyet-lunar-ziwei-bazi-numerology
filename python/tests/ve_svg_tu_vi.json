@@ -1,0 +1,322 @@
+{
+ "mon": "tu_vi",
+ "ghiChu": "Băm SHA-256 của hình SVG do bản TypeScript vẽ; bản Python phải ra cùng băm.",
+ "ca": [
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "ec047933ba6f1f6efd36efdf52be9ebce1345903f63725f6fddef8a020bbeb5f"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "06abfc6faeefe86615878d6d0497a66287220deaaa7ccde010dc8f3f101d92c3"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "67c7910b310634a4dae901e23cfc6c19610cc3834484c5f2b56b1cb896b67c0d"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "8ac887110ce38f2603e50e4078b3003ee8f777359072240d7e2d91d51a997d7d"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "64750246771427d4f86f289c962bd4e4ee57314ae52d9c208555f7ffe3c89d51"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "gioiTinh": "Nam",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 10
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "1dcac28849f1195c08f035dbdf9d98d417fe0d86b0981a044ca3cb3c748d1f59"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "df0b94d06a03df77dce90fd8226e6a7a3509946a037c9b19bbbdb7facc0071eb"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "0f8acfd3136761a67d0dce38c6b4fdb85677ff02ee62a211e50a599acf8158a5"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "b72941c2c1612855fa0e04dbf5f1f2ed34062b0b138d650b4ef014acba6037c1"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "bcc42f5e492e72111660361f6eff135f49a9a373b880b769586797a6e7da35ea"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "e2f7a8a67656ef94ea9cd34ee24536b083ae9ac9b8ad74b0672c60ecdad72eaf"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "gioiTinh": "Nữ",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": 0
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "bc8fcdbee936c8ab821843d542fa0f45b40b50f8ee44bd428830234978d032a0"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "7282e6a0ac14c42d3c990429183619d15367a3b5da8242be165d5ab47d9b5a5e"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "f3fa110961cd074340c2465656989ef4070d071ee4f61f2c678ba3ddfbf48208"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "464889497fdac750b39eeb6f6c757f3b4b57a9fdc73de87758cf3b1a815fd083"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "5b6bf0c7216ba0d8326f4fa16aad49109563f2e85d51abf4df466ddc466136eb"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "a3bc2079d2d46cda9add0e59f1510ee19dca83abde7fa10f92440ca169ab2e25"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "gioiTinh": "Nữ",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "3594e3e09e14a005da0f3923883244149cc9e86181d67f6fdd79c6cfa84b3681"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "b25a395fee40e246f996e4e89419e41e1871f5232cfcfa0e4b62c4e7920bad6a"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "9c19b30349103aa93a75dbad76e94376db451e43f35198d1e6d9d3d3c6ffadbf"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "ad92d8615b53fa05ad8fbc3c996ac4343b7ca9282651e0f8c4b59442d42e3568"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "f22408703bcbfe92838c71a9388e90cdf490b2c14988f6128db45c46d88b1795"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "4119f05c62ce0a81afbbdcd24339bf2806c68ddda6973b1f365d9e86d35041e2"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "gioiTinh": "Nam",
+    "dd": 15,
+    "mm": 8,
+    "yyyy": 1975,
+    "gio": 3
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "1dba5bff7a1bce0d56961969eeb1c0cf9f3a0986ca76c6a7571f9e6c1b4ad7da"
+  }
+ ]
+}

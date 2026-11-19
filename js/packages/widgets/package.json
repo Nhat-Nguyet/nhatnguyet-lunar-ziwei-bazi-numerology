@@ -1,0 +1,69 @@
+{
+  "name": "@nhatnguyet/widgets",
+  "version": "0.1.0",
+  "description": "Vietnamese lunar calendar web components (Custom Elements): today's date, month grid, auspicious hours, Tết countdown, date converter. Run in the browser with no server. Nhat Nguyet (nhatnguyet.org)",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://github.com/Nhat-Nguyet/nhatnguyet/tree/main/widgets",
+  "keywords": [
+    "web components",
+    "custom elements",
+    "lunar calendar",
+    "vietnamese lunar calendar",
+    "am lich",
+    "lich am",
+    "tet countdown",
+    "auspicious hours",
+    "gio hoang dao",
+    "农历"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tinh": {
+      "source": "./src/tinh.ts",
+      "types": "./dist/tinh.d.ts",
+      "default": "./dist/tinh.js"
+    },
+    "./nn-widgets.js": "./dist/nn-widgets.js"
+  },
+  "jsdelivr": "./dist/nn-widgets.js",
+  "unpkg": "./dist/nn-widgets.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": [
+    "./src/index.ts",
+    "./dist/index.js",
+    "./dist/nn-widgets.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node build-cdn.mjs",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "directory": "js/packages/widgets"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -18,6 +18,11 @@ import {
   TRANG_SINH_THEO_CUC,
   TRIET_THEO_CAN,
   TU_HOA_THEO_CAN,
+  CHINH_TINH_NAME_ZH,
+  PHU_TINH_NAME_ZH,
+  enCua,
+  tenCucBaThu,
+  zhCua,
   daoHoaViTri,
   thienMaViTri,
 } from "./du-lieu.ts";
@@ -185,12 +190,16 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
   const cung: CungTuVi[] = [];
   for (let i = 0; i < 12; i++) {
     const names = TEN_CUNG_THEO_OFFSET[mod(cungMenh - i, 12)];
+    const canChi = canChiOfPalace(canThangGieng, i);
     cung.push({
       viTri: i,
       chi: DIA_CHI[i],
-      canChi: canChiOfPalace(canThangGieng, i),
+      chiZh: zhCua(DIA_CHI[i]),
+      canChi,
+      canChiZh: zhCua(canChi),
       tenCung: names.vi,
       tenCungEn: names.en,
+      tenCungZh: names.zh,
       laThan: i === cungThan,
       tuanTrung: i === tuanCungs[0] || i === tuanCungs[1],
       trietLo: i === trietCungs[0] || i === trietCungs[1],
@@ -198,7 +207,7 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
     });
   }
 
-  const addSao = (pos: number, ten: string, tenEn: string, loai: LoaiSao, tenZh?: string): void => {
+  const addSao = (pos: number, ten: string, tenEn: string, tenZh: string, loai: LoaiSao): void => {
     const s: SaoTuVi = { ten, tenEn, loai };
     if (tenZh) s.tenZh = tenZh;
     const dig = CHINH_TINH_DIGNITY[ten];
@@ -206,31 +215,35 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
       const lbl = DIGNITY_LABEL[dig[pos]];
       s.mieuVuong = lbl.vi;
       s.mieuVuongEn = lbl.en;
+      s.mieuVuongZh = lbl.zh;
     }
     const hoa = Object.prototype.hasOwnProperty.call(tuHoaOf, ten) ? tuHoaOf[ten] : undefined;
-    if (hoa) s.tuHoa = hoa;
+    if (hoa) {
+      s.tuHoa = hoa;
+      s.tuHoaZh = zhCua(hoa);
+    }
     cung[pos].sao.push(s);
   };
 
-  for (const name of CHINH_TINH) addSao(starPos[name], name, CHINH_TINH_NAME_EN[name], "chinh-tinh");
-  for (const name of PHU_TINH_GOC) addSao(starPos[name], name, PHU_TINH_NAME_EN[name], "phu-tinh");
+  for (const name of CHINH_TINH) addSao(starPos[name], name, CHINH_TINH_NAME_EN[name], CHINH_TINH_NAME_ZH[name], "chinh-tinh");
+  for (const name of PHU_TINH_GOC) addSao(starPos[name], name, PHU_TINH_NAME_EN[name], PHU_TINH_NAME_ZH[name], "phu-tinh");
   for (const name of TEN_SAO_PHU_MOI) {
     const { en, zh } = tenSaoBaThu(name);
-    addSao(starPos[name], name, en, "phu-tinh", zh);
+    addSao(starPos[name], name, en, zh, "phu-tinh");
   }
   // Vòng Tràng Sinh theo âm dương năm và giới (Dương Nam, Âm Nữ thuận).
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_TRUONG_SINH[i];
-    addSao(mod(viTriTrangSinh + amDuongNamNu * i, 12), n.vi, n.en, "truong-sinh");
+    addSao(mod(viTriTrangSinh + amDuongNamNu * i, 12), n.vi, n.en, n.zh, "truong-sinh");
   }
   // Vòng Thái Tuế luôn thuận.
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_THAI_TUE[i];
-    addSao(viTriSaoThaiTue(chiNamIdx, i), n.vi, n.en, "thai-tue");
+    addSao(viTriSaoThaiTue(chiNamIdx, i), n.vi, n.en, n.zh, "thai-tue");
   }
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_BAC_SY[i];
-    addSao(mod(viTriLocTon + amDuongNamNu * i, 12), n.vi, n.en, "bac-sy");
+    addSao(mod(viTriLocTon + amDuongNamNu * i, 12), n.vi, n.en, n.zh, "bac-sy");
   }
 
   const laSo: LaSoTuVi = {
@@ -239,14 +252,23 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
     ngaySinhDuong: { ngay: dd, thang: mm, nam: yyyy },
     ngaySinhAm: lunar,
     gioSinh: DIA_CHI[gioSinhChiIdx],
+    gioSinhZh: zhCua(DIA_CHI[gioSinhChiIdx]),
     canChiNam: THIEN_CAN[canNamIdx] + " " + DIA_CHI[chiNamIdx],
+    canChiNamZh: zhCua(THIEN_CAN[canNamIdx] + " " + DIA_CHI[chiNamIdx]),
     amDuongMenh,
+    amDuongMenhEn: enCua(amDuongMenh),
+    amDuongMenhZh: zhCua(amDuongMenh),
     cuc: cucSo,
     tenCuc: cuc.ten,
+    tenCucEn: tenCucBaThu(cuc.ten).en,
+    tenCucZh: tenCucBaThu(cuc.ten).zh,
     banMenhNapAm: banMenhTen,
+    banMenhNapAmEn: enCua(banMenhTen),
+    banMenhNapAmZh: zhCua(banMenhTen),
     cungMenh,
     cungThan,
     menhCungChi: DIA_CHI[cungMenh],
+    menhCungChiZh: zhCua(DIA_CHI[cungMenh]),
     cung,
     caveat: CAVEAT_TU_VI.vi,
     caveatEn: CAVEAT_TU_VI.en,

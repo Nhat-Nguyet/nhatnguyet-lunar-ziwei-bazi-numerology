@@ -33,6 +33,8 @@ import math
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
+from ._mat_troi_bang import CHUONG_DONG_IAU1980, VSOP87D_TRAI_DAT_L, VSOP87D_TRAI_DAT_R
+
 __all__ = [
     # bảng
     "THIEN_CAN", "DIA_CHI", "CON_GIAP", "TIME_ZONE_VN", "NGU_HANH_LIST",
@@ -50,6 +52,7 @@ __all__ = [
     "can_thang_dan", "luc_thap_hoa_giap", "chi_index", "can_index",
     # tiết khí
     "all_tiet_khi", "tiet_khi_theo_index", "kinh_do_mat_troi", "delta_t_giay",
+    "kinh_do_bieu_kien_tt", "kinh_do_mat_troi_ut", "chuong_dong_kinh_do_giay", "nam_thap_phan",
     "tiet_khi_tai_thoi_diem", "tiet_khi_cua_ngay", "ngay_bat_dau_tiet_khi",
     "lich_tiet_khi_nam", "moc_tiet_khi", "moc_tiet_khi_trong_nam",
     "moc_tiet_khi_quanh_ngay",
@@ -472,44 +475,124 @@ def all_tiet_khi() -> List[Dict]:
     return [tiet_khi_theo_index((21 + i) % 24) for i in range(24)]
 
 
-# Hiệu chỉnh quang sai và hệ số chương động (độ), Meeus chương 25.
-_QUANG_SAI_DO = -0.00569
-_CHUONG_DONG_HE_SO_DO = -0.00478
+# Kinh độ biểu kiến của Mặt Trời cho tiết khí (lõi Go: mat_troi.go). Cách tính
+# độ chính xác cao của Jean Meeus, "Astronomical Algorithms": L, R nhật tâm
+# của Trái Đất theo VSOP87D rút gọn (Bretagnon và Francou 1988, IMCCE; bảng ở
+# _mat_troi_bang.py), địa tâm Θ = L + 180 độ, hệ FK5 -0,09033 giây cung,
+# chương động IAU 1980 đủ 63 số hạng, quang sai -20,4898 giây cung chia R; giờ
+# TT bằng UT cộng ΔT của Espenak và Meeus (NASA, 2006). Bộ đổi âm lịch giữ
+# sun_longitude rút gọn của thuật toán Hồ Ngọc Đức.
+_FK5_KINH_DO_GIAY = -0.09033
+QUANG_SAI_K_GIAY = -20.4898
+# Hệ số quang sai (độ); quang sai thật là hệ số này chia R.
+_QUANG_SAI_DO = QUANG_SAI_K_GIAY / 3600
 
 
-def delta_t_giay(nam: int) -> float:
-    """ΔT = TT - UT (giây), đa thức của Espenak và Meeus (NASA, 2006)."""
-    y = float(nam) + 0.5
-    if 2005 <= nam <= 2050:
-        t = y - 2000
-        return 62.92 + 0.32217 * t + 0.005589 * t * t
-    if 1986 <= nam < 2005:
-        t = y - 2000
-        return (63.86 + 0.3345 * t - 0.060374 * t * t + 0.0017275 * t * t * t
-                + 0.000651814 * t * t * t * t + 0.00002373599 * t * t * t * t * t)
-    if 1961 <= nam < 1986:
-        t = y - 1975
-        return 45.45 + 1.067 * t - t * t / 260 - t * t * t / 718
-    if 1941 <= nam < 1961:
-        t = y - 1950
-        return 29.07 + 0.407 * t - t * t / 233 + t * t * t / 2547
-    u = (y - 1820) / 100
-    return -20 + 32 * u * u
+def _chuoi_vsop(bang, tau: float) -> float:
+    """Σ_p τ^p Σ A·cos(B + C·τ), lược đồ Horner, cùng thứ tự cộng với bản Go."""
+    s = 0.0
+    for p in range(len(bang) - 1, -1, -1):
+        x = 0.0
+        for a, b, c in bang[p]:
+            x += a * math.cos(b + c * tau)
+        s = s * tau + x
+    return s
 
 
-def kinh_do_mat_troi(dd: int, mm: int, yy: int, gio_local: float, time_zone: float) -> float:
-    """Kinh độ BIỂU KIẾN của Mặt Trời (độ, 0 tới 360) lúc gio_local giờ (thập
-    phân) của ngày dd/mm/yy theo múi giờ time_zone: kinh độ hình học tại giờ
-    động lực TT, cộng quang sai và chương động (Meeus chương 25)."""
-    jd_ut = float(jd_from_date(dd, mm, yy)) - 0.5 + gio_local / 24 - time_zone / 24
-    jde = jd_ut + delta_t_giay(yy) / 86400
-    T = (jde - 2451545.0) / 36525
-    omega = (125.04 - 1934.136 * T) * math.pi / 180
-    deg = sun_longitude(jde) * 180 / math.pi + _QUANG_SAI_DO + _CHUONG_DONG_HE_SO_DO * math.sin(omega)
+def chuong_dong_kinh_do_giay(T: float) -> float:
+    """Chương động theo kinh độ Δψ (giây cung), IAU 1980; T là thế kỷ Julius
+    từ J2000 theo giờ TT."""
+    T2 = T * T
+    T3 = T2 * T
+    D = 297.85036 + 445267.111480 * T - 0.0019142 * T2 + T3 / 189474
+    M = 357.52772 + 35999.050340 * T - 0.0001603 * T2 - T3 / 300000
+    Mp = 134.96298 + 477198.867398 * T + 0.0086972 * T2 + T3 / 56250
+    F = 93.27191 + 483202.017538 * T - 0.0036825 * T2 + T3 / 327270
+    Om = 125.04452 - 1934.136261 * T + 0.0020708 * T2 + T3 / 450000
+    dr = math.pi / 180
+    s = 0.0
+    for h in CHUONG_DONG_IAU1980:
+        doi_so = (h[0] * D + h[1] * M + h[2] * Mp + h[3] * F + h[4] * Om) * dr
+        s += (h[5] + h[6] * T) * math.sin(doi_so)
+    return s * 0.0001
+
+
+def kinh_do_bieu_kien_tt(jde: float) -> float:
+    """Kinh độ biểu kiến của Mặt Trời (độ, 0 tới 360) tại ngày Julius jde
+    theo giờ động lực TT."""
+    tau = (jde - 2451545.0) / 365250.0
+    L = _chuoi_vsop(VSOP87D_TRAI_DAT_L, tau)
+    R = _chuoi_vsop(VSOP87D_TRAI_DAT_R, tau)
+    T = tau * 10
+    deg = L * 180 / math.pi + 180
+    deg += (_FK5_KINH_DO_GIAY + chuong_dong_kinh_do_giay(T) + QUANG_SAI_K_GIAY / R) / 3600.0
     deg = math.fmod(deg, 360)
     if deg < 0:
         deg += 360
     return deg
+
+
+def nam_thap_phan(jd_ut: float) -> float:
+    """Ngày Julius (UT) sang năm dương lịch thập phân."""
+    return 2000 + (jd_ut - 2451544.5) / 365.2425
+
+
+def delta_t_giay(y: float) -> float:
+    """ΔT = TT - UT (giây), các đa thức của Espenak và Meeus (NASA, 2006); y
+    là năm thập phân (2026.5 là giữa năm 2026). Ngoài 1600 tới 2150 dùng
+    parabol dài hạn cùng nguồn."""
+    y = float(y)
+    if 1600 <= y < 1700:
+        t = y - 1600
+        return 120 - 0.9808 * t - 0.01532 * t * t + t * t * t / 7129
+    if 1700 <= y < 1800:
+        t = y - 1700
+        return 8.83 + 0.1603 * t - 0.0059285 * t * t + 0.00013336 * t * t * t - t * t * t * t / 1174000
+    if 1800 <= y < 1860:
+        t = y - 1800
+        return (13.72 - 0.332447 * t + 0.0068612 * t * t + 0.0041116 * t * t * t - 0.00037436 * t * t * t * t
+                + 0.0000121272 * t * t * t * t * t - 0.0000001699 * t * t * t * t * t * t
+                + 0.000000000875 * t * t * t * t * t * t * t)
+    if 1860 <= y < 1900:
+        t = y - 1860
+        return (7.62 + 0.5737 * t - 0.251754 * t * t + 0.01680668 * t * t * t
+                - 0.0004473624 * t * t * t * t + t * t * t * t * t / 233174)
+    if 1900 <= y < 1920:
+        t = y - 1900
+        return -2.79 + 1.494119 * t - 0.0598939 * t * t + 0.0061966 * t * t * t - 0.000197 * t * t * t * t
+    if 1920 <= y < 1941:
+        t = y - 1920
+        return 21.20 + 0.84493 * t - 0.076100 * t * t + 0.0020936 * t * t * t
+    if 1941 <= y < 1961:
+        t = y - 1950
+        return 29.07 + 0.407 * t - t * t / 233 + t * t * t / 2547
+    if 1961 <= y < 1986:
+        t = y - 1975
+        return 45.45 + 1.067 * t - t * t / 260 - t * t * t / 718
+    if 1986 <= y < 2005:
+        t = y - 2000
+        return (63.86 + 0.3345 * t - 0.060374 * t * t + 0.0017275 * t * t * t
+                + 0.000651814 * t * t * t * t + 0.00002373599 * t * t * t * t * t)
+    if 2005 <= y < 2050:
+        t = y - 2000
+        return 62.92 + 0.32217 * t + 0.005589 * t * t
+    if 2050 <= y < 2150:
+        u = (y - 1820) / 100
+        return -20 + 32 * u * u - 0.5628 * (2150 - y)
+    u = (y - 1820) / 100
+    return -20 + 32 * u * u
+
+
+def kinh_do_mat_troi_ut(jd_ut: float) -> float:
+    """Kinh độ biểu kiến (độ) tại ngày Julius jd_ut theo giờ UT."""
+    return kinh_do_bieu_kien_tt(jd_ut + delta_t_giay(nam_thap_phan(jd_ut)) / 86400)
+
+
+def kinh_do_mat_troi(dd: int, mm: int, yy: int, gio_local: float, time_zone: float) -> float:
+    """Kinh độ BIỂU KIẾN của Mặt Trời (độ, 0 tới 360) lúc gio_local giờ (thập
+    phân) của ngày dd/mm/yy theo múi giờ time_zone."""
+    jd_ut = float(jd_from_date(dd, mm, yy)) - 0.5 + gio_local / 24 - time_zone / 24
+    return kinh_do_mat_troi_ut(jd_ut)
 
 
 def tiet_khi_tai_thoi_diem(dd: int, mm: int, yy: int, gio_local: float) -> Dict:
@@ -540,13 +623,17 @@ def ngay_bat_dau_tiet_khi(tk: Dict, nam_duong: int) -> Dict[str, int]:
         offset -= 365.2422
     guess = float(jd_xuan_phan) + offset
     start = int(guess) - 20
+
+    def dau_ngay(jd: int) -> float:
+        # Kinh độ lúc 0h giờ Việt Nam của ngày số Julius jd; mỗi ngày tính một lần.
+        return kinh_do_mat_troi_ut(float(jd) - 0.5 - TIME_ZONE_VN / 24)
+
+    a = dau_ngay(start)
     for jd in range(start, start + 41):
-        d = jd_to_date(jd)
-        sau = jd_to_date(jd + 1)
-        a = kinh_do_mat_troi(d["day"], d["month"], d["year"], 0, TIME_ZONE_VN)
-        b = kinh_do_mat_troi(sau["day"], sau["month"], sau["year"], 0, TIME_ZONE_VN)
+        b = dau_ngay(jd + 1)
         if _moc_roi_vao_ngay(a, b, float(tk["kinhDo"])):
-            return d
+            return jd_to_date(jd)
+        a = b
     return jd_to_date(int(guess))
 
 
@@ -566,53 +653,51 @@ def lich_tiet_khi_nam(nam_duong: int) -> List[Dict]:
     return ra
 
 
-_NGUONG_CHIA_DOI_PHUT = 1.0
+# Phép lặp dừng khi bước hiệu chỉnh còn dưới ngưỡng này (phút), rồi làm tròn tới phút.
+_NGUONG_DUNG_GIAI_PHUT = 0.001
+# Tốc độ trung bình của kinh độ Mặt Trời (độ mỗi ngày), đạo hàm cố định của phép lặp Newton.
+_TOC_DO_TRUNG_BINH_DO_NGAY = 360 / 365.2422
 
 
 def moc_tiet_khi(tk: Dict, nam_duong: int) -> Dict:
     """Thời điểm bắt đầu tiết khí tk trong năm nam_duong, giờ Việt Nam, tới
-    phút: tiết khí kèm khoá ``ngay``, ``gio``, ``phut``. Dò nghiệm bằng chia
-    đôi trên hiệu kinh độ đã đưa về [-180, 180)."""
-    muc = float(tk["kinhDo"])
+    phút: tiết khí kèm khoá ``ngay``, ``gio``, ``phut``. Giải bằng lặp Newton
+    (đạo hàm là tốc độ trung bình) tới dưới 0,06 giây, làm tròn tới phút; mốc
+    trong nửa phút cuối của một ngày ghi 23:59 của ngày ấy."""
+    ngay, gio, phut = _moc_tiet_khi_dem(nam_duong, tk["index"], tk["kinhDo"])
+    ra = dict(tk)
+    ra.pop("ngay", None)
+    ra.update({"ngay": dict(ngay), "gio": gio, "phut": phut})
+    return ra
+
+
+@lru_cache(maxsize=None)
+def _moc_tiet_khi_dem(nam_duong: int, index: int, kinh_do: int) -> Tuple[Dict, int, int]:
+    muc = float(kinh_do)
 
     def lech(jd: float) -> float:
-        sd = jd_to_date(int(math.floor(jd + 0.5)))
-        gio = (jd + 0.5 - math.floor(jd + 0.5)) * 24
-        d = kinh_do_mat_troi(sd["day"], sd["month"], sd["year"], gio, TIME_ZONE_VN) - muc
+        d = kinh_do_mat_troi_ut(jd - TIME_ZONE_VN / 24) - muc
         while d >= 180:
             d -= 360
         while d < -180:
             d += 360
         return d
 
-    uoc = ngay_bat_dau_tiet_khi(tk, nam_duong)
-    giua = float(_jd_cua(uoc))
-    lo, hi = giua - 10, giua + 10
-    if lech(lo) > 0 or lech(hi) < 0:
-        lo, hi = giua - 20, giua + 20
-    i = 0
-    while i < 40 and hi - lo > _NGUONG_CHIA_DOI_PHUT / 1440:
-        mid = (lo + hi) / 2
-        if lech(mid) < 0:
-            lo = mid
-        else:
-            hi = mid
-        i += 1
+    jd = float(jd_from_date(20, 3, nam_duong)) + float(index) * 365.2422 / 24
+    if index >= 19:
+        jd -= 365.2422
+    for _ in range(30):
+        buoc = lech(jd) / _TOC_DO_TRUNG_BINH_DO_NGAY
+        jd -= buoc
+        if abs(buoc) * 1440 < _NGUONG_DUNG_GIAI_PHUT:
+            break
 
-    jd = (lo + hi) / 2
     ngay_jd = int(math.floor(jd + 0.5))
     sd = jd_to_date(ngay_jd)
     phut_trong_ngay = _lam_tron((jd + 0.5 - float(ngay_jd)) * 1440)
-    if phut_trong_ngay >= 1440:
-        phut_trong_ngay -= 1440
-        sd = jd_to_date(ngay_jd + 1)
-    if phut_trong_ngay < 0:
-        phut_trong_ngay += 1440
-        sd = jd_to_date(ngay_jd - 1)
-    ra = dict(tk)
-    ra.pop("ngay", None)
-    ra.update({"ngay": sd, "gio": phut_trong_ngay // 60, "phut": phut_trong_ngay % 60})
-    return ra
+    if phut_trong_ngay > 1439:
+        phut_trong_ngay = 1439
+    return sd, phut_trong_ngay // 60, phut_trong_ngay % 60
 
 
 def moc_tiet_khi_trong_nam(nam_duong: int) -> List[Dict]:

@@ -1,59 +1,22 @@
-# Đóng góp · Contributing · 贡献指南
+# Contributing · Đóng góp · 贡献指南
 
-[Tiếng Việt](#tiếng-việt) · [English](#english) · [中文](#中文)
-
-## Tiếng Việt
-
-Cảm ơn anh chị đã muốn góp tay.
-
-### Báo lỗi
-
-Mở một issue, kèm một ví dụ tái hiện được:
-
-- ngày, giờ sinh (dương lịch hay âm lịch, có tháng nhuận không), giới tính, năm xem;
-- hàm đã gọi, kết quả nhận được và kết quả mong đợi;
-- căn cứ cho kết quả mong đợi: tên sách, chương, câu nguyên văn, hoặc số liệu
-  thiên văn (NASA, IMCCE...).
-
-Không có căn cứ thì vẫn báo được, nhưng sẽ được xếp là câu hỏi, chưa phải lỗi.
-
-### Quy tắc vàng
-
-- **Lõi tính gốc của Nhật Nguyệt là nguồn sự thật.** Bản TypeScript và Python
-  là bản chuyển ngữ, không tự đặt đáp án.
-- **Mọi bản phải ra đúng bộ ca kiểm** (`ca-kiem/*.json`): từng trường, mọi ca.
-  Ca kiểm do lõi tính gốc sinh ra, không sửa tay.
-- **Sửa một phép tính cần căn cứ**: văn bản gốc (sách, chương, câu nguyên văn)
-  hoặc số liệu thiên văn. Ca kiểm lệch mà anh chị nghĩ đáp án gốc sai thì đừng
-  sửa ca kiểm; mở issue kèm căn cứ, Nhật Nguyệt sửa lõi tính rồi sinh lại ca
-  kiểm cho mọi ngôn ngữ.
-- Không thêm thư viện phụ thuộc lúc chạy.
-
-### Chạy test
-
-```bash
-cd js && npm test                                  # Node 24
-cd python && python3 -m unittest discover -s tests # Python 3.9 trở lên
-```
-
-### Thêm một ngôn ngữ lập trình
-
-Rất hoan nghênh (Go, Rust, Java, C#, Swift, Kotlin, PHP...). Dùng bộ ca kiểm làm
-đáp án: đọc `vao`, gọi hàm, so với `ra` sau khi bỏ các khoá trong `khoaBo`, số
-thực lệch tối đa 1e-9. Đạt trọn mọi ca thì gửi pull request.
-
-### Ghi nguồn
-
-Dùng dữ liệu thì ghi `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`; xem mục Quy định
-sử dụng trong [README](./README.vi.md).
+[English](#english) · [Tiếng Việt](#tiếng-việt) · [中文](#中文)
 
 ## English
 
-Thanks for helping out.
+Thanks for helping out. There are three easy ways in:
+
+1. **Report a wrong result** (a date, a star, a pillar, a number), with your
+   source.
+2. **Pick a good first issue**: issues labelled
+   [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+   are small, self-contained and come with the files to touch.
+3. **Take the [port challenge](#port-challenge)**: write the engine in another
+   language and pass all 17,291 shared test cases.
 
 ### Reporting a bug
 
-Open an issue with a reproducible example:
+Open an issue with the "Wrong calculation" template and a reproducible example:
 
 - birth date and time (solar or lunar, leap month or not), gender, year viewed;
 - the function you called, the result you got and the result you expected;
@@ -80,29 +43,228 @@ until a source is found.
 ### Running the tests
 
 ```bash
-cd js && npm test                                  # Node 24
+cd js && npm install && npm test                   # Node 24
 cd python && python3 -m unittest discover -s tests # Python 3.9+
 ```
 
-### Adding a programming language
+### Pull requests
 
-Very welcome (Go, Rust, Java, C#, Swift, Kotlin, PHP...). Use the test cases as
-the answer key: read `vao` (input), call your function, compare with `ra`
-(output) after dropping the keys listed in `khoaBo`, with floats within 1e-9.
-Once every case passes, send a pull request.
+- One topic per pull request; say which test suites you ran and paste the
+  pass counts.
+- Code comments may be in Vietnamese or English. Strings that users read must
+  not use the em dash.
+- Keep function names and result keys as they are: the result objects use the
+  exact keys of the test cases (camelCase, also in Python).
+
+### Port challenge
+
+**Implement the engine in Go, Rust, Dart, Swift, Java, C#, Kotlin, PHP, Ruby,
+Elixir, Zig... and pass all 17,291 test cases in [`ca-kiem/`](./ca-kiem).**
+The test cases are plain JSON, so no part of this needs TypeScript or Python.
+The two existing ports are readable references:
+[`js/packages/*/src`](./js/packages) and [`python/nhatnguyet`](./python/nhatnguyet).
+
+| Suite | Cases | Input (`vao`) | Expected output (`ra`) | Difficulty |
+|---|---:|---|---|---|
+| `than-so-hoc.json` | 600 | `hoTen, dd, mm, yyyy, namXem, thangXem, ngayXem` | the full numerology profile | easiest: arithmetic and letter tables |
+| `am-lich.json` | 14,936 | see below | lunar date, can chi, solar terms | astronomy (Jean Meeus), the core of everything else |
+| `le-hoi.json` | 201 | `nam` (year) | `[{id, ngay: "YYYY-MM-DD"}]` in dataset order | needs `am-lich` and [`du-lieu/le-hoi-viet-nam.json`](./du-lieu) |
+| `bat-tu.json` | 777 | `dd, mm, yyyy, gio, phut, gioiTinh, namXem` (`gio` absent: unknown hour) | `{laSo, tieuVan}` | needs `am-lich` (solar terms to the minute) |
+| `tu-vi.json` | 777 | `dd, mm, yyyy, gio, gioiTinh, namXem` (`gio` is the branch index, 0 Tý to 11 Hợi) | `{laSo, daiVan, hanNam, saoLuu, cachCuc}` | needs `am-lich`; the largest rule set |
+
+`am-lich.json` has three kinds of cases, chosen by `vao.phep`:
+
+- `duong-sang-am` (`dd, mm, yyyy`): Gregorian to lunar on Vietnam time (UTC+7).
+  `ra` is `{am, canChiNgay, canChiThang, canChiNam, tietKhi, saoNhiThapBatTu}`.
+  When `muiGio` is present (8 for China, 9 for Korea and Japan), `ra` is only
+  `{am}`, computed in that time zone.
+- `am-sang-duong` (`ngay, thang, nam, nhuan`, optional `muiGio`): lunar to
+  Gregorian, `ra` is `{duong, hopLe}`.
+- `moc-tiet-khi` (`nam`): the 24 solar term moments of that Gregorian year, to
+  the minute, Vietnam time.
+
+The exact function call behind every `ra` is in the Python test harness:
+`tinh(vao)` in [`python/tests/test_*.py`](./python/tests). Invalid input (for
+example a gender that is neither `"Nam"` nor `"Nữ"`) expects `{"loi": true}`.
+
+**File format.** Every file is
+`{mon, moTa, phienBanDongCo, khoaBo, soCa, ca: [{vao, ra}]}`: `mon` is the
+suite, `phienBanDongCo` the reference engine version, `ca` the cases.
+
+**Comparison rules.**
+
+1. Drop every key listed in `khoaBo` at every depth, on both sides (these are
+   long explanatory texts, not part of the challenge).
+2. Compare deeply. Key order does not matter; arrays are compared in order.
+3. Numbers: integers must be equal; floats may differ by at most `1e-9`.
+4. A key present on one side and missing on the other is a failure, and so is
+   a type mismatch (`true` is not `1`).
+
+<a id="check-py"></a>**Checking from any language.** Make your program read a
+case file and print one JSON value per line (JSON Lines), the answer to
+`ca[0]`, `ca[1]`... in order. Then check it with this script (Python 3.8+, no
+dependencies):
+
+```python
+# check.py: compare your port's answers with a ca-kiem file.
+# usage: python3 check.py ca-kiem/am-lich.json answers.jsonl
+# answers.jsonl: one JSON value per line, the answer to ca[i], in the same order.
+import json, math, sys
+
+def drop(v, keys):
+    if isinstance(v, dict):
+        return {k: drop(x, keys) for k, x in v.items() if k not in keys}
+    if isinstance(v, list):
+        return [drop(x, keys) for x in v]
+    return v
+
+def diff(want, got, path="$"):
+    if isinstance(want, bool) or isinstance(got, bool):
+        return None if want is got else f"{path}: want {want!r}, got {got!r}"
+    if isinstance(want, (int, float)) and isinstance(got, (int, float)):
+        return None if math.isclose(want, got, rel_tol=0, abs_tol=1e-9) else f"{path}: want {want!r}, got {got!r}"
+    if isinstance(want, dict) and isinstance(got, dict):
+        for k in sorted(set(want) | set(got)):
+            if k not in got: return f"{path}.{k}: missing"
+            if k not in want: return f"{path}.{k}: unexpected key"
+            r = diff(want[k], got[k], f"{path}.{k}")
+            if r: return r
+        return None
+    if isinstance(want, list) and isinstance(got, list):
+        if len(want) != len(got): return f"{path}: length {len(want)} vs {len(got)}"
+        for i, (a, b) in enumerate(zip(want, got)):
+            r = diff(a, b, f"{path}[{i}]")
+            if r: return r
+        return None
+    return None if want == got and type(want) is type(got) else f"{path}: want {want!r}, got {got!r}"
+
+suite = json.load(open(sys.argv[1], encoding="utf-8"))
+keys = set(suite["khoaBo"])
+answers = [json.loads(l) for l in open(sys.argv[2], encoding="utf-8") if l.strip()]
+failed = 0
+for i, case in enumerate(suite["ca"]):
+    got = answers[i] if i < len(answers) else "<no answer>"
+    r = diff(drop(case["ra"], keys), drop(got, keys))
+    if r:
+        failed += 1
+        if failed <= 5: print(f"case {i} {json.dumps(case['vao'], ensure_ascii=False)}\n  {r}")
+print(f"{suite['mon']}: {len(suite['ca']) - failed}/{len(suite['ca'])} passed")
+sys.exit(1 if failed else 0)
+```
+
+```bash
+./my-port ca-kiem/than-so-hoc.json > answers.jsonl
+python3 check.py ca-kiem/than-so-hoc.json answers.jsonl
+# than-so-hoc: 600/600 passed
+```
+
+You can also port the comparison itself: it is about 40 lines in any language
+([`js/kiem/so-sanh.ts`](./js/kiem/so-sanh.ts) and
+[`python/tests/so_sanh.py`](./python/tests/so_sanh.py) are two examples).
+
+**Submitting a port.** Open an issue with the "Port to another language"
+template first, so nobody duplicates work. A port can live in your own
+repository; tell us when it passes a full suite (one suite is a fine first
+milestone, `than-so-hoc` or `am-lich`), with the pass counts and the reference
+engine version (`phienBanDongCo`). Credit the data as
+`Data: Nhat Nguyet (nhatnguyet.org)`, and keep the Meeus credit for the
+astronomy.
 
 ### Credit
 
 When you use the data, credit `Data: Nhat Nguyet (nhatnguyet.org)`; see Terms
 of use in the [README](./README.md).
 
+## Tiếng Việt
+
+Cảm ơn anh chị đã muốn góp tay. Có ba lối vào dễ:
+
+1. **Báo một kết quả sai** (ngày, sao, trụ, con số), kèm căn cứ.
+2. **Nhận một việc cho người mới**: issue gắn nhãn
+   [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+   là việc nhỏ, làm trọn được, có ghi sẵn tệp cần sửa.
+3. **Nhận thử thách viết lại bằng ngôn ngữ khác**: viết lõi tính bằng một ngôn
+   ngữ lập trình khác và qua đủ 17.291 ca kiểm (xem dưới).
+
+### Báo lỗi
+
+Mở một issue theo mẫu "Wrong calculation", kèm một ví dụ tái hiện được:
+
+- ngày, giờ sinh (dương lịch hay âm lịch, có tháng nhuận không), giới tính, năm xem;
+- hàm đã gọi, kết quả nhận được và kết quả mong đợi;
+- căn cứ cho kết quả mong đợi: tên sách, chương, câu nguyên văn, hoặc số liệu
+  thiên văn (NASA, IMCCE...).
+
+Không có căn cứ thì vẫn báo được, nhưng sẽ được xếp là câu hỏi, chưa phải lỗi.
+
+### Quy tắc vàng
+
+- **Lõi tính gốc của Nhật Nguyệt là nguồn sự thật.** Bản TypeScript và Python
+  là bản chuyển ngữ, không tự đặt đáp án.
+- **Mọi bản phải ra đúng bộ ca kiểm** (`ca-kiem/*.json`): từng trường, mọi ca.
+  Ca kiểm do lõi tính gốc sinh ra, không sửa tay.
+- **Sửa một phép tính cần căn cứ**: văn bản gốc (sách, chương, câu nguyên văn)
+  hoặc số liệu thiên văn. Ca kiểm lệch mà anh chị nghĩ đáp án gốc sai thì đừng
+  sửa ca kiểm; mở issue kèm căn cứ, Nhật Nguyệt sửa lõi tính rồi sinh lại ca
+  kiểm cho mọi ngôn ngữ.
+- Không thêm thư viện phụ thuộc lúc chạy.
+
+### Chạy test
+
+```bash
+cd js && npm install && npm test                   # Node 24
+cd python && python3 -m unittest discover -s tests # Python 3.9 trở lên
+```
+
+### Pull request
+
+- Mỗi pull request một việc; ghi bộ ca kiểm đã chạy và số ca đạt.
+- Chú thích trong mã viết tiếng Việt hay tiếng Anh đều được. Chuỗi người dùng
+  đọc không dùng gạch dài.
+- Giữ nguyên tên hàm và khoá kết quả: đối tượng trả về dùng đúng khoá của ca
+  kiểm (camelCase, cả ở Python).
+
+### Thử thách viết lại bằng ngôn ngữ khác
+
+**Viết lõi tính bằng Go, Rust, Dart, Swift, Java, C#, Kotlin, PHP... và qua đủ
+17.291 ca kiểm trong [`ca-kiem/`](./ca-kiem).** Ca kiểm là JSON thuần, không
+cần biết TypeScript hay Python; hai bản sẵn có là tài liệu tham khảo dễ đọc:
+[`js/packages/*/src`](./js/packages) và [`python/nhatnguyet`](./python/nhatnguyet).
+
+- Thứ tự gợi ý: `than-so-hoc` (600 ca, dễ nhất), `am-lich` (14.936 ca, nền của
+  mọi môn khác), `le-hoi` (201 ca), `bat-tu` (777 ca), `tu-vi` (777 ca).
+- Khuôn tệp: `{mon, moTa, phienBanDongCo, khoaBo, soCa, ca: [{vao, ra}]}`. Đầu
+  vào từng môn và dạng đáp án ghi ở bảng của bản tiếng Anh bên trên; lời gọi
+  hàm chính xác sau mỗi `ra` nằm ở hàm `tinh(vao)` trong
+  [`python/tests/test_*.py`](./python/tests).
+- Luật so: bỏ các khoá trong `khoaBo` ở mọi tầng của cả hai bên; so sâu, thứ tự
+  khoá không tính, mảng so theo thứ tự; số nguyên phải bằng, số thực lệch tối
+  đa `1e-9`; khoá thừa, khoá thiếu, khác kiểu đều là lệch.
+- Kiểm từ ngôn ngữ bất kỳ: cho chương trình in mỗi dòng một giá trị JSON, đáp
+  án của `ca[0]`, `ca[1]`... theo đúng thứ tự, rồi chạy
+  [`check.py`](#check-py) ở bản tiếng Anh:
+  `python3 check.py ca-kiem/than-so-hoc.json answers.jsonl`.
+- Gửi bản chuyển ngữ: mở issue theo mẫu "Port to another language" trước để
+  khỏi trùng việc. Bản chuyển ngữ có thể nằm ở repo riêng của anh chị; qua trọn
+  một bộ ca kiểm thì báo lại kèm số ca đạt và phiên bản lõi tính
+  (`phienBanDongCo`).
+
+### Ghi nguồn
+
+Dùng dữ liệu thì ghi `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`; xem mục Quy định
+sử dụng trong [README](./README.vi.md).
+
 ## 中文
 
-感谢您愿意参与贡献。
+感谢您愿意参与贡献。有三种简单的方式：
+
+1. **报告错误结果**（日期、星曜、柱、数字），并附上依据。
+2. **认领新手任务**：带有 [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 标签的 issue 规模小、可独立完成，并注明需要修改的文件。
+3. **参加移植挑战**：用另一种编程语言实现计算核心，并通过全部 17,291 个测试用例（见下文）。
 
 ### 报告问题
 
-请提交 issue，并附上可复现的例子：
+请使用 "Wrong calculation" 模板提交 issue，并附上可复现的例子：
 
 - 出生日期和时间（公历还是农历，是否闰月）、性别、流年；
 - 调用的函数、实际结果和期望结果；
@@ -120,13 +282,25 @@ of use in the [README](./README.md).
 ### 运行测试
 
 ```bash
-cd js && npm test                                  # Node 24
+cd js && npm install && npm test                   # Node 24
 cd python && python3 -m unittest discover -s tests # Python 3.9 及以上
 ```
 
-### 新增编程语言
+### Pull request
 
-非常欢迎（Go、Rust、Java、C#、Swift、Kotlin、PHP 等）。以测试用例为标准答案：读取 `vao`（输入），调用函数，去掉 `khoaBo` 中列出的键后与 `ra`（输出）比较，浮点数误差不超过 1e-9。全部用例通过后即可提交 pull request。
+- 每个 pull request 只做一件事；请写明运行了哪些测试用例集以及通过数量。
+- 代码注释可用越南语或英语。面向用户的字符串不要使用破折号（em dash）。
+- 函数名和结果的键名保持不变：返回对象使用测试用例中的键名（camelCase，Python 也一样）。
+
+### 移植挑战
+
+**用 Go、Rust、Dart、Swift、Java、C#、Kotlin、PHP 等语言实现计算核心，并通过 [`ca-kiem/`](./ca-kiem) 中全部 17,291 个测试用例。** 用例是纯 JSON，无需懂 TypeScript 或 Python；现有两个版本可作为易读的参考：[`js/packages/*/src`](./js/packages) 和 [`python/nhatnguyet`](./python/nhatnguyet)。
+
+- 建议顺序：`than-so-hoc`（600 个，最简单）、`am-lich`（14,936 个，其他各部分的基础）、`le-hoi`（201 个）、`bat-tu`（777 个）、`tu-vi`（777 个）。
+- 文件格式：`{mon, moTa, phienBanDongCo, khoaBo, soCa, ca: [{vao, ra}]}`。各部分的输入（`vao`）与输出（`ra`）见上方英文部分的表格；每个 `ra` 对应的确切函数调用见 [`python/tests/test_*.py`](./python/tests) 中的 `tinh(vao)`。
+- 比较规则：双方在所有层级都去掉 `khoaBo` 中列出的键；深度比较，键的顺序不计，数组按顺序比较；整数必须相等，浮点数误差不超过 `1e-9`；多键、缺键或类型不同都算不通过。
+- 任何语言都能检验：让程序按顺序每行输出一个 JSON 值（`ca[0]`、`ca[1]`……的答案），再运行英文部分的 [`check.py`](#check-py)：`python3 check.py ca-kiem/than-so-hoc.json answers.jsonl`。
+- 提交移植版：请先用 "Port to another language" 模板开 issue，避免重复劳动。移植版可以放在您自己的仓库；通过完整的一个用例集后请告诉我们通过数量和计算核心版本（`phienBanDongCo`）。
 
 ### 注明出处
 

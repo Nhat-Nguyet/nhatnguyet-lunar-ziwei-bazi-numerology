@@ -1,0 +1,298 @@
+{
+ "mon": "than_so_hoc",
+ "ghiChu": "Băm SHA-256 của hình SVG do bản TypeScript vẽ; bản Python phải ra cùng băm.",
+ "ca": [
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "3a9366bee1dee59b29d98ec40e6acc77fbcc791f5dabb01ed036f53226e94022"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "75690b29105e372894085d926caa976f9c7f73ef9575ffdbb1e4097f1985b1f1"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "f7f87ac130537e0a91f6a5c3821b15d16e3947de1f96b09197102c7d3cd930a3"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "11a52b7c102708293dd5fcb451d3f127551a9a4f61f63cbae36c566366edbc80"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "44c7e4f5c9bf0803b900afcbde5887b43f20f184da3ffe37e48d2cc2c3ddee3c"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "fbc088c125789e8b13e4a0390683e5dc1b881de036711727e9eb0748143276ac"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "c8573adf636fa63c18a8b4c2819f17debf78bf282bfade9dce2cf7c0f04ebb08"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "96d03819d2f4a4998f0555a25eb6a78deba1ecf58163f288bccce301cd356ce9"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "4d6a412162cf5f5535af9e8bfb2f284bf99d86384382c2db92af80808dbebcb1"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "6ab9fb8e512c3bff98be4efc54c1de42f7c2093ce86c60e7a606bd972ca865e3"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "1bd9479e5379c969842180914dd7c0b8dec6fe827ce0e9668f4ba7cd7f27dba0"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "f23979673620671fcf46024c9d8993e37069387098959127b8b6d53fd5b48c6f"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "1491c4e42a1a384971f91b7f5d0062a3c3c2b365ff9308902c902ebc7cd3a5f3"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "338a6b0e3f8df838d1383f094ae10ea21f8a4365fee2616052cbd4be141c2323"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "5e0806b54086a16f1cf7bb544807fefba21d021f1b611182404acf756adadeeb"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "a48a1594467417f78fc6d8171f936557f07bedb02653dea7dfad086a34ab9ad1"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "2825b2c16b6a27ea76b0a254e417f94b6d37ff3cd637ee048af9728f05ed38a9"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyễn Phạm Hoàng Khánh Thiên Trường",
+    "dd": 13,
+    "mm": 11,
+    "yyyy": 2004,
+    "namXem": 2030
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "ef5d1468e75dd23241a89d895d6bad343db9b25dd445148fa5b6c20b46aa7dc5"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "2ca1db11c016c426a19e0d8747521ecec5beccb6bfd07a9fae32e75a1c13ec49"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "9093b808c671390542a49143c851f5d7fbeaf4abe835debb3780dbc54d08630b"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "89c073d54d688cdf0beb5f4f99efaf591d5963edcf21911900faf1f0fbd6c886"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "028d874cf3a19c11e5c9bdadc284b19bd32365fdc637a434d90efea1ec9ecc8d"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "2e1af85397f42dd26da4937b9954313cfe8765ef7cdbd8f007af34acd1a57185"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "namXem": 2026
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "a3238b4657a8c36ee68d700d53fa47dd90f44a5c6e7a7cfa8c3c6b4a306bda9e"
+  }
+ ]
+}

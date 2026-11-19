@@ -15,7 +15,9 @@ from __future__ import annotations
 from typing import Dict, List
 
 from .am_lich import DIA_CHI, THIEN_CAN, mod
-from .tu_vi_du_lieu import LOC_TON_VI_TRI, TEN_HOA, TU_HOA_THEO_CAN
+from .tu_vi_du_lieu import (
+    LOC_TON_VI_TRI, TEN_HOA, TU_HOA_THEO_CAN, noi_ten_sao, ten_cung_ba_thu, ten_sao_tu_vi_ba_thu, zh_cua,
+)
 from .tu_vi_lap_so import thien_ma_vi_tri, vi_tri_dau_quan
 
 # ---------------------------------------------------------------------------
@@ -115,13 +117,14 @@ def dai_van(la_so: Dict) -> List[Dict]:
         c = la_so["cung"][pos]
         tu = la_so["cuc"] + k * 10
         d = {
-            "thu": k + 1, "viTri": c["viTri"], "chi": c["chi"],
-            "tenCung": c["tenCung"], "tenCungEn": c["tenCungEn"],
+            "thu": k + 1, "viTri": c["viTri"], "chi": c["chi"], "chiZh": zh_cua(c["chi"]),
+            "tenCung": c["tenCung"], "tenCungEn": c["tenCungEn"], "tenCungZh": ten_cung_ba_thu(c["tenCung"])[1],
             "tuTuoi": tu, "denTuoi": tu + 9,
         }
         ct = chinh_tinh_cua_cung(la_so, pos)
         if ct:
             d["chinhTinh"] = ct
+            d["chinhTinhEn"], d["chinhTinhZh"] = noi_ten_sao(ct)
         out.append(d)
     return out
 
@@ -160,8 +163,11 @@ def tinh_nguyet_han(la_so: Dict, chi_nam_xem: int) -> Dict:
     for t in range(1, 13):
         p = mod(dq + t - 1, 12)
         c = la_so["cung"][p]
-        thang.append({"thang": t, "viTri": p, "chi": DIA_CHI[p], "tenCung": c["tenCung"], "tenCungEn": c["tenCungEn"]})
-    return {"luuDauQuanViTri": dq, "luuDauQuanChi": DIA_CHI[dq], "thang": thang}
+        thang.append({
+            "thang": t, "viTri": p, "chi": DIA_CHI[p], "chiZh": zh_cua(DIA_CHI[p]),
+            "tenCung": c["tenCung"], "tenCungEn": c["tenCungEn"], "tenCungZh": ten_cung_ba_thu(c["tenCung"])[1],
+        })
+    return {"luuDauQuanViTri": dq, "luuDauQuanChi": DIA_CHI[dq], "luuDauQuanChiZh": zh_cua(DIA_CHI[dq]), "thang": thang}
 
 
 def tinh_han_nam(la_so: Dict, nam_xem: int) -> Dict:
@@ -186,25 +192,44 @@ def tinh_han_nam(la_so: Dict, nam_xem: int) -> Dict:
 
     luu_tu_hoa = []
     for hoa, sao in zip(TEN_HOA, TU_HOA_THEO_CAN[can_idx]):
-        item = {"hoa": hoa, "sao": sao, "viTri": -1, "chiCung": "", "tenCung": "", "coTrenLaSo": False}
+        sao_en, sao_zh = ten_sao_tu_vi_ba_thu(sao)
+        item = {
+            "hoa": hoa, "hoaZh": zh_cua(hoa), "sao": sao, "saoEn": sao_en, "saoZh": sao_zh, "viTri": -1,
+            "chiCung": "", "chiCungZh": "", "tenCung": "", "tenCungEn": "", "tenCungZh": "", "coTrenLaSo": False,
+        }
         p = vi_tri_sao(la_so, sao)
         if p >= 0:
-            item.update(viTri=p, coTrenLaSo=True, chiCung=DIA_CHI[p], tenCung=ten_cung_tai_vi_tri(la_so, p))
+            ten_cung = ten_cung_tai_vi_tri(la_so, p)
+            en, zh = ten_cung_ba_thu(ten_cung)
+            item.update(viTri=p, coTrenLaSo=True, chiCung=DIA_CHI[p], chiCungZh=zh_cua(DIA_CHI[p]),
+                        tenCung=ten_cung, tenCungEn=en, tenCungZh=zh)
         luu_tu_hoa.append(item)
 
+    can_chi = THIEN_CAN[can_idx] + " " + DIA_CHI[chi_idx]
+    ln = ten_cung_tai_vi_tri(la_so, chi_idx)
+    tvc = ten_cung_tai_vi_tri(la_so, tv)
     return {
         "nam": nam_xem,
-        "canChiNam": THIEN_CAN[can_idx] + " " + DIA_CHI[chi_idx],
+        "canChiNam": can_chi,
+        "canChiNamZh": zh_cua(can_chi),
         "tuoiMu": tuoi_mu,
         "luuNienViTri": chi_idx,
         "luuNienChi": DIA_CHI[chi_idx],
-        "luuNienTenCung": ten_cung_tai_vi_tri(la_so, chi_idx),
+        "luuNienChiZh": zh_cua(DIA_CHI[chi_idx]),
+        "luuNienTenCung": ln,
+        "luuNienTenCungEn": ten_cung_ba_thu(ln)[0],
+        "luuNienTenCungZh": ten_cung_ba_thu(ln)[1],
         "tieuVanViTri": tv,
         "tieuVanChi": DIA_CHI[tv],
-        "tieuVanTenCung": ten_cung_tai_vi_tri(la_so, tv),
+        "tieuVanChiZh": zh_cua(DIA_CHI[tv]),
+        "tieuVanTenCung": tvc,
+        "tieuVanTenCungEn": ten_cung_ba_thu(tvc)[0],
+        "tieuVanTenCungZh": ten_cung_ba_thu(tvc)[1],
         "daiVanTuTuoi": dv_tu,
         "daiVanDenTuoi": dv_den,
         "daiVanTenCung": dv_ten,
+        "daiVanTenCungEn": ten_cung_ba_thu(dv_ten)[0],
+        "daiVanTenCungZh": ten_cung_ba_thu(dv_ten)[1],
         "luuTuHoa": luu_tu_hoa,
         "nguyetHan": tinh_nguyet_han(la_so, chi_idx),
     }
@@ -274,9 +299,12 @@ def tinh_sao_luu(la_so: Dict, nam_xem: int) -> List[Dict]:
     ra = []
     for ma, vi, en, zh, theo_can in _TEN_SAO_LUU:
         p = vt[ma]
+        ten_cung = ten_cung_tai_vi_tri(la_so, p)
+        cung_en, cung_zh = ten_cung_ba_thu(ten_cung)
         ra.append({
             "ma": ma, "ten": vi, "tenEn": en, "tenZh": zh, "theoCan": theo_can,
-            "viTri": p, "chi": DIA_CHI[p], "tenCung": ten_cung_tai_vi_tri(la_so, p),
+            "viTri": p, "chi": DIA_CHI[p], "chiZh": zh_cua(DIA_CHI[p]),
+            "tenCung": ten_cung, "tenCungEn": cung_en, "tenCungZh": cung_zh,
             "voiLuuNien": quan_he_hai_cung(p, hn["luuNienViTri"]),
             "voiTieuVan": quan_he_hai_cung(p, hn["tieuVanViTri"]),
             "voiDaiVan": quan_he_hai_cung(p, dv) if dv >= 0 else "",

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Docs, datasets and guides
+    url: https://nhatnguyet.org/en/ma-nguon-mo
+    about: Project page with the open datasets and step by step guides.
+  - name: How the calendar and charts are computed
+    url: https://nhatnguyet.org/en/blog/co-so-khoa-hoc-kiem-chung
+    about: How Nhat Nguyet checks its work (NASA, IMCCE, classical texts).

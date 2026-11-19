@@ -9,6 +9,10 @@ export * from "./tieu-van.ts";
 export * from "./thap-than.ts";
 export * from "./tang-can.ts";
 export * from "./than-sat.ts";
+export * from "./ve-svg.ts";
+// Lớp API tiếng Anh (tham số đặt tên, giờ đồng hồ, kết quả theo lang).
+export * from "./en.ts";
+export * from "./van-ban.ts";
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.0.0";
+export const PHIEN_BAN_DONG_CO = "2.0.1";

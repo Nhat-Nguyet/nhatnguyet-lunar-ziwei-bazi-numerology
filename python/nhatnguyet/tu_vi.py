@@ -1,7 +1,7 @@
 """Tử Vi Đẩu Số: lập lá số, đại vận, hạn năm, sao lưu, cách cục.
 
 Bản chuyển ngữ sang Python của lõi tính Go của Nhật Nguyệt
-(lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t : tuvi.go, tuvi_lapso.go, tuvi_data.go,
+(lõi tính Go của Nhật Nguyệt : tuvi.go, tuvi_lapso.go, tuvi_data.go,
 tuvi_saophu.go, tuvi_chieusau.go, tuvi_luunien.go, tuvi_luusao.go,
 tuvi_cachcuc.go, tuvi_cachcuc_toan_thu.go). Lõi Go là nguồn sự thật; bộ ca
 kiểm ở thu-vien-mo/ca-kiem/tu-vi.json bắt mọi chỗ lệch.

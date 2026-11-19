@@ -17,6 +17,7 @@ from .am_lich import DIA_CHI, THIEN_CAN, mod, ngu_hanh_nap_am, solar_to_lunar
 from .tu_vi_du_lieu import (
     CHINH_TINH_DIGNITY, CHINH_TINH_NAME_EN, CHOM_THIEN_PHU, CHOM_TU_VI, DIGNITY_LABEL,
     HANH_TO_CUC, LOC_TON_VI_TRI, PHU_TINH_NAME_EN, TEN_CHINH_TINH, TEN_CUNG_THEO_OFFSET,
+    CHINH_TINH_NAME_ZH, PHU_TINH_NAME_ZH, TEN_CUC_BA_THU, en_cua, zh_cua,
     TEN_HOA, TEN_PHU_TINH, TEN_SAO_PHU_MOI, TEN_SAO_PHU_MOI_BA_THU, TEN_VONG_BAC_SY,
     TEN_VONG_THAI_TUE, TEN_VONG_TRUONG_SINH, THIEN_KHOI_VI_TRI, THIEN_PHUC_VI_TRI,
     THIEN_QUAN_VI_TRI, TRANG_SINH_THEO_CUC, TRIET_THEO_CAN, TU_HOA_THEO_CAN,
@@ -319,50 +320,55 @@ def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gi
 
     cung: List[Dict] = []
     for i in range(12):
-        ten_vi, ten_en = TEN_CUNG_THEO_OFFSET[mod(cung_menh - i, 12)]
+        ten_vi, ten_en, ten_zh = TEN_CUNG_THEO_OFFSET[mod(cung_menh - i, 12)]
+        can_chi = _can_chi_cua_cung(can_thang_gieng, i)
         cung.append({
             "viTri": i,
             "chi": DIA_CHI[i],
-            "canChi": _can_chi_cua_cung(can_thang_gieng, i),
+            "chiZh": zh_cua(DIA_CHI[i]),
+            "canChi": can_chi,
+            "canChiZh": zh_cua(can_chi),
             "tenCung": ten_vi,
             "tenCungEn": ten_en,
+            "tenCungZh": ten_zh,
             "laThan": i == cung_than,
             "tuanTrung": i in tuan,
             "trietLo": i in triet,
             "sao": [],
         })
 
-    def them_sao(pos: int, ten: str, ten_en: str, loai: str, ten_zh: str = "") -> None:
+    def them_sao(pos: int, ten: str, ten_en: str, ten_zh: str, loai: str) -> None:
         s = {"ten": ten, "tenEn": ten_en}
         if ten_zh:
             s["tenZh"] = ten_zh
         s["loai"] = loai
         dig = CHINH_TINH_DIGNITY.get(ten)
         if dig is not None:
-            vi, en = DIGNITY_LABEL[dig[pos]]
-            s["mieuVuong"], s["mieuVuongEn"] = vi, en
+            vi, en, zh = DIGNITY_LABEL[dig[pos]]
+            s["mieuVuong"], s["mieuVuongEn"], s["mieuVuongZh"] = vi, en, zh
         if ten in tu_hoa_of:
             s["tuHoa"] = tu_hoa_of[ten]
+            s["tuHoaZh"] = zh_cua(tu_hoa_of[ten])
         cung[pos]["sao"].append(s)
 
     for ten in TEN_CHINH_TINH:
-        them_sao(star_pos[ten], ten, CHINH_TINH_NAME_EN[ten], "chinh-tinh")
+        them_sao(star_pos[ten], ten, CHINH_TINH_NAME_EN[ten], CHINH_TINH_NAME_ZH[ten], "chinh-tinh")
     for ten in TEN_PHU_TINH:
-        them_sao(star_pos[ten], ten, PHU_TINH_NAME_EN[ten], "phu-tinh")
+        them_sao(star_pos[ten], ten, PHU_TINH_NAME_EN[ten], PHU_TINH_NAME_ZH[ten], "phu-tinh")
     for ten in TEN_SAO_PHU_MOI:
         en, zh = TEN_SAO_PHU_MOI_BA_THU[ten]
-        them_sao(star_pos[ten], ten, en, "phu-tinh", zh)
+        them_sao(star_pos[ten], ten, en, zh, "phu-tinh")
     # Vòng Tràng Sinh theo âm dương năm và giới (Dương Nam, Âm Nữ thuận).
     for i in range(12):
-        vi, en = TEN_VONG_TRUONG_SINH[i]
-        them_sao(mod(vt_trang_sinh + am_duong_nam_nu * i, 12), vi, en, "truong-sinh")
+        vi, en, zh = TEN_VONG_TRUONG_SINH[i]
+        them_sao(mod(vt_trang_sinh + am_duong_nam_nu * i, 12), vi, en, zh, "truong-sinh")
     # Vòng Thái Tuế luôn thuận.
     for i in range(12):
-        vi, en = TEN_VONG_THAI_TUE[i]
-        them_sao(vi_tri_sao_thai_tue(chi_nam, i), vi, en, "thai-tue")
+        vi, en, zh = TEN_VONG_THAI_TUE[i]
+        them_sao(vi_tri_sao_thai_tue(chi_nam, i), vi, en, zh, "thai-tue")
     for i in range(12):
-        vi, en = TEN_VONG_BAC_SY[i]
-        them_sao(mod(vt_loc_ton + am_duong_nam_nu * i, 12), vi, en, "bac-sy")
+        vi, en, zh = TEN_VONG_BAC_SY[i]
+        them_sao(mod(vt_loc_ton + am_duong_nam_nu * i, 12), vi, en, zh, "bac-sy")
 
     return {
         "hoTen": ho_ten,
@@ -370,13 +376,22 @@ def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gi
         "ngaySinhDuong": {"ngay": dd, "thang": mm, "nam": yyyy},
         "ngaySinhAm": dict(lunar),
         "gioSinh": DIA_CHI[gio_chi_idx],
+        "gioSinhZh": zh_cua(DIA_CHI[gio_chi_idx]),
         "canChiNam": THIEN_CAN[can_nam] + " " + DIA_CHI[chi_nam],
+        "canChiNamZh": zh_cua(THIEN_CAN[can_nam] + " " + DIA_CHI[chi_nam]),
         "amDuongMenh": am_duong_menh,
+        "amDuongMenhEn": en_cua(am_duong_menh),
+        "amDuongMenhZh": zh_cua(am_duong_menh),
         "cuc": cuc_so,
         "tenCuc": ten_cuc,
+        "tenCucEn": TEN_CUC_BA_THU[ten_cuc][0],
+        "tenCucZh": TEN_CUC_BA_THU[ten_cuc][1],
         "banMenhNapAm": ban_menh_ten,
+        "banMenhNapAmEn": en_cua(ban_menh_ten),
+        "banMenhNapAmZh": zh_cua(ban_menh_ten),
         "cungMenh": cung_menh,
         "cungThan": cung_than,
         "menhCungChi": DIA_CHI[cung_menh],
+        "menhCungChiZh": zh_cua(DIA_CHI[cung_menh]),
         "cung": cung,
     }

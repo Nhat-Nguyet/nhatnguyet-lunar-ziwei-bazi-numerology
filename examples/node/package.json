@@ -1,0 +1,15 @@
+{
+  "name": "nhatnguyet-example-node",
+  "private": true,
+  "type": "module",
+  "description": "Nhat Nguyet libraries from Node: lunar calendar, Zi Wei, BaZi, numerology.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "latest",
+    "@nhatnguyet/bat-tu": "latest",
+    "@nhatnguyet/than-so-hoc": "latest",
+    "@nhatnguyet/tu-vi": "latest"
+  }
+}

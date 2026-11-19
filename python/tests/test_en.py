@@ -1,0 +1,239 @@
+"""Kiểm lớp API tiếng Anh (nhatnguyet.en): đối chiếu với hàm tiếng Việt và các
+khoá En/Zh của ca kiểm (khi ca kiểm có)."""
+
+import datetime
+import os
+import sys
+import unittest
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import nhatnguyet  # noqa: E402
+from nhatnguyet import am_lich, bat_tu, en, le_hoi, than_so_hoc, tu_vi  # noqa: E402
+from so_sanh import doc_ca_kiem  # noqa: E402
+
+# TODO(zh): sao mà lõi chưa trả chữ Trung và bảng TU_VUNG không dùng được (cùng
+# chữ Việt mang nghĩa khác): bản zh tạm để tên tiếng Anh. Lõi đủ zh thì rỗng.
+SAO_CHUA_CO_ZH = {"Phúc Đức"}
+TRU = (("year", "truNam"), ("month", "truThang"), ("day", "truNgay"), ("hour", "truGio"))
+
+
+class TestAmLich(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.ca = doc_ca_kiem("am-lich")["ca"]
+
+    def test_to_lunar_khop_ca_kiem(self):
+        n = kiem = 0
+        for c in self.ca:
+            v = c["vao"]
+            if v["phep"] != "duong-sang-am":
+                continue
+            n += 1
+            if n % 7:
+                continue
+            r = en.to_lunar((v["yyyy"], v["mm"], v["dd"]), time_zone=v.get("muiGio"), lang="vi")
+            self.assertEqual({k: r[k] for k in ("day", "month", "year", "leap")}, c["ra"]["am"])
+            if "canChiNam" in c["ra"]:
+                self.assertEqual(r["yearName"], c["ra"]["canChiNam"]["label"])
+                self.assertEqual(r["monthName"], c["ra"]["canChiThang"]["label"])
+                self.assertEqual(r["dayName"], c["ra"]["canChiNgay"]["label"])
+            kiem += 1
+        self.assertGreater(kiem, 1000)
+
+    def test_to_solar_khop_lunar_to_solar(self):
+        kiem = 0
+        for c in self.ca[::3]:
+            v = c["vao"]
+            if v["phep"] != "am-sang-duong":
+                continue
+            tz = v.get("muiGio", 7)
+            ra = c["ra"]
+            if not ra["hopLe"]:
+                with self.assertRaises(ValueError):
+                    en.to_solar(v["nam"], v["thang"], v["ngay"], v["nhuan"], time_zone=tz)
+                continue
+            sd = ra["duong"]
+            l = am_lich.solar_to_lunar(sd["day"], sd["month"], sd["year"], tz)
+            if (l["day"], l["month"], l["year"], l["leap"]) == (v["ngay"], v["thang"], v["nam"], v["nhuan"]):
+                r = en.to_solar(v["nam"], v["thang"], v["ngay"], v["nhuan"], time_zone=tz)
+                self.assertEqual({k: r[k] for k in ("day", "month", "year")}, sd)
+                kiem += 1
+            else:
+                with self.assertRaisesRegex(ValueError, "29 days"):
+                    en.to_solar(v["nam"], v["thang"], v["ngay"], v["nhuan"], time_zone=tz)
+        self.assertGreater(kiem, 300)
+
+    def test_solar_terms_khop_ca_kiem_va_doi_gio(self):
+        for c in self.ca:
+            v = c["vao"]
+            if v["phep"] != "moc-tiet-khi" or v["nam"] % 25:
+                continue
+            vi = en.solar_terms(v["nam"], lang="vi")
+            enl = en.solar_terms(v["nam"])
+            jp = en.solar_terms(v["nam"], country="JP")
+            for i, m in enumerate(c["ra"]):
+                self.assertEqual(vi[i]["date"], "%04d-%02d-%02d" % (m["ngay"]["year"], m["ngay"]["month"], m["ngay"]["day"]))
+                self.assertEqual(vi[i]["time"], "%02d:%02d" % (m["gio"], m["phut"]))
+                self.assertEqual(vi[i]["name"], m["ten"])
+                self.assertEqual(enl[i]["name"], m["tenEn"])
+                a = datetime.datetime.fromisoformat(vi[i]["date"] + "T" + vi[i]["time"])
+                b = datetime.datetime.fromisoformat(jp[i]["date"] + "T" + jp[i]["time"])
+                self.assertEqual(b - a, datetime.timedelta(hours=2))
+
+    def test_nuoc_va_con_giap(self):
+        vn, cn = en.to_lunar("1985-01-21"), en.to_lunar("1985-01-21", country="CN")
+        self.assertEqual((vn["month"], vn["day"]), (1, 1))
+        goc = am_lich.solar_to_lunar(21, 1, 1985, 8)
+        self.assertEqual((cn["year"], cn["month"], cn["day"]), (goc["year"], goc["month"], goc["day"]))
+        self.assertEqual(en.to_lunar("2023-02-01")["zodiac"], "Cat")
+        self.assertEqual(en.to_lunar("2023-02-01", country="CN")["zodiac"], "Rabbit")
+        with self.assertRaisesRegex(ValueError, "unsupported country"):
+            en.to_lunar("2027-02-06", country="TH")
+
+    def test_doc_ngay_gio(self):
+        self.assertEqual(en.parse_date(datetime.date(1990, 9, 19)), {"year": 1990, "month": 9, "day": 19})
+        self.assertEqual(en.parse_date({"year": 1990, "month": 9, "day": 19}), {"year": 1990, "month": 9, "day": 19})
+        with self.assertRaisesRegex(ValueError, "no such date"):
+            en.parse_date("2023-02-29")
+        with self.assertRaises(ValueError):
+            en.parse_date("19/09/1990")
+        self.assertEqual(en.parse_time("8:05"), {"hour": 8, "minute": 5})
+        self.assertIsNone(en.parse_time(None))
+        with self.assertRaises(ValueError):
+            en.parse_time("24:00")
+        for h in range(24):
+            self.assertEqual(en.hour_branch(h)["index"], bat_tu.chi_gio_tu_gio_dong_ho(h))
+        self.assertEqual(en.hour_branch("23:30"), {"index": 0, "name": "Tý", "animal": "Rat", "range": "23:00-00:59"})
+        self.assertEqual(en.day_pillar("1990-09-19", lang="zh")["label"], "丁亥")
+        self.assertEqual(en.year_pillar(2026, lang="zh")["label"], "丙午")
+
+    def test_xuat_o_goi(self):
+        for ten in ("cast_zi_wei", "cast_bazi", "to_lunar", "numerology", "festivals"):
+            self.assertTrue(callable(getattr(nhatnguyet, ten)))
+
+
+class TestTuVi(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.mau = [c for i, c in enumerate(doc_ca_kiem("tu-vi")["ca"]) if i % 10 == 0 and not c["ra"].get("loi")]
+
+    def _cast(self, c, lang):
+        v = c["vao"]
+        return en.cast_zi_wei((v["yyyy"], v["mm"], v["dd"]), "female" if v["gioiTinh"] == "Nữ" else "male",
+                              time="%02d:00" % (v["gio"] * 2), view_year=v["namXem"], lang=lang)
+
+    def test_khop_ham_goc_va_ca_kiem(self):
+        thieu = set()
+        for c in self.mau:
+            v, ra = c["vao"], c["ra"]
+            vi, e, z = (self._cast(c, l) for l in ("vi", "en", "zh"))
+            self.assertEqual(vi["raw"], tu_vi.lap_la_so_tu_vi("", v["gioiTinh"], v["dd"], v["mm"], v["yyyy"], v["gio"]))
+            self.assertEqual(vi["hour"]["index"], v["gio"])
+            for i, cg in enumerate(ra["laSo"]["cung"]):
+                self.assertEqual(vi["palaces"][i]["name"], cg["tenCung"])
+                self.assertEqual(e["palaces"][i]["name"], cg["tenCungEn"])
+                if cg.get("tenCungZh"):
+                    self.assertEqual(z["palaces"][i]["name"], cg["tenCungZh"])
+                for k, s in enumerate(cg["sao"]):
+                    self.assertEqual(e["palaces"][i]["stars"][k]["name"], s["tenEn"])
+                    if s.get("tenZh") and z["palaces"][i]["stars"][k]["name"] != s["tenZh"]:
+                        thieu.add(s["ten"])
+            dv = en.decade_luck(e)
+            self.assertEqual([d["fromAge"] for d in dv], [d["tuTuoi"] for d in ra["daiVan"]])
+            self.assertEqual([d["palace"] for d in dv], [d["tenCungEn"] for d in ra["daiVan"]])
+            y = en.yearly_luck(e)
+            self.assertEqual(y["age"], ra["hanNam"]["tuoiMu"])
+            self.assertEqual(y["minorLimit"]["index"], ra["hanNam"]["tieuVanViTri"])
+            self.assertEqual([(s["code"], s["palaceIndex"]) for s in en.yearly_stars(e)], [(s["ma"], s["viTri"]) for s in ra["saoLuu"]])
+            self.assertEqual([p["nameVi"] for p in en.find_patterns(e)], [p["ten"] for p in ra["cachCuc"]])
+        self.assertTrue(thieu <= SAO_CHUA_CO_ZH, thieu)
+
+    def test_loi_va_gio_ty(self):
+        with self.assertRaisesRegex(ValueError, "pass time"):
+            en.cast_zi_wei("1990-09-19", "male")
+        with self.assertRaisesRegex(ValueError, "gender"):
+            en.cast_zi_wei("1990-09-19", "x", time="20:00")
+        with self.assertRaisesRegex(ValueError, "branch 10"):
+            en.cast_zi_wei("1990-09-19", "f", time="20:00", hour_branch_index=3)
+        a = en.cast_zi_wei("1990-09-19", "male", time="23:30")
+        b = en.cast_zi_wei("1990-09-19", "male", time="00:10")
+        self.assertEqual(a["raw"], b["raw"])
+        self.assertEqual(len(a["notes"]), 2)
+
+
+class TestBatTu(unittest.TestCase):
+    def test_khop_ham_goc_va_ca_kiem(self):
+        for c in doc_ca_kiem("bat-tu")["ca"][::9]:
+            v, ra = c["vao"], c["ra"]["laSo"]
+            t = None if "gio" not in v else "%02d:%02d" % (v["gio"], v["phut"])
+            g = "female" if v["gioiTinh"] == "Nữ" else "male"
+            vi, e, z = (en.cast_bazi((v["yyyy"], v["mm"], v["dd"]), g, time=t, lang=l) for l in ("vi", "en", "zh"))
+            self.assertEqual(vi["raw"], bat_tu.lap_la_so_bat_tu(v["dd"], v["mm"], v["yyyy"], v.get("gio"), v["phut"], v["gioiTinh"]))
+            for k, kv in TRU:
+                tr = ra.get(kv)
+                if not tr:
+                    self.assertIsNone(vi["pillars"][k])
+                    continue
+                self.assertEqual(vi["pillars"][k]["label"], tr["label"])
+                self.assertEqual(e["pillars"][k]["tenGod"], tr["thapThanCanEn"])
+                if tr.get("labelZh"):
+                    self.assertEqual(z["pillars"][k]["label"], tr["labelZh"])
+                if tr.get("napAmTenEn"):
+                    self.assertEqual(e["pillars"][k]["naYin"], tr["napAmTenEn"])
+                if tr.get("thanSatZh") is not None:
+                    self.assertEqual(z["pillars"][k]["stars"], tr["thanSatZh"])
+            self.assertEqual(e["luck"]["explanation"], ra["daiVan"]["lyDoEn"])
+            self.assertEqual([p["fromYear"] for p in e["luck"]["pillars"]], [p["namTu"] for p in ra["daiVan"]["cacVan"]])
+            tv = en.minor_luck(e, v["namXem"])
+            goc = bat_tu.tinh_tieu_van_bat_tu(e["raw"], v["namXem"])
+            self.assertEqual(tv is None, goc is None)
+            if tv:
+                self.assertEqual(tv["label"], goc["label"])
+
+    def test_tru_ngay_doi_luc_23h(self):
+        a = en.cast_bazi("1990-09-19", "male", time="23:10")
+        b = en.cast_bazi("1990-09-20", "male", time="01:00")
+        self.assertEqual(a["pillars"]["day"]["label"], b["pillars"]["day"]["label"])
+        self.assertIsNone(en.cast_bazi("1990-09-19", "female")["pillars"]["hour"])
+
+
+class TestThanSoHocLeHoi(unittest.TestCase):
+    def test_numerology_khop_ca_kiem(self):
+        for c in doc_ca_kiem("than-so-hoc")["ca"]:
+            v, ra = c["vao"], c["ra"]
+            r = en.numerology(v["hoTen"], (v["yyyy"], v["mm"], v["dd"]), today=(v["namXem"], v["thangXem"], v["ngayXem"]))
+            self.assertEqual(r["raw"], than_so_hoc.tinh_ho_so_than_so_hoc_sau(
+                v["hoTen"], v["dd"], v["mm"], v["yyyy"], v["namXem"], v["thangXem"], v["ngayXem"]))
+            self.assertEqual((r["lifePath"], r["expression"], r["soulUrge"], r["personality"]),
+                             (ra["soDuongDoi"], ra["soSuMenh"], ra["soLinhHon"], ra["soNhanCach"]))
+            self.assertEqual(r["karmicDebt"], ra.get("soNoNghiepNgaySinh"))
+        with self.assertRaises(ValueError):
+            en.numerology("", "1990-09-19")
+
+    def test_festivals_khop_ca_kiem(self):
+        for c in doc_ca_kiem("le-hoi")["ca"][::10]:
+            f = en.festivals(c["vao"]["nam"], lang="vi")
+            self.assertEqual(sorted((x["date"], x["id"]) for x in f), sorted((x["ngay"], x["id"]) for x in (c["ra"] or [])))
+            self.assertEqual([x["date"] for x in f], sorted(x["date"] for x in f))
+        tet = next(x for x in en.festivals(2027) if x["id"] == "tet-nguyen-dan")
+        self.assertEqual((tet["date"], tet["calendar"], tet["name"]), ("2027-02-06", "lunar", tet["raw"]["ten_en"]))
+        self.assertEqual(len(en.festivals(2027)), len(le_hoi.le_hoi_trong_nam(2027)))
+
+
+class TestSvg(unittest.TestCase):
+    def test_svg_tu_ket_qua_tieng_anh(self):
+        from nhatnguyet import render_bazi_svg, render_chart_svg, render_numerology_svg
+        c = en.cast_zi_wei("1990-09-19", "male", time="20:00", lang="zh")
+        self.assertEqual(en.zi_wei_svg(c), render_chart_svg(c["raw"], lang="zh"))
+        self.assertEqual(en.zi_wei_svg(c["raw"], theme="dark"), render_chart_svg(c["raw"], lang="en", theme="dark"))
+        b = en.cast_bazi("1990-09-19", "male", time="20:00", lang="vi")
+        self.assertEqual(en.bazi_svg(b, name="An"), render_bazi_svg(b["raw"], lang="vi", ho_ten="An"))
+        r = en.numerology("Nguyen Van An", "1990-09-19", today="2026-11-19")
+        vao = {"hoTen": "Nguyen Van An", "dd": 19, "mm": 9, "yyyy": 1990, "namXem": 2026}
+        self.assertEqual(en.numerology_svg(r, theme="dark"), render_numerology_svg(vao, lang="en", theme="dark"))
+
+
+if __name__ == "__main__":
+    unittest.main()

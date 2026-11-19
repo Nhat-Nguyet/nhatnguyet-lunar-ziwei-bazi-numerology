@@ -19,7 +19,7 @@ from __future__ import annotations
 from typing import Dict, List, Set, Tuple
 
 from .am_lich import DIA_CHI, mod
-from .tu_vi_du_lieu import CHINH_TINH_DIGNITY, CHINH_TINH_NAME_ZH
+from .tu_vi_du_lieu import CHINH_TINH_DIGNITY, CHINH_TINH_NAME_ZH, ten_cung_ba_thu, zh_cua
 from .tu_vi_han import ten_cung_tai_vi_tri, vi_tri_sao
 from .tu_vi_lap_so import vi_tri_cung_thu_k
 
@@ -249,6 +249,18 @@ def nhan_dien_cach_cuc(la_so: Dict) -> List[Dict]:
         )))
 
     out.extend(_cach_cuc_toan_thu(la_so))
+    # Tên cung ba thứ tiếng gắn một chỗ cho mọi cách cục, kể cả bảng toàn thư.
+    for c in out:
+        if c.get("tenCung"):
+            en, zh = ten_cung_ba_thu(c["tenCung"])
+            if en:
+                c["tenCungEn"] = en
+            if zh:
+                c["tenCungZh"] = zh
+        if c.get("chiCung"):
+            z = zh_cua(c["chiCung"])
+            if z:
+                c["chiCungZh"] = z
     return [_xuat(c) for c in out]
 
 

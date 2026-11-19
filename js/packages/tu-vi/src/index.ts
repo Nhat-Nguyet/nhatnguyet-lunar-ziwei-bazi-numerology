@@ -16,6 +16,10 @@ export * from "./cach-cuc.ts";
 export {
   NHOM_DINH_PHU, NHOM_DINH_QUY, NHOM_DINH_BAN_TIEN, cachCucBa, cachCucToanThu,
 } from "./cach-cuc-toan-thu.ts";
+// Lớp API tiếng Anh (tham số đặt tên, giờ đồng hồ, kết quả theo lang).
+export * from "./en.ts";
+export * from "./ve-svg.ts";
+export * from "./van-ban.ts";
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.0.0";
+export const PHIEN_BAN_DONG_CO = "2.0.1";

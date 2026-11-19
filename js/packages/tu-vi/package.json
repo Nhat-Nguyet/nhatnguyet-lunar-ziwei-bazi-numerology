@@ -1,20 +1,35 @@
 {
   "name": "@nhatnguyet/tu-vi",
   "version": "0.1.0",
-  "description": "Lập lá số Tử Vi (Zi Wei Dou Shu): an sao, Tứ Hóa, đại vận, hạn năm, cách cục Toàn Thư. Ba thứ tiếng. Nhật Nguyệt (nhatnguyet.org)",
+  "description": "Zi Wei Dou Shu (紫微斗数, Purple Star Astrology, Tử Vi) chart calculator for JS/TS: 12 palaces, 14 major stars and minor stars, brightness, Four Transformations (四化), decade and yearly periods, Quan Shu patterns. Names in Vietnamese, English, Chinese.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
-  "homepage": "https://nhatnguyet.org/ma-nguon-mo",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
   "keywords": [
-    "tu vi",
-    "la so tu vi",
-    "zi wei dou shu",
     "ziwei",
+    "zi wei dou shu",
+    "ziwei doushu",
     "purple star astrology",
-    "紫微斗数",
     "chinese astrology",
-    "horoscope chart",
-    "vietnamese"
+    "astrology chart",
+    "natal chart",
+    "horoscope",
+    "four transformations",
+    "si hua",
+    "tu vi",
+    "tử vi",
+    "la so tu vi",
+    "tu vi dau so",
+    "紫微斗数",
+    "紫微斗數",
+    "紫微排盘",
+    "四化",
+    "lunar calendar",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -24,6 +39,11 @@
       "source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./iztro": {
+      "source": "./src/iztro.ts",
+      "types": "./dist/iztro.d.ts",
+      "default": "./dist/iztro.js"
     }
   },
   "files": [

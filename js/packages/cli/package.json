@@ -1,0 +1,67 @@
+{
+  "name": "@nhatnguyet/cli",
+  "version": "0.1.0",
+  "description": "Command line for Nhat Nguyet: Zi Wei Dou Shu chart as a 4x4 grid, BaZi, Vietnamese/Chinese/Korean/Japanese lunar calendar, numerology, Vietnamese festivals. English, Vietnamese, Chinese. Nhat Nguyet (nhatnguyet.org)",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/ma-nguon-mo",
+  "keywords": [
+    "cli",
+    "zi wei dou shu",
+    "ziwei",
+    "tu vi",
+    "bazi",
+    "four pillars",
+    "lunar calendar",
+    "vietnamese lunar calendar",
+    "chinese calendar",
+    "numerology",
+    "terminal"
+  ],
+  "type": "module",
+  "bin": {
+    "nhatnguyet": "./dist/cli.js"
+  },
+  "main": "./dist/render.js",
+  "types": "./dist/render.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/render.ts",
+      "types": "./dist/render.d.ts",
+      "default": "./dist/render.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.1.0",
+    "@nhatnguyet/bat-tu": "^0.1.0",
+    "@nhatnguyet/le-hoi": "^0.1.0",
+    "@nhatnguyet/than-so-hoc": "^0.1.0",
+    "@nhatnguyet/tu-vi": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "directory": "js/packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -6,7 +6,7 @@
 // Khúc (bài ca có hai cách đọc, chưa chốt).
 
 import { DIA_CHI, mod } from "./phu-thuoc.ts";
-import { LOC_TON_VI_TRI, thienMaViTri } from "./du-lieu.ts";
+import { LOC_TON_VI_TRI, tenCungBaThu, thienMaViTri, zhCua } from "./du-lieu.ts";
 import { daiVan } from "./chieu-sau.ts";
 import { tinhHanNam } from "./luu-nien.ts";
 import { tenCungTaiViTri } from "./tra-cuu.ts";
@@ -34,7 +34,10 @@ export interface SaoLuu {
   theoCan: boolean;
   viTri: number;
   chi: string;
+  chiZh: string;
   tenCung: string;
+  tenCungEn: string;
+  tenCungZh: string;
   /** "", "dong-cung", "xung-chieu" hay "tam-hop". */
   voiLuuNien: string;
   voiTieuVan: string;
@@ -94,9 +97,12 @@ export function tinhSaoLuu(laSo: LaSoTuVi, namXem: number): SaoLuu[] {
   }
   return TEN_SAO_LUU.map((t) => {
     const p = viTri[t.ma];
+    const tenCung = tenCungTaiViTri(laSo, p);
+    const cb = tenCungBaThu(tenCung);
     return {
       ma: t.ma, ten: t.ten.vi, tenEn: t.ten.en, tenZh: t.ten.zh, theoCan: t.theoCan,
-      viTri: p, chi: DIA_CHI[p], tenCung: tenCungTaiViTri(laSo, p),
+      viTri: p, chi: DIA_CHI[p], chiZh: zhCua(DIA_CHI[p]),
+      tenCung, tenCungEn: cb.en, tenCungZh: cb.zh,
       voiLuuNien: quanHeHaiCung(p, hn.luuNienViTri),
       voiTieuVan: quanHeHaiCung(p, hn.tieuVanViTri),
       voiDaiVan: cungDaiVan >= 0 ? quanHeHaiCung(p, cungDaiVan) : "",

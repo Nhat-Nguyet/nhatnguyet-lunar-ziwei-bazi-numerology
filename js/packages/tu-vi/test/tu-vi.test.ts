@@ -1,6 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { baoCao, docCaKiem, kiemCa } from "../../../kiem/so-sanh.ts";
+import { doBaNgonNgu, tomTatThieu } from "../../../kiem/ba-ngon-ngu.ts";
+import type { DemBaNgonNgu } from "../../../kiem/ba-ngon-ngu.ts";
 import {
   daiVan,
   lapLaSoTuVi,
@@ -46,4 +48,11 @@ test("tu-vi: an Tử Vi theo cục và ngày", () => {
   // Thủy Nhị Cục, mùng 1: Tử Vi ở Sửu; Hỏa Lục Cục, mùng 1: Tử Vi ở Dậu.
   assert.equal(viTriTuVi(2, 1), 1);
   assert.equal(viTriTuVi(6, 1), 9);
+});
+
+test("tu-vi: mọi tên trên mọi lá của ca kiểm có đủ ba thứ tiếng", () => {
+  const dem: DemBaNgonNgu = { tong: 0, thieu: [] };
+  for (const c of tep.ca) doBaNgonNgu(tinh(c.vao), dem);
+  assert.ok(dem.tong > 0, "không đo được tên nào");
+  assert.equal(dem.thieu.length, 0, tomTatThieu(dem));
 });

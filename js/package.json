@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "node --conditions=source --test \"packages/*/test/**/*.test.ts\"",
-    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi"
+    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi -w @nhatnguyet/widgets && npm run build -w @nhatnguyet/cli -w @nhatnguyet/mcp"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

@@ -6,7 +6,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from nhatnguyet import tu_vi  # noqa: E402
-from so_sanh import so_mon  # noqa: E402
+from so_sanh import doc_ca_kiem, so_mon  # noqa: E402
+from ba_ngon_ngu import do_ba_ngon_ngu, tom_tat_thieu  # noqa: E402
 
 
 def tinh(vao):
@@ -42,6 +43,16 @@ class TestTuVi(unittest.TestCase):
         for thang in range(1, 13):
             for gio in (0, 6):
                 self.assertEqual(tu_vi.vi_tri_cung_menh(thang, gio), tu_vi.vi_tri_cung_than(thang, gio))
+
+    def test_ba_thu_tieng(self):
+        # Mọi tên (sao, cung, cục, sáng tối, thuật ngữ) trên mọi lá của ca kiểm
+        # có bản chữ Hán, và bản tiếng Anh trừ tên giữ Hán Việt.
+        dem = {"tong": 0, "thieu": []}
+        for c in doc_ca_kiem("tu-vi")["ca"]:
+            do_ba_ngon_ngu(tinh(c["vao"]), dem)
+        print("\ntu-vi: %d tên, %d chỗ thiếu bản dịch" % (dem["tong"], len(dem["thieu"])))
+        self.assertGreater(dem["tong"], 0)
+        self.assertEqual(dem["thieu"], [], tom_tat_thieu(dem))
 
 
 if __name__ == "__main__":

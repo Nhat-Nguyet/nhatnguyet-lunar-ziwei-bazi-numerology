@@ -6,7 +6,7 @@
 // (cach-cuc-toan-thu.ts).
 
 import { DIA_CHI, mod } from "./phu-thuoc.ts";
-import { CHINH_TINH_DIGNITY, saoZh } from "./du-lieu.ts";
+import { CHINH_TINH_DIGNITY, saoZh, tenCungBaThu, zhCua } from "./du-lieu.ts";
 import { chinhTinhTaiViTri, coDu, saoTaiViTri, saoTamPhuongTuChinh, tenCungTaiViTri, viTriSao } from "./tra-cuu.ts";
 import { cachCucBa, cachCucToanThu } from "./cach-cuc-toan-thu.ts";
 import type { CachCuc } from "./cach-cuc-toan-thu.ts";
@@ -223,7 +223,20 @@ export function nhanDienCachCuc(laSo: LaSoTuVi): CachCuc[] {
     }));
   }
 
-  return out.concat(cachCucToanThu(ls));
+  const ra = out.concat(cachCucToanThu(ls));
+  // Tên cung ba thứ tiếng gắn một chỗ cho mọi cách cục, kể cả bảng toàn thư.
+  for (const c of ra) {
+    if (c.tenCung) {
+      const cb = tenCungBaThu(c.tenCung);
+      if (cb.en) c.tenCungEn = cb.en;
+      if (cb.zh) c.tenCungZh = cb.zh;
+    }
+    if (c.chiCung) {
+      const z = zhCua(c.chiCung);
+      if (z) c.chiCungZh = z;
+    }
+  }
+  return ra;
 }
 
 /** Một dòng liệt kê tên các cách cục, nối bằng dấu phẩy. */
