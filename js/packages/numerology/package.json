@@ -1,0 +1,58 @@
+{
+  "name": "@nhatnguyet/numerology",
+  "version": "0.3.0",
+  "description": "Pythagorean numerology with correct handling of Vietnamese names: life path, expression, soul urge, pinnacles, challenges, personal year, SVG. English-named alias of @nhatnguyet/than-so-hoc.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "numerology",
+    "pythagorean numerology",
+    "life path number",
+    "expression number",
+    "soul urge",
+    "destiny number",
+    "soul urge number",
+    "personal year number",
+    "pinnacle numbers",
+    "birth chart",
+    "vietnamese names",
+    "than so hoc",
+    "thần số học",
+    "so chu dao",
+    "生命灵数",
+    "数字命理",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
+  ],
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@nhatnguyet/than-so-hoc": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/numerology"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  }
+}

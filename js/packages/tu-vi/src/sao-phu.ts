@@ -7,7 +7,17 @@
 // năm xem).
 
 import { DIA_CHI, THIEN_CAN, mod } from "./phu-thuoc.ts";
-import { TU_VUNG_SAO } from "./du-lieu.ts";
+import {
+  CHINH_TINH_NAME_EN,
+  CHINH_TINH_NAME_ZH,
+  PHU_TINH_NAME_EN,
+  PHU_TINH_NAME_ZH,
+  TEN_VONG_BAC_SY,
+  TEN_VONG_THAI_TUE,
+  TEN_VONG_TRUONG_SINH,
+  TU_VUNG_SAO,
+} from "./du-lieu.ts";
+import { SAO_PHU_THEM } from "./sao-phu-them.ts";
 import type { BaNgonNgu } from "./kieu.ts";
 
 /** Tả Phù: tháng Giêng ở Thìn, đếm thuận theo tháng sinh. */
@@ -202,4 +212,32 @@ export function saoPhuMoi(): MoTaSaoPhu[] {
     else if (ten === "Thiên Phúc") cach = cachAnTheoCan(cach, THIEN_PHUC_VI_TRI);
     return { ten, tenEn: en, tenZh: zh, cachAn: { ...cach } };
   });
+}
+
+/**
+ * Tên tiếng Anh và chữ Hán của một sao Tử Vi theo tên tiếng Việt, tra đúng các
+ * bảng an sao (tenSaoTuViBaThu của Go). Rỗng khi không phải tên sao.
+ */
+export function tenSaoTuViBaThu(ten: string): { en: string; zh: string } {
+  if (Object.prototype.hasOwnProperty.call(CHINH_TINH_NAME_EN, ten)) {
+    return { en: CHINH_TINH_NAME_EN[ten], zh: CHINH_TINH_NAME_ZH[ten] };
+  }
+  if (Object.prototype.hasOwnProperty.call(PHU_TINH_NAME_EN, ten)) {
+    return { en: PHU_TINH_NAME_EN[ten], zh: PHU_TINH_NAME_ZH[ten] };
+  }
+  if (TEN_SAO_PHU_MOI.includes(ten)) return tenSaoBaThu(ten);
+  const them = SAO_PHU_THEM.find((s) => s.ten === ten);
+  if (them) return { en: them.en, zh: them.zh };
+  for (const bang of [TEN_VONG_TRUONG_SINH, TEN_VONG_THAI_TUE, TEN_VONG_BAC_SY]) {
+    const n = bang.find((x) => x.vi === ten);
+    if (n) return { en: n.en, zh: n.zh };
+  }
+  return { en: "", zh: "" };
+}
+
+/** Nối tên sao ba thứ tiếng theo chuỗi Việt "A, B": Anh nối ", ", Trung nối "、". */
+export function noiTenSao(vi: string): { en: string; zh: string } {
+  if (vi === "") return { en: "", zh: "" };
+  const phan = vi.split(", ").map(tenSaoTuViBaThu);
+  return { en: phan.map((p) => p.en).join(", "), zh: phan.map((p) => p.zh).join("、") };
 }

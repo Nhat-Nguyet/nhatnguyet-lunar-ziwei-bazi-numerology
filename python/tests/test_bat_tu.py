@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import unittest
@@ -6,7 +7,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from nhatnguyet import bat_tu  # noqa: E402
-from so_sanh import so_mon  # noqa: E402
+from so_sanh import doc_ca_kiem, so_mon  # noqa: E402
+from ba_ngon_ngu import do_ba_ngon_ngu, tom_tat_thieu  # noqa: E402
 
 
 def tinh(vao):
@@ -20,6 +22,40 @@ def tinh(vao):
     if tv is not None:
         ra["tieuVan"] = tv
     return ra
+
+
+def tinh_phai(vao):
+    """Ca kiểm bat-tu-phai: như tinh() nhưng truyền lựa chọn phái (schools)."""
+    ls = bat_tu.lap_la_so_bat_tu(vao["dd"], vao["mm"], vao["yyyy"], vao.get("gio"), vao["phut"], vao["gioiTinh"],
+                                 vao.get("schools"))
+    ra = {"laSo": ls}
+    tv = bat_tu.tinh_tieu_van_bat_tu(ls, vao["namXem"])
+    if tv is not None:
+        ra["tieuVan"] = tv
+    return ra
+
+
+class TestBatTuPhai(unittest.TestCase):
+    def test_ca_kiem_phai(self):
+        dat, tong, lech = so_mon("bat-tu-phai", tinh_phai)
+        print("\nbat-tu-phai: %d/%d ca đạt" % (dat, tong))
+        self.assertEqual(tong, doc_ca_kiem("bat-tu-phai")["soCa"])
+        self.assertEqual(dat, tong, "\n".join(lech))
+
+    def test_nua_dem(self):
+        # 23h30 ngày 1/1/2024 như lunar-javascript (sect 1 và 2).
+        goc = bat_tu.lap_la_so_bat_tu(1, 1, 2024, 23, 30, "Nam")
+        moi = bat_tu.lap_la_so_bat_tu(1, 1, 2024, 23, 30, "Nam", {"ziHour": "split-at-midnight"})
+        self.assertEqual((goc["truNgay"]["label"], goc["truGio"]["label"]), ("Ất Sửu", "Bính Tý"))
+        self.assertEqual((moi["truNgay"]["label"], moi["truGio"]["label"], moi["schools"]),
+                         ("Giáp Tý", "Bính Tý", {"ziHour": "split-at-midnight"}))
+        for s in (None, {}, {"ziHour": "next-day-from-23"}):
+            self.assertEqual(json.dumps(bat_tu.lap_la_so_bat_tu(1, 1, 2024, 23, 30, "Nam", s), ensure_ascii=False),
+                             json.dumps(goc, ensure_ascii=False))
+        with self.assertRaisesRegex(ValueError, "invalid ziHour \"midnight\""):
+            bat_tu.lap_la_so_bat_tu(1, 1, 2024, 23, 30, "Nam", {"ziHour": "midnight"})
+        with self.assertRaisesRegex(ValueError, "unknown school option"):
+            bat_tu.lap_la_so_bat_tu(1, 1, 2024, 23, 30, "Nam", {"zi_hour": "split-at-midnight"})
 
 
 class TestBatTu(unittest.TestCase):
@@ -43,6 +79,16 @@ class TestBatTu(unittest.TestCase):
         self.assertEqual(bat_tu.thap_than_cua_can("Giáp", "Canh")["ten"], "Thất Sát")
         self.assertEqual(bat_tu.thap_than_cua_can("Giáp", "Tân")["ten"], "Chính Quan")
         self.assertEqual(len(bat_tu.all_thap_than()), 10)
+
+    def test_ba_thu_tieng(self):
+        # Mọi tên (sao, cung, cục, sáng tối, thuật ngữ) trên mọi lá của ca kiểm
+        # có bản chữ Hán, và bản tiếng Anh trừ tên giữ Hán Việt.
+        dem = {"tong": 0, "thieu": []}
+        for c in doc_ca_kiem("bat-tu")["ca"]:
+            do_ba_ngon_ngu(tinh(c["vao"]), dem)
+        print("\nbat-tu: %d tên, %d chỗ thiếu bản dịch" % (dem["tong"], len(dem["thieu"])))
+        self.assertGreater(dem["tong"], 0)
+        self.assertEqual(dem["thieu"], [], tom_tat_thieu(dem))
 
 
 if __name__ == "__main__":

@@ -7,6 +7,11 @@ export * from "./can-chi.ts";
 export * from "./tiet-khi.ts";
 export * from "./nhi-thap-bat-tu.ts";
 export * from "./ngu-hanh.ts";
+// Lớp API tiếng Anh (tham số đặt tên, kết quả theo lang).
+export * from "./en.ts";
+// Giờ hoàng đạo: chỉ xuất lớp tiếng Anh (hàm lõi gioHoangDaoKemThan để ca kiểm).
+export { AUSPICIOUS_SPIRITS, HOUR_SPIRIT_PINYIN, auspiciousHours } from "./gio-hoang-dao.ts";
+export type { AuspiciousHour, AuspiciousHoursResult } from "./gio-hoang-dao.ts";
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.0.0";
+export const PHIEN_BAN_DONG_CO = "2.2.0";

@@ -19,7 +19,7 @@ from __future__ import annotations
 from typing import Dict, List, Set, Tuple
 
 from .am_lich import DIA_CHI, mod
-from .tu_vi_du_lieu import CHINH_TINH_DIGNITY, CHINH_TINH_NAME_ZH
+from .tu_vi_du_lieu import CHINH_TINH_DIGNITY, CHINH_TINH_NAME_ZH, ten_cung_ba_thu, zh_cua
 from .tu_vi_han import ten_cung_tai_vi_tri, vi_tri_sao
 from .tu_vi_lap_so import vi_tri_cung_thu_k
 
@@ -228,7 +228,7 @@ def nhan_dien_cach_cuc(la_so: Dict) -> List[Dict]:
         c["coDiBan"] = True
         them(c)
     if _co_du(hoi_menh, "Tả Phù", "Hữu Bật"):
-        them(_cach_cuc_ba("Tả Hữu đồng hội", "左右", "左右", (
+        them(_cach_cuc_ba("Tả Hữu đồng hội", "左右同会", "左右同會", (
             "Tả Phù và Hữu Bật cùng hội về tam phương tứ chính của cung Mệnh",
             "Tả Phù and Hữu Bật both gather in the triangle and opposite of the Mệnh palace",
             "左辅、右弼同会于命宫的三方四正",
@@ -238,7 +238,7 @@ def nhan_dien_cach_cuc(la_so: Dict) -> List[Dict]:
             "辅佐之星对，古书将其与得人相助相连。",
         )))
     if _co_du(hoi_menh, "Địa Không", "Địa Kiếp"):
-        them(_cach_cuc_ba("Không Kiếp đồng hội", "空劫", "空劫", (
+        them(_cach_cuc_ba("Không Kiếp đồng hội", "空劫同会", "空劫同會", (
             "Địa Không và Địa Kiếp cùng hội về tam phương tứ chính của cung Mệnh",
             "Địa Không and Địa Kiếp both gather in the triangle and opposite of the Mệnh palace",
             "地空、地劫同会于命宫的三方四正",
@@ -249,6 +249,18 @@ def nhan_dien_cach_cuc(la_so: Dict) -> List[Dict]:
         )))
 
     out.extend(_cach_cuc_toan_thu(la_so))
+    # Tên cung ba thứ tiếng gắn một chỗ cho mọi cách cục, kể cả bảng toàn thư.
+    for c in out:
+        if c.get("tenCung"):
+            en, zh = ten_cung_ba_thu(c["tenCung"])
+            if en:
+                c["tenCungEn"] = en
+            if zh:
+                c["tenCungZh"] = zh
+        if c.get("chiCung"):
+            z = zh_cua(c["chiCung"])
+            if z:
+                c["chiCungZh"] = z
     return [_xuat(c) for c in out]
 
 

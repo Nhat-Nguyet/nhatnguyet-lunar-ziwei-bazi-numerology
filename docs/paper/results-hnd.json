@@ -1,0 +1,82 @@
+{
+ "range": "1900-01-01 to 2100-12-31",
+ "time_zone": 7,
+ "days": 73414,
+ "sources": {
+  "amlich-aa98.js": {
+   "url": "http://web.archive.org/web/20060710052023id_/http://www.informatik.uni-leipzig.de:80/~duc/amlich/amlich-aa98.js",
+   "original": "http://www.informatik.uni-leipzig.de/~duc/amlich/amlich-aa98.js",
+   "sha256": "26ee2710d65967dba934f120dc990d780b7d55b5e6e9cc6ac8df97b06b1cea4f"
+  },
+  "amlich-js.zip": {
+   "url": "http://web.archive.org/web/20160501054739id_/http://www.informatik.uni-leipzig.de/~duc/amlich/amlich-js.zip",
+   "original": "http://www.informatik.uni-leipzig.de/~duc/amlich/amlich-js.zip",
+   "sha256": "83968ce4357e6093678869e2720e7c0b64598ab65c9b3451463d5c6a1a576561",
+   "member": "JavaScript/amlich-hnd.js",
+   "member_sha256": "e22d364105af6e765f1057addcef45fbdc339f9d2f9880e7d58859de477b45ea"
+  }
+ },
+ "node": "v24.22.1",
+ "aa98_agree": 73412,
+ "aa98_differences": [
+  {
+   "date": "2054-05-07",
+   "engine": "30,3,2054,0",
+   "aa98": "0,4,2054,0",
+   "jdn": 2471395,
+   "new_moon_day_k_plus_1": 2471425,
+   "new_moon_day_k": 2471396,
+   "new_moon_day_k_minus_1": 2471366,
+   "cause": "estimate two lunations ahead: new-moon day of k is after the day, the published code steps back once (if), the engine until it is not (while)"
+  },
+  {
+   "date": "2062-04-09",
+   "engine": "30,2,2062,0",
+   "aa98": "0,3,2062,0",
+   "jdn": 2474289,
+   "new_moon_day_k_plus_1": 2474319,
+   "new_moon_day_k": 2474290,
+   "new_moon_day_k_minus_1": 2474260,
+   "cause": "estimate two lunations ahead: new-moon day of k is after the day, the published code steps back once (if), the engine until it is not (while)"
+  }
+ ],
+ "hnd_table_agree_utc7": 72487,
+ "hnd_table_differ_utc7_days": 927,
+ "hnd_table_differ_utc7_before_1968_days": 837,
+ "hnd_table_rule": "Beijing meridian before 1929, UTC+8 1929-1967, UTC+7 from 1968 (exact containment)",
+ "hnd_table_differ_from_rule_days": 120,
+ "hnd_table_differ_from_rule": [
+  {
+   "first": "1925-01-24",
+   "last": "1925-02-22",
+   "days": 30,
+   "rule": "beijing-meridian",
+   "by_rule_first": "1,1,1925,0",
+   "table_first": "30,12,1924,0"
+  },
+  {
+   "first": "2054-05-07",
+   "last": "2054-06-05",
+   "days": 30,
+   "rule": "utc+7",
+   "by_rule_first": "30,3,2054,0",
+   "table_first": "1,4,2054,0"
+  },
+  {
+   "first": "2072-12-09",
+   "last": "2073-01-07",
+   "days": 30,
+   "rule": "utc+7",
+   "by_rule_first": "30,10,2072,0",
+   "table_first": "1,11,2072,0"
+  },
+  {
+   "first": "2077-11-15",
+   "last": "2077-12-14",
+   "days": 30,
+   "rule": "utc+7",
+   "by_rule_first": "30,9,2077,0",
+   "table_first": "1,10,2077,0"
+  }
+ ]
+}

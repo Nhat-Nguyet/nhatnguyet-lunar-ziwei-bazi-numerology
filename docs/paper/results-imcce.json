@@ -1,0 +1,47 @@
+{
+ "utc": {
+  "samples": 40000,
+  "first_sample_jd": 2414960.5,
+  "last_sample_jd": 2494958.5,
+  "instants": 4824,
+  "file": "docs/paper/data/imcce-terms-utc.tsv",
+  "sha256": "fc86b4754f133f461d459be3f1d964cdf3e640fbdcecf15dff407097054c406e",
+  "four_day_step_max_change_s": 4.31,
+  "four_day_step_matched": 4824,
+  "estimated_two_day_interpolation_error_s": 0.29
+ },
+ "tt": {
+  "samples": 40000,
+  "first_sample_jd": 2414960.5,
+  "last_sample_jd": 2494958.5,
+  "instants": 4824,
+  "file": "docs/paper/data/imcce-terms-tt.tsv",
+  "sha256": "0a3ebcbabc6d1a74389dcf1eaa13043e3a1dd361cf02409e97757a74d1f9b2ab",
+  "four_day_step_max_change_s": 4.31,
+  "four_day_step_matched": 4824,
+  "estimated_two_day_interpolation_error_s": 0.29
+ },
+ "agreement_with_published_utc_instants": {
+  "published": 4824,
+  "equal_to_the_second": 4824,
+  "max_abs_difference_s": 0.5
+ },
+ "raw_files": {
+  "miriade-sun-tt-0.csv.gz": "5eca3e4edca72fd0fa4694090c3387fbf110ffc14d22b104be024b7afee08dec",
+  "miriade-sun-tt-1.csv.gz": "00e7ab0b1f16993eb2c1dca5266e69eadf052de791c71f5fbcbfe46a823353ef",
+  "miriade-sun-tt-2.csv.gz": "aaf91c48b21ab4aa983efa58ade572d8b09ee2c9c102b8d56710b1dd50d7fcd0",
+  "miriade-sun-tt-3.csv.gz": "dc04819662161ef566571bd1cda2fa4a8238fe5d7834fd4cc7c9766c1fe8952c",
+  "miriade-sun-tt-4.csv.gz": "bbb598fa989d8af048f7bcd5ba1e331f1582fc14c71e5da477cfaa5453c50f92",
+  "miriade-sun-tt-5.csv.gz": "25067a924790261ad78a7209449d2644cd27ccbedd439e39ac3f4c3040935727",
+  "miriade-sun-tt-6.csv.gz": "a25372ad9c135db31a099aacf93aad16458ca89e1911490c0428bcdb087bbabc",
+  "miriade-sun-tt-7.csv.gz": "e6c31accfbc6df3009493e5620a074754620b29383c2320554cbf17a20afaadb",
+  "miriade-sun-utc-0.csv.gz": "54696b4e72702e37c9e05ab07064b84afff044ca0a9448b591f8ec6c5a914d2f",
+  "miriade-sun-utc-1.csv.gz": "0193ecbe2c0278806bd420af33af67f65ef72013e5189156b47f9dee271c3036",
+  "miriade-sun-utc-2.csv.gz": "aef211685940e74586dcfb6354aa095f265e72d77bb8559825b5c1d9a85b3fa1",
+  "miriade-sun-utc-3.csv.gz": "2e17b9a0fc104f3057fdbe7a9f53c7f7cad5f8939e8df957c77bf5ff93cd88b7",
+  "miriade-sun-utc-4.csv.gz": "e01c6dc906e6d347964478a29724e2cca84f6926efed4cc16f1676a3c0f78cbb",
+  "miriade-sun-utc-5.csv.gz": "ecc65b7a4f92db98617f6825cab1385223a1c6a5e22cb58568dd798b4784641e",
+  "miriade-sun-utc-6.csv.gz": "a032b7b374243d9079b061290139adfa15794758aafdba72a61f1aa331a393cf",
+  "miriade-sun-utc-7.csv.gz": "fe6160121160a45f1b661a5bb4551d1d0fff8ec50e176d7ba7aa80e73f5ff6ab"
+ }
+}

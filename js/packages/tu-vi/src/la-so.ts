@@ -17,7 +17,11 @@ import {
   THIEN_KHOI_VI_TRI,
   TRANG_SINH_THEO_CUC,
   TRIET_THEO_CAN,
-  TU_HOA_THEO_CAN,
+  CHINH_TINH_NAME_ZH,
+  PHU_TINH_NAME_ZH,
+  enCua,
+  tenCucBaThu,
+  zhCua,
   daoHoaViTri,
   thienMaViTri,
 } from "./du-lieu.ts";
@@ -42,22 +46,25 @@ import {
   viTriVanKhuc,
   viTriVanXuong,
 } from "./sao-phu.ts";
+import { SAO_PHU_THEM, nhomCuaPhuTinh, viTriSaoPhuThem } from "./sao-phu-them.ts";
+import { caveatTheoPhai, normalizeZiWeiSchools, thangAnTheoPhai, tuHoaTheoPhai, viTriHoaLinhTheoPhai, viTriThienTruTheoPhai } from "./schools.ts";
+import type { ZiWeiSchools } from "./schools.ts";
 import type { BaNgonNgu, CungTuVi, LaSoTuVi, LoaiSao, SaoTuVi } from "./kieu.ts";
 
-/** Lời rào của lá số, đủ ba bản. */
+/** Lời rào của lá số mặc định, đủ ba bản (bằng caveatTheoPhai({}, ...)). */
 export const CAVEAT_TU_VI: BaNgonNgu = {
   vi: "Lá số lập theo bản phổ biến ở Việt Nam, phần lớn theo Tử Vi Đẩu Số Tân Biên. " +
     "Tứ Hóa của can Canh, Tân, Nhâm có dị bản giữa các phái. " +
     "Riêng can Canh, lá số này dùng Thiên Đồng hóa Khoa, Thái Âm hóa Kỵ theo Huyền Vi, Thiên Lương và Việt Viêm Tử; Tân Biên và Tử Vi Đẩu Số toàn thư ghi Thái Âm hóa Khoa, Thiên Đồng hóa Kỵ; có sách ghi Thiên Phủ hóa Khoa, Thiên Đồng hóa Kỵ. " +
-    "Lá số chưa an một số sao phụ như Hỏa Tinh, Linh Tinh, Hồng Loan, Thiên Hình.",
+    "Hỏa Tinh, Linh Tinh an theo Tân Biên: Dương Nam, Âm Nữ đếm Hỏa thuận, Linh nghịch; Âm Nam, Dương Nữ ngược lại. Tử Vi Đẩu Số toàn thư đếm cả hai sao thuận.",
   en: "This chart follows the version most used in Vietnam, largely after Tử Vi Đẩu Số Tân Biên. " +
     "The Four Transformations for the stems Canh, Tân and Nhâm differ between schools. " +
     "For Canh, this chart uses Thiên Đồng as Hóa Khoa and Thái Âm as Hóa Kỵ, after Huyền Vi, Thiên Lương and Việt Viêm Tử; Tân Biên and the Tử Vi Đẩu Số Toàn Thư give Thái Âm as Hóa Khoa and Thiên Đồng as Hóa Kỵ; others give Thiên Phủ as Hóa Khoa and Thiên Đồng as Hóa Kỵ. " +
-    "Some minor stars, such as Hỏa Tinh, Linh Tinh, Hồng Loan and Thiên Hình, are not placed yet.",
+    "Hỏa Tinh and Linh Tinh follow Tân Biên: for a yang-year man or yin-year woman Hỏa Tinh counts forward and Linh Tinh backward, the other way round for a yin-year man or yang-year woman. The Tử Vi Đẩu Số Toàn Thư counts both forward.",
   zh: "本命盘按越南最通行的版本排出，大体依《紫微斗数新编》。" +
     "庚、辛、壬三干的四化各派说法不一。" +
     "庚干本命盘取天同化科、太阴化忌，依三位越南作者的紫微书；《紫微斗数新编》与《紫微斗数全书》作太阴化科、天同化忌；也有的书作天府化科、天同化忌。" +
-    "火星、铃星、红鸾、天刑等部分辅星尚未排入。",
+    "火星、铃星依《紫微斗数新编》安：阳男阴女火星顺数、铃星逆数，阴男阳女相反。《紫微斗数全书》二星皆顺数。",
 };
 
 /** Dòng giải thích cách lấy ngày khi sinh giờ Tý. */
@@ -92,8 +99,12 @@ function canChiOfPalace(canThangGieng: number, viTri: number): string {
  *
  * Ngày âm lấy theo đúng ngày dương đã nhập, giờ Việt Nam UTC+7, kể cả khi sinh
  * từ 23h tới 0h.
+ *
+ * @param schools School options (see `ZiWeiSchools`, docs/schools.md). Omitted
+ * or all-default gives exactly the default chart; an unknown value throws.
  */
-export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: number, yyyy: number, gioSinhChiIdx: number): LaSoTuVi {
+export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: number, yyyy: number, gioSinhChiIdx: number, schools?: ZiWeiSchools): LaSoTuVi {
+  const tc = normalizeZiWeiSchools(schools);
   if (gioiTinh !== "Nam" && gioiTinh !== "Nữ") {
     throw new Error('gioiTinh phải là "Nam" hoặc "Nữ"');
   }
@@ -103,7 +114,8 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
 
   const lunar = solarToLunar(dd, mm, yyyy, 7);
   const amNam = lunar.year;
-  const amThang = lunar.month;
+  // Tháng an sao: người sinh tháng nhuận theo lựa chọn leapMonth.
+  const amThang = thangAnTheoPhai(lunar, tc?.leapMonth);
   const amNgay = lunar.day;
 
   const canNamIdx = mod(amNam - 4, 10);
@@ -167,8 +179,19 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
   starPos["Thiên Hư"] = viTriThienHu(chiNamIdx);
   starPos["Đẩu Quân"] = viTriDauQuan(chiNamIdx, amThang, gioSinhChiIdx);
 
+  // Ba mươi mốt sao thêm 19/11/2026 (Hỏa Linh, tạp diệu), sao-phu-them.ts.
+  Object.assign(starPos, viTriSaoPhuThem(canNamIdx, chiNamIdx, amThang, gioSinhChiIdx, amDuongNamNu, cungMenh, viTriLocTon));
+  if (tc) {
+    // Lựa chọn phái (schools.ts): Hỏa Linh, Thiên Trù, Thiên Thương Thiên Sứ.
+    [starPos["Hỏa Tinh"], starPos["Linh Tinh"]] = viTriHoaLinhTheoPhai(chiNamIdx, gioSinhChiIdx, amDuongNamNu, gioiTinh === "Nữ", tc.fireBell);
+    starPos["Thiên Trù"] = viTriThienTruTheoPhai(canNamIdx, tc.heavenlyKitchen);
+    if (tc.injuryMessenger === "zhongzhou" && amDuongNamNu < 0) {
+      [starPos["Thiên Thương"], starPos["Thiên Sứ"]] = [starPos["Thiên Sứ"], starPos["Thiên Thương"]];
+    }
+  }
+
   // Tứ Hóa
-  const th = TU_HOA_THEO_CAN[canNamIdx];
+  const th = tuHoaTheoPhai(canNamIdx, tc?.transformations);
   const tuHoaOf: Record<string, string> = {
     [th.loc]: "Hóa Lộc",
     [th.quyen]: "Hóa Quyền",
@@ -185,12 +208,16 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
   const cung: CungTuVi[] = [];
   for (let i = 0; i < 12; i++) {
     const names = TEN_CUNG_THEO_OFFSET[mod(cungMenh - i, 12)];
+    const canChi = canChiOfPalace(canThangGieng, i);
     cung.push({
       viTri: i,
       chi: DIA_CHI[i],
-      canChi: canChiOfPalace(canThangGieng, i),
+      chiZh: zhCua(DIA_CHI[i]),
+      canChi,
+      canChiZh: zhCua(canChi),
       tenCung: names.vi,
       tenCungEn: names.en,
+      tenCungZh: names.zh,
       laThan: i === cungThan,
       tuanTrung: i === tuanCungs[0] || i === tuanCungs[1],
       trietLo: i === trietCungs[0] || i === trietCungs[1],
@@ -198,39 +225,45 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
     });
   }
 
-  const addSao = (pos: number, ten: string, tenEn: string, loai: LoaiSao, tenZh?: string): void => {
+  const addSao = (pos: number, ten: string, tenEn: string, tenZh: string, loai: LoaiSao): void => {
     const s: SaoTuVi = { ten, tenEn, loai };
     if (tenZh) s.tenZh = tenZh;
+    if (loai === "phu-tinh") s.nhom = nhomCuaPhuTinh(ten);
     const dig = CHINH_TINH_DIGNITY[ten];
     if (dig) {
       const lbl = DIGNITY_LABEL[dig[pos]];
       s.mieuVuong = lbl.vi;
       s.mieuVuongEn = lbl.en;
+      s.mieuVuongZh = lbl.zh;
     }
     const hoa = Object.prototype.hasOwnProperty.call(tuHoaOf, ten) ? tuHoaOf[ten] : undefined;
-    if (hoa) s.tuHoa = hoa;
+    if (hoa) {
+      s.tuHoa = hoa;
+      s.tuHoaZh = zhCua(hoa);
+    }
     cung[pos].sao.push(s);
   };
 
-  for (const name of CHINH_TINH) addSao(starPos[name], name, CHINH_TINH_NAME_EN[name], "chinh-tinh");
-  for (const name of PHU_TINH_GOC) addSao(starPos[name], name, PHU_TINH_NAME_EN[name], "phu-tinh");
+  for (const name of CHINH_TINH) addSao(starPos[name], name, CHINH_TINH_NAME_EN[name], CHINH_TINH_NAME_ZH[name], "chinh-tinh");
+  for (const name of PHU_TINH_GOC) addSao(starPos[name], name, PHU_TINH_NAME_EN[name], PHU_TINH_NAME_ZH[name], "phu-tinh");
   for (const name of TEN_SAO_PHU_MOI) {
     const { en, zh } = tenSaoBaThu(name);
-    addSao(starPos[name], name, en, "phu-tinh", zh);
+    addSao(starPos[name], name, en, zh, "phu-tinh");
   }
+  for (const sp of SAO_PHU_THEM) addSao(starPos[sp.ten], sp.ten, sp.en, sp.zh, "phu-tinh");
   // Vòng Tràng Sinh theo âm dương năm và giới (Dương Nam, Âm Nữ thuận).
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_TRUONG_SINH[i];
-    addSao(mod(viTriTrangSinh + amDuongNamNu * i, 12), n.vi, n.en, "truong-sinh");
+    addSao(mod(viTriTrangSinh + amDuongNamNu * i, 12), n.vi, n.en, n.zh, "truong-sinh");
   }
   // Vòng Thái Tuế luôn thuận.
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_THAI_TUE[i];
-    addSao(viTriSaoThaiTue(chiNamIdx, i), n.vi, n.en, "thai-tue");
+    addSao(viTriSaoThaiTue(chiNamIdx, i), n.vi, n.en, n.zh, "thai-tue");
   }
   for (let i = 0; i < 12; i++) {
     const n = TEN_VONG_BAC_SY[i];
-    addSao(mod(viTriLocTon + amDuongNamNu * i, 12), n.vi, n.en, "bac-sy");
+    addSao(mod(viTriLocTon + amDuongNamNu * i, 12), n.vi, n.en, n.zh, "bac-sy");
   }
 
   const laSo: LaSoTuVi = {
@@ -239,14 +272,23 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
     ngaySinhDuong: { ngay: dd, thang: mm, nam: yyyy },
     ngaySinhAm: lunar,
     gioSinh: DIA_CHI[gioSinhChiIdx],
+    gioSinhZh: zhCua(DIA_CHI[gioSinhChiIdx]),
     canChiNam: THIEN_CAN[canNamIdx] + " " + DIA_CHI[chiNamIdx],
+    canChiNamZh: zhCua(THIEN_CAN[canNamIdx] + " " + DIA_CHI[chiNamIdx]),
     amDuongMenh,
+    amDuongMenhEn: enCua(amDuongMenh),
+    amDuongMenhZh: zhCua(amDuongMenh),
     cuc: cucSo,
     tenCuc: cuc.ten,
+    tenCucEn: tenCucBaThu(cuc.ten).en,
+    tenCucZh: tenCucBaThu(cuc.ten).zh,
     banMenhNapAm: banMenhTen,
+    banMenhNapAmEn: enCua(banMenhTen),
+    banMenhNapAmZh: zhCua(banMenhTen),
     cungMenh,
     cungThan,
     menhCungChi: DIA_CHI[cungMenh],
+    menhCungChiZh: zhCua(DIA_CHI[cungMenh]),
     cung,
     caveat: CAVEAT_TU_VI.vi,
     caveatEn: CAVEAT_TU_VI.en,
@@ -256,6 +298,14 @@ export function lapLaSoTuVi(hoTen: string, gioiTinh: string, dd: number, mm: num
     laSo.ghiChuGioTy = GHI_CHU_GIO_TY_TU_VI.vi;
     laSo.ghiChuGioTyEn = GHI_CHU_GIO_TY_TU_VI.en;
     laSo.ghiChuGioTyZh = GHI_CHU_GIO_TY_TU_VI.zh;
+  }
+  if (tc) {
+    const cv = caveatTheoPhai(tc, lunar.leap, canNamIdx === 9, amDuongNamNu < 0);
+    laSo.caveat = cv.vi;
+    laSo.caveatEn = cv.en;
+    laSo.caveatZh = cv.zh;
+    laSo.schools = tc;
+    if (amThang !== lunar.month) laSo.placementMonth = amThang;
   }
   return laSo;
 }

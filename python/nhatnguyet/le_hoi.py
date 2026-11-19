@@ -35,6 +35,18 @@ def _nap() -> tuple:
     return tuple(ds), nguon
 
 
+@lru_cache(maxsize=1)
+def _tinh() -> Dict[str, Dict[str, str]]:
+    with open(os.path.join(_THU_MUC, "tinh-2025.json"), encoding="utf-8") as f:
+        return {t["ma"]: t for t in json.load(f)["tinh"]}
+
+
+def provinces() -> List[Dict[str, str]]:
+    """The 34 current provinces and cities (Resolution 202/2025/QH15):
+    [{code, vi, en, zh}], the codes used by the dataset's ``tinh`` column."""
+    return [{"code": t["ma"], "vi": t["vi"], "en": t["en"], "zh": t["zh"]} for t in _tinh().values()]
+
+
 def danh_sach_le_hoi() -> List[Dict]:
     """Mọi lễ của bộ dữ liệu (bản sao, sửa không ảnh hưởng dữ liệu gốc)."""
     return [dict(x) for x in _nap()[0]]

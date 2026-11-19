@@ -1,7 +1,7 @@
 """Tử Vi Đẩu Số: lập lá số, đại vận, hạn năm, sao lưu, cách cục.
 
 Bản chuyển ngữ sang Python của lõi tính Go của Nhật Nguyệt
-(lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t : tuvi.go, tuvi_lapso.go, tuvi_data.go,
+(lõi tính Go của Nhật Nguyệt : tuvi.go, tuvi_lapso.go, tuvi_data.go,
 tuvi_saophu.go, tuvi_chieusau.go, tuvi_luunien.go, tuvi_luusao.go,
 tuvi_cachcuc.go, tuvi_cachcuc_toan_thu.go). Lõi Go là nguồn sự thật; bộ ca
 kiểm ở thu-vien-mo/ca-kiem/tu-vi.json bắt mọi chỗ lệch.
@@ -13,9 +13,13 @@ Mã chia theo tệp Go:
 - ``tu_vi_han``: hội sao, liên cung, đại vận, hạn năm, sao lưu.
 - ``tu_vi_cach_cuc``: nhận diện cách cục.
 
+- ``tu_vi_schools``: lựa chọn phái (school options: fireBell, leapMonth,
+  transformations, heavenlyKitchen, injuryMessenger), tham số ``schools`` của
+  ``lap_la_so_tu_vi``.
+
 Kết quả là ``dict`` mang đúng khoá camelCase của lõi Go. Phần chữ diễn giải
-(dienGiai, caveat, phepTinh, ghiChuGioTy) không được dựng: thư viện trả phần
-TÍNH và tên ba thứ tiếng, chưa trả lời luận.
+(dienGiai, phepTinh) không được dựng: thư viện trả phần TÍNH, tên ba thứ
+tiếng, lời rào (caveat, theo lựa chọn phái) và ghi chú giờ Tý, chưa trả lời luận.
 
 Ví dụ::
 
@@ -35,6 +39,9 @@ from .tu_vi_han import (  # noqa: F401
     LUU_THAI_TUE, LUU_THIEN_MA, chieu_dai_van, chieu_tieu_van, dai_van, hoi_sao, khoi_tieu_van,
     lien_cung, quan_he_hai_cung, tinh_han_nam, tinh_nguyet_han, tinh_sao_luu, vi_tri_sao_luu,
 )
+from .tu_vi_schools import (  # noqa: F401
+    ZI_WEI_SCHOOL_KEYS, ZI_WEI_SCHOOL_VALUES, normalize_zi_wei_schools, school_lines, school_short,
+)
 from .tu_vi_lap_so import (  # noqa: F401
     can_cua_cung, can_cung_dan, cuc_theo_cung_menh, cung_than_cu, lap_la_so_tu_vi,
     ten_cung_cach_menh_thuan, ten_cung_theo_thu_tu, vi_tri_an_quang, vi_tri_bat_toa,
@@ -46,7 +53,8 @@ from .tu_vi_lap_so import (  # noqa: F401
 )
 
 __all__ = [
-    "lap_la_so_tu_vi", "dai_van", "tinh_han_nam", "tinh_sao_luu", "nhan_dien_cach_cuc",
+    "lap_la_so_tu_vi", "dai_van", "normalize_zi_wei_schools", "ZI_WEI_SCHOOL_KEYS", "ZI_WEI_SCHOOL_VALUES",
+    "school_lines", "school_short", "tinh_han_nam", "tinh_sao_luu", "nhan_dien_cach_cuc",
     "hoi_sao", "lien_cung", "tinh_nguyet_han", "chieu_dai_van", "chieu_tieu_van",
     "khoi_tieu_van", "quan_he_hai_cung", "vi_tri_sao_luu", "tom_tat_cach_cuc",
     "vi_tri_cung_thang_sinh", "vi_tri_cung_menh", "vi_tri_cung_than", "cung_than_cu",

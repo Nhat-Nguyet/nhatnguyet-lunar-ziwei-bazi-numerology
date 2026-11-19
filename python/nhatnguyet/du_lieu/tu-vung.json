@@ -1,0 +1,1746 @@
+{
+ "Giáp": [
+  "Giáp",
+  "甲"
+ ],
+ "Ất": [
+  "Ất",
+  "乙"
+ ],
+ "Bính": [
+  "Bính",
+  "丙"
+ ],
+ "Đinh": [
+  "Đinh",
+  "丁"
+ ],
+ "Mậu": [
+  "Mậu",
+  "戊"
+ ],
+ "Kỷ": [
+  "Kỷ",
+  "己"
+ ],
+ "Canh": [
+  "Canh",
+  "庚"
+ ],
+ "Tân": [
+  "Tân",
+  "辛"
+ ],
+ "Nhâm": [
+  "Nhâm",
+  "壬"
+ ],
+ "Quý": [
+  "Quý",
+  "癸"
+ ],
+ "Tý": [
+  "Tý",
+  "子"
+ ],
+ "Sửu": [
+  "Sửu",
+  "丑"
+ ],
+ "Dần": [
+  "Dần",
+  "寅"
+ ],
+ "Mão": [
+  "Mão",
+  "卯"
+ ],
+ "Thìn": [
+  "Thìn",
+  "辰"
+ ],
+ "Tỵ": [
+  "Tỵ",
+  "巳"
+ ],
+ "Ngọ": [
+  "Ngọ",
+  "午"
+ ],
+ "Mùi": [
+  "Mùi",
+  "未"
+ ],
+ "Thân": [
+  "Thân",
+  "申"
+ ],
+ "Dậu": [
+  "Dậu",
+  "酉"
+ ],
+ "Tuất": [
+  "Tuất",
+  "戌"
+ ],
+ "Hợi": [
+  "Hợi",
+  "亥"
+ ],
+ "Chuột": [
+  "Rat",
+  "鼠"
+ ],
+ "Trâu": [
+  "Ox",
+  "牛"
+ ],
+ "Hổ": [
+  "Tiger",
+  "虎"
+ ],
+ "Mèo": [
+  "Cat",
+  "猫"
+ ],
+ "Rồng": [
+  "Dragon",
+  "龙"
+ ],
+ "Rắn": [
+  "Snake",
+  "蛇"
+ ],
+ "Ngựa": [
+  "Horse",
+  "马"
+ ],
+ "Dê": [
+  "Goat",
+  "羊"
+ ],
+ "Khỉ": [
+  "Monkey",
+  "猴"
+ ],
+ "Gà": [
+  "Rooster",
+  "鸡"
+ ],
+ "Chó": [
+  "Dog",
+  "狗"
+ ],
+ "Lợn": [
+  "Pig",
+  "猪"
+ ],
+ "Kim": [
+  "Metal",
+  "金"
+ ],
+ "Mộc": [
+  "Wood",
+  "木"
+ ],
+ "Thủy": [
+  "Water",
+  "水"
+ ],
+ "Thuỷ": [
+  "Water",
+  "水"
+ ],
+ "Hỏa": [
+  "Fire",
+  "火"
+ ],
+ "Hoả": [
+  "Fire",
+  "火"
+ ],
+ "Thổ": [
+  "Earth",
+  "土"
+ ],
+ "Mệnh": [
+  "Self",
+  "命宫"
+ ],
+ "Huynh Đệ": [
+  "Siblings",
+  "兄弟宫"
+ ],
+ "Phu Thê": [
+  "Spouse",
+  "夫妻宫"
+ ],
+ "Tử Tức": [
+  "Children",
+  "子女宫"
+ ],
+ "Tài Bạch": [
+  "Wealth",
+  "财帛宫"
+ ],
+ "Tật Ách": [
+  "Health",
+  "疾厄宫"
+ ],
+ "Thiên Di": [
+  "Travel",
+  "迁移宫"
+ ],
+ "Nô Bộc": [
+  "Friends/Subordinates",
+  "奴仆宫"
+ ],
+ "Quan Lộc": [
+  "Career",
+  "官禄宫"
+ ],
+ "Điền Trạch": [
+  "Property",
+  "田宅宫"
+ ],
+ "Phúc Đức": [
+  "Fortune/Virtue",
+  "福德宫"
+ ],
+ "Phụ Mẫu": [
+  "Parents",
+  "父母宫"
+ ],
+ "Tử Vi": [
+  "Purple Star",
+  "紫微"
+ ],
+ "Thiên Cơ": [
+  "Celestial Mechanism",
+  "天机"
+ ],
+ "Thái Dương": [
+  "Sun",
+  "太阳"
+ ],
+ "Vũ Khúc": [
+  "Military Song",
+  "武曲"
+ ],
+ "Thiên Đồng": [
+  "Celestial Blessing",
+  "天同"
+ ],
+ "Liêm Trinh": [
+  "Purity",
+  "廉贞"
+ ],
+ "Thiên Phủ": [
+  "Celestial Treasury",
+  "天府"
+ ],
+ "Thái Âm": [
+  "Moon",
+  "太阴"
+ ],
+ "Tham Lang": [
+  "Greedy Wolf",
+  "贪狼"
+ ],
+ "Cự Môn": [
+  "Giant Gate",
+  "巨门"
+ ],
+ "Thiên Tướng": [
+  "Celestial General",
+  "天相"
+ ],
+ "Thiên Lương": [
+  "Celestial Beam",
+  "天梁"
+ ],
+ "Thất Sát": [
+  "Seven Killings",
+  "七杀"
+ ],
+ "Phá Quân": [
+  "Army Breaker",
+  "破军"
+ ],
+ "Văn Xương": [
+  "Literary Glory",
+  "文昌"
+ ],
+ "Văn Khúc": [
+  "Literary Melody",
+  "文曲"
+ ],
+ "Tả Phù": [
+  "Left Assistant",
+  "左辅"
+ ],
+ "Hữu Bật": [
+  "Right Assistant",
+  "右弼"
+ ],
+ "Lộc Tồn": [
+  "Prosperity",
+  "禄存"
+ ],
+ "Kình Dương": [
+  "Sword Ram",
+  "擎羊"
+ ],
+ "Đà La": [
+  "Spinning Camel",
+  "陀罗"
+ ],
+ "Thiên Khôi": [
+  "Celestial Leader",
+  "天魁"
+ ],
+ "Thiên Việt": [
+  "Celestial Excellence",
+  "天钺"
+ ],
+ "Địa Không": [
+  "Earthly Void",
+  "地空"
+ ],
+ "Địa Kiếp": [
+  "Earthly Robber",
+  "地劫"
+ ],
+ "Thiên Mã": [
+  "Celestial Horse",
+  "天马"
+ ],
+ "Đào Hoa": [
+  "Peach Blossom",
+  "桃花"
+ ],
+ "Sinh Khí": [
+  "Sheng Qi",
+  "生气"
+ ],
+ "Thiên Y": [
+  "Tian Yi",
+  "天医"
+ ],
+ "Diên Niên": [
+  "Yan Nian",
+  "延年"
+ ],
+ "Phục Vị": [
+  "Fu Wei",
+  "伏位"
+ ],
+ "Tuyệt Mệnh": [
+  "Jue Ming",
+  "绝命"
+ ],
+ "Ngũ Quỷ": [
+  "Wu Gui",
+  "五鬼"
+ ],
+ "Lục Sát": [
+  "Liu Sha",
+  "六煞"
+ ],
+ "Hoạ Hại": [
+  "Huo Hai",
+  "祸害"
+ ],
+ "Họa Hại": [
+  "Huo Hai",
+  "祸害"
+ ],
+ "Tam Thai": [
+  "Three Terraces",
+  "三台"
+ ],
+ "Bát Tọa": [
+  "Eight Seats",
+  "八座"
+ ],
+ "Ân Quang": [
+  "Grace Light",
+  "恩光"
+ ],
+ "Thiên Quý": [
+  "Celestial Nobility",
+  "天贵"
+ ],
+ "Thiên Quan": [
+  "Celestial Official",
+  "天官"
+ ],
+ "Thiên Phúc": [
+  "Celestial Fortune",
+  "天福"
+ ],
+ "Thiên Thọ": [
+  "Celestial Longevity",
+  "天寿"
+ ],
+ "Thiên Khốc": [
+  "Celestial Weeping",
+  "天哭"
+ ],
+ "Thiên Hư": [
+  "Celestial Emptiness",
+  "天虚"
+ ],
+ "Đẩu Quân": [
+  "Dipper Lord",
+  "斗君"
+ ],
+ "Nhất Bạch": [
+  "One White",
+  "一白"
+ ],
+ "Nhị Hắc": [
+  "Two Black",
+  "二黑"
+ ],
+ "Tam Bích": [
+  "Three Jade",
+  "三碧"
+ ],
+ "Tứ Lục": [
+  "Four Green",
+  "四绿"
+ ],
+ "Ngũ Hoàng": [
+  "Five Yellow",
+  "五黄"
+ ],
+ "Lục Bạch": [
+  "Six White",
+  "六白"
+ ],
+ "Thất Xích": [
+  "Seven Red",
+  "七赤"
+ ],
+ "Bát Bạch": [
+  "Eight White",
+  "八白"
+ ],
+ "Cửu Tử": [
+  "Nine Purple",
+  "九紫"
+ ],
+ "Hóa Lộc": [
+  "Hóa Lộc",
+  "化禄"
+ ],
+ "Hóa Quyền": [
+  "Hóa Quyền",
+  "化权"
+ ],
+ "Hóa Khoa": [
+  "Hóa Khoa",
+  "化科"
+ ],
+ "Hóa Kỵ": [
+  "Hóa Kỵ",
+  "化忌"
+ ],
+ "Miếu": [
+  "Exalted",
+  "庙"
+ ],
+ "Vượng": [
+  "Prosperous",
+  "旺"
+ ],
+ "Đắc": [
+  "Favorable",
+  "得地"
+ ],
+ "Bình": [
+  "Neutral",
+  "平"
+ ],
+ "Hãm": [
+  "Weak",
+  "陷"
+ ],
+ "Kim Tứ Cục": [
+  "Metal Four",
+  "金四局"
+ ],
+ "Mộc Tam Cục": [
+  "Wood Three",
+  "木三局"
+ ],
+ "Thủy Nhị Cục": [
+  "Water Two",
+  "水二局"
+ ],
+ "Hỏa Lục Cục": [
+  "Fire Six",
+  "火六局"
+ ],
+ "Thổ Ngũ Cục": [
+  "Earth Five",
+  "土五局"
+ ],
+ "Đông": [
+  "East",
+  "东"
+ ],
+ "Tây": [
+  "West",
+  "西"
+ ],
+ "Nam": [
+  "South",
+  "南"
+ ],
+ "Bắc": [
+  "North",
+  "北"
+ ],
+ "Đông Nam": [
+  "Southeast",
+  "东南"
+ ],
+ "Đông Bắc": [
+  "Northeast",
+  "东北"
+ ],
+ "Tây Nam": [
+  "Southwest",
+  "西南"
+ ],
+ "Tây Bắc": [
+  "Northwest",
+  "西北"
+ ],
+ "âm": [
+  "yin",
+  "阴"
+ ],
+ "dương": [
+  "yang",
+  "阳"
+ ],
+ "Âm": [
+  "Yin",
+  "阴"
+ ],
+ "Dương": [
+  "Yang",
+  "阳"
+ ],
+ "Nữ": [
+  "Female",
+  "女"
+ ],
+ "Dương Nam": [
+  "Yang Male",
+  "阳男"
+ ],
+ "Âm Nam": [
+  "Yin Male",
+  "阴男"
+ ],
+ "Dương Nữ": [
+  "Yang Female",
+  "阳女"
+ ],
+ "Âm Nữ": [
+  "Yin Female",
+  "阴女"
+ ],
+ "Thân vượng": [
+  "strong day master",
+  "身旺"
+ ],
+ "Thân nhược": [
+  "weak day master",
+  "身弱"
+ ],
+ "Thứ Hai": [
+  "Monday",
+  "星期一"
+ ],
+ "Thứ Ba": [
+  "Tuesday",
+  "星期二"
+ ],
+ "Thứ Tư": [
+  "Wednesday",
+  "星期三"
+ ],
+ "Thứ Năm": [
+  "Thursday",
+  "星期四"
+ ],
+ "Thứ Sáu": [
+  "Friday",
+  "星期五"
+ ],
+ "Thứ Bảy": [
+  "Saturday",
+  "星期六"
+ ],
+ "Chủ Nhật": [
+  "Sunday",
+  "星期日"
+ ],
+ "Thiên": [
+  "Heaven",
+  "天"
+ ],
+ "Địa": [
+  "Earth",
+  "地"
+ ],
+ "Sơn": [
+  "Mountain",
+  "山"
+ ],
+ "Lôi": [
+  "Thunder",
+  "雷"
+ ],
+ "Trạch": [
+  "Lake",
+  "泽"
+ ],
+ "Phong": [
+  "Wind",
+  "风"
+ ],
+ "Khí": [
+  "Qi",
+  "气"
+ ],
+ "Càn": [
+  "Qian",
+  "乾"
+ ],
+ "Khôn": [
+  "Kun",
+  "坤"
+ ],
+ "Chấn": [
+  "Zhen",
+  "震"
+ ],
+ "Tốn": [
+  "Xun",
+  "巽"
+ ],
+ "Khảm": [
+  "Kan",
+  "坎"
+ ],
+ "Ly": [
+  "Li",
+  "离"
+ ],
+ "Cấn": [
+  "Gen",
+  "艮"
+ ],
+ "Đoài": [
+  "Dui",
+  "兑"
+ ],
+ "Sơ Cửu": [
+  "First nine",
+  "初九"
+ ],
+ "Cửu Nhị": [
+  "Second nine",
+  "九二"
+ ],
+ "Cửu Tam": [
+  "Third nine",
+  "九三"
+ ],
+ "Cửu Tứ": [
+  "Fourth nine",
+  "九四"
+ ],
+ "Cửu Ngũ": [
+  "Fifth nine",
+  "九五"
+ ],
+ "Thượng Cửu": [
+  "Top nine",
+  "上九"
+ ],
+ "Sơ Lục": [
+  "First six",
+  "初六"
+ ],
+ "Lục Nhị": [
+  "Second six",
+  "六二"
+ ],
+ "Lục Tam": [
+  "Third six",
+  "六三"
+ ],
+ "Lục Tứ": [
+  "Fourth six",
+  "六四"
+ ],
+ "Lục Ngũ": [
+  "Fifth six",
+  "六五"
+ ],
+ "Thượng Lục": [
+  "Top six",
+  "上六"
+ ],
+ "Dụng Cửu": [
+  "All nines",
+  "用九"
+ ],
+ "Dụng Lục": [
+  "All sixes",
+  "用六"
+ ],
+ "Thê Tài": [
+  "Wife/Wealth",
+  "妻财"
+ ],
+ "Quan Quỷ": [
+  "Officials",
+  "官鬼"
+ ],
+ "Tử Tôn": [
+  "Offspring",
+  "子孙"
+ ],
+ "sấp": [
+  "tails",
+  "反面"
+ ],
+ "ngửa": [
+  "heads",
+  "正面"
+ ],
+ "Tràng Sinh": [
+  "Growth",
+  "长生"
+ ],
+ "Mộc Dục": [
+  "Bathing",
+  "沐浴"
+ ],
+ "Quan Đới": [
+  "Youth",
+  "冠带"
+ ],
+ "Lâm Quan": [
+  "Prime",
+  "临官"
+ ],
+ "Đế Vượng": [
+  "Peak",
+  "帝旺"
+ ],
+ "Suy": [
+  "Decline",
+  "衰"
+ ],
+ "Bệnh": [
+  "Illness",
+  "病"
+ ],
+ "Tử": [
+  "Death",
+  "死"
+ ],
+ "Mộ": [
+  "Tomb",
+  "墓"
+ ],
+ "Tuyệt": [
+  "Extinction",
+  "绝"
+ ],
+ "Thai": [
+  "Conception",
+  "胎"
+ ],
+ "Dưỡng": [
+  "Nurture",
+  "养"
+ ],
+ "Thái Tuế": [
+  "Grand Duke",
+  "太岁"
+ ],
+ "Thiếu Dương": [
+  "Young Yang",
+  "少阳"
+ ],
+ "Tang Môn": [
+  "Mourning",
+  "丧门"
+ ],
+ "Thiếu Âm": [
+  "Young Yin",
+  "少阴"
+ ],
+ "Quan Phù": [
+  "Official Symbol",
+  "官符"
+ ],
+ "Tử Phù": [
+  "Death Symbol",
+  "死符"
+ ],
+ "Tuế Phá": [
+  "Year Breaker",
+  "岁破"
+ ],
+ "Long Đức": [
+  "Dragon Virtue",
+  "龙德"
+ ],
+ "Bạch Hổ": [
+  "White Tiger",
+  "白虎"
+ ],
+ "Điếu Khách": [
+  "Mourning Guest",
+  "吊客"
+ ],
+ "Trực Phù": [
+  "Direct Symbol",
+  "直符"
+ ],
+ "Bác Sỹ": [
+  "Scholar",
+  "博士"
+ ],
+ "Lực Sĩ": [
+  "Strongman",
+  "力士"
+ ],
+ "Thanh Long": [
+  "Green Dragon",
+  "青龙"
+ ],
+ "Tiểu Hao": [
+  "Small Loss",
+  "小耗"
+ ],
+ "Tướng Quân": [
+  "General",
+  "将军"
+ ],
+ "Tấu Thư": [
+  "Petitioner",
+  "奏书"
+ ],
+ "Phi Liêm": [
+  "Flying Blade",
+  "飞廉"
+ ],
+ "Hỷ Thần": [
+  "Joy Deity",
+  "喜神"
+ ],
+ "Bệnh Phù": [
+  "Illness Symbol",
+  "病符"
+ ],
+ "Đại Hao": [
+  "Great Loss",
+  "大耗"
+ ],
+ "Phục Binh": [
+  "Hidden Soldier",
+  "伏兵"
+ ],
+ "Quan Phủ": [
+  "Magistrate",
+  "官府"
+ ],
+ "Lập Xuân": [
+  "Lap Xuan",
+  "立春"
+ ],
+ "Vũ Thủy": [
+  "Vu Thuy",
+  "雨水"
+ ],
+ "Kinh Trập": [
+  "Kinh Trap",
+  "惊蛰"
+ ],
+ "Xuân Phân": [
+  "Xuan Phan",
+  "春分"
+ ],
+ "Thanh Minh": [
+  "Thanh Minh",
+  "清明"
+ ],
+ "Cốc Vũ": [
+  "Coc Vu",
+  "谷雨"
+ ],
+ "Lập Hạ": [
+  "Lap Ha",
+  "立夏"
+ ],
+ "Tiểu Mãn": [
+  "Tieu Man",
+  "小满"
+ ],
+ "Mang Chủng": [
+  "Mang Chung",
+  "芒种"
+ ],
+ "Hạ Chí": [
+  "Ha Chi",
+  "夏至"
+ ],
+ "Tiểu Thử": [
+  "Tieu Thu",
+  "小暑"
+ ],
+ "Đại Thử": [
+  "Dai Thu",
+  "大暑"
+ ],
+ "Lập Thu": [
+  "Lap Thu",
+  "立秋"
+ ],
+ "Xử Thử": [
+  "Xu Thu",
+  "处暑"
+ ],
+ "Bạch Lộ": [
+  "Bach Lo",
+  "白露"
+ ],
+ "Thu Phân": [
+  "Thu Phan",
+  "秋分"
+ ],
+ "Hàn Lộ": [
+  "Han Lo",
+  "寒露"
+ ],
+ "Sương Giáng": [
+  "Suong Giang",
+  "霜降"
+ ],
+ "Lập Đông": [
+  "Lap Dong",
+  "立冬"
+ ],
+ "Tiểu Tuyết": [
+  "Tieu Tuyet",
+  "小雪"
+ ],
+ "Đại Tuyết": [
+  "Dai Tuyet",
+  "大雪"
+ ],
+ "Đông Chí": [
+  "Dong Chi",
+  "冬至"
+ ],
+ "Tiểu Hàn": [
+  "Tieu Han",
+  "小寒"
+ ],
+ "Đại Hàn": [
+  "Dai Han",
+  "大寒"
+ ],
+ "Tam Hợp": [
+  "Tam Hợp",
+  "三合"
+ ],
+ "Lục Hợp": [
+  "Lục Hợp",
+  "六合"
+ ],
+ "Lục Hại": [
+  "Lục Hại",
+  "六害"
+ ],
+ "Tứ Hành Xung": [
+  "Tứ Hành Xung",
+  "四行冲"
+ ],
+ "Kinh Dịch": [
+  "I Ching",
+  "易经"
+ ],
+ "Bạch Dương": [
+  "Aries",
+  "白羊座"
+ ],
+ "Kim Ngưu": [
+  "Taurus",
+  "金牛座"
+ ],
+ "Song Tử": [
+  "Gemini",
+  "双子座"
+ ],
+ "Cự Giải": [
+  "Cancer",
+  "巨蟹座"
+ ],
+ "Sư Tử": [
+  "Leo",
+  "狮子座"
+ ],
+ "Xử Nữ": [
+  "Virgo",
+  "处女座"
+ ],
+ "Thiên Bình": [
+  "Libra",
+  "天秤座"
+ ],
+ "Bọ Cạp": [
+  "Scorpio",
+  "天蝎座"
+ ],
+ "Nhân Mã": [
+  "Sagittarius",
+  "射手座"
+ ],
+ "Ma Kết": [
+  "Capricorn",
+  "摩羯座"
+ ],
+ "Bảo Bình": [
+  "Aquarius",
+  "水瓶座"
+ ],
+ "Song Ngư": [
+  "Pisces",
+  "双鱼座"
+ ],
+ "Thần số học": [
+  "Numerology",
+  "生命灵数"
+ ],
+ "Bát Tự": [
+  "Bát Tự",
+  "八字"
+ ],
+ "Lục Hào": [
+  "Lục Hào",
+  "六爻"
+ ],
+ "Bát Trạch": [
+  "Bát Trạch",
+  "八宅"
+ ],
+ "Nạp Âm": [
+  "Nạp Âm",
+  "纳音"
+ ],
+ "Lỗ Ban": [
+  "Lỗ Ban",
+  "鲁班"
+ ],
+ "Tam Nương": [
+  "Tam Nương",
+  "三娘日"
+ ],
+ "Ngũ Hổ Độn": [
+  "Ngũ Hổ Độn",
+  "五虎遁"
+ ],
+ "Hồng Loan": [
+  "Hồng Loan",
+  "红鸾"
+ ],
+ "Ngọc Hạp Thông Thư": [
+  "Ngọc Hạp Thông Thư",
+  "玉匣通书"
+ ],
+ "Tử Vi Đẩu Số Tân Biên": [
+  "Tử Vi Đẩu Số Tân Biên",
+  "紫微斗数新编"
+ ],
+ "Nhật chủ": [
+  "day master",
+  "日主"
+ ],
+ "Bản khí": [
+  "main qi",
+  "本气"
+ ],
+ "Trung khí": [
+  "middle qi",
+  "中气"
+ ],
+ "Dư khí": [
+  "residual qi",
+  "余气"
+ ],
+ "Thiên Ất Quý Nhân": [
+  "Heavenly Noble",
+  "天乙贵人"
+ ],
+ "Lộc Thần": [
+  "Prosperity Star",
+  "禄神"
+ ],
+ "Dương Nhận": [
+  "Yang Blade",
+  "羊刃"
+ ],
+ "Dịch Mã": [
+  "Travelling Horse",
+  "驿马"
+ ],
+ "Hoa Cái": [
+  "Canopy",
+  "华盖"
+ ],
+ "Kiếp Sát": [
+  "Robbery Sha",
+  "劫煞"
+ ],
+ "Vong Thần": [
+  "Lost Spirit",
+  "亡神"
+ ],
+ "Phù ức": [
+  "Phù Ức",
+  "扶抑"
+ ],
+ "Kiến lộc": [
+  "Kiến Lộc",
+  "建禄"
+ ],
+ "Dương nhận": [
+  "Dương Nhận",
+  "羊刃"
+ ],
+ "Hỉ thần": [
+  "Hỉ Thần",
+  "喜神"
+ ],
+ "Thông quan": [
+  "Thông Quan",
+  "通关"
+ ],
+ "Điều hậu": [
+  "Điều Hậu",
+  "调候"
+ ],
+ "Bệnh dược": [
+  "Bệnh Dược",
+  "病药"
+ ],
+ "Tòng cách": [
+  "Tòng Cách",
+  "从格"
+ ],
+ "Nguyệt lệnh": [
+  "Nguyệt Lệnh",
+  "月令"
+ ],
+ "Tử Bình": [
+  "Tử Bình",
+  "子平"
+ ],
+ "Dụng thần": [
+  "favourable element",
+  "用神"
+ ],
+ "Trung bình": [
+  "Average",
+  "中等"
+ ],
+ "Chu Tước": [
+  "Chu Tuoc",
+  "朱雀"
+ ],
+ "Câu Trần": [
+  "Cau Tran",
+  "勾陈"
+ ],
+ "Đằng Xà": [
+  "Dang Xa",
+  "腾蛇"
+ ],
+ "Huyền Vũ": [
+  "Huyen Vu",
+  "玄武"
+ ],
+ "Minh Đường": [
+  "Minh Đường",
+  "明堂"
+ ],
+ "Thiên Hình": [
+  "Thiên Hình",
+  "天刑"
+ ],
+ "Kim Quỹ": [
+  "Kim Quỹ",
+  "金匮"
+ ],
+ "Kim Đường": [
+  "Kim Đường",
+  "天德"
+ ],
+ "Ngọc Đường": [
+  "Ngọc Đường",
+  "玉堂"
+ ],
+ "Thiên Lao": [
+  "Thiên Lao",
+  "天牢"
+ ],
+ "Nguyên Vũ": [
+  "Nguyên Vũ",
+  "元武"
+ ],
+ "Tư Mệnh": [
+  "Tư Mệnh",
+  "司命"
+ ],
+ "vượng": [
+  "prospering",
+  "旺"
+ ],
+ "tướng": [
+  "supported",
+  "相"
+ ],
+ "hưu": [
+  "resting",
+  "休"
+ ],
+ "tù": [
+  "trapped",
+  "囚"
+ ],
+ "tử": [
+  "dead",
+  "死"
+ ],
+ "Bát thuần": [
+  "Pure (palace head)",
+  "八纯"
+ ],
+ "Nhất thế": [
+  "First generation",
+  "一世"
+ ],
+ "Nhị thế": [
+  "Second generation",
+  "二世"
+ ],
+ "Tam thế": [
+  "Third generation",
+  "三世"
+ ],
+ "Tứ thế": [
+  "Fourth generation",
+  "四世"
+ ],
+ "Ngũ thế": [
+  "Fifth generation",
+  "五世"
+ ],
+ "Du hồn": [
+  "Wandering soul",
+  "游魂"
+ ],
+ "Quy hồn": [
+  "Returning soul",
+  "归魂"
+ ],
+ "Năm sinh": [
+  "Birth year",
+  "出生年"
+ ],
+ "Khai trương": [
+  "Opening a business",
+  "开业"
+ ],
+ "La Hầu": [
+  "La Hau",
+  "罗睺"
+ ],
+ "Kế Đô": [
+  "Ke Do",
+  "计都"
+ ],
+ "Thái Bạch": [
+  "Thai Bach",
+  "太白"
+ ],
+ "Vân Hán": [
+  "Van Han",
+  "云汉"
+ ],
+ "Thổ Tú": [
+  "Tho Tu",
+  "土宿"
+ ],
+ "Thủy Diệu": [
+  "Thuy Dieu",
+  "水曜"
+ ],
+ "Mộc Đức": [
+  "Moc Duc",
+  "木德"
+ ],
+ "Vân Hớn": [
+  "Van Hon",
+  "云汉"
+ ],
+ "Hải Trung Kim": [
+  "Gold in the Sea",
+  "海中金"
+ ],
+ "Lư Trung Hỏa": [
+  "Fire in the Furnace",
+  "炉中火"
+ ],
+ "Đại Lâm Mộc": [
+  "Wood of the Great Forest",
+  "大林木"
+ ],
+ "Lộ Bàng Thổ": [
+  "Earth by the Roadside",
+  "路旁土"
+ ],
+ "Kiếm Phong Kim": [
+  "Gold of the Sword Edge",
+  "剑锋金"
+ ],
+ "Sơn Đầu Hỏa": [
+  "Fire on the Hilltop",
+  "山头火"
+ ],
+ "Giản Hạ Thủy": [
+  "Water in the Ravine",
+  "涧下水"
+ ],
+ "Thành Đầu Thổ": [
+  "Earth of the City Wall",
+  "城头土"
+ ],
+ "Bạch Lạp Kim": [
+  "Gold of the White Candle",
+  "白蜡金"
+ ],
+ "Dương Liễu Mộc": [
+  "Wood of the Willow",
+  "杨柳木"
+ ],
+ "Tuyền Trung Thủy": [
+  "Water in the Spring",
+  "泉中水"
+ ],
+ "Ốc Thượng Thổ": [
+  "Earth on the Roof",
+  "屋上土"
+ ],
+ "Tích Lịch Hỏa": [
+  "Fire of the Thunderbolt",
+  "霹雳火"
+ ],
+ "Tùng Bách Mộc": [
+  "Wood of Pine and Cypress",
+  "松柏木"
+ ],
+ "Trường Lưu Thủy": [
+  "Water of the Long Stream",
+  "长流水"
+ ],
+ "Sa Trung Kim": [
+  "Gold in the Sand",
+  "沙中金"
+ ],
+ "Sơn Hạ Hỏa": [
+  "Fire at the Foot of the Hill",
+  "山下火"
+ ],
+ "Bình Địa Mộc": [
+  "Wood of the Plain",
+  "平地木"
+ ],
+ "Bích Thượng Thổ": [
+  "Earth on the Wall",
+  "壁上土"
+ ],
+ "Kim Bạch Kim": [
+  "Gold of Foil",
+  "金箔金"
+ ],
+ "Kim Bạc Kim": [
+  "Gold of Foil",
+  "金箔金"
+ ],
+ "Phú Đăng Hỏa": [
+  "Fire of the Lamp",
+  "覆灯火"
+ ],
+ "Thiên Hà Thủy": [
+  "Water of the Milky Way",
+  "天河水"
+ ],
+ "Đại Trạch Thổ": [
+  "Earth of the Great Marsh",
+  "大泽土"
+ ],
+ "Thoa Xuyến Kim": [
+  "Gold of Hairpin and Bracelet",
+  "钗钏金"
+ ],
+ "Tang Đố Mộc": [
+  "Wood of the Mulberry",
+  "桑柘木"
+ ],
+ "Đại Khê Thủy": [
+  "Water of the Great Brook",
+  "大溪水"
+ ],
+ "Sa Trung Thổ": [
+  "Earth in the Sand",
+  "沙中土"
+ ],
+ "Thiên Thượng Hỏa": [
+  "Fire in the Sky",
+  "天上火"
+ ],
+ "Thạch Lựu Mộc": [
+  "Wood of the Pomegranate",
+  "石榴木"
+ ],
+ "Đại Hải Thủy": [
+  "Water of the Great Sea",
+  "大海水"
+ ],
+ "Kim Lâu": [
+  "Kim Lau",
+  "金楼"
+ ],
+ "Kim Lâu Thân": [
+  "Kim Lau of the self",
+  "金楼身"
+ ],
+ "Kim Lâu Thê": [
+  "Kim Lau of the spouse",
+  "金楼妻"
+ ],
+ "Kim Lâu Tử": [
+  "Kim Lau of the children",
+  "金楼子"
+ ],
+ "Kim Lâu Lục Súc": [
+  "Kim Lau of the livestock",
+  "金楼六畜"
+ ],
+ "Hoang Ốc": [
+  "Hoang Oc",
+  "荒屋"
+ ],
+ "Nhất Cát": [
+  "First: auspicious",
+  "一吉"
+ ],
+ "Nhì Nghi": [
+  "Second: suitable",
+  "二宜"
+ ],
+ "Tam Địa Sát": [
+  "Third: earth harm",
+  "三地杀"
+ ],
+ "Tứ Tấn Tài": [
+  "Fourth: wealth gained",
+  "四进财"
+ ],
+ "Ngũ Thọ Tử": [
+  "Fifth: death",
+  "五寿死"
+ ],
+ "Lục Hoang Ốc": [
+  "Sixth: desolate house",
+  "六荒屋"
+ ],
+ "Tam Tai": [
+  "Tam Tai",
+  "三灾"
+ ],
+ "Tài đức": [
+  "Wealth and virtue",
+  "财德"
+ ],
+ "Bảo khố": [
+  "Treasury",
+  "宝库"
+ ],
+ "Lục hợp": [
+  "Six harmonies",
+  "六合"
+ ],
+ "Nghênh phúc": [
+  "Welcoming fortune",
+  "迎福"
+ ],
+ "Thoát tài": [
+  "Wealth slipping away",
+  "脱财"
+ ],
+ "Công sự": [
+  "Public litigation",
+  "公事"
+ ],
+ "Lao chấp": [
+  "Imprisonment",
+  "牢执"
+ ],
+ "Cô quả": [
+  "Loneliness",
+  "孤寡"
+ ],
+ "Trưởng khố": [
+  "Growing store",
+  "长库"
+ ],
+ "Kiếp tài": [
+  "Wealth seized",
+  "劫财"
+ ],
+ "Thất thoát": [
+  "Loss",
+  "失脱"
+ ],
+ "Thêm đinh": [
+  "A son added",
+  "添丁"
+ ],
+ "Ích lợi": [
+  "Benefit",
+  "益利"
+ ],
+ "Quý tử": [
+  "A worthy son",
+  "贵子"
+ ],
+ "Đại cát": [
+  "Greatly auspicious",
+  "大吉"
+ ],
+ "Thuận khoa": [
+  "Success in examinations",
+  "顺科"
+ ],
+ "Hoạnh tài": [
+  "Unexpected wealth",
+  "横财"
+ ],
+ "Tiến ích": [
+  "Steady gain",
+  "进益"
+ ],
+ "Phú quý": [
+  "Wealth and rank",
+  "富贵"
+ ],
+ "Tử biệt": [
+  "Death and parting",
+  "死别"
+ ],
+ "Thoái khẩu": [
+  "Loss of family",
+  "退口"
+ ],
+ "Ly hương": [
+  "Leaving home",
+  "离乡"
+ ],
+ "Tài thất": [
+  "Wealth lost",
+  "财失"
+ ],
+ "Tai chí": [
+  "Disaster arrives",
+  "灾至"
+ ],
+ "Tử tuyệt": [
+  "Death and ending",
+  "死绝"
+ ],
+ "Bệnh lâm": [
+  "Illness arrives",
+  "病临"
+ ],
+ "Khẩu thiệt": [
+  "Quarrels",
+  "口舌"
+ ],
+ "Đăng khoa": [
+  "Passing the examination",
+  "登科"
+ ],
+ "Tiến bảo": [
+  "Treasure gained",
+  "进宝"
+ ],
+ "Hưng vượng": [
+  "Flourishing",
+  "兴旺"
+ ],
+ "Tài chí": [
+  "Wealth arrives",
+  "财至"
+ ],
+ "Thi thơ": [
+  "Poetry and learning",
+  "诗书"
+ ],
+ "Quan tài": [
+  "Coffin",
+  "棺材"
+ ],
+ "Hoàn tử": [
+  "Losing a child",
+  "还子"
+ ],
+ "Thân bệnh": [
+  "Illness of the body",
+  "身病"
+ ],
+ "Thất tài": [
+  "Wealth lost",
+  "失财"
+ ],
+ "Phòng bệnh": [
+  "Guard against illness",
+  "防病"
+ ],
+ "Chiêu ôn": [
+  "Inviting pestilence",
+  "招瘟"
+ ],
+ "Ôn tai": [
+  "Plague",
+  "瘟灾"
+ ],
+ "Ngục tù": [
+  "Prison",
+  "狱囚"
+ ],
+ "Đại tài": [
+  "Great wealth",
+  "大财"
+ ],
+ "Hiếu tử": [
+  "A filial child",
+  "孝子"
+ ],
+ "Quý nhân": [
+  "A benefactor",
+  "贵人"
+ ],
+ "Thiên lộc": [
+  "Heavenly emolument",
+  "天禄"
+ ],
+ "Tác lộc": [
+  "Earning emolument",
+  "作禄"
+ ],
+ "Thanh quý": [
+  "Honourable standing",
+  "清贵"
+ ],
+ "Văn học": [
+  "Scholarship",
+  "文学"
+ ],
+ "Văn chương": [
+  "Letters",
+  "文章"
+ ],
+ "Thập thiện": [
+  "Ten virtues",
+  "十善"
+ ],
+ "Tấn bửu": [
+  "Treasure gained",
+  "进宝"
+ ],
+ "Trung tín": [
+  "Loyalty and trust",
+  "忠信"
+ ],
+ "Tác quan": [
+  "Holding office",
+  "作官"
+ ],
+ "Phát đạt": [
+  "Prospering",
+  "发达"
+ ],
+ "Thông minh": [
+  "Bright wits",
+  "聪明"
+ ],
+ "Tán thành": [
+  "Scattering",
+  "散成"
+ ],
+ "Thời nhân": [
+  "Of the times",
+  "时人"
+ ],
+ "Thất hiếu": [
+  "Loss of filial piety",
+  "失孝"
+ ],
+ "Tai họa": [
+  "Calamity",
+  "灾祸"
+ ],
+ "Trường bệnh": [
+  "Lingering illness",
+  "长病"
+ ],
+ "Bạc nghịch": [
+  "Unfilial conduct",
+  "薄逆"
+ ],
+ "Vô vọng": [
+  "Without hope",
+  "无妄"
+ ],
+ "Ly tán": [
+  "Scattering apart",
+  "离散"
+ ],
+ "Tửu thực": [
+  "Drink and food",
+  "酒食"
+ ],
+ "Dâm dục": [
+  "Licentiousness",
+  "淫欲"
+ ],
+ "Quyền lộc": [
+  "Power and emolument",
+  "权禄"
+ ]
+}

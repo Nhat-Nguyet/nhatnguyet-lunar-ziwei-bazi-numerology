@@ -1,6 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { baoCao, docCaKiem, kiemCa } from "../../../kiem/so-sanh.ts";
+import { doBaNgonNgu, tomTatThieu } from "../../../kiem/ba-ngon-ngu.ts";
+import type { DemBaNgonNgu } from "../../../kiem/ba-ngon-ngu.ts";
 import {
   LoiThieuGioiTinh,
   allNguyetLenh,
@@ -87,4 +89,33 @@ test("bat-tu: phép so bắt được đáp án sai", () => {
   assert.ok(kq.tong > 0);
   assert.equal(kq.dat, 0);
   assert.match(kq.loi[0], /ra\.laSo\.daiVan\.soNgay: mong/);
+});
+
+test("bat-tu: mọi tên trên mọi lá của ca kiểm có đủ ba thứ tiếng", () => {
+  const dem: DemBaNgonNgu = { tong: 0, thieu: [] };
+  for (const c of tep.ca) doBaNgonNgu(tinh(c.vao), dem);
+  assert.ok(dem.tong > 0, "không đo được tên nào");
+  assert.equal(dem.thieu.length, 0, tomTatThieu(dem));
+});
+
+// Lựa chọn phái (schools: ziHour): ca kiểm bat-tu-phai do bản Go sinh.
+test("bat-tu-phai: mọi ca kiểm lựa chọn giờ Tý khớp bản Go", () => {
+  const tepPhai = docCaKiem("bat-tu-phai");
+  const kq = kiemCa(tepPhai, (vao) => {
+    const gio = typeof vao.gio === "number" ? vao.gio : null;
+    const laSo = lapLaSoBatTu(vao.dd as number, vao.mm as number, vao.yyyy as number, gio, vao.phut as number, vao.gioiTinh as string, vao.schools as never);
+    const tieuVan = tinhTieuVanBatTu(laSo, vao.namXem as number);
+    return tieuVan ? { laSo, tieuVan } : { laSo };
+  });
+  assert.equal(kq.tong, tepPhai.soCa);
+  assert.equal(kq.soLech, 0, baoCao("bat-tu-phai", kq));
+});
+
+test("bat-tu-phai: 23h30 ngày 1/1/2024 như lunar-javascript (sect 1 và 2); mặc định giữ nguyên; giá trị lạ ném lỗi", () => {
+  const goc = lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam");
+  const moi = lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam", { ziHour: "split-at-midnight" });
+  assert.deepEqual([goc.truNgay.label, goc.truGio?.label], ["Ất Sửu", "Bính Tý"]);
+  assert.deepEqual([moi.truNgay.label, moi.truGio?.label, moi.schools], ["Giáp Tý", "Bính Tý", { ziHour: "split-at-midnight" }]);
+  assert.equal(JSON.stringify(lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam", { ziHour: "next-day-from-23" })), JSON.stringify(goc));
+  assert.throws(() => lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam", { ziHour: "midnight" } as never), /invalid ziHour/);
 });

@@ -1,0 +1,76 @@
+# Runs the README examples against the packages as published on npm and PyPI,
+# in a clean runner: catches a README that promises an API the registry does
+# not have. After every release, every Monday, and on demand.
+name: Published packages
+on:
+  release:
+    types: [published]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to check, for example 0.3.0 (empty: the latest on npm)"
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  version:
+    name: Resolve version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - id: v
+        env:
+          INPUT: ${{ inputs.version }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          v="${INPUT:-${TAG#v}}"
+          if [ -z "$v" ]; then v="$(npm view @nhatnguyet/am-lich version)"; fi
+          if ! printf '%s' "$v" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "::error::not a version: $v"; exit 1
+          fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "Checking published version $v" >> "$GITHUB_STEP_SUMMARY"
+  readme:
+    name: README on npm ${{ needs.version.outputs.version }}, Node ${{ matrix.node }}, Python ${{ matrix.python }}
+    needs: version
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: 22
+            python: "3.9"
+          - node: 24
+            python: "3.13"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: npm install and pip install the published version, run every README example
+        run: node .github/scripts/run-readme-code.mjs --published "${{ needs.version.outputs.version }}"
+  datasets:
+    name: README dataset examples (Hugging Face)
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: node .github/scripts/run-readme-code.mjs --published "${{ needs.version.outputs.version }}" --network README.md

@@ -8,9 +8,9 @@
   "mo_ta_zh": "越南民间节庆、岁时节日与法定假日，并附每个节日固定的农历或公历日期。",
   "giay_phep": "CC-BY-4.0",
   "giay_phep_url": "https://creativecommons.org/licenses/by/4.0/",
-  "phien_ban": "1.5.0",
-  "cap_nhat": "2026-10-19",
-  "so_dong": 200,
+  "phien_ban": "1.7.0",
+  "cap_nhat": "2026-11-19",
+  "so_dong": 206,
   "cot": [
     {
       "ten": "id",
@@ -200,6 +200,96 @@
       "epistemic_status": "editorial"
     },
     {
+      "ten": "tinh",
+      "kieu": "string",
+      "moTa": "Mã các tỉnh, thành hiện hành nơi lễ diễn ra (34 đơn vị theo Nghị quyết 202/2025/QH15, ví dụ ninh-binh), ngăn bằng dấu chấm phẩy; rỗng khi lễ không gắn nơi nào hoặc kho chưa đủ căn cứ",
+      "moTaEn": "Codes of the current provinces and cities where the festival is held (the 34 units of Resolution 202/2025/QH15, e.g. ninh-binh), separated by semicolons; empty when the festival is not tied to a place or the store lacks the evidence",
+      "moTaZh": "举办节庆的现行省、市代码（依第 202/2025/QH15 号决议的 34 个单位，例如 ninh-binh），以分号分隔；节庆不限于某地或库中依据不足时留空",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "toan_quoc",
+      "kieu": "string",
+      "moTa": "co nếu là lễ chung cả nước (ngày nghỉ lễ, ngày kỷ niệm, lễ tết nhà nào cũng làm), khong nếu không; một lễ có thể vừa toàn quốc vừa có tỉnh cử hành chính",
+      "moTaEn": "co if it is observed nationwide (public holidays, commemorations, household festivals), khong if not; a festival can be nationwide and still have a province of main celebration",
+      "moTaZh": "co 表示全国性节日（法定假日、纪念日、家家都过的节），khong 表示不是；节日可既为全国性又有主要举办省份",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "dan_toc",
+      "kieu": "string",
+      "moTa": "Tên các dân tộc mà lễ là lễ của họ, theo danh mục 54 dân tộc, ngăn bằng dấu chấm phẩy; chỉ ghi khi mô tả của lễ nói rõ, rỗng khi không thuộc riêng dân tộc nào hoặc chưa gán",
+      "moTaEn": "Names of the ethnic groups whose festival it is, from the official list of 54, separated by semicolons; recorded only when the festival's description says so, empty otherwise",
+      "moTaZh": "该节庆所属民族的名称，取自 54 民族官方名录，以分号分隔；仅在节庆描述明确说明时填写，否则留空",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "dan_toc_en",
+      "kieu": "string",
+      "moTa": "Cột dan_toc viết bằng tiếng Anh: tên dân tộc giữ chữ Việt có dấu",
+      "moTaEn": "The dan_toc column in English: ethnic group names keep their Vietnamese spelling with diacritics",
+      "moTaZh": "以英文书写的 dan_toc 列：民族名称保留带声调的越南文写法",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "dan_toc_zh",
+      "kieu": "string",
+      "moTa": "Cột dan_toc viết bằng tiếng Trung",
+      "moTaEn": "The dan_toc column in Chinese",
+      "moTaZh": "以中文书写的 dan_toc 列",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "noi_to_chuc",
+      "kieu": "string",
+      "moTa": "Tên các nơi tổ chức cụ thể (di tích, đền, tháp, quảng trường), ngăn bằng dấu chấm phẩy; rỗng khi kho không ghi nơi cụ thể",
+      "moTaEn": "Names of the specific venues (monuments, temples, towers, squares), separated by semicolons; empty when the store records no specific venue",
+      "moTaZh": "具体举办地点（古迹、祠庙、塔、广场）的名称，以分号分隔；库中未记载具体地点时留空",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "noi_to_chuc_en",
+      "kieu": "string",
+      "moTa": "Cột noi_to_chuc viết bằng tiếng Anh, cùng thứ tự",
+      "moTaEn": "The noi_to_chuc column in English, same order",
+      "moTaZh": "以英文书写的 noi_to_chuc 列，顺序相同",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "noi_to_chuc_zh",
+      "kieu": "string",
+      "moTa": "Cột noi_to_chuc viết bằng tiếng Trung, cùng thứ tự",
+      "moTaEn": "The noi_to_chuc column in Chinese, same order",
+      "moTaZh": "以中文书写的 noi_to_chuc 列，顺序相同",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "toa_do",
+      "kieu": "string",
+      "moTa": "Toạ độ vĩ độ,kinh độ (WGS 84) của từng nơi ở cột noi_to_chuc, cùng thứ tự, ngăn bằng dấu chấm phẩy; ô của một nơi để trống khi chưa có toạ độ kèm nguồn",
+      "moTaEn": "Latitude,longitude (WGS 84) of each venue in noi_to_chuc, same order, separated by semicolons; a venue's slot is empty when no sourced coordinate is known",
+      "moTaZh": "noi_to_chuc 各地点的纬度,经度（WGS 84），顺序相同，以分号分隔；没有附来源的坐标时该地点的位置留空",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
+      "ten": "toa_do_nguon",
+      "kieu": "string",
+      "moTa": "Địa chỉ nguồn của từng toạ độ ở cột toa_do, cùng thứ tự, ngăn bằng dấu chấm phẩy",
+      "moTaEn": "Source URL of each coordinate in toa_do, same order, separated by semicolons",
+      "moTaZh": "toa_do 中各坐标的来源网址，顺序相同，以分号分隔",
+      "loai_bang_chung": "D",
+      "epistemic_status": "editorial"
+    },
+    {
       "ten": "nguon",
       "kieu": "string",
       "moTa": "Loại nguồn của dòng, một hay nhiều phần ngăn bằng dấu chấm phẩy, mỗi phần là tinh-toan (lõi tính ra), quy-uoc-truyen-thong, quy-uoc-he-hien-dai (quy ước của một truyền thống hay một hệ hiện đại), van-ban (kèm tác phẩm sau dấu hai chấm) hoặc bien-tap (kèm chi tiết); chi tiết tĩnh cũng ở nguon_chi_tiet của meta, và hai bộ lớn nhất chỉ ghi ở đó; cột nào thuộc phần nào xem loai_bang_chung của từng cột trong meta",
@@ -219,20 +309,20 @@
   "ghi_chu_chung_en": "This dataset is NOT computed but editorial, so it changes when someone adds or edits a festival. The dates recorded here are the FIXED lunar or solar dates of each occasion, not the solar date of any particular year: to get the solar date for a given year, convert from the ngay_am column. Many regional festivals are held on different days in different localities, and this dataset records the most widely observed date. Occasions that follow the Cham or Khmer calendar, or whose dates are set by organisers, have no fixed date: they carry loai_ngay theo-nam and their dates appear only in the lich_cong_bo column.",
   "ghi_chu_chung_zh": "本数据集不是推算所得，而是编辑数据，因此有人新增或修改节庆时它就会变动。此处所记为各节日按农历或公历固定的日期，而不是某一年的公历日期：要得到某一年的公历日期，请由 ngay_am 一列换算。许多地方性节庆在不同地方举行的日子不同，本数据集记录最通行的日期。按占族历、高棉历举行或由主办方定日的节日没有固定日期：它们的 loai_ngay 为 theo-nam，日期只出现在 lich_cong_bo 一列。",
   "ghi_nguon_yeu_cau": "Nguồn: Nhật Nguyệt (nhatnguyet.org), CC BY 4.0",
-  "ghi_nguon_yeu_cau_en": "Source: Nhật Nguyệt (nhatnguyet.org), CC BY 4.0",
-  "ghi_nguon_yeu_cau_zh": "来源：Nhật Nguyệt (nhatnguyet.org)，CC BY 4.0",
+  "ghi_nguon_yeu_cau_en": "Source: Nhat Nguyet (nhatnguyet.org), CC BY 4.0",
+  "ghi_nguon_yeu_cau_zh": "来源：Nhat Nguyet (nhatnguyet.org)，CC BY 4.0",
   "trang": "/tien-ich/lich-le-hoi",
   "ma_hoa": "UTF-8 không BOM",
   "gioi_han_su_dung": "Bộ dữ liệu này ghi lại quy ước văn hoá và lịch pháp, không phải phát biểu khoa học. Nó dùng được cho nghiên cứu văn hoá, xử lý ngôn ngữ và ứng dụng lịch. Nó không dùng để dự đoán sự kiện, đánh giá con người, hay ra quyết định ảnh hưởng tới ai.",
   "gioi_han_su_dung_en": "This dataset records cultural and calendrical conventions, not scientific claims. It is suitable for cultural research, NLP, and calendar applications. It is not intended for predicting events, evaluating people, or making decisions that affect anyone.",
   "gioi_han_su_dung_zh": "本数据集记录的是文化与历法约定，而非科学论断。它适用于文化研究、自然语言处理和历法应用，不用于预测事件、评价他人，或作出影响任何人的决定。",
-  "trich_dan": "Nhật Nguyệt (2026). Lễ hội, lễ tết và ngày nghỉ Việt Nam. Phiên bản 1.5.0. CC-BY-4.0. https://nhatnguyet.org/du-lieu/le-hoi-viet-nam.csv",
-  "trich_dan_en": "Nhật Nguyệt (2026). Vietnamese festivals, seasonal feasts and public holidays. Version 1.5.0. CC-BY-4.0. https://nhatnguyet.org/du-lieu/le-hoi-viet-nam.csv",
+  "trich_dan": "Nhật Nguyệt (2026). Lễ hội, lễ tết và ngày nghỉ Việt Nam. Phiên bản 1.7.0. CC-BY-4.0. https://nhatnguyet.org/du-lieu/le-hoi-viet-nam.csv",
+  "trich_dan_en": "Nhat Nguyet (2026). Vietnamese festivals, seasonal feasts and public holidays. Version 1.7.0. CC-BY-4.0. https://nhatnguyet.org/du-lieu/le-hoi-viet-nam.csv",
   "co_parquet": false,
   "nguon_goc_du_lieu": "bien-tap",
   "nguon_goc_du_lieu_mo_ta": "Nội dung do Nhật Nguyệt tuyển chọn và biên tập; nguồn của từng dòng ghi ở cột nguon.",
-  "nguon_goc_du_lieu_mo_ta_en": "Content selected and edited by Nhật Nguyệt; each row's source is in the nguon column.",
-  "nguon_goc_du_lieu_mo_ta_zh": "内容由 Nhật Nguyệt 选编；各行来源见 nguon 列。",
+  "nguon_goc_du_lieu_mo_ta_en": "Content selected and edited by Nhat Nguyet; each row's source is in the nguon column.",
+  "nguon_goc_du_lieu_mo_ta_zh": "内容由 Nhat Nguyet 选编；各行来源见 nguon 列。",
   "mui_gio": "Asia/Ho_Chi_Minh",
   "mo_hinh": [],
   "quy_uoc": [
@@ -244,12 +334,12 @@
   "vai_tro_mo_ta_en": "A knowledge dataset: calendrical values, lookup tables or edited content, reusable as a reference (within the stated limits of use).",
   "vai_tro_mo_ta_zh": "知识类数据集：历法数值、查表或编辑内容，可作为参考资料转用（以所列使用限制为限）。",
   "thay_doi_gan_nhat": {
-    "phien_ban": "1.5.0",
-    "ngay": "2026-10-19",
-    "loai": "data",
-    "mo_ta": "Thêm ba lễ mừng cơm mới, mỗi lễ kèm lịch năm có nguồn báo chí chính thức: Lễ hội Cơm mới đền Đông Cuông (Tày Khao, Lào Cai), Lễ mừng cơm mới của người Mông Púng Luông (Lào Cai), Lễ hội Mạ mạ mê của người Khơ Mú Nậm Hàng (Lai Châu). Cột không đổi.",
-    "mo_ta_en": "Adds three new-rice festivals, each with a yearly schedule sourced from official press: the Đông Cuông Temple new-rice festival (Tày Khao, Lào Cai), the Hmong new-rice celebration of Púng Luông (Lào Cai), and the Mạ mạ mê festival of the Khơ Mú in Nậm Hàng (Lai Châu). Columns do not change.",
-    "mo_ta_zh": "新增三个新米节，各附有官方报刊出处的年度日程：东宫庙新米节（岱考族，老街）、蓬龙赫蒙族新米节（老街）、南杭克木族妈妈咩节（莱州）。列不变。"
+    "phien_ban": "1.7.0",
+    "ngay": "2026-11-19",
+    "loai": "schema",
+    "mo_ta": "Thêm cột tinh (mã 34 tỉnh, thành theo Nghị quyết 202/2025/QH15), toan_quoc, dan_toc (kèm dan_toc_en, dan_toc_zh, theo danh mục 54 dân tộc, chỉ khi mô tả của lễ nói rõ), noi_to_chuc (kèm _en, _zh), toa_do và toa_do_nguon (chỉ toạ độ có nguồn). Thêm 6 lễ hội: đền Trạng Trình, hội vật võ Liễu Đôi, lễ hội Xương Giang, lễ hội Trò Trám, lễ phát lương đền Trần Thương, chọi trâu Hải Lựu. Meta bản tiếng Anh và tiếng Trung viết tên nhà phát hành là Nhat Nguyet, không dấu.",
+    "mo_ta_en": "Adds the columns tinh (codes of the 34 provinces and cities under Resolution 202/2025/QH15), toan_quoc, dan_toc (with dan_toc_en, dan_toc_zh, from the official list of 54 ethnic groups, only where the festival's description says so), noi_to_chuc (with _en, _zh), toa_do and toa_do_nguon (sourced coordinates only). Adds 6 festivals: Trạng Trình temple, Liễu Đôi wrestling, Xương Giang, Trò Trám, the Trần Thương rice-distribution rite and the Hải Lựu buffalo fight. English and Chinese metadata now write the publisher as Nhat Nguyet, without diacritics.",
+    "mo_ta_zh": "新增 tinh（依第 202/2025/QH15 号决议的 34 个省、市代码）、toan_quoc、dan_toc（及 dan_toc_en、dan_toc_zh，取自 54 民族官方名录，仅在节庆描述明确说明时填写）、noi_to_chuc（及 _en、_zh）、toa_do 与 toa_do_nguon（仅附来源的坐标）各列。新增 6 个节庆：状程祠庙会、柳堆摔跤会、昌江庙会、Trò Trám 庙会、陈商祠发粮仪式、海流斗牛会。英文与中文元数据将发布者写作 Nhat Nguyet，不带声调符号。"
   },
   "loai_bo": "bien-tap",
   "loai_bo_tuong_duong": "editorial",
@@ -282,8 +372,8 @@
       "ma": "D",
       "ten": "bien-tap-van-hoa",
       "mo_ta": "Biên tập văn hoá: Nhật Nguyệt tuyển chọn, tóm tắt hay ghi lại từ bài viết, kho lịch lễ hội, hay bộ câu hỏi của chính site.",
-      "mo_ta_en": "Cultural editing: selected, summarised or recorded by Nhật Nguyệt from the site's articles, festival store or question set.",
-      "mo_ta_zh": "文化编辑：由 Nhật Nguyệt 从本站文章、节庆库或问题集中选取、概括或记录。"
+      "mo_ta_en": "Cultural editing: selected, summarised or recorded by Nhat Nguyet from the site's articles, festival store or question set.",
+      "mo_ta_zh": "文化编辑：由 Nhat Nguyet 从本站文章、节庆库或问题集中选取、概括或记录。"
     },
     {
       "ma": "E",
@@ -345,8 +435,8 @@
       "ma": "bien-tap",
       "tuong_duong_en": "editorial",
       "mo_ta": "Nhật Nguyệt tuyển chọn, tóm tắt, ghi lại hay viết.",
-      "mo_ta_en": "Selected, summarised, recorded or written by Nhật Nguyệt.",
-      "mo_ta_zh": "由 Nhật Nguyệt 选取、概括、记录或撰写。"
+      "mo_ta_en": "Selected, summarised, recorded or written by Nhat Nguyet.",
+      "mo_ta_zh": "由 Nhat Nguyet 选取、概括、记录或撰写。"
     },
     {
       "ma": "tham-chieu-ngoai",
@@ -393,8 +483,8 @@
       "loai_bang_chung": "D",
       "ten": "biên tập",
       "mo_ta": "Nhật Nguyệt ghi lại hay tuyển chọn; đúng sai tuỳ nguồn của từng dòng.",
-      "mo_ta_en": "Recorded or selected by Nhật Nguyệt; accuracy depends on each row's source.",
-      "mo_ta_zh": "由 Nhật Nguyệt 记录或选取；正确与否取决于各行来源。"
+      "mo_ta_en": "Recorded or selected by Nhat Nguyet; accuracy depends on each row's source.",
+      "mo_ta_zh": "由 Nhat Nguyet 记录或选取；正确与否取决于各行来源。"
     },
     {
       "ma": "interpretive",

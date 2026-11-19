@@ -1,0 +1,99 @@
+{
+  "dataset": "nhatnguyet/numerology-knowledge",
+  "engine_version": "2.2.0",
+  "tables": [
+    {
+      "table": "core-number",
+      "rows": 31,
+      "rows_with_site_text": 31,
+      "rows_with_classical": 31,
+      "classical_links": 183,
+      "distinct_passages": 159,
+      "description": "One row per core number (Life Path, Birthday, Attitude) and value: what the index means, the strengths and weaknesses the site writes for the number, life-area notes for the Life Path, and the classical passages on the number."
+    },
+    {
+      "table": "cycle-number",
+      "rows": 34,
+      "rows_with_site_text": 30,
+      "rows_with_classical": 32,
+      "classical_links": 302,
+      "distinct_passages": 96,
+      "description": "One row per Karmic Debt, Pinnacle, Challenge and Personal Year number: the site's meaning of the number in that role and the classical passages on it."
+    },
+    {
+      "table": "life-topic",
+      "rows": 78,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 28,
+      "classical_links": 64,
+      "distinct_passages": 64,
+      "description": "One row per life topic of the numerology classics (work, money, marriage...) for each Life Path number, plus one general row per topic, with the passages."
+    }
+  ],
+  "distinct_site_texts": 105,
+  "distinct_passages": 195,
+  "books": [
+    {
+      "book_title": "Numerology Made Plain: The Science of Names and Numbers and the Law of Vibration (Thần số học giảng rõ, Taylor, 1926)",
+      "author_vi": "Ariel Yvon Taylor",
+      "author_en": "Ariel Yvon Taylor",
+      "passages": 50
+    },
+    {
+      "book_title": "What's in Your Name? The Science of Letters and Numbers (Tên của bạn chứa gì?, Cheasley, 1916)",
+      "author_vi": "Clifford W. Cheasley (1890-?)",
+      "author_en": "Clifford W. Cheasley (1890-?)",
+      "passages": 49
+    },
+    {
+      "book_title": "Cheiro's Book of Numbers (Sách về các con số của Cheiro, 1926)",
+      "author_vi": "Cheiro (William John Warner, 1866-1936)",
+      "author_en": "Cheiro (William John Warner, 1866-1936)",
+      "passages": 32
+    },
+    {
+      "book_title": "The Kabala of Numbers: A Handbook of Interpretation (Kabala của các con số, Sepharial, 1911)",
+      "author_vi": "Sepharial (Walter Gorn Old, 1864-1929)",
+      "author_en": "Sepharial (Walter Gorn Old, 1864-1929)",
+      "passages": 20
+    },
+    {
+      "book_title": "How to Attain Success Through the Strength of Vibration (Đạt thành công nhờ sức mạnh của rung động, Balliett, 1905)",
+      "author_vi": "Mrs. L. Dow Balliett (1847-1929)",
+      "author_en": "Mrs. L. Dow Balliett (1847-1929)",
+      "passages": 13
+    },
+    {
+      "book_title": "Names, Dates, and Numbers: What They Mean to You (Tên, ngày và số, Walton, 1914)",
+      "author_vi": "Roy Page Walton",
+      "author_en": "Roy Page Walton",
+      "passages": 13
+    },
+    {
+      "book_title": "The Philosophy of Numbers; Their Tone and Colors (Triết học về các con số, âm và màu của chúng, Balliett, 1908)",
+      "author_vi": "Mrs. L. Dow Balliett (1847-1929)",
+      "author_en": "Mrs. L. Dow Balliett (1847-1929)",
+      "passages": 13
+    },
+    {
+      "book_title": "Numbers: Their Occult Power and Mystic Virtues (Các con số: quyền năng huyền bí và đức tính thần bí, Westcott, 1890; bản 1911)",
+      "author_vi": "W. Wynn Westcott (1848-1925)",
+      "author_en": "W. Wynn Westcott (1848-1925)",
+      "passages": 5
+    }
+  ],
+  "passages_with_author_en": 195,
+  "passages_without_author_en": 0,
+  "public_domain_passages_in_store": 239,
+  "public_domain_passages_linked": 195,
+  "rules": 1,
+  "omitted_tables_no_content": [
+    "birth-day",
+    "grid",
+    "arrow"
+  ],
+  "scan": {
+    "birth_dates_scanned": 73414,
+    "day_step": 1
+  }
+}

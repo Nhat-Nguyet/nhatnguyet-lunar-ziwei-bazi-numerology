@@ -1,5 +1,5 @@
 // Chín thần sát thông dụng của Bát Tự. Chuyển ngữ từ
-// lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t battu_thansat.go (Đào Hoa, Dịch Mã lấy
+// lõi tính Go của Nhật Nguyệt battu_thansat.go (Đào Hoa, Dịch Mã lấy
 // đúng phép daoHoaViTri, thienMaViTri của Tử Vi).
 //
 // Hai họ: tra theo THIÊN CAN (Thiên Ất Quý Nhân, Văn Xương, Lộc Thần, Dương
@@ -7,7 +7,7 @@
 // Hoa Cái, Kiếp Sát, Vong Thần). Chỗ các sách tra khác nhau ghi ở `loiKhac`.
 
 import { DIA_CHI, chiSoChi, mod } from "./am-lich.ts";
-import { duongNhanCuaCan, locCuaCan } from "./tang-can.ts";
+import { duongNhanCuaCan, enCua, locCuaCan, zhCua } from "./tang-can.ts";
 
 /** Một câu ba thứ tiếng. */
 interface BaNgonNgu {
@@ -91,8 +91,12 @@ function thienMaViTri(chiIdx: number): number {
 /** Một sao thần sát kèm chỗ nó rơi trên lá số. */
 export interface ThanSatBatTu {
   ten: string;
+  tenEn: string;
+  tenZh: string;
   /** Các địa chi sao đóng; trụ có chi trong đây là trụ mang sao. */
   chiDich: string[];
+  /** Chữ Hán của chiDich, cùng thứ tự. */
+  chiDichZh: string[];
   /** Chỉ số các trụ mang sao: 0 năm, 1 tháng, 2 ngày, 3 giờ. */
   viTri: number[];
   traTheo: string;
@@ -180,7 +184,10 @@ export function tinhThanSat(
     });
     return {
       ten: s.ten,
+      tenEn: enCua(s.ten),
+      tenZh: zhCua(s.ten),
       chiDich: s.dich.map((c) => DIA_CHI[c]),
+      chiDichZh: s.dich.map((c) => zhCua(DIA_CHI[c])),
       viTri,
       traTheo: s.traTheo.vi,
       traTheoEn: s.traTheo.en,

@@ -1,0 +1,60 @@
+{
+  "name": "@nhatnguyet/festivals",
+  "version": "0.3.0",
+  "description": "Vietnamese festivals and holidays with lunar-to-solar dates for any year (206 festivals, CC BY 4.0 data). English-named alias of @nhatnguyet/le-hoi.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "vietnamese festivals",
+    "vietnam holidays",
+    "tet",
+    "lunar festivals",
+    "holidays",
+    "vietnamese holidays",
+    "public holidays",
+    "lunar new year",
+    "mid-autumn festival",
+    "festival calendar",
+    "lunar calendar",
+    "cultural heritage",
+    "open data",
+    "le hoi",
+    "lễ hội",
+    "越南节日",
+    "越南春节",
+    "农历",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
+  ],
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@nhatnguyet/le-hoi": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/festivals"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  }
+}

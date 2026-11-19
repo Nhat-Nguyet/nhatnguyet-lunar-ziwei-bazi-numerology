@@ -1,0 +1,605 @@
+{
+ "mon": "bat_tu",
+ "ghiChu": "Băm SHA-256 của hình SVG do bản TypeScript vẽ; bản Python phải ra cùng băm.",
+ "ca": [
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "f896638c2909588cd5a4e70b778f494081ef77ca0e9d8d3f5d215064851fdbc7"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "e1e9a6e9f4e62b26a54e3c7c9c47b226391f45988ba3a2b4d2062337adb22912"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "ae50a481486b01f0665fa826653bba77d9e41cfda30551b380697296ada0c83b"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "07519c82390959debec3f04dd60f0d3a694fb717469af40b2b5ebfdfd0d58146"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "ce0ce2bbfdba1f4824a7be8ab11edacc8c8e3f79b8ca325b96177f304b2c5bbd"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "1990922d08c9c0d21db1b3d256f27049d938879360960447a576f9acef6d579c"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "1ef8695b45255afee3a147905ea6920bc6d0a515be4d47dc1a785a4b35a1dad2"
+  },
+  {
+   "vao": {
+    "hoTen": "Nguyen Van An",
+    "dd": 19,
+    "mm": 9,
+    "yyyy": 1990,
+    "gio": 20,
+    "phut": 0,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "4239f6fa1a9f876af7b07176d9321c7ee1469e9a6446ca08b3b7140a4010eef7"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "0b8f8fc16476e3229e124fcda6daa67d36404ad2ad01aa6a79cbfb6719df1090"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "9aa1a6525f25697fbb533e469341285ea0b47c90d354302932b03143231ccaef"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "4dc9e4ca0986d8fb65768568b7d8379935960168cb0b4dcba4ef5d4758733767"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "07f79e154620b22f248d4f9e97c345913b2d0b41876d412350e2977580fb7011"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "a58acc78a3b4895dde8f38666ee23693a35cb11fcf2f9d4810ba0354ecb8017e"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "df9db38974b8479c56397298269964fd5f39b514eeedae60e24149d4ef60c04c"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "93f7f07e97f0bb1edd876022cb8bfee7cd548f1d44a5525a08394eb5cc4506a7"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2000,
+    "gio": null,
+    "phut": 0,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "e360bccdc245ec18622f873a6ae8ad2ca93643932c09044187f33fd1af44f913"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "41328033516a690be021ca79a833cedac0b2d962ad101dd29a01902822c20348"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "4800b69b1cb7a6f8c5b4a43757548149020120aebd9e277138f06e6c3fe352cf"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "6aa57c92731f1f9a1d52b95daede6387b45a6c85bea7886a551368e7293688fd"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "20dac0ad7ccb9bb184bed5620cec61e9ae306311fe1a73050fa45213e10c4fef"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "1af64d81a90378a588b6a7b966237cbb374b3c91734404bdbf8f94b3446d5ecb"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "b6ea4f91d818d27c6e1de1c212fe2e2aabe556787d10c878e54a376ba2dd8f21"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "f23eff587778a19eb2ae4f165e126b7c984b3047e0dc25cf7103baf7eafe07e3"
+  },
+  {
+   "vao": {
+    "hoTen": "Trần Thị Bích Ngọc",
+    "dd": 29,
+    "mm": 2,
+    "yyyy": 1984,
+    "gio": 6,
+    "phut": 30,
+    "gioiTinh": "Nữ"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "a6746b86938cdecc7a559030a0e7503fd299b2180e6a54e6c7bac8a9c17acd45"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "a96eb31c3c0ca3bcf2cd319c0a9428591c59b452a596a9d3e815410801ba5046"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "708a4b703a95f21020e31ef132a5a383cc5e25bfe09204a4c906a7e871e23fcd"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "95964d0bcccb32dae72dd7e687ee1d9a5f20e3c16f1816f133ebcca70f908363"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "7f299c94facf34f187f1202b3e71d967b2c4bfc151233fe37cfa1787aafcde7d"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "43f73e266ed910fed10e0a364449caf0a5f601d8fffa7ec2decb5ce152db72b7"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "478f9e6ef1f12ef61724d855b9821d8a229cd0758fb7fdea2c5a9dd076f50119"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "10ba816f76557bd0f92cf8ca472f3b2f8555db6808a69d99fe0762234fd0594e"
+  },
+  {
+   "vao": {
+    "hoTen": "Lê Hoàng Phúc",
+    "dd": 3,
+    "mm": 2,
+    "yyyy": 1955,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "a8aa4cb6dff39b3979c5e5c740d0f8fab94ced9c82056f2d9501a5061c3ab86e"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "e69b020ff0013f055d3470740d53bb61cfea4b42da8fe8798e8be402b7c0d56b"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "fec428123f2d1d71ee24b1d6d0c003d461a4c16c18bddd7ca75117a6a721cf8b"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "10ae028e34cb969980ec085aa9ff6c6e9644850856543fb4334c85d54b7f49ae"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "8848de3d3e3a96bd1bfe48fe736b4fbe8ae556c5feb236607368f645f70c268d"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "a469389e9d59adcf4bca031b991aeb1d12ec56ec8b42278cbb90a35aa2e8930a"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "6d1180733b1c71fa1a63fc274a07c319c0ccbeee005bea3c02948449e5aff957"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "228e1303902141e8501452c181a9e8b367895192359eebedb240fcc03be1b341"
+  },
+  {
+   "vao": {
+    "hoTen": "",
+    "dd": 1,
+    "mm": 1,
+    "yyyy": 2024,
+    "gio": 23,
+    "phut": 30,
+    "gioiTinh": "Nam",
+    "schools": {
+     "ziHour": "split-at-midnight"
+    }
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "d7244d6647a718abd3f71fd0f6b510fc34d6e06c7027193879bb091f89017feb"
+  }
+ ]
+}

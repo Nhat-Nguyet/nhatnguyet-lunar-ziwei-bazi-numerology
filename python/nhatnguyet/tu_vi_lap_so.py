@@ -11,15 +11,22 @@ là chỉ số chi của giờ sinh (0 là Tý); can năm 0 là Giáp.
 
 from __future__ import annotations
 
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from .am_lich import DIA_CHI, THIEN_CAN, mod, ngu_hanh_nap_am, solar_to_lunar
 from .tu_vi_du_lieu import (
     CHINH_TINH_DIGNITY, CHINH_TINH_NAME_EN, CHOM_THIEN_PHU, CHOM_TU_VI, DIGNITY_LABEL,
     HANH_TO_CUC, LOC_TON_VI_TRI, PHU_TINH_NAME_EN, TEN_CHINH_TINH, TEN_CUNG_THEO_OFFSET,
+    CHINH_TINH_NAME_ZH, PHU_TINH_NAME_ZH, TEN_CUC_BA_THU, en_cua, zh_cua,
     TEN_HOA, TEN_PHU_TINH, TEN_SAO_PHU_MOI, TEN_SAO_PHU_MOI_BA_THU, TEN_VONG_BAC_SY,
     TEN_VONG_THAI_TUE, TEN_VONG_TRUONG_SINH, THIEN_KHOI_VI_TRI, THIEN_PHUC_VI_TRI,
-    THIEN_QUAN_VI_TRI, TRANG_SINH_THEO_CUC, TRIET_THEO_CAN, TU_HOA_THEO_CAN,
+    THIEN_QUAN_VI_TRI, TRANG_SINH_THEO_CUC, TRIET_THEO_CAN,
+)
+
+from .tu_vi_sao_phu_them import SAO_PHU_THEM, nhom_cua_phu_tinh, vi_tri_sao_phu_them
+from .tu_vi_schools import (
+    CAVEAT_TU_VI, GHI_CHU_GIO_TY_TU_VI, caveat_theo_phai, normalize_zi_wei_schools, thang_an_theo_phai,
+    tu_hoa_theo_phai, vi_tri_hoa_linh_theo_phai, vi_tri_thien_tru_theo_phai,
 )
 
 # ---------------------------------------------------------------------------
@@ -236,19 +243,28 @@ def _can_chi_cua_cung(can_thang_gieng: int, vi_tri: int) -> str:
 # ---------------------------------------------------------------------------
 
 
-def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gio_chi_idx: int) -> Dict:
+def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gio_chi_idx: int,
+                    schools: Optional[Dict] = None) -> Dict:
     """Lập lá số Tử Vi từ ngày sinh dương lịch và chỉ số chi giờ sinh (0 Tý
     tới 11 Hợi). ``gioi_tinh`` là "Nam" hoặc "Nữ". Đầu vào sai thì ném ValueError.
 
-    Trả dict mang đúng khoá của lõi Go (bỏ phần chữ diễn giải, lời rào và ghi
-    chú giờ Tý)."""
+    ``schools``: lựa chọn phái (school options, khoá camelCase: fireBell,
+    leapMonth, transformations, heavenlyKitchen, injuryMessenger; xem
+    ``tu_vi_schools`` và docs/schools.md). Vắng hay toàn mặc định thì ra đúng
+    lá số mặc định; giá trị lạ ném ValueError.
+
+    Trả dict mang đúng khoá của lõi Go (bỏ phần chữ diễn giải; có lời rào
+    caveat và ghi chú giờ Tý như bản TS)."""
+    tc = normalize_zi_wei_schools(schools)
     if gioi_tinh not in ("Nam", "Nữ"):
         raise ValueError('gioiTinh phải là "Nam" hoặc "Nữ"')
     if not isinstance(gio_chi_idx, int) or gio_chi_idx < 0 or gio_chi_idx > 11:
         raise ValueError("gioSinhChiIdx phải trong khoảng 0-11")
 
     lunar = solar_to_lunar(dd, mm, yyyy, 7)
-    am_nam, am_thang, am_ngay = lunar["year"], lunar["month"], lunar["day"]
+    am_nam, am_ngay = lunar["year"], lunar["day"]
+    # Tháng an sao: người sinh tháng nhuận theo lựa chọn leapMonth.
+    am_thang = thang_an_theo_phai(lunar, tc.get("leapMonth") if tc else None)
 
     can_nam = mod(am_nam - 4, 10)
     chi_nam = mod(am_nam - 4, 12)
@@ -308,9 +324,19 @@ def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gi
     star_pos["Thiên Khốc"] = vi_tri_thien_khoc(chi_nam)
     star_pos["Thiên Hư"] = vi_tri_thien_hu(chi_nam)
     star_pos["Đẩu Quân"] = vi_tri_dau_quan(chi_nam, am_thang, gio_chi_idx)
+    # Ba mươi mốt sao thêm 19/11/2026 (Hỏa Linh, tạp diệu), tu_vi_sao_phu_them.py.
+    star_pos.update(vi_tri_sao_phu_them(can_nam, chi_nam, am_thang, gio_chi_idx, am_duong_nam_nu,
+                                        cung_menh, vt_loc_ton))
+    if tc:
+        # Lựa chọn phái (tu_vi_schools): Hỏa Linh, Thiên Trù, Thiên Thương Thiên Sứ.
+        star_pos["Hỏa Tinh"], star_pos["Linh Tinh"] = vi_tri_hoa_linh_theo_phai(
+            chi_nam, gio_chi_idx, am_duong_nam_nu, gioi_tinh == "Nữ", tc.get("fireBell"))
+        star_pos["Thiên Trù"] = vi_tri_thien_tru_theo_phai(can_nam, tc.get("heavenlyKitchen"))
+        if tc.get("injuryMessenger") == "zhongzhou" and am_duong_nam_nu < 0:
+            star_pos["Thiên Thương"], star_pos["Thiên Sứ"] = star_pos["Thiên Sứ"], star_pos["Thiên Thương"]
 
-    # Tứ Hóa theo can năm sinh
-    tu_hoa_of = {sao: hoa for sao, hoa in zip(TU_HOA_THEO_CAN[can_nam], TEN_HOA)}
+    # Tứ Hóa theo can năm sinh (hàng can Canh theo lựa chọn transformations)
+    tu_hoa_of = {sao: hoa for sao, hoa in zip(tu_hoa_theo_phai(can_nam, tc.get("transformations") if tc else None), TEN_HOA)}
 
     # Tuần, Triệt
     triet = TRIET_THEO_CAN[can_nam]
@@ -319,64 +345,96 @@ def lap_la_so_tu_vi(ho_ten: str, gioi_tinh: str, dd: int, mm: int, yyyy: int, gi
 
     cung: List[Dict] = []
     for i in range(12):
-        ten_vi, ten_en = TEN_CUNG_THEO_OFFSET[mod(cung_menh - i, 12)]
+        ten_vi, ten_en, ten_zh = TEN_CUNG_THEO_OFFSET[mod(cung_menh - i, 12)]
+        can_chi = _can_chi_cua_cung(can_thang_gieng, i)
         cung.append({
             "viTri": i,
             "chi": DIA_CHI[i],
-            "canChi": _can_chi_cua_cung(can_thang_gieng, i),
+            "chiZh": zh_cua(DIA_CHI[i]),
+            "canChi": can_chi,
+            "canChiZh": zh_cua(can_chi),
             "tenCung": ten_vi,
             "tenCungEn": ten_en,
+            "tenCungZh": ten_zh,
             "laThan": i == cung_than,
             "tuanTrung": i in tuan,
             "trietLo": i in triet,
             "sao": [],
         })
 
-    def them_sao(pos: int, ten: str, ten_en: str, loai: str, ten_zh: str = "") -> None:
+    def them_sao(pos: int, ten: str, ten_en: str, ten_zh: str, loai: str) -> None:
         s = {"ten": ten, "tenEn": ten_en}
         if ten_zh:
             s["tenZh"] = ten_zh
         s["loai"] = loai
+        if loai == "phu-tinh":
+            s["nhom"] = nhom_cua_phu_tinh(ten)
         dig = CHINH_TINH_DIGNITY.get(ten)
         if dig is not None:
-            vi, en = DIGNITY_LABEL[dig[pos]]
-            s["mieuVuong"], s["mieuVuongEn"] = vi, en
+            vi, en, zh = DIGNITY_LABEL[dig[pos]]
+            s["mieuVuong"], s["mieuVuongEn"], s["mieuVuongZh"] = vi, en, zh
         if ten in tu_hoa_of:
             s["tuHoa"] = tu_hoa_of[ten]
+            s["tuHoaZh"] = zh_cua(tu_hoa_of[ten])
         cung[pos]["sao"].append(s)
 
     for ten in TEN_CHINH_TINH:
-        them_sao(star_pos[ten], ten, CHINH_TINH_NAME_EN[ten], "chinh-tinh")
+        them_sao(star_pos[ten], ten, CHINH_TINH_NAME_EN[ten], CHINH_TINH_NAME_ZH[ten], "chinh-tinh")
     for ten in TEN_PHU_TINH:
-        them_sao(star_pos[ten], ten, PHU_TINH_NAME_EN[ten], "phu-tinh")
+        them_sao(star_pos[ten], ten, PHU_TINH_NAME_EN[ten], PHU_TINH_NAME_ZH[ten], "phu-tinh")
     for ten in TEN_SAO_PHU_MOI:
         en, zh = TEN_SAO_PHU_MOI_BA_THU[ten]
-        them_sao(star_pos[ten], ten, en, "phu-tinh", zh)
+        them_sao(star_pos[ten], ten, en, zh, "phu-tinh")
+    for ten, en, zh, _ in SAO_PHU_THEM:
+        them_sao(star_pos[ten], ten, en, zh, "phu-tinh")
     # Vòng Tràng Sinh theo âm dương năm và giới (Dương Nam, Âm Nữ thuận).
     for i in range(12):
-        vi, en = TEN_VONG_TRUONG_SINH[i]
-        them_sao(mod(vt_trang_sinh + am_duong_nam_nu * i, 12), vi, en, "truong-sinh")
+        vi, en, zh = TEN_VONG_TRUONG_SINH[i]
+        them_sao(mod(vt_trang_sinh + am_duong_nam_nu * i, 12), vi, en, zh, "truong-sinh")
     # Vòng Thái Tuế luôn thuận.
     for i in range(12):
-        vi, en = TEN_VONG_THAI_TUE[i]
-        them_sao(vi_tri_sao_thai_tue(chi_nam, i), vi, en, "thai-tue")
+        vi, en, zh = TEN_VONG_THAI_TUE[i]
+        them_sao(vi_tri_sao_thai_tue(chi_nam, i), vi, en, zh, "thai-tue")
     for i in range(12):
-        vi, en = TEN_VONG_BAC_SY[i]
-        them_sao(mod(vt_loc_ton + am_duong_nam_nu * i, 12), vi, en, "bac-sy")
+        vi, en, zh = TEN_VONG_BAC_SY[i]
+        them_sao(mod(vt_loc_ton + am_duong_nam_nu * i, 12), vi, en, zh, "bac-sy")
 
-    return {
+    la_so = {
         "hoTen": ho_ten,
         "gioiTinh": gioi_tinh,
         "ngaySinhDuong": {"ngay": dd, "thang": mm, "nam": yyyy},
         "ngaySinhAm": dict(lunar),
         "gioSinh": DIA_CHI[gio_chi_idx],
+        "gioSinhZh": zh_cua(DIA_CHI[gio_chi_idx]),
         "canChiNam": THIEN_CAN[can_nam] + " " + DIA_CHI[chi_nam],
+        "canChiNamZh": zh_cua(THIEN_CAN[can_nam] + " " + DIA_CHI[chi_nam]),
         "amDuongMenh": am_duong_menh,
+        "amDuongMenhEn": en_cua(am_duong_menh),
+        "amDuongMenhZh": zh_cua(am_duong_menh),
         "cuc": cuc_so,
         "tenCuc": ten_cuc,
+        "tenCucEn": TEN_CUC_BA_THU[ten_cuc][0],
+        "tenCucZh": TEN_CUC_BA_THU[ten_cuc][1],
         "banMenhNapAm": ban_menh_ten,
+        "banMenhNapAmEn": en_cua(ban_menh_ten),
+        "banMenhNapAmZh": zh_cua(ban_menh_ten),
         "cungMenh": cung_menh,
         "cungThan": cung_than,
         "menhCungChi": DIA_CHI[cung_menh],
+        "menhCungChiZh": zh_cua(DIA_CHI[cung_menh]),
         "cung": cung,
+        "caveat": CAVEAT_TU_VI["vi"],
+        "caveatEn": CAVEAT_TU_VI["en"],
+        "caveatZh": CAVEAT_TU_VI["zh"],
     }
+    if gio_chi_idx == 0:
+        la_so["ghiChuGioTy"] = GHI_CHU_GIO_TY_TU_VI["vi"]
+        la_so["ghiChuGioTyEn"] = GHI_CHU_GIO_TY_TU_VI["en"]
+        la_so["ghiChuGioTyZh"] = GHI_CHU_GIO_TY_TU_VI["zh"]
+    if tc:
+        cv = caveat_theo_phai(tc, bool(lunar.get("leap")), can_nam == 9, am_duong_nam_nu < 0)
+        la_so["caveat"], la_so["caveatEn"], la_so["caveatZh"] = cv["vi"], cv["en"], cv["zh"]
+        la_so["schools"] = dict(tc)
+        if am_thang != lunar["month"]:
+            la_so["placementMonth"] = am_thang
+    return la_so

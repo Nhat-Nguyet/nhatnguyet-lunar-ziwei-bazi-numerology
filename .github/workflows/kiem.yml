@@ -1,22 +1,26 @@
-name: Kiểm ca kiểm
+name: Tests
 on:
   push:
   pull_request:
+permissions:
+  contents: read
 jobs:
   typescript:
+    name: TypeScript (17,291 test vectors)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm install --ignore-scripts
+      - run: npm install --ignore-scripts --no-audit --no-fund
         working-directory: js
       - run: npm test
         working-directory: js
       - run: npm run build
         working-directory: js
   python:
+    name: Python ${{ matrix.python }} (17,291 test vectors)
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -29,3 +33,68 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests
         working-directory: python
+  readme:
+    name: README code (local packages)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: The seven READMEs agree
+        run: node cong-cu/kiem-readme.mjs
+      - run: npm install --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - name: Every README example prints what the README shows
+        run: node .github/scripts/run-readme-code.mjs
+  datasets:
+    name: Terminology and AI evaluation set follow the libraries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - name: Every name the libraries output is in the terminology; files are regenerated
+        run: node --conditions=source --test du-lieu/terminology/check.test.mjs
+      - name: Every AI evaluation answer is recomputed by the engine; the scorer passes its self-test
+        run: node --conditions=source --test ai-eval/check.test.mjs
+  docs:
+    name: API reference is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - run: npm run docs
+        working-directory: js
+      - name: docs/api matches the sources
+        run: |
+          if [ -n "$(git status --porcelain -- docs/api)" ]; then
+            git status --short -- docs/api
+            git diff --stat -- docs/api
+            echo "::error::docs/api is out of date. Run 'npm run docs' in js/ and commit the result."
+            exit 1
+          fi
+  versions:
+    name: Versions agree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node .github/scripts/release-tools.mjs check

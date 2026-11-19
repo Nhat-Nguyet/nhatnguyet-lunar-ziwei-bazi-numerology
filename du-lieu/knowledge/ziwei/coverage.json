@@ -1,0 +1,77 @@
+{
+  "dataset": "nhatnguyet/ziwei-knowledge",
+  "engine_version": "2.2.0",
+  "tables": [
+    {
+      "table": "major-star-in-palace",
+      "rows": 2016,
+      "rows_with_site_text": 2016,
+      "rows_with_classical": 1656,
+      "classical_links": 2188,
+      "distinct_passages": 362,
+      "description": "One row per major star, palace and earthly branch: the brightness the star has at that branch and the site's reading of the star in that palace, with the classical passages the reading engine looks up for it."
+    },
+    {
+      "table": "minor-star-in-palace",
+      "rows": 662,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 107,
+      "classical_links": 135,
+      "distinct_passages": 135,
+      "description": "One row per minor star (or the void markers Tuần and Triệt) and palace, as met on real charts, with the classical passages looked up for the star in that palace."
+    },
+    {
+      "table": "star",
+      "rows": 71,
+      "rows_with_site_text": 11,
+      "rows_with_classical": 36,
+      "classical_links": 292,
+      "distinct_passages": 292,
+      "description": "One row per star: how the site places it (minor stars) and the classical passages about the star itself."
+    },
+    {
+      "table": "four-transformations",
+      "rows": 4,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 4,
+      "classical_links": 19,
+      "distinct_passages": 19,
+      "description": "One row per transformation (Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ) with the classical passages about it."
+    },
+    {
+      "table": "pattern",
+      "rows": 34,
+      "rows_with_site_text": 34,
+      "rows_with_classical": 28,
+      "classical_links": 77,
+      "distinct_passages": 77,
+      "description": "One row per named chart pattern the engine recognises: the site's description, the annotation of the Tử Vi Đẩu Số Toàn Thư where it lists the pattern, and the classical passages under the pattern's name."
+    }
+  ],
+  "distinct_site_texts": 696,
+  "distinct_passages": 885,
+  "books": [
+    {
+      "book_title": "紫微斗数全书 (Tử Vi Đẩu Số Toàn Thư)",
+      "author_vi": "truyền thống quy cho 陈抟 (陈希夷, Trần Đoàn) soạn; 罗洪先 (La Hồng Tiên) đề tựa năm 嘉靖庚戌 (1550) và biên",
+      "author_en": "traditionally attributed to Chen Tuan (Chen Xiyi); preface (Jiajing gengxu year, 1550) and editing by Luo Hongxian",
+      "passages": 874
+    },
+    {
+      "book_title": "新鋟希夷陈先生紫微斗数全书（明南阳堂刊本） (Tử Vi Đẩu Số Toàn Thư, bản khắc Minh Nam Dương Đường: lời chú Cốt Tủy Phú và các bài luận cách)",
+      "author_vi": "truyền thống quy cho 陈抟; 潘希尹 bổ tập",
+      "author_en": "traditionally attributed to Chen Tuan; supplemented by Pan Xiyin",
+      "passages": 11
+    }
+  ],
+  "passages_with_author_en": 885,
+  "passages_without_author_en": 0,
+  "public_domain_passages_in_store": 1502,
+  "public_domain_passages_linked": 847,
+  "rules": 3,
+  "omitted_tables_no_content": [],
+  "scan": {
+    "charts_scanned": 1761936,
+    "day_step": 1
+  }
+}

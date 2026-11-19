@@ -6,7 +6,7 @@
 // (cach-cuc-toan-thu.ts).
 
 import { DIA_CHI, mod } from "./phu-thuoc.ts";
-import { CHINH_TINH_DIGNITY, saoZh } from "./du-lieu.ts";
+import { CHINH_TINH_DIGNITY, saoZh, tenCungBaThu, zhCua } from "./du-lieu.ts";
 import { chinhTinhTaiViTri, coDu, saoTaiViTri, saoTamPhuongTuChinh, tenCungTaiViTri, viTriSao } from "./tra-cuu.ts";
 import { cachCucBa, cachCucToanThu } from "./cach-cuc-toan-thu.ts";
 import type { CachCuc } from "./cach-cuc-toan-thu.ts";
@@ -200,7 +200,7 @@ export function nhanDienCachCuc(laSo: LaSoTuVi): CachCuc[] {
     them(c);
   }
   if (coDu(hoiMenh, "Tả Phù", "Hữu Bật")) {
-    them(cachCucBa("Tả Hữu đồng hội", "左右", "左右", {
+    them(cachCucBa("Tả Hữu đồng hội", "左右同会", "左右同會", {
       vi: "Tả Phù và Hữu Bật cùng hội về tam phương tứ chính của cung Mệnh",
       en: "Tả Phù and Hữu Bật both gather in the triangle and opposite of the Mệnh palace",
       zh: "左辅、右弼同会于命宫的三方四正",
@@ -212,7 +212,7 @@ export function nhanDienCachCuc(laSo: LaSoTuVi): CachCuc[] {
   }
   // Không Kiếp: nêu cả cách nghịch để không bày một nửa dữ kiện.
   if (coDu(hoiMenh, "Địa Không", "Địa Kiếp")) {
-    them(cachCucBa("Không Kiếp đồng hội", "空劫", "空劫", {
+    them(cachCucBa("Không Kiếp đồng hội", "空劫同会", "空劫同會", {
       vi: "Địa Không và Địa Kiếp cùng hội về tam phương tứ chính của cung Mệnh",
       en: "Địa Không and Địa Kiếp both gather in the triangle and opposite of the Mệnh palace",
       zh: "地空、地劫同会于命宫的三方四正",
@@ -223,7 +223,20 @@ export function nhanDienCachCuc(laSo: LaSoTuVi): CachCuc[] {
     }));
   }
 
-  return out.concat(cachCucToanThu(ls));
+  const ra = out.concat(cachCucToanThu(ls));
+  // Tên cung ba thứ tiếng gắn một chỗ cho mọi cách cục, kể cả bảng toàn thư.
+  for (const c of ra) {
+    if (c.tenCung) {
+      const cb = tenCungBaThu(c.tenCung);
+      if (cb.en) c.tenCungEn = cb.en;
+      if (cb.zh) c.tenCungZh = cb.zh;
+    }
+    if (c.chiCung) {
+      const z = zhCua(c.chiCung);
+      if (z) c.chiCungZh = z;
+    }
+  }
+  return ra;
 }
 
 /** Một dòng liệt kê tên các cách cục, nối bằng dấu phẩy. */

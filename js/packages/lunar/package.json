@@ -1,0 +1,71 @@
+{
+  "name": "@nhatnguyet/lunar",
+  "version": "0.3.0",
+  "description": "Vietnamese lunar calendar (also Chinese, Korean, Japanese), sexagenary cycle, 24 solar terms within 1 minute of IMCCE, 28 lunar mansions. English-named alias of @nhatnguyet/am-lich.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "lunar calendar",
+    "vietnamese lunar calendar",
+    "chinese calendar",
+    "korean lunar calendar",
+    "solar terms",
+    "sexagenary cycle",
+    "tet",
+    "lunar new year",
+    "vietnamese calendar",
+    "chinese lunar calendar",
+    "lunisolar calendar",
+    "japanese lunar calendar",
+    "lunar date converter",
+    "24 solar terms",
+    "jieqi",
+    "heavenly stems",
+    "earthly branches",
+    "chinese zodiac",
+    "lich am",
+    "am lich",
+    "âm lịch",
+    "lich van nien",
+    "can chi",
+    "tiet khi",
+    "农历",
+    "阴历",
+    "干支",
+    "二十四节气",
+    "越南农历",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
+  ],
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/lunar"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  }
+}

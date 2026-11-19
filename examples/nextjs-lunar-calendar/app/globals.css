@@ -1,0 +1,35 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fffdf8;
+  --fg: #1f2933;
+  --muted: #5f6b76;
+  --line: #e4ddd0;
+  --accent: #1f6f6b;
+  --today: #fdecc8;
+  font-family: system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14181c; --fg: #e8e6e1; --muted: #a3acb5; --line: #2f363d; --accent: #6cc4bd; --today: #3b3220; }
+}
+body { margin: 0; background: var(--bg); color: var(--fg); }
+main { max-width: 760px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.6rem; }
+.muted, footer { color: var(--muted); }
+footer { margin-top: 32px; font-size: 0.875rem; }
+a { color: var(--accent); }
+.today { border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; }
+.big { font-size: 1.3rem; font-weight: 600; }
+.nav { display: flex; align-items: center; justify-content: space-between; }
+.nav button, form button { min-height: 44px; min-width: 44px; font: inherit; }
+.grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.grid th { font-size: 0.8rem; color: var(--muted); padding: 4px 0; }
+.grid td { border: 1px solid var(--line); vertical-align: top; padding: 4px; height: 3.6rem; }
+.grid td.is-today { background: var(--today); }
+.solar { display: block; font-weight: 600; }
+.lunar { display: block; font-size: 0.75rem; color: var(--muted); }
+.term { display: block; font-size: 0.7rem; color: var(--accent); line-height: 1.1; }
+form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+label { display: grid; gap: 4px; font-size: 0.875rem; }
+input, select { font: inherit; min-height: 44px; padding: 0 8px; }
+.error { color: #b91c3b; }
+.chart svg { display: block; width: 100%; height: auto; margin-top: 16px; }

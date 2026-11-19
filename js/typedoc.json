@@ -1,0 +1,54 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Nhat Nguyet API reference",
+  "entryPoints": [
+    "typedoc/am-lich.ts",
+    "typedoc/tu-vi.ts",
+    "typedoc/bat-tu.ts",
+    "typedoc/than-so-hoc.ts",
+    "typedoc/le-hoi.ts",
+    "typedoc/cli.ts"
+  ],
+  "tsconfig": "tsconfig.typedoc.json",
+  "plugin": [
+    "typedoc-plugin-markdown"
+  ],
+  "out": "../docs/api",
+  "cleanOutputDir": true,
+  "readme": "none",
+  "entryFileName": "README.md",
+  "outputFileStrategy": "modules",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "hidePageHeader": true,
+  "hideBreadcrumbs": false,
+  "useCodeBlocks": true,
+  "expandObjects": false,
+  "parametersFormat": "table",
+  "interfacePropertiesFormat": "table",
+  "typeDeclarationFormat": "table",
+  "enumMembersFormat": "table",
+  "indexFormat": "table",
+  "sort": [
+    "kind",
+    "source-order"
+  ],
+  "validation": {
+    "notExported": false,
+    "invalidLink": true,
+    "notDocumented": true
+  },
+  "treatWarningsAsErrors": true,
+  "disableSources": true,
+  "groupOrder": [
+    "Functions",
+    "Variables",
+    "Interfaces",
+    "Type Aliases",
+    "*"
+  ],
+  "requiredToBeDocumented": [
+    "Function"
+  ]
+}

@@ -1,18 +1,51 @@
 cff-version: 1.2.0
-title: "Nhật Nguyệt: mã và dữ liệu mở về Tử Vi, Bát Tự, Thần số học"
-message: "Dữ liệu: Nhật Nguyệt (nhatnguyet.org). Khi dùng, xin trích dẫn như sau."
+title: "Nhat Nguyet: open source code and data for Zi Wei Dou Shu, BaZi and numerology"
+message: "If you use this software or its data, please cite it as below. Credit line: Data: Nhat Nguyet (nhatnguyet.org)."
 type: software
 authors:
-  - name: "Nhật Nguyệt"
+  - name: "Nhat Nguyet"
     website: "https://nhatnguyet.org"
-repository-code: "https://github.com/Nhat-Nguyet/nhatnguyet"
-url: "https://nhatnguyet.org/ma-nguon-mo"
+version: "0.3.0"
+doi: "10.5281/zenodo.24358013"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24358013"
+    description: "Concept DOI, resolves to the latest version"
+repository-code: "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology"
+url: "https://nhatnguyet.org/en/ma-nguon-mo"
 license: MIT
+abstract: >-
+  TypeScript and Python libraries, a command line tool, an MCP server and 5
+  web components for the Vietnamese lunar calendar (Hanoi time, UTC+7) and
+  the Chinese, Korean and Japanese ones, the 24 solar terms, auspicious hours,
+  Zi Wei Dou Shu, BaZi, Pythagorean numerology and 206 Vietnamese festivals,
+  with an English API and named school options where the books disagree.
+  Every result reproduces the engine behind nhatnguyet.org (engine 2.2.0)
+  and is checked by 18,819 shared test vectors. The calendar is checked
+  against NASA new moons and IMCCE solar terms from 1900 to 2100; on 2,724
+  of those 73,414 days the Vietnamese lunar date differs from
+  lunar-javascript. Code is MIT; data, readings and test vectors are CC BY
+  4.0.
 keywords:
-  - tu vi
   - zi wei dou shu
+  - tu vi
   - bazi
+  - four pillars of destiny
   - numerology
   - vietnamese lunar calendar
   - chinese calendar
+  - solar terms
+  - auspicious hours
+  - vietnamese festivals
+  - test vectors
   - open data
+references:
+  - type: report
+    title: "Computing the Vietnamese lunisolar calendar: method, verification against NASA, IMCCE and JPL DE440, and differences from the Chinese calendar (1900–2100)"
+    authors:
+      - name: "Nhat Nguyet"
+        website: "https://nhatnguyet.org"
+    year: 2026
+    month: 11
+    notes: "Technical report of the project, version 3. Method and verification of the calendar computed by these libraries; every number is reproduced by docs/paper/reproduce.sh."
+    url: "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/blob/main/docs/paper/paper.pdf"

@@ -3,6 +3,8 @@
 
 import { mod } from "./phu-thuoc.ts";
 import { chinhTinhCuaCung } from "./tra-cuu.ts";
+import { tenCungBaThu, zhCua } from "./du-lieu.ts";
+import { noiTenSao } from "./sao-phu.ts";
 import type { LaSoTuVi, SaoTuVi } from "./kieu.ts";
 
 /** Một sao chiếu tới cung đang xét, kèm cung nó đang toạ. */
@@ -46,13 +48,17 @@ export interface ChangDaiVan {
   thu: number;
   viTri: number;
   chi: string;
+  chiZh: string;
   tenCung: string;
   tenCungEn: string;
+  tenCungZh: string;
   /** Tuổi mụ. */
   tuTuoi: number;
   denTuoi: number;
-  /** Vắng khi cung vô chính diệu. */
+  /** Vắng khi cung vô chính diệu. Bản Anh nối ", ", bản Trung nối "、". */
   chinhTinh?: string;
+  chinhTinhEn?: string;
+  chinhTinhZh?: string;
 }
 
 function saoToChieu(s: SaoTuVi, chiCung: string): SaoChieu {
@@ -128,12 +134,17 @@ export function daiVan(laSo: LaSoTuVi): ChangDaiVan[] {
     const c = laSo.cung[pos];
     const tu = laSo.cuc + k * 10;
     const chang: ChangDaiVan = {
-      thu: k + 1, viTri: c.viTri, chi: c.chi,
-      tenCung: c.tenCung, tenCungEn: c.tenCungEn,
+      thu: k + 1, viTri: c.viTri, chi: c.chi, chiZh: zhCua(c.chi),
+      tenCung: c.tenCung, tenCungEn: c.tenCungEn, tenCungZh: tenCungBaThu(c.tenCung).zh,
       tuTuoi: tu, denTuoi: tu + 9,
     };
     const ct = chinhTinhCuaCung(laSo, pos);
-    if (ct) chang.chinhTinh = ct;
+    if (ct) {
+      const ba = noiTenSao(ct);
+      chang.chinhTinh = ct;
+      chang.chinhTinhEn = ba.en;
+      chang.chinhTinhZh = ba.zh;
+    }
     out.push(chang);
   }
   return out;

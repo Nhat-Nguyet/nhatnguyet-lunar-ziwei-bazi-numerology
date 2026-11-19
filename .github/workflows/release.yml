@@ -1,0 +1,141 @@
+# Publishes a release when a tag vX.Y.Z is pushed: npm packages with provenance
+# (trusted publishing through GitHub OIDC, NPM_TOKEN as a fallback), the Python
+# package through PyPI trusted publishing, then the GitHub release with the
+# notes of CHANGELOG.md, then checks the README against what was published.
+# Steps and the one-time setup: RELEASING.md.
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  check:
+    name: Check versions and run the tests
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - id: v
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+      - name: Tag, package.json files, pyproject, CITATION and CHANGELOG agree
+        run: node .github/scripts/release-tools.mjs check "${{ steps.v.outputs.version }}"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - run: npm test
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - run: python -m unittest discover -s tests
+        working-directory: python
+      - name: README examples against the local packages
+        run: node .github/scripts/run-readme-code.mjs
+
+  npm:
+    name: Publish to npm
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/org/nhatnguyet
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: npm 11.5.1 or newer (trusted publishing)
+        run: npm install -g npm@11.21.2
+      - run: npm install --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - name: Publish, dependencies first, English-named aliases last
+        working-directory: js
+        env:
+          VERSION: ${{ needs.check.outputs.version }}
+          # Empty unless the fallback secret is set; with a trusted publisher
+          # configured on npmjs.com, npm uses the OIDC token instead.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          tag=latest
+          case "$VERSION" in *-*) tag=next ;; esac
+          for pkg in $(node ../.github/scripts/release-tools.mjs order); do
+            if npm view "$pkg@$VERSION" version >/dev/null 2>&1; then
+              echo "$pkg@$VERSION is already on npm, skipping"
+              continue
+            fi
+            npm publish -w "$pkg" --provenance --access public --tag "$tag"
+          done
+
+  pypi:
+    name: Publish to PyPI
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/nhatnguyet/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build sdist and wheel
+        working-directory: python
+        run: |
+          python -m pip install build==1.6.1
+          python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist
+          skip-existing: true
+
+  github-release:
+    name: GitHub release
+    needs: [check, npm, pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Release notes from CHANGELOG.md
+        run: node .github/scripts/release-tools.mjs notes "${{ needs.check.outputs.version }}" > "$RUNNER_TEMP/notes.md"
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ needs.check.outputs.version }}
+        run: |
+          pre=""
+          case "$VERSION" in *-*) pre="--prerelease" ;; esac
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" --title "v$VERSION" --notes-file "$RUNNER_TEMP/notes.md"
+          else
+            gh release create "$TAG" --verify-tag --title "v$VERSION" --notes-file "$RUNNER_TEMP/notes.md" $pre
+          fi
+
+  published:
+    name: README against the published packages
+    needs: [check, github-release]
+    uses: ./.github/workflows/published.yml
+    with:
+      version: ${{ needs.check.outputs.version }}

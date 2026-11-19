@@ -1,0 +1,202 @@
+year,year_name_vi,tet_utc7,tet_utc8,tet_beijing_meridian,utc7_utc8_differ,diff_days,nasa_new_moon_ut,split,rule_north,rule_south,tet_by_rule_north,tet_by_rule_south,tet_as_used_north,tet_as_used_south,as_used_status,sources
+1900,Canh Tý,1900-01-31,1900-01-31,1900-01-31,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1901,Tân Sửu,1901-02-19,1901-02-19,1901-02-19,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1902,Nhâm Dần,1902-02-08,1902-02-08,1902-02-08,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1903,Quý Mão,1903-01-28,1903-01-29,1903-01-29,1,-1,1903-01-28 16:39,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4 S10
+1904,Giáp Thìn,1904-02-16,1904-02-16,1904-02-16,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1905,Ất Tỵ,1905-02-04,1905-02-04,1905-02-04,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1906,Bính Ngọ,1906-01-25,1906-01-25,1906-01-25,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1907,Đinh Mùi,1907-02-13,1907-02-13,1907-02-13,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1908,Mậu Thân,1908-02-02,1908-02-02,1908-02-02,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1909,Kỷ Dậu,1909-01-22,1909-01-22,1909-01-22,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1910,Canh Tuất,1910-02-10,1910-02-10,1910-02-10,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1911,Tân Hợi,1911-01-30,1911-01-30,1911-01-30,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1912,Nhâm Tý,1912-02-18,1912-02-18,1912-02-18,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1913,Quý Sửu,1913-02-06,1913-02-06,1913-02-06,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1914,Giáp Dần,1914-01-26,1914-01-26,1914-01-26,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1915,Ất Mão,1915-02-14,1915-02-14,1915-02-14,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1916,Bính Thìn,1916-02-03,1916-02-04,1916-02-03,1,-1,1916-02-03 16:05,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4 S10
+1917,Đinh Tỵ,1917-01-23,1917-01-23,1917-01-23,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1918,Mậu Ngọ,1918-02-11,1918-02-11,1918-02-11,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1919,Kỷ Mùi,1919-02-01,1919-02-01,1919-02-01,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1920,Canh Thân,1920-02-20,1920-02-20,1920-02-20,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1921,Tân Dậu,1921-02-08,1921-02-08,1921-02-08,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1922,Nhâm Tuất,1922-01-28,1922-01-28,1922-01-28,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1923,Quý Hợi,1923-02-16,1923-02-16,1923-02-16,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1924,Giáp Tý,1924-02-05,1924-02-05,1924-02-05,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1925,Ất Sửu,1925-01-24,1925-01-24,1925-01-24,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1926,Bính Dần,1926-02-13,1926-02-13,1926-02-13,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1927,Đinh Mão,1927-02-02,1927-02-02,1927-02-02,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1928,Mậu Thìn,1928-01-23,1928-01-23,1928-01-23,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1929,Kỷ Tỵ,1929-02-10,1929-02-10,1929-02-10,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1930,Canh Ngọ,1930-01-30,1930-01-30,1930-01-30,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1931,Tân Mùi,1931-02-17,1931-02-17,1931-02-17,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1932,Nhâm Thân,1932-02-06,1932-02-06,1932-02-06,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1933,Quý Dậu,1933-01-26,1933-01-26,1933-01-26,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1934,Giáp Tuất,1934-02-14,1934-02-14,1934-02-14,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1935,Ất Hợi,1935-02-03,1935-02-04,1935-02-04,1,-1,1935-02-03 16:27,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4 S10
+1936,Bính Tý,1936-01-24,1936-01-24,1936-01-24,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1937,Đinh Sửu,1937-02-11,1937-02-11,1937-02-11,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1938,Mậu Dần,1938-01-31,1938-01-31,1938-01-31,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1939,Kỷ Mão,1939-02-19,1939-02-19,1939-02-19,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1940,Canh Thìn,1940-02-08,1940-02-08,1940-02-08,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1941,Tân Tỵ,1941-01-27,1941-01-27,1941-01-27,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1942,Nhâm Ngọ,1942-02-15,1942-02-15,1942-02-15,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1943,Quý Mùi,1943-02-05,1943-02-05,1943-02-05,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1944,Giáp Thân,1944-01-25,1944-01-25,1944-01-25,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1945,Ất Dậu,1945-02-13,1945-02-13,1945-02-13,0,0,,0,nguyen-court-calendar,nguyen-court-calendar,,,,,computed (no historical source),S4
+1946,Bính Tuất,1946-02-02,1946-02-02,1946-02-02,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1946-02-02,1946-02-02,,,computed (no historical source),S1 S2
+1947,Đinh Hợi,1947-01-22,1947-01-22,1947-01-22,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1947-01-22,1947-01-22,,,computed (no historical source),S1 S2
+1948,Mậu Tý,1948-02-10,1948-02-10,1948-02-10,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1948-02-10,1948-02-10,,,computed (no historical source),S1 S2
+1949,Kỷ Sửu,1949-01-29,1949-01-29,1949-01-29,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1949-01-29,1949-01-29,,,computed (no historical source),S1 S2
+1950,Canh Dần,1950-02-17,1950-02-17,1950-02-17,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1950-02-17,1950-02-17,,,computed (no historical source),S1 S2
+1951,Tân Mão,1951-02-06,1951-02-06,1951-02-06,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1951-02-06,1951-02-06,,,computed (no historical source),S1 S2
+1952,Nhâm Thìn,1952-01-27,1952-01-27,1952-01-27,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1952-01-27,1952-01-27,,,computed (no historical source),S1 S2
+1953,Quý Tỵ,1953-02-14,1953-02-14,1953-02-14,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1953-02-14,1953-02-14,,,computed (no historical source),S1 S2
+1954,Giáp Ngọ,1954-02-03,1954-02-03,1954-02-03,0,0,,0,beijing-meridian-116e25,beijing-meridian-116e25,1954-02-03,1954-02-03,,,computed (no historical source),S1 S2
+1955,Ất Mùi,1955-01-24,1955-01-24,1955-01-24,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1955-01-24,1955-01-24,,,computed (no historical source),S1 S2
+1956,Bính Thân,1956-02-12,1956-02-12,1956-02-12,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1956-02-12,1956-02-12,,,computed (no historical source),S1 S2
+1957,Đinh Dậu,1957-01-31,1957-01-31,1957-01-31,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1957-01-31,1957-01-31,,,computed (no historical source),S1 S2
+1958,Mậu Tuất,1958-02-18,1958-02-18,1958-02-18,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1958-02-18,1958-02-18,,,computed (no historical source),S1 S2
+1959,Kỷ Hợi,1959-02-08,1959-02-08,1959-02-08,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1959-02-08,1959-02-08,,,computed (no historical source),S1 S2
+1960,Canh Tý,1960-01-28,1960-01-28,1960-01-28,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1960-01-28,1960-01-28,,,computed (no historical source),S1 S2
+1961,Tân Sửu,1961-02-15,1961-02-15,1961-02-15,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1961-02-15,1961-02-15,,,computed (no historical source),S1 S2
+1962,Nhâm Dần,1962-02-05,1962-02-05,1962-02-05,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1962-02-05,1962-02-05,,,computed (no historical source),S1 S2
+1963,Quý Mão,1963-01-25,1963-01-25,1963-01-25,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1963-01-25,1963-01-25,,,computed (no historical source),S1 S2
+1964,Giáp Thìn,1964-02-13,1964-02-13,1964-02-13,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1964-02-13,1964-02-13,,,computed (no historical source),S1 S2
+1965,Ất Tỵ,1965-02-01,1965-02-02,1965-02-02,1,-1,1965-02-01 16:36,1,beijing-meridian-116e25,beijing-meridian-116e25,1965-02-02,1965-02-02,1965-02-02,,reported (secondary),S1 S2 S6 S10
+1966,Bính Ngọ,1966-01-21,1966-01-21,1966-01-21,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1966-01-21,1966-01-21,,,computed (no historical source),S1 S2
+1967,Đinh Mùi,1967-02-09,1967-02-09,1967-02-09,0,0,,1,beijing-meridian-116e25,beijing-meridian-116e25,1967-02-09,1967-02-09,,,computed (no historical source),S1 S2
+1968,Mậu Thân,1968-01-29,1968-01-30,1968-01-30,1,-1,1968-01-29 16:29,1,utc+7-decision-121-cp,beijing-meridian-116e25,1968-01-29,1968-01-30,1968-01-29,1968-01-30,attested,S1 S2 S10
+1969,Kỷ Dậu,1969-02-16,1969-02-17,1969-02-17,1,-1,1969-02-16 16:25,1,utc+7-decision-121-cp,beijing-meridian-116e25,1969-02-16,1969-02-17,,,computed (no historical source),S1 S2 S10
+1970,Canh Tuất,1970-02-06,1970-02-06,1970-02-06,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1970-02-06,1970-02-06,,,computed (no historical source),S1 S2
+1971,Tân Hợi,1971-01-27,1971-01-27,1971-01-27,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1971-01-27,1971-01-27,,,computed (no historical source),S1 S2
+1972,Nhâm Tý,1972-02-15,1972-02-15,1972-02-15,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1972-02-15,1972-02-15,,,computed (no historical source),S1 S2
+1973,Quý Sửu,1973-02-03,1973-02-03,1973-02-03,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1973-02-03,1973-02-03,,,computed (no historical source),S1 S2
+1974,Giáp Dần,1974-01-23,1974-01-23,1974-01-23,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1974-01-23,1974-01-23,,,computed (no historical source),S1 S2
+1975,Ất Mão,1975-02-11,1975-02-11,1975-02-11,0,0,,1,utc+7-decision-121-cp,beijing-meridian-116e25,1975-02-11,1975-02-11,,,computed (no historical source),S1 S2
+1976,Bính Thìn,1976-01-31,1976-01-31,1976-01-31,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1976-01-31,1976-01-31,,,computed (no historical source),S1
+1977,Đinh Tỵ,1977-02-18,1977-02-18,1977-02-18,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1977-02-18,1977-02-18,,,computed (no historical source),S1
+1978,Mậu Ngọ,1978-02-07,1978-02-07,1978-02-07,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1978-02-07,1978-02-07,,,computed (no historical source),S1
+1979,Kỷ Mùi,1979-01-28,1979-01-28,1979-01-28,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1979-01-28,1979-01-28,,,computed (no historical source),S1
+1980,Canh Thân,1980-02-16,1980-02-16,1980-02-16,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1980-02-16,1980-02-16,,,computed (no historical source),S1
+1981,Tân Dậu,1981-02-05,1981-02-05,1981-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1981-02-05,1981-02-05,,,computed (no historical source),S1
+1982,Nhâm Tuất,1982-01-25,1982-01-25,1982-01-25,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1982-01-25,1982-01-25,,,computed (no historical source),S1
+1983,Quý Hợi,1983-02-13,1983-02-13,1983-02-13,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1983-02-13,1983-02-13,,,computed (no historical source),S1
+1984,Giáp Tý,1984-02-02,1984-02-02,1984-02-02,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1984-02-02,1984-02-02,,,computed (no historical source),S1
+1985,Ất Sửu,1985-01-21,1985-02-20,1985-02-20,1,-30,1985-01-21 02:28,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1985-01-21,1985-01-21,,,computed (no historical source),S1 S10
+1986,Bính Dần,1986-02-09,1986-02-09,1986-02-09,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1986-02-09,1986-02-09,,,computed (no historical source),S1
+1987,Đinh Mão,1987-01-29,1987-01-29,1987-01-29,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1987-01-29,1987-01-29,,,computed (no historical source),S1
+1988,Mậu Thìn,1988-02-17,1988-02-17,1988-02-17,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1988-02-17,1988-02-17,,,computed (no historical source),S1
+1989,Kỷ Tỵ,1989-02-06,1989-02-06,1989-02-06,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1989-02-06,1989-02-06,,,computed (no historical source),S1
+1990,Canh Ngọ,1990-01-27,1990-01-27,1990-01-27,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1990-01-27,1990-01-27,,,computed (no historical source),S1
+1991,Tân Mùi,1991-02-15,1991-02-15,1991-02-15,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1991-02-15,1991-02-15,,,computed (no historical source),S1
+1992,Nhâm Thân,1992-02-04,1992-02-04,1992-02-04,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1992-02-04,1992-02-04,,,computed (no historical source),S1
+1993,Quý Dậu,1993-01-23,1993-01-23,1993-01-23,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1993-01-23,1993-01-23,,,computed (no historical source),S1
+1994,Giáp Tuất,1994-02-10,1994-02-10,1994-02-10,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1994-02-10,1994-02-10,,,computed (no historical source),S1
+1995,Ất Hợi,1995-01-31,1995-01-31,1995-01-31,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1995-01-31,1995-01-31,,,computed (no historical source),S1
+1996,Bính Tý,1996-02-19,1996-02-19,1996-02-19,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1996-02-19,1996-02-19,,,computed (no historical source),S1
+1997,Đinh Sửu,1997-02-07,1997-02-07,1997-02-07,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1997-02-07,1997-02-07,,,computed (no historical source),S1
+1998,Mậu Dần,1998-01-28,1998-01-28,1998-01-28,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1998-01-28,1998-01-28,,,computed (no historical source),S1
+1999,Kỷ Mão,1999-02-16,1999-02-16,1999-02-16,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,1999-02-16,1999-02-16,,,computed (no historical source),S1
+2000,Canh Thìn,2000-02-05,2000-02-05,2000-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2000-02-05,2000-02-05,,,computed (no historical source),S1
+2001,Tân Tỵ,2001-01-24,2001-01-24,2001-01-24,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2001-01-24,2001-01-24,,,computed (no historical source),S1
+2002,Nhâm Ngọ,2002-02-12,2002-02-12,2002-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2002-02-12,2002-02-12,,,computed (no historical source),S1
+2003,Quý Mùi,2003-02-01,2003-02-01,2003-02-01,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2003-02-01,2003-02-01,,,computed (no historical source),S1
+2004,Giáp Thân,2004-01-22,2004-01-22,2004-01-22,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2004-01-22,2004-01-22,,,computed (no historical source),S1
+2005,Ất Dậu,2005-02-09,2005-02-09,2005-02-09,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2005-02-09,2005-02-09,,,computed (no historical source),S1
+2006,Bính Tuất,2006-01-29,2006-01-29,2006-01-29,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2006-01-29,2006-01-29,,,computed (no historical source),S1
+2007,Đinh Hợi,2007-02-17,2007-02-18,2007-02-18,1,-1,2007-02-17 16:14,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2007-02-17,2007-02-17,2007-02-17,2007-02-17,attested,S1 S7 S10
+2008,Mậu Tý,2008-02-07,2008-02-07,2008-02-07,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2008-02-07,2008-02-07,,,computed (no historical source),S1
+2009,Kỷ Sửu,2009-01-26,2009-01-26,2009-01-26,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2009-01-26,2009-01-26,,,computed (no historical source),S1
+2010,Canh Dần,2010-02-14,2010-02-14,2010-02-14,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2010-02-14,2010-02-14,,,computed (no historical source),S1
+2011,Tân Mão,2011-02-03,2011-02-03,2011-02-03,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2011-02-03,2011-02-03,,,computed (no historical source),S1
+2012,Nhâm Thìn,2012-01-23,2012-01-23,2012-01-23,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2012-01-23,2012-01-23,,,computed (no historical source),S1
+2013,Quý Tỵ,2013-02-10,2013-02-10,2013-02-10,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2013-02-10,2013-02-10,,,computed (no historical source),S1
+2014,Giáp Ngọ,2014-01-31,2014-01-31,2014-01-31,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2014-01-31,2014-01-31,,,computed (no historical source),S1
+2015,Ất Mùi,2015-02-19,2015-02-19,2015-02-19,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2015-02-19,2015-02-19,,,computed (no historical source),S1
+2016,Bính Thân,2016-02-08,2016-02-08,2016-02-08,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2016-02-08,2016-02-08,,,computed (no historical source),S1
+2017,Đinh Dậu,2017-01-28,2017-01-28,2017-01-28,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2017-01-28,2017-01-28,,,computed (no historical source),S1
+2018,Mậu Tuất,2018-02-16,2018-02-16,2018-02-16,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2018-02-16,2018-02-16,,,computed (no historical source),S1
+2019,Kỷ Hợi,2019-02-05,2019-02-05,2019-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2019-02-05,2019-02-05,,,computed (no historical source),S1
+2020,Canh Tý,2020-01-25,2020-01-25,2020-01-25,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2020-01-25,2020-01-25,,,computed (no historical source),S1
+2021,Tân Sửu,2021-02-12,2021-02-12,2021-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2021-02-12,2021-02-12,,,computed (no historical source),S1
+2022,Nhâm Dần,2022-02-01,2022-02-01,2022-02-01,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2022-02-01,2022-02-01,,,computed (no historical source),S1
+2023,Quý Mão,2023-01-22,2023-01-22,2023-01-22,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2023-01-22,2023-01-22,,,computed (no historical source),S1
+2024,Giáp Thìn,2024-02-10,2024-02-10,2024-02-10,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2024-02-10,2024-02-10,,,computed (no historical source),S1
+2025,Ất Tỵ,2025-01-29,2025-01-29,2025-01-29,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2025-01-29,2025-01-29,,,computed (no historical source),S1
+2026,Bính Ngọ,2026-02-17,2026-02-17,2026-02-17,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2026-02-17,2026-02-17,,,computed (no historical source),S1
+2027,Đinh Mùi,2027-02-06,2027-02-06,2027-02-06,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2027-02-06,2027-02-06,,,computed (no historical source),S1
+2028,Mậu Thân,2028-01-26,2028-01-26,2028-01-26,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2028-01-26,2028-01-26,,,computed (no historical source),S1
+2029,Kỷ Dậu,2029-02-13,2029-02-13,2029-02-13,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2029-02-13,2029-02-13,,,computed (no historical source),S1
+2030,Canh Tuất,2030-02-02,2030-02-03,2030-02-02,1,-1,2030-02-02 16:07,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2030-02-02,2030-02-02,,,computed (no historical source),S1 S10
+2031,Tân Hợi,2031-01-23,2031-01-23,2031-01-23,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2031-01-23,2031-01-23,,,computed (no historical source),S1
+2032,Nhâm Tý,2032-02-11,2032-02-11,2032-02-11,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2032-02-11,2032-02-11,,,computed (no historical source),S1
+2033,Quý Sửu,2033-01-31,2033-01-31,2033-01-31,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2033-01-31,2033-01-31,,,computed (no historical source),S1
+2034,Giáp Dần,2034-02-19,2034-02-19,2034-02-19,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2034-02-19,2034-02-19,,,computed (no historical source),S1
+2035,Ất Mão,2035-02-08,2035-02-08,2035-02-08,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2035-02-08,2035-02-08,,,computed (no historical source),S1
+2036,Bính Thìn,2036-01-28,2036-01-28,2036-01-28,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2036-01-28,2036-01-28,,,computed (no historical source),S1
+2037,Đinh Tỵ,2037-02-15,2037-02-15,2037-02-15,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2037-02-15,2037-02-15,,,computed (no historical source),S1
+2038,Mậu Ngọ,2038-02-04,2038-02-04,2038-02-04,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2038-02-04,2038-02-04,,,computed (no historical source),S1
+2039,Kỷ Mùi,2039-01-24,2039-01-24,2039-01-24,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2039-01-24,2039-01-24,,,computed (no historical source),S1
+2040,Canh Thân,2040-02-12,2040-02-12,2040-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2040-02-12,2040-02-12,,,computed (no historical source),S1
+2041,Tân Dậu,2041-02-01,2041-02-01,2041-02-01,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2041-02-01,2041-02-01,,,computed (no historical source),S1
+2042,Nhâm Tuất,2042-01-22,2042-01-22,2042-01-22,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2042-01-22,2042-01-22,,,computed (no historical source),S1
+2043,Quý Hợi,2043-02-10,2043-02-10,2043-02-10,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2043-02-10,2043-02-10,,,computed (no historical source),S1
+2044,Giáp Tý,2044-01-30,2044-01-30,2044-01-30,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2044-01-30,2044-01-30,,,computed (no historical source),S1
+2045,Ất Sửu,2045-02-17,2045-02-17,2045-02-17,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2045-02-17,2045-02-17,,,computed (no historical source),S1
+2046,Bính Dần,2046-02-06,2046-02-06,2046-02-06,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2046-02-06,2046-02-06,,,computed (no historical source),S1
+2047,Đinh Mão,2047-01-26,2047-01-26,2047-01-26,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2047-01-26,2047-01-26,,,computed (no historical source),S1
+2048,Mậu Thìn,2048-02-14,2048-02-14,2048-02-14,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2048-02-14,2048-02-14,,,computed (no historical source),S1
+2049,Kỷ Tỵ,2049-02-02,2049-02-02,2049-02-02,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2049-02-02,2049-02-02,,,computed (no historical source),S1
+2050,Canh Ngọ,2050-01-23,2050-01-23,2050-01-23,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2050-01-23,2050-01-23,,,computed (no historical source),S1
+2051,Tân Mùi,2051-02-11,2051-02-11,2051-02-11,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2051-02-11,2051-02-11,,,computed (no historical source),S1
+2052,Nhâm Thân,2052-02-01,2052-02-01,2052-02-01,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2052-02-01,2052-02-01,,,computed (no historical source),S1
+2053,Quý Dậu,2053-02-18,2053-02-19,2053-02-19,1,-1,2053-02-18 16:31,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2053-02-18,2053-02-18,,,computed (no historical source),S1 S10
+2054,Giáp Tuất,2054-02-08,2054-02-08,2054-02-08,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2054-02-08,2054-02-08,,,computed (no historical source),S1
+2055,Ất Hợi,2055-01-28,2055-01-28,2055-01-28,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2055-01-28,2055-01-28,,,computed (no historical source),S1
+2056,Bính Tý,2056-02-15,2056-02-15,2056-02-15,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2056-02-15,2056-02-15,,,computed (no historical source),S1
+2057,Đinh Sửu,2057-02-04,2057-02-04,2057-02-04,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2057-02-04,2057-02-04,,,computed (no historical source),S1
+2058,Mậu Dần,2058-01-24,2058-01-24,2058-01-24,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2058-01-24,2058-01-24,,,computed (no historical source),S1
+2059,Kỷ Mão,2059-02-12,2059-02-12,2059-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2059-02-12,2059-02-12,,,computed (no historical source),S1
+2060,Canh Thìn,2060-02-02,2060-02-02,2060-02-02,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2060-02-02,2060-02-02,,,computed (no historical source),S1
+2061,Tân Tỵ,2061-01-21,2061-01-21,2061-01-21,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2061-01-21,2061-01-21,,,computed (no historical source),S1
+2062,Nhâm Ngọ,2062-02-09,2062-02-09,2062-02-09,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2062-02-09,2062-02-09,,,computed (no historical source),S1
+2063,Quý Mùi,2063-01-29,2063-01-29,2063-01-29,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2063-01-29,2063-01-29,,,computed (no historical source),S1
+2064,Giáp Thân,2064-02-17,2064-02-17,2064-02-17,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2064-02-17,2064-02-17,,,computed (no historical source),S1
+2065,Ất Dậu,2065-02-05,2065-02-05,2065-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2065-02-05,2065-02-05,,,computed (no historical source),S1
+2066,Bính Tuất,2066-01-26,2066-01-26,2066-01-26,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2066-01-26,2066-01-26,,,computed (no historical source),S1
+2067,Đinh Hợi,2067-02-14,2067-02-14,2067-02-14,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2067-02-14,2067-02-14,,,computed (no historical source),S1
+2068,Mậu Tý,2068-02-03,2068-02-03,2068-02-03,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2068-02-03,2068-02-03,,,computed (no historical source),S1
+2069,Kỷ Sửu,2069-01-23,2069-01-23,2069-01-23,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2069-01-23,2069-01-23,,,computed (no historical source),S1
+2070,Canh Dần,2070-02-11,2070-02-11,2070-02-11,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2070-02-11,2070-02-11,,,computed (no historical source),S1
+2071,Tân Mão,2071-01-31,2071-01-31,2071-01-31,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2071-01-31,2071-01-31,,,computed (no historical source),S1
+2072,Nhâm Thìn,2072-02-19,2072-02-19,2072-02-19,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2072-02-19,2072-02-19,,,computed (no historical source),S1
+2073,Quý Tỵ,2073-02-07,2073-02-07,2073-02-07,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2073-02-07,2073-02-07,,,computed (no historical source),S1
+2074,Giáp Ngọ,2074-01-27,2074-01-27,2074-01-27,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2074-01-27,2074-01-27,,,computed (no historical source),S1
+2075,Ất Mùi,2075-02-15,2075-02-15,2075-02-15,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2075-02-15,2075-02-15,,,computed (no historical source),S1
+2076,Bính Thân,2076-02-05,2076-02-05,2076-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2076-02-05,2076-02-05,,,computed (no historical source),S1
+2077,Đinh Dậu,2077-01-24,2077-01-24,2077-01-24,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2077-01-24,2077-01-24,,,computed (no historical source),S1
+2078,Mậu Tuất,2078-02-12,2078-02-12,2078-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2078-02-12,2078-02-12,,,computed (no historical source),S1
+2079,Kỷ Hợi,2079-02-02,2079-02-02,2079-02-02,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2079-02-02,2079-02-02,,,computed (no historical source),S1
+2080,Canh Tý,2080-01-22,2080-01-22,2080-01-22,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2080-01-22,2080-01-22,,,computed (no historical source),S1
+2081,Tân Sửu,2081-02-09,2081-02-09,2081-02-09,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2081-02-09,2081-02-09,,,computed (no historical source),S1
+2082,Nhâm Dần,2082-01-29,2082-01-29,2082-01-29,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2082-01-29,2082-01-29,,,computed (no historical source),S1
+2083,Quý Mão,2083-02-17,2083-02-17,2083-02-17,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2083-02-17,2083-02-17,,,computed (no historical source),S1
+2084,Giáp Thìn,2084-02-06,2084-02-06,2084-02-06,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2084-02-06,2084-02-06,,,computed (no historical source),S1
+2085,Ất Tỵ,2085-01-26,2085-01-26,2085-01-26,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2085-01-26,2085-01-26,,,computed (no historical source),S1
+2086,Bính Ngọ,2086-02-14,2086-02-14,2086-02-14,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2086-02-14,2086-02-14,,,computed (no historical source),S1
+2087,Đinh Mùi,2087-02-03,2087-02-03,2087-02-03,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2087-02-03,2087-02-03,,,computed (no historical source),S1
+2088,Mậu Thân,2088-01-24,2088-01-24,2088-01-24,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2088-01-24,2088-01-24,,,computed (no historical source),S1
+2089,Kỷ Dậu,2089-02-10,2089-02-10,2089-02-10,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2089-02-10,2089-02-10,,,computed (no historical source),S1
+2090,Canh Tuất,2090-01-30,2090-01-30,2090-01-30,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2090-01-30,2090-01-30,,,computed (no historical source),S1
+2091,Tân Hợi,2091-02-18,2091-02-18,2091-02-18,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2091-02-18,2091-02-18,,,computed (no historical source),S1
+2092,Nhâm Tý,2092-02-07,2092-02-07,2092-02-07,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2092-02-07,2092-02-07,,,computed (no historical source),S1
+2093,Quý Sửu,2093-01-27,2093-01-27,2093-01-27,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2093-01-27,2093-01-27,,,computed (no historical source),S1
+2094,Giáp Dần,2094-02-15,2094-02-15,2094-02-15,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2094-02-15,2094-02-15,,,computed (no historical source),S1
+2095,Ất Mão,2095-02-05,2095-02-05,2095-02-05,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2095-02-05,2095-02-05,,,computed (no historical source),S1
+2096,Bính Thìn,2096-01-25,2096-01-25,2096-01-25,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2096-01-25,2096-01-25,,,computed (no historical source),S1
+2097,Đinh Tỵ,2097-02-12,2097-02-12,2097-02-12,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2097-02-12,2097-02-12,,,computed (no historical source),S1
+2098,Mậu Ngọ,2098-02-01,2098-02-01,2098-02-01,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2098-02-01,2098-02-01,,,computed (no historical source),S1
+2099,Kỷ Mùi,2099-01-21,2099-01-21,2099-01-21,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2099-01-21,2099-01-21,,,computed (no historical source),S1
+2100,Canh Thân,2100-02-09,2100-02-09,2100-02-09,0,0,,0,utc+7-decision-121-cp,utc+7-decision-121-cp,2100-02-09,2100-02-09,,,computed (no historical source),S1

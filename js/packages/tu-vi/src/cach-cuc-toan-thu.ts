@@ -30,7 +30,10 @@ export interface CachCuc {
   /** Cung mà cách ứng vào (-1 khi không gắn cung nào). */
   viTri: number;
   tenCung?: string;
+  tenCungEn?: string;
+  tenCungZh?: string;
   chiCung?: string;
+  chiCungZh?: string;
   /** Các phái chép khác nhau về điều kiện. */
   coDiBan?: boolean;
   /** "dinh-phu", "dinh-quy", "dinh-ban-tien"; vắng ở cách không lấy từ Toàn thư. */

@@ -1,0 +1,16 @@
+{
+  "name": "nhatnguyet-google-sheets",
+  "private": true,
+  "type": "module",
+  "description": "Google Sheets custom functions LUNARDATE, SEXAGENARY, SOLARTERM, SOLARDATE: the lunar calendar library bundled into one Apps Script file.",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs --check",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@nhatnguyet/am-lich": "file:../../js/packages/am-lich",
+    "@nhatnguyet/lunar": "file:../../js/packages/lunar",
+    "esbuild": "0.28.2"
+  }
+}

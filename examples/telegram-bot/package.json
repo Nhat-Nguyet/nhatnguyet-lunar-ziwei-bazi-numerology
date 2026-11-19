@@ -1,0 +1,20 @@
+{
+  "name": "nhatnguyet-telegram-bot",
+  "private": true,
+  "type": "module",
+  "description": "Telegram bot: today's Vietnamese lunar date, can chi and solar term, Tết countdown, Zi Wei chart summary.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "file:../../js/packages/am-lich",
+    "@nhatnguyet/lunar": "file:../../js/packages/lunar",
+    "@nhatnguyet/tu-vi": "file:../../js/packages/tu-vi",
+    "@nhatnguyet/ziwei": "file:../../js/packages/ziwei",
+    "grammy": "1.46.0"
+  }
+}

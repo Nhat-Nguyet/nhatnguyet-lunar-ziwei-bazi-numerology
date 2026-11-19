@@ -1,0 +1,62 @@
+{
+  "name": "@nhatnguyet/bazi",
+  "version": "0.3.0",
+  "description": "BaZi (Four Pillars of Destiny, 八字) by solar term: pillars, hidden stems, Ten Gods, symbolic stars, luck periods, SVG. English-named alias of @nhatnguyet/bat-tu.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "bazi",
+    "four pillars",
+    "八字",
+    "four pillars of destiny",
+    "ten gods",
+    "luck pillars",
+    "ba zi",
+    "chinese astrology",
+    "heavenly stems",
+    "earthly branches",
+    "solar terms",
+    "saju",
+    "bat tu",
+    "tu tru",
+    "bát tự",
+    "四柱",
+    "四柱八字",
+    "八字排盘",
+    "十神",
+    "神煞",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
+  ],
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@nhatnguyet/bat-tu": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/bazi"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  }
+}

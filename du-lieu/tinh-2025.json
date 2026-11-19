@@ -1,0 +1,210 @@
+{
+ "canCu": "Nghị quyết 202/2025/QH15",
+ "nguon": "https://api.nhatnguyet.org/api/v1/dia-gioi/tinh",
+ "tinh": [
+  {
+   "ma": "an-giang",
+   "vi": "An Giang",
+   "en": "An Giang",
+   "zh": "安江"
+  },
+  {
+   "ma": "bac-ninh",
+   "vi": "Bắc Ninh",
+   "en": "Bắc Ninh",
+   "zh": "北宁"
+  },
+  {
+   "ma": "ca-mau",
+   "vi": "Cà Mau",
+   "en": "Cà Mau",
+   "zh": "金瓯"
+  },
+  {
+   "ma": "can-tho",
+   "vi": "Cần Thơ",
+   "en": "Cần Thơ",
+   "zh": "芹苴"
+  },
+  {
+   "ma": "cao-bang",
+   "vi": "Cao Bằng",
+   "en": "Cao Bằng",
+   "zh": "高平"
+  },
+  {
+   "ma": "da-nang",
+   "vi": "Đà Nẵng",
+   "en": "Đà Nẵng",
+   "zh": "岘港"
+  },
+  {
+   "ma": "dak-lak",
+   "vi": "Đắk Lắk",
+   "en": "Đắk Lắk",
+   "zh": "多乐"
+  },
+  {
+   "ma": "dien-bien",
+   "vi": "Điện Biên",
+   "en": "Điện Biên",
+   "zh": "奠边"
+  },
+  {
+   "ma": "dong-nai",
+   "vi": "Đồng Nai",
+   "en": "Đồng Nai",
+   "zh": "同奈"
+  },
+  {
+   "ma": "dong-thap",
+   "vi": "Đồng Tháp",
+   "en": "Đồng Tháp",
+   "zh": "同塔"
+  },
+  {
+   "ma": "gia-lai",
+   "vi": "Gia Lai",
+   "en": "Gia Lai",
+   "zh": "嘉莱"
+  },
+  {
+   "ma": "ha-noi",
+   "vi": "Hà Nội",
+   "en": "Hà Nội",
+   "zh": "河内"
+  },
+  {
+   "ma": "ha-tinh",
+   "vi": "Hà Tĩnh",
+   "en": "Hà Tĩnh",
+   "zh": "河静"
+  },
+  {
+   "ma": "hai-phong",
+   "vi": "Hải Phòng",
+   "en": "Hải Phòng",
+   "zh": "海防"
+  },
+  {
+   "ma": "ho-chi-minh",
+   "vi": "TP. Hồ Chí Minh",
+   "en": "Hồ Chí Minh City",
+   "zh": "胡志明市"
+  },
+  {
+   "ma": "hue",
+   "vi": "Huế",
+   "en": "Huế",
+   "zh": "顺化"
+  },
+  {
+   "ma": "hung-yen",
+   "vi": "Hưng Yên",
+   "en": "Hưng Yên",
+   "zh": "兴安"
+  },
+  {
+   "ma": "khanh-hoa",
+   "vi": "Khánh Hòa",
+   "en": "Khánh Hòa",
+   "zh": "庆和"
+  },
+  {
+   "ma": "lai-chau",
+   "vi": "Lai Châu",
+   "en": "Lai Châu",
+   "zh": "莱州"
+  },
+  {
+   "ma": "lam-dong",
+   "vi": "Lâm Đồng",
+   "en": "Lâm Đồng",
+   "zh": "林同"
+  },
+  {
+   "ma": "lang-son",
+   "vi": "Lạng Sơn",
+   "en": "Lạng Sơn",
+   "zh": "谅山"
+  },
+  {
+   "ma": "lao-cai",
+   "vi": "Lào Cai",
+   "en": "Lào Cai",
+   "zh": "老街"
+  },
+  {
+   "ma": "nghe-an",
+   "vi": "Nghệ An",
+   "en": "Nghệ An",
+   "zh": "乂安"
+  },
+  {
+   "ma": "ninh-binh",
+   "vi": "Ninh Bình",
+   "en": "Ninh Bình",
+   "zh": "宁平"
+  },
+  {
+   "ma": "phu-tho",
+   "vi": "Phú Thọ",
+   "en": "Phú Thọ",
+   "zh": "富寿"
+  },
+  {
+   "ma": "quang-ngai",
+   "vi": "Quảng Ngãi",
+   "en": "Quảng Ngãi",
+   "zh": "广义"
+  },
+  {
+   "ma": "quang-ninh",
+   "vi": "Quảng Ninh",
+   "en": "Quảng Ninh",
+   "zh": "广宁"
+  },
+  {
+   "ma": "quang-tri",
+   "vi": "Quảng Trị",
+   "en": "Quảng Trị",
+   "zh": "广治"
+  },
+  {
+   "ma": "son-la",
+   "vi": "Sơn La",
+   "en": "Sơn La",
+   "zh": "山罗"
+  },
+  {
+   "ma": "tay-ninh",
+   "vi": "Tây Ninh",
+   "en": "Tây Ninh",
+   "zh": "西宁"
+  },
+  {
+   "ma": "thai-nguyen",
+   "vi": "Thái Nguyên",
+   "en": "Thái Nguyên",
+   "zh": "太原"
+  },
+  {
+   "ma": "thanh-hoa",
+   "vi": "Thanh Hóa",
+   "en": "Thanh Hóa",
+   "zh": "清化"
+  },
+  {
+   "ma": "tuyen-quang",
+   "vi": "Tuyên Quang",
+   "en": "Tuyên Quang",
+   "zh": "宣光"
+  },
+  {
+   "ma": "vinh-long",
+   "vi": "Vĩnh Long",
+   "en": "Vĩnh Long",
+   "zh": "永隆"
+  }
+ ]
+}

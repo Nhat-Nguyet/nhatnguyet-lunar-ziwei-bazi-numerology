@@ -1,0 +1,20 @@
+{
+  "name": "nhatnguyet-nextjs-lunar-calendar",
+  "private": true,
+  "type": "module",
+  "description": "Vietnamese lunar calendar page with Next.js (App Router, static export): month grid, can chi, solar term, Tết countdown, Zi Wei chart.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "file:../../js/packages/am-lich",
+    "@nhatnguyet/lunar": "file:../../js/packages/lunar",
+    "@nhatnguyet/tu-vi": "file:../../js/packages/tu-vi",
+    "@nhatnguyet/ziwei": "file:../../js/packages/ziwei",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

@@ -1,0 +1,5 @@
+rule_id,version,rule_type,name_vi,name_en,name_zh,school_vi,school_en,school_zh,engine_function,not_yet_collated_with_print,register
+phai.bat-tu.than-sat,1.0.0,school-rule,"Thần sát tra theo bảng, lối đã chọn ghi dưới từng sao","Auxiliary stars looked up from tables, with the chosen reading stated under each",神煞依表查得，各煞之下写明所取之法,Tử Bình (Bát Tự),Tử Bình (Bát Tự),子平（八字）,battu_thansat.go,true,site-tool-rules
+phai.bat-tu.tru-gio,1.0.0,school-rule,Trụ giờ suy từ can ngày theo Ngũ Thử Độn,The hour pillar derived from the day stem by the Five Rats rule,时柱依五鼠遁由日干推得,Tử Bình (Bát Tự),Tử Bình (Bát Tự),子平（八字）,LapBatTu,true,site-tool-rules
+phai.ngu-hanh.nap-am,1.0.0,folk-convention,Mệnh nạp âm của năm sinh theo bảng lục thập hoa giáp,The Nạp Âm element of the birth year from the sixty-year table,依六十甲子表取生年纳音,Quan niệm dân gian,Folk belief,民间观念,NguHanhNapAm; cong_thuc_tra_nguoc.go (tra ngược ra năm),false,site-tool-rules
+rule.month.solar-term-month,1.0.0,convention,Tháng đổi lúc nào,When the month turns over,何时换月,,,,,false,open-data-rules (quy-tac.json)

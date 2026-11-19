@@ -2,7 +2,7 @@
 sát, thai nguyên, mệnh cung, đại vận và tiểu vận.
 
 Bản chuyển ngữ sang Python của lõi tính Go của Nhật Nguyệt
-(lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t : battu.go, battu_laso.go, battu_tangcan.go,
+(battu.go, battu_laso.go, battu_tangcan.go,
 battu_thansat.go, battu_loc.go, battu_tieuvan.go, thapthan.go, cùng các bảng
 Lộc, vòng Tràng Sinh, Đào Hoa, Thiên Mã ở tuvi_data.go, tuvi.go). Lõi Go là
 nguồn sự thật; bộ ca kiểm ở thu-vien-mo/ca-kiem/bat-tu.json bắt mọi chỗ lệch.
@@ -26,6 +26,7 @@ khớp với danh sách ``khoaBo`` của bộ ca kiểm. Lời giải thích đ�
 
 from __future__ import annotations
 
+import json
 import math
 from typing import Dict, List, Optional, Tuple
 
@@ -49,6 +50,7 @@ from .am_lich import (
     ngu_hanh_nap_am,
     ngu_hanh_sinh_ra,
     tiet_khi_tai_thoi_diem,
+    all_tiet_khi,
     tiet_khi_theo_index,
     year_can_chi,
 )
@@ -56,6 +58,8 @@ from .am_lich import (
 __all__ = [
     # hàm chính
     "lap_la_so_bat_tu", "tinh_tieu_van_bat_tu",
+    # lựa chọn phái (school options)
+    "normalize_bazi_schools", "BAZI_SCHOOL_VALUES",
     # bốn trụ và các phép tra
     "lap_tu_tru", "tru_tu_index", "chi_gio_tu_gio_dong_ho",
     "thap_than_cua_can", "all_thap_than", "tang_can_cua_chi",
@@ -65,6 +69,92 @@ __all__ = [
     "NHAT_CHU_LABEL", "VAI_TRO_BAN_KHI", "VAI_TRO_TRUNG_KHI", "VAI_TRO_DU_KHI",
     "CAN_NGU_HOP", "CAN_KHAC", "CAN_BI_KHAC", "CAN_SINH", "CAN_DUOC_SINH", "CAN_DONG_HANH",
 ]
+
+
+# ---------------------------------------------------------------------------
+# Tên ba thứ tiếng (tuvi_bangonngu.go của lõi Go)
+# ---------------------------------------------------------------------------
+
+# Thuật ngữ ba thứ tiếng của lá số, chép từ TuVung (tuvung.go): can, chi, hành,
+# vai tàng can, âm dương, chín thần sát, 30 nạp âm (hai lối viết Kim Bạch, Kim
+# Bạc). Mỗi mục (tiếng Anh, chữ Hán). Can, chi giữ tên Hán Việt ở bản Anh nên
+# kết quả chỉ mang bản chữ Hán của chúng.
+TU_VUNG_BAT_TU: Dict[str, Tuple[str, str]] = {
+    "Giáp": ("Giáp", "甲"), "Ất": ("Ất", "乙"), "Bính": ("Bính", "丙"), "Đinh": ("Đinh", "丁"), "Mậu": ("Mậu", "戊"),
+    "Kỷ": ("Kỷ", "己"), "Canh": ("Canh", "庚"), "Tân": ("Tân", "辛"), "Nhâm": ("Nhâm", "壬"), "Quý": ("Quý", "癸"),
+    "Tý": ("Tý", "子"), "Sửu": ("Sửu", "丑"), "Dần": ("Dần", "寅"), "Mão": ("Mão", "卯"), "Thìn": ("Thìn", "辰"),
+    "Tỵ": ("Tỵ", "巳"), "Ngọ": ("Ngọ", "午"), "Mùi": ("Mùi", "未"), "Thân": ("Thân", "申"), "Dậu": ("Dậu", "酉"),
+    "Tuất": ("Tuất", "戌"), "Hợi": ("Hợi", "亥"),
+    "Kim": ("Metal", "金"), "Mộc": ("Wood", "木"), "Thủy": ("Water", "水"), "Hỏa": ("Fire", "火"), "Thổ": ("Earth", "土"),
+    "Bản khí": ("main qi", "本气"), "Trung khí": ("middle qi", "中气"), "Dư khí": ("residual qi", "余气"),
+    "Dương": ("Yang", "阳"), "Âm": ("Yin", "阴"),
+    "Thiên Ất Quý Nhân": ("Heavenly Noble", "天乙贵人"), "Văn Xương": ("Literary Glory", "文昌"),
+    "Lộc Thần": ("Prosperity Star", "禄神"), "Dương Nhận": ("Yang Blade", "羊刃"), "Đào Hoa": ("Peach Blossom", "桃花"),
+    "Dịch Mã": ("Travelling Horse", "驿马"), "Hoa Cái": ("Canopy", "华盖"), "Kiếp Sát": ("Robbery Sha", "劫煞"),
+    "Vong Thần": ("Lost Spirit", "亡神"),
+    "Hải Trung Kim": ("Gold in the Sea", "海中金"), "Lư Trung Hỏa": ("Fire in the Furnace", "炉中火"),
+    "Đại Lâm Mộc": ("Wood of the Great Forest", "大林木"), "Lộ Bàng Thổ": ("Earth by the Roadside", "路旁土"),
+    "Kiếm Phong Kim": ("Gold of the Sword Edge", "剑锋金"), "Sơn Đầu Hỏa": ("Fire on the Hilltop", "山头火"),
+    "Giản Hạ Thủy": ("Water in the Ravine", "涧下水"), "Thành Đầu Thổ": ("Earth of the City Wall", "城头土"),
+    "Bạch Lạp Kim": ("Gold of the White Candle", "白蜡金"), "Dương Liễu Mộc": ("Wood of the Willow", "杨柳木"),
+    "Tuyền Trung Thủy": ("Water in the Spring", "泉中水"), "Ốc Thượng Thổ": ("Earth on the Roof", "屋上土"),
+    "Tích Lịch Hỏa": ("Fire of the Thunderbolt", "霹雳火"), "Tùng Bách Mộc": ("Wood of Pine and Cypress", "松柏木"),
+    "Trường Lưu Thủy": ("Water of the Long Stream", "长流水"), "Sa Trung Kim": ("Gold in the Sand", "沙中金"),
+    "Sơn Hạ Hỏa": ("Fire at the Foot of the Hill", "山下火"), "Bình Địa Mộc": ("Wood of the Plain", "平地木"),
+    "Bích Thượng Thổ": ("Earth on the Wall", "壁上土"), "Kim Bạch Kim": ("Gold of Foil", "金箔金"),
+    "Kim Bạc Kim": ("Gold of Foil", "金箔金"), "Phú Đăng Hỏa": ("Fire of the Lamp", "覆灯火"),
+    "Thiên Hà Thủy": ("Water of the Milky Way", "天河水"), "Đại Trạch Thổ": ("Earth of the Great Marsh", "大泽土"),
+    "Thoa Xuyến Kim": ("Gold of Hairpin and Bracelet", "钗钏金"), "Tang Đố Mộc": ("Wood of the Mulberry", "桑柘木"),
+    "Đại Khê Thủy": ("Water of the Great Brook", "大溪水"), "Sa Trung Thổ": ("Earth in the Sand", "沙中土"),
+    "Thiên Thượng Hỏa": ("Fire in the Sky", "天上火"), "Thạch Lựu Mộc": ("Wood of the Pomegranate", "石榴木"),
+    "Đại Hải Thủy": ("Water of the Great Sea", "大海水"),
+}
+
+# Chữ Hán của 24 tiết khí (TuVung).
+_TIET_KHI_ZH = {
+    "Lập Xuân": "立春", "Vũ Thủy": "雨水", "Kinh Trập": "惊蛰", "Xuân Phân": "春分", "Thanh Minh": "清明",
+    "Cốc Vũ": "谷雨", "Lập Hạ": "立夏", "Tiểu Mãn": "小满", "Mang Chủng": "芒种", "Hạ Chí": "夏至",
+    "Tiểu Thử": "小暑", "Đại Thử": "大暑", "Lập Thu": "立秋", "Xử Thử": "处暑", "Bạch Lộ": "白露",
+    "Thu Phân": "秋分", "Hàn Lộ": "寒露", "Sương Giáng": "霜降", "Lập Đông": "立冬", "Tiểu Tuyết": "小雪",
+    "Đại Tuyết": "大雪", "Đông Chí": "冬至", "Tiểu Hàn": "小寒", "Đại Hàn": "大寒",
+}
+
+
+def zh_cua(vi: str) -> str:
+    """Chữ Hán của một thuật ngữ hay một cặp can chi ("Bính Ngọ" ra 丙午);
+    rỗng khi không có (zhCua của lõi Go)."""
+    s = vi.strip()
+    if not s:
+        return ""
+    phan = s.split()
+    if len(phan) == 2 and phan[0] in THIEN_CAN and phan[1] in DIA_CHI:
+        return TU_VUNG_BAT_TU[phan[0]][1] + TU_VUNG_BAT_TU[phan[1]][1]
+    t = TU_VUNG_BAT_TU.get(s)
+    return t[1] if t else ""
+
+
+def en_cua(vi: str) -> str:
+    """Tên tiếng Anh của một thuật ngữ; rỗng khi không có (enCua của lõi Go)."""
+    t = TU_VUNG_BAT_TU.get(vi.strip())
+    return t[0] if t else ""
+
+
+def tiet_khi_ba_thu(vi: str) -> Tuple[str, str]:
+    """(tiếng Anh theo bảng tiết khí, chữ Hán) của một tiết khí; rỗng khi không phải tên tiết."""
+    if not vi:
+        return "", ""
+    for t in all_tiet_khi():
+        if t["ten"] == vi:
+            return t["tenEn"], _TIET_KHI_ZH.get(vi, "")
+    return "", ""
+
+
+def truong_sinh_ba_thu(vi: str) -> Tuple[str, str]:
+    """(tiếng Anh, chữ Hán) của một giai đoạn vòng trường sinh."""
+    for v, en, zh in _VONG_TRUONG_SINH:
+        if v == vi:
+            return en, zh
+    return "", ""
 
 
 # ---------------------------------------------------------------------------
@@ -94,11 +184,15 @@ def tru_tu_index(can_idx: int, chi_idx: int) -> Dict:
     can, chi = THIEN_CAN[ci], DIA_CHI[hi]
     chi_hanh, _ = chi_to_ngu_hanh(chi)
     nap_am, _, nap_am_ten = ngu_hanh_nap_am(ci, hi)
+    can_hanh = CAN_NGU_HANH[ci]
     return {
-        "can": can, "chi": chi, "label": can + " " + chi,
-        "canHanh": CAN_NGU_HANH[ci], "chiHanh": chi_hanh,
+        "can": can, "canZh": zh_cua(can), "chi": chi, "chiZh": zh_cua(chi),
+        "label": can + " " + chi, "labelZh": zh_cua(can + " " + chi),
+        "canHanh": can_hanh, "canHanhEn": en_cua(can_hanh), "canHanhZh": zh_cua(can_hanh),
+        "chiHanh": chi_hanh, "chiHanhEn": en_cua(chi_hanh), "chiHanhZh": zh_cua(chi_hanh),
         "canAm": ci % 2 == 1,
-        "napAm": nap_am, "napAmTen": nap_am_ten,
+        "napAm": nap_am, "napAmEn": en_cua(nap_am), "napAmZh": zh_cua(nap_am),
+        "napAmTen": nap_am_ten, "napAmTenEn": en_cua(nap_am_ten), "napAmTenZh": zh_cua(nap_am_ten),
     }
 
 
@@ -117,7 +211,7 @@ def _can_thang_dan(can_nam_idx: int) -> int:
     return ((can_nam_idx % 5) * 2 + 2) % 10
 
 
-def lap_tu_tru(dd: int, mm: int, yyyy: int, gio_sinh: int, phut: int) -> Dict:
+def lap_tu_tru(dd: int, mm: int, yyyy: int, gio_sinh: int, phut: int, nua_dem: bool = False) -> Dict:
     """Bốn trụ từ ngày giờ sinh DƯƠNG LỊCH (giờ Việt Nam), như LapBatTu của Go,
     chỉ phần lập trụ (không có phần đếm ngũ hành). Trả ``{truNam, truThang,
     truNgay, truGio, nhatChu, nhatChuHanh, tietKhi, namTruNam, tietDauThang}``,
@@ -136,6 +230,13 @@ def lap_tu_tru(dd: int, mm: int, yyyy: int, gio_sinh: int, phut: int) -> Dict:
     cc_ngay = day_can_chi(d_ngay["day"], d_ngay["month"], d_ngay["year"])
     can_ngay_idx = _idx_can(cc_ngay["can"])
     chi_ngay_idx = _idx_chi(cc_ngay["chi"])
+    # Can giờ suy từ can của ngày mà giờ Tý ấy mở đầu; lựa chọn "split-at-midnight"
+    # (nua_dem) chỉ giữ trụ NGÀY ở ngày đã nhập.
+    can_ngay_cho_gio = can_ngay_idx
+    if nua_dem and gio_sinh >= 23:
+        cc = day_can_chi(dd, mm, yyyy)
+        can_ngay_idx = _idx_can(cc["can"])
+        chi_ngay_idx = _idx_chi(cc["chi"])
 
     # Trụ năm và trụ tháng theo kinh độ Mặt Trời.
     deg = kinh_do_mat_troi(dd, mm, yyyy, gio_thap_phan, TIME_ZONE_VN)
@@ -153,7 +254,7 @@ def lap_tu_tru(dd: int, mm: int, yyyy: int, gio_sinh: int, phut: int) -> Dict:
     can_thang_idx = (_can_thang_dan(can_nam_idx) + thu_tu_thang) % 10
 
     chi_gio_idx = chi_gio_tu_gio_dong_ho(gio_sinh)
-    can_gio_idx = (_can_gio_dau(can_ngay_idx) + chi_gio_idx) % 10
+    can_gio_idx = (_can_gio_dau(can_ngay_cho_gio) + chi_gio_idx) % 10
 
     tru_ngay = tru_tu_index(can_ngay_idx, chi_ngay_idx)
     return {
@@ -240,12 +341,12 @@ def all_thap_than() -> List[Dict]:
 # Dần, Mão, Tỵ, Ngọ, Tỵ, Ngọ, Thân, Dậu, Hợi, Tý.
 _LOC_VI_TRI = (2, 3, 5, 6, 5, 6, 8, 9, 11, 0)
 
-# Mười hai giai đoạn vòng Tràng Sinh (tên Việt, tên Anh).
+# Mười hai giai đoạn vòng Tràng Sinh (tên Việt, tên Anh, chữ Hán).
 _VONG_TRUONG_SINH = (
-    ("Tràng Sinh", "Growth"), ("Mộc Dục", "Bathing"), ("Quan Đới", "Youth"),
-    ("Lâm Quan", "Prime"), ("Đế Vượng", "Peak"), ("Suy", "Decline"),
-    ("Bệnh", "Illness"), ("Tử", "Death"), ("Mộ", "Tomb"),
-    ("Tuyệt", "Extinction"), ("Thai", "Conception"), ("Dưỡng", "Nurture"),
+    ("Tràng Sinh", "Growth", "长生"), ("Mộc Dục", "Bathing", "沐浴"), ("Quan Đới", "Youth", "冠带"),
+    ("Lâm Quan", "Prime", "临官"), ("Đế Vượng", "Peak", "帝旺"), ("Suy", "Decline", "衰"),
+    ("Bệnh", "Illness", "病"), ("Tử", "Death", "死"), ("Mộ", "Tomb", "墓"),
+    ("Tuyệt", "Extinction", "绝"), ("Thai", "Conception", "胎"), ("Dưỡng", "Nurture", "养"),
 )
 
 
@@ -317,7 +418,10 @@ def tang_can_cua_chi(chi_idx: int, nhat_chu: str = "") -> List[Dict]:
     for i, c in enumerate(_TANG_CAN[mod(chi_idx, 12)]):
         if c < 0:
             continue
-        tc = {"can": THIEN_CAN[c], "hanh": CAN_NGU_HANH[c], "vaiTro": _TEN_VAI_TRO[i], "thapThan": ""}
+        h, vt = CAN_NGU_HANH[c], _TEN_VAI_TRO[i]
+        tc = {"can": THIEN_CAN[c], "canZh": zh_cua(THIEN_CAN[c]),
+              "hanh": h, "hanhEn": en_cua(h), "hanhZh": zh_cua(h),
+              "vaiTro": vt, "vaiTroEn": en_cua(vt), "vaiTroZh": zh_cua(vt), "thapThan": ""}
         if nhat_chu:
             tt = thap_than_cua_can(nhat_chu, tc["can"])
             if tt is not None:
@@ -458,8 +562,9 @@ def _tinh_than_sat(can_ngay: int, can_nam: int, chi_nam: int, chi_ngay: int, chi
     for ten, dich, tra_theo, loi_khac in ds:
         vi_tri = [i for i, c in enumerate(chi_tru) if c >= 0 and c in dich]
         ra.append({
-            "ten": ten,
+            "ten": ten, "tenEn": en_cua(ten), "tenZh": zh_cua(ten),
             "chiDich": [DIA_CHI[c] for c in dich],
+            "chiDichZh": [zh_cua(DIA_CHI[c]) for c in dich],
             "viTri": vi_tri,
             "traTheo": tra_theo[0], "traTheoEn": tra_theo[1], "traTheoZh": tra_theo[2],
             "loiKhac": loi_khac[0], "loiKhacEn": loi_khac[1], "loiKhacZh": loi_khac[2],
@@ -517,7 +622,7 @@ def _tinh_dai_van(dd: int, mm: int, yyyy: int, gio: int, phut: int, gioi_tinh: s
                 sau, jd_sau = m, j
 
     dv: Dict = {
-        "thuan": thuan, "tietMoc": "", "tietMocNgay": {"day": 0, "month": 0, "year": 0},
+        "thuan": thuan, "tietMoc": "", "tietMocEn": "", "tietMocZh": "", "tietMocNgay": {"day": 0, "month": 0, "year": 0},
         "tietMocGio": 0, "tietMocPhut": 0, "soNgay": 0.0, "tuoiKhoiNam": 0,
         "tuoiKhoiThang": 0, "ngayKhoiVan": {"day": 0, "month": 0, "year": 0},
         "cacVan": [], "lyDo": "", "lyDoEn": "", "lyDoZh": "",
@@ -529,6 +634,7 @@ def _tinh_dai_van(dd: int, mm: int, yyyy: int, gio: int, phut: int, gioi_tinh: s
 
     ngay_moc = moc["ngay"]
     dv["tietMoc"] = moc["ten"]
+    dv["tietMocEn"], dv["tietMocZh"] = tiet_khi_ba_thu(moc["ten"])
     dv["tietMocNgay"] = {"day": ngay_moc["day"], "month": ngay_moc["month"], "year": ngay_moc["year"]}
     dv["tietMocGio"], dv["tietMocPhut"] = moc["gio"], moc["phut"]
     so_ngay = abs(jd_moc - sinh)
@@ -545,11 +651,13 @@ def _tinh_dai_van(dd: int, mm: int, yyyy: int, gio: int, phut: int, gioi_tinh: s
         ci, hi = can_thang + buoc * (i + 1), chi_thang + buoc * (i + 1)
         t = tru_tu_index(ci, hi)
         ten, en, zh = _thap_than_can_ba(nc, t["can"])
+        ts = truong_sinh_cua_can(can_ngay, mod(hi, 12))
+        ts_en, ts_zh = truong_sinh_ba_thu(ts)
         v = {"thuTu": i + 1}
         v.update(t)
         v.update({
             "thapThanCan": ten, "thapThanCanEn": en, "thapThanCanZh": zh,
-            "truongSinh": truong_sinh_cua_can(can_ngay, mod(hi, 12)),
+            "truongSinh": ts, "truongSinhEn": ts_en, "truongSinhZh": ts_zh,
             "tuoiTu": dv["tuoiKhoiNam"] + 10 * i,
             "namTu": dv["ngayKhoiVan"]["year"] + 10 * i,
             "namDen": dv["ngayKhoiVan"]["year"] + 10 * i + 9,
@@ -610,7 +718,32 @@ def _chuan_hoa_gioi_tinh(s: str) -> str:
     return ""
 
 
-def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int, gioi_tinh: str) -> Dict:
+# Lựa chọn phái của lá số Bát Tự (BaZi school options), khoá và giá trị
+# tiếng Anh như bản TS (BaZiSchools). Mặc định đứng đầu.
+BAZI_SCHOOL_VALUES = {"ziHour": ("next-day-from-23", "split-at-midnight")}
+
+
+def normalize_bazi_schools(o) -> Optional[Dict[str, str]]:
+    """Bỏ giá trị mặc định, ném ValueError khi khoá hay giá trị lạ (như bản
+    Go, TS); None khi mặc định."""
+    if o is None:
+        return None
+    if not isinstance(o, dict):
+        raise ValueError("schools must be an object")
+    for k in o:
+        if k != "ziHour":
+            raise ValueError("unknown school option %s; use ziHour" % json.dumps(k, ensure_ascii=False))
+    v = o.get("ziHour")
+    if v is None or v == "":
+        return None
+    hop_le = BAZI_SCHOOL_VALUES["ziHour"]
+    if not isinstance(v, str) or v not in hop_le:
+        raise ValueError("invalid ziHour %s, expected one of: %s" % (json.dumps(v, ensure_ascii=False), ", ".join(hop_le)))
+    return None if v == hop_le[0] else {"ziHour": v}
+
+
+def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int, gioi_tinh: str,
+                     schools: Optional[Dict] = None) -> Dict:
     """Lập lá số Bát Tự từ ngày giờ sinh DƯƠNG LỊCH theo giờ Việt Nam.
 
     ``gio`` là giờ đồng hồ 0 tới 23; None (hay ngoài khoảng) là chưa biết giờ
@@ -621,8 +754,15 @@ def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int,
     Trả dict mang đúng khoá camelCase của lõi Go: ngaySinh, coGioSinh, gio,
     phut, gioiTinh, truNam, truThang, truNgay, truGio (vắng khi chưa biết
     giờ), nhatChu, nhatChuHanh, nhatChuAmDuong, tietKhi, tietDauThang,
-    namTruNam, thaiNguyen, menhCung (vắng khi chưa biết giờ), thanSat, daiVan.
+    namTruNam, thaiNguyen, menhCung (vắng khi chưa biết giờ), thanSat, daiVan,
+    schools (chỉ khi lựa chọn khác mặc định).
+
+    ``schools``: lựa chọn phái (school options), khoá ``ziHour``:
+    "next-day-from-23" (mặc định, trụ ngày đổi lúc 23h) hoặc "split-at-midnight"
+    (tách Tý sớm, Tý muộn: sinh 23h tới 24h giữ trụ ngày của ngày đã nhập, trụ
+    giờ là giờ Tý của ngày hôm sau). Giá trị lạ ném ValueError.
     """
+    tc = normalize_bazi_schools(schools)
     gt = _chuan_hoa_gioi_tinh(gioi_tinh)
     if not gt:
         raise ValueError("thiếu giới tính")
@@ -631,7 +771,8 @@ def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int,
     if phut < 0 or phut > 59 or not co_gio:
         phut = 0
     # Không biết giờ thì Go lập trụ với 12h00 rồi bỏ trụ giờ; trụ như nhau.
-    bt = lap_tu_tru(dd, mm, yyyy, h, phut)
+    bt = lap_tu_tru(dd, mm, yyyy, h, phut, bool(tc) and tc.get("ziHour") == "split-at-midnight") \
+        if co_gio else lap_tu_tru(dd, mm, yyyy, 12, 0)
 
     nc = bt["nhatChu"]
     can_ngay = _idx_can(nc)
@@ -649,8 +790,10 @@ def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int,
             "tangCan": tang_can_cua_chi(hi, nc),
             "truongSinh": truong_sinh_cua_can(can_ngay, hi),
             "tuToa": truong_sinh_cua_can(ci, hi),
-            "thanSat": [],
+            "thanSat": [], "thanSatEn": [], "thanSatZh": [],
         })
+        tl["truongSinhEn"], tl["truongSinhZh"] = truong_sinh_ba_thu(tl["truongSinh"])
+        tl["tuToaEn"], tl["tuToaZh"] = truong_sinh_ba_thu(tl["tuToa"])
         return tl
 
     ls: Dict = {
@@ -659,14 +802,20 @@ def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int,
         "truNam": dung_tru(bt["truNam"]),
         "truThang": dung_tru(bt["truThang"]),
         "truNgay": dung_tru(bt["truNgay"]),
-        "nhatChu": nc, "nhatChuHanh": bt["nhatChuHanh"],
+        "nhatChu": nc, "nhatChuZh": zh_cua(nc),
+        "nhatChuHanh": bt["nhatChuHanh"],
+        "nhatChuHanhEn": en_cua(bt["nhatChuHanh"]), "nhatChuHanhZh": zh_cua(bt["nhatChuHanh"]),
         "nhatChuAmDuong": "Dương" if can_ngay % 2 == 0 else "Âm",
+        "nhatChuAmDuongEn": "Yang" if can_ngay % 2 == 0 else "Yin",
+        "nhatChuAmDuongZh": "阳" if can_ngay % 2 == 0 else "阴",
         "tietKhi": bt["tietKhi"]["ten"],
         "namTruNam": bt["namTruNam"],
     }
     ls["truNgay"].update({"thapThanCan": NHAT_CHU_LABEL, "thapThanCanEn": "Day Master", "thapThanCanZh": "日主"})
     if co_gio:
         ls["truGio"] = dung_tru(bt["truGio"])
+    if tc:
+        ls["schools"] = tc
 
     # Thai nguyên: can tháng tiến một, chi tháng tiến ba.
     ls["thaiNguyen"] = tru_tu_index(can_thang + 1, chi_thang + 3)
@@ -687,9 +836,13 @@ def lap_la_so_bat_tu(dd: int, mm: int, yyyy: int, gio: Optional[int], phut: int,
             t = tru_theo_vi_tri[v]
             if t is not None:
                 t["thanSat"].append(ts["ten"])
+                t["thanSatEn"].append(ts["tenEn"])
+                t["thanSatZh"].append(ts["tenZh"])
 
     ls["daiVan"], ls["tietDauThang"] = _tinh_dai_van(
         dd, mm, yyyy, h, phut, gt, can_nam, can_thang, chi_thang, can_ngay, co_gio)
+    ls["tietKhiEn"], ls["tietKhiZh"] = tiet_khi_ba_thu(ls["tietKhi"])
+    ls["tietDauThangEn"], ls["tietDauThangZh"] = tiet_khi_ba_thu(ls["tietDauThang"])
     return ls
 
 

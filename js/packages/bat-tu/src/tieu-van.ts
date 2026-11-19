@@ -1,5 +1,5 @@
 // Tiểu vận (小运) và quan hệ can của năm với vận. Chuyển ngữ từ
-// lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t battu_tieuvan.go.
+// lõi tính Go của Nhật Nguyệt battu_tieuvan.go.
 //
 // Lối khởi từ TRỤ GIỜ (Tam Mệnh Thông Hội quyển 2, luận tiểu vận, dẫn Tuý
 // Tỉnh Tử): một tuổi là trụ liền sau (hay liền trước) trụ giờ, mỗi năm một

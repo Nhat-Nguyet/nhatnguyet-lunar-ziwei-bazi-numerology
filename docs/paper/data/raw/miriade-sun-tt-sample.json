@@ -1,0 +1,73 @@
+{
+  "sso": {
+    "num": "11",
+    "name": "Sun",
+    "type": "planet",
+    "parameters": {
+      "physical_model": "",
+      "diameter": 1392684.0
+    }
+  },
+  "coosys": {
+    "epoch": "J2000",
+    "equinox": "J2000",
+    "system": "ec_ICRF"
+  },
+  "ephemeris": {
+    "time_scale": "TT",
+    "planetary_theory": "INPOP19",
+    "coordinates": "spherical",
+    "reference_frame": {
+      "type": "apparent (true equator; equinoxe of the date)",
+      "plane": "ecliptic",
+      "center": "geocenter"
+    }
+  },
+  "data": [
+    {
+      "Date": 2451544.5,
+      "TT-UTC": 64.183999936670062,
+      "Longitude": "+279:51:30.45974",
+      "Latitude": "+00:00:06.5013",
+      "Dobs": 0.9833318652397216,
+      "VMag": -26.776499435667311,
+      "muLoncosLat": 2.3463490710452612,
+      "muLat": 0.68305301569608927E-2,
+      "RV": -0.16598658142198505E-1
+    },
+    {
+      "Date": 2451546.5,
+      "TT-UTC": 64.183999936670062,
+      "Longitude": "+281:53:50.69202",
+      "Latitude": "+00:00:06.4274",
+      "Dobs": 0.98332147192956665,
+      "VMag": -26.776522387130917,
+      "muLoncosLat": 2.3502081892368971,
+      "muLat": 0.95939682853780021E-2,
+      "RV": -0.15935203177457672E-2
+    }
+  ],
+  "datacol": {
+    "Date": "Date",
+    "IAU_code": "IAU code of the observatory",
+    "TT-UTC": "TT-UTC",
+    "Longitude": "Longitude",
+    "Latitude": "Latitude",
+    "Dobs": "Range of target center to observer",
+    "VMag": "Apparent magnitude",
+    "muLoncosLat": "Component of proper motion in longitude corrected for latitude",
+    "muLat": "Component of proper motion in latitude",
+    "RV": "Radial velocity of target wrt observer"
+  },
+  "unit": {
+    "diameter": "km",
+    "TT-UTC": "s",
+    "Longitude": "deg",
+    "Latitude": "deg",
+    "Dobs": "au",
+    "VMag": "mag",
+    "muLoncosLat": "arcsec/min",
+    "muLat": "arcsec/min",
+    "RV": "km/s"
+  }
+}

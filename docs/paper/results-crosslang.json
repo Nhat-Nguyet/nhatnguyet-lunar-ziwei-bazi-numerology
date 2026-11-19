@@ -1,0 +1,17 @@
+{
+ "apparent_longitude_tt": {
+  "values": 4824,
+  "bit_identical": 4824,
+  "max_abs_difference": 0.0
+ },
+ "apparent_longitude_ut": {
+  "values": 4824,
+  "bit_identical": 4824,
+  "max_abs_difference": 0.0
+ },
+ "new_moon_series": {
+  "values": 2474,
+  "bit_identical": 2474,
+  "max_abs_difference": 0.0
+ }
+}

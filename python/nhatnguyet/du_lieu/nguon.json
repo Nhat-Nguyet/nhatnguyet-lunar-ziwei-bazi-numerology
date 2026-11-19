@@ -1,8 +1,9 @@
 {
  "bo": "le-hoi-viet-nam",
- "phienBan": "1.5.0",
- "maPhatHanh": "2026.10.27-cd6fca71",
+ "phienBan": "1.7.0",
+ "maPhatHanh": "2026.11.19-b5a44783",
+ "capNhat": "2026-11-19",
  "giayPhep": "CC-BY-4.0",
- "sha256": "50c478508a6c6a5515ace04f4fb6a35e6b47e54c18269060337966f2efaf144a",
+ "sha256": "165fb09f4652ecebb399ed53a0adc082a7caf0dfdf7c79c2de7f9e15206d6072",
  "nguon": "https://nhatnguyet.org/du-lieu"
 }

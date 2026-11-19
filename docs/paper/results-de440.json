@@ -1,0 +1,7 @@
+{
+ "kernel": "de440s.bsp",
+ "kernel_sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+ "new_moons": 2474,
+ "file": "docs/paper/data/de440-new-moons-1901-2100.tsv",
+ "sha256": "78fd3f9c5d8b488cada4c08958a6cd1f67e3080977fb42460223b818aff9248f"
+}

@@ -1,0 +1,134 @@
+{
+  "dataset": "nhatnguyet/bazi-knowledge",
+  "engine_version": "2.2.0",
+  "tables": [
+    {
+      "table": "day-master",
+      "rows": 10,
+      "rows_with_site_text": 10,
+      "rows_with_classical": 10,
+      "classical_links": 21,
+      "distinct_passages": 21,
+      "description": "One row per day stem (the day master): the site's one-line reading of it and the classical passages on that stem."
+    },
+    {
+      "table": "day-master-by-month",
+      "rows": 120,
+      "rows_with_site_text": 120,
+      "rows_with_classical": 120,
+      "classical_links": 307,
+      "distinct_passages": 199,
+      "description": "One row per day stem and month branch: the site's reading of being born in that month (in or out of season) and the classical passages on climate balance (tiao hou) for that pair."
+    },
+    {
+      "table": "day-pillar-and-hour",
+      "rows": 720,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 720,
+      "classical_links": 1749,
+      "distinct_passages": 914,
+      "description": "One row per day pillar and hour branch, with the classical passages on a day stem born at that hour."
+    },
+    {
+      "table": "pillar-na-yin",
+      "rows": 60,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 60,
+      "classical_links": 119,
+      "distinct_passages": 119,
+      "description": "One row per stem-branch pillar with its na yin element and the classical passages on that pillar's na yin."
+    },
+    {
+      "table": "ten-god",
+      "rows": 10,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 10,
+      "classical_links": 59,
+      "distinct_passages": 59,
+      "description": "One row per Ten God with the classical passages on it."
+    },
+    {
+      "table": "pattern",
+      "rows": 10,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 10,
+      "classical_links": 86,
+      "distinct_passages": 86,
+      "description": "One row per chart pattern taken from the month command (as met on real charts), with the classical passages on the pattern and on choosing luck pillars for it."
+    },
+    {
+      "table": "symbolic-star",
+      "rows": 9,
+      "rows_with_site_text": 9,
+      "rows_with_classical": 9,
+      "classical_links": 21,
+      "distinct_passages": 18,
+      "description": "One row per symbolic star (shen sha): how the site looks it up, how other books differ, and the classical passages on it."
+    },
+    {
+      "table": "topic",
+      "rows": 34,
+      "rows_with_site_text": 0,
+      "rows_with_classical": 34,
+      "classical_links": 173,
+      "distinct_passages": 173,
+      "description": "One row per topic heading of the BaZi classics that the reading engine looks up (temperament, family, wealth, luck...), with its passages. topic_en is a working label, not a reviewed translation."
+    }
+  ],
+  "distinct_site_texts": 77,
+  "distinct_passages": 1589,
+  "books": [
+    {
+      "book_title": "三命通会 (Tam Mệnh Thông Hội)",
+      "author_vi": "万民英 (育吾山人)",
+      "author_en": "Wan Minying (Yuwu Shanren)",
+      "passages": 1121
+    },
+    {
+      "book_title": "穷通宝鉴 (Cùng Thông Bảo Giám)",
+      "author_vi": "khuyết danh đời Minh (栏江网); 余春台 biên tập lại, đặt tên 穷通宝鉴",
+      "author_en": "anonymous, Ming dynasty (original title Lanjiang Wang); re-edited and titled Qiongtong Baojian by Yu Chuntai",
+      "passages": 187
+    },
+    {
+      "book_title": "神峰通考 (Thần Phong Thông Khảo)",
+      "author_vi": "张楠 (张神峰)",
+      "author_en": "Zhang Nan (Zhang Shenfeng)",
+      "passages": 80
+    },
+    {
+      "book_title": "命理约言 (Mệnh Lý Ước Ngôn)",
+      "author_vi": "陈素庵 (陈之遴, 1605-1666); bản lưu hành do 韦千里 chọn in lại",
+      "author_en": "Chen Su'an (Chen Zhilin, 1605-1666); circulating edition selected and reprinted by Wei Qianli",
+      "passages": 74
+    },
+    {
+      "book_title": "滴天髓阐微 (Trích Thiên Tủy)",
+      "author_vi": "nguyên văn truyền thống quy cho 京图 (Tống), 原注 quy cho 刘基 (Minh); 任铁樵 (Thanh) viết 阐微",
+      "author_en": "original text traditionally attributed to Jing Tu (Song dynasty), original notes attributed to Liu Ji (Ming dynasty); Chanwei commentary by Ren Tieqiao (Qing dynasty)",
+      "passages": 55
+    },
+    {
+      "book_title": "渊海子平 (Uyên Hải Tử Bình)",
+      "author_vi": "徐升 (徐大升, Tống) biên; 杨淙 (Minh) hợp 渊海 và 渊源 thành một bộ, tăng đính",
+      "author_en": "compiled by Xu Sheng (Xu Dasheng, Song dynasty); Yang Cong (Ming dynasty) merged Yuanhai and Yuanyuan into one work and enlarged it",
+      "passages": 39
+    },
+    {
+      "book_title": "子平真诠 (Tử Bình Chân Thuyên)",
+      "author_vi": "沈孝瞻 (沈燡燔)",
+      "author_en": "Shen Xiaozhan (Shen Yifan)",
+      "passages": 33
+    }
+  ],
+  "passages_with_author_en": 1589,
+  "passages_without_author_en": 0,
+  "public_domain_passages_in_store": 1685,
+  "public_domain_passages_linked": 1372,
+  "rules": 4,
+  "omitted_tables_no_content": [],
+  "scan": {
+    "charts_scanned": 73414,
+    "day_step": 1
+  }
+}

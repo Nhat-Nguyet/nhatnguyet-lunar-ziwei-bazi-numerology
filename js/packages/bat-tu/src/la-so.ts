@@ -1,6 +1,6 @@
 // Lá số Bát Tự (Tứ Trụ) đầy đủ: bốn trụ kèm tàng can, thập thần, nạp âm,
 // trường sinh, thần sát, thai nguyên, mệnh cung, đại vận. Chuyển ngữ từ
-// lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t battu.go (phần lập bốn trụ) và
+// lõi tính Go của Nhật Nguyệt battu.go (phần lập bốn trụ) và
 // battu_laso.go.
 //
 // Ba quy ước bản Go chọn và nói rõ:
@@ -36,7 +36,7 @@ import {
 } from "./am-lich.ts";
 import type { SolarDate, ThoiDiemTietKhi } from "./am-lich.ts";
 import { thapThanCuaCan } from "./thap-than.ts";
-import { tangCanCuaChi, truongSinhCuaCan } from "./tang-can.ts";
+import { enCua, tangCanCuaChi, tietKhiBaThu, truongSinhBaThu, truongSinhCuaCan, zhCua } from "./tang-can.ts";
 import type { TangCan } from "./tang-can.ts";
 import { tinhThanSat } from "./than-sat.ts";
 import type { ThanSatBatTu } from "./than-sat.ts";
@@ -44,15 +44,30 @@ import type { ThanSatBatTu } from "./than-sat.ts";
 /** Một trụ can chi kèm ngũ hành và nạp âm. */
 export interface Tru {
   can: string;
+  /** Chữ Hán của can; bản Anh giữ tên can tiếng Việt. */
+  canZh: string;
   chi: string;
+  chiZh: string;
   label: string;
+  /** Ví dụ 丙午. */
+  labelZh: string;
   canHanh: string;
+  canHanhEn: string;
+  canHanhZh: string;
   chiHanh: string;
+  chiHanhEn: string;
+  chiHanhZh: string;
   /** Đúng khi can là can Âm. */
   canAm: boolean;
   /** Hành nạp âm của cặp, ví dụ "Kim". */
   napAm: string;
+  napAmEn: string;
+  napAmZh: string;
   napAmTen: string;
+  /** Ví dụ "Gold in the Sea". */
+  napAmTenEn: string;
+  /** Ví dụ 海中金. */
+  napAmTenZh: string;
 }
 
 /** Dựng trụ từ hai chỉ số (tự đưa về vòng): can 0 Giáp, chi 0 Tý. */
@@ -62,15 +77,28 @@ export function truTuChiSo(canIdx: number, chiIdx: number): Tru {
   const can = THIEN_CAN[ci];
   const chi = DIA_CHI[hi];
   const na = nguHanhNapAm(ci, hi);
+  const canHanh = CAN_NGU_HANH[ci];
+  const chiHanh = chiToNguHanh(chi).hanh;
   return {
     can,
+    canZh: zhCua(can),
     chi,
+    chiZh: zhCua(chi),
     label: can + " " + chi,
-    canHanh: CAN_NGU_HANH[ci],
-    chiHanh: chiToNguHanh(chi).hanh,
+    labelZh: zhCua(can + " " + chi),
+    canHanh,
+    canHanhEn: enCua(canHanh),
+    canHanhZh: zhCua(canHanh),
+    chiHanh,
+    chiHanhEn: enCua(chiHanh),
+    chiHanhZh: zhCua(chiHanh),
     canAm: ci % 2 === 1,
     napAm: na.hanh,
+    napAmEn: enCua(na.hanh),
+    napAmZh: zhCua(na.hanh),
     napAmTen: na.ten,
+    napAmTenEn: enCua(na.ten),
+    napAmTenZh: zhCua(na.ten),
   };
 }
 
@@ -83,9 +111,16 @@ export interface TruLaSo extends Tru {
   tangCan: TangCan[];
   /** Giai đoạn của NHẬT CHỦ tại chi trụ này. */
   truongSinh: string;
+  truongSinhEn: string;
+  truongSinhZh: string;
   /** Giai đoạn của CAN TRỤ tại chính chi của trụ ấy (tự toạ). */
   tuToa: string;
+  tuToaEn: string;
+  tuToaZh: string;
+  /** Tên các sao trên trụ; ba mảng cùng thứ tự. */
   thanSat: string[];
+  thanSatEn: string[];
+  thanSatZh: string[];
 }
 
 /** Một đại vận mười năm. */
@@ -97,6 +132,8 @@ export interface VanBatTu extends Tru {
   thapThanCanZh: string;
   /** Nhật chủ tại chi của vận. */
   truongSinh: string;
+  truongSinhEn: string;
+  truongSinhZh: string;
   /** Tuổi thực lúc vào vận. */
   tuoiTu: number;
   /** Năm dương lịch vào vận. */
@@ -110,6 +147,9 @@ export interface DaiVanBatTu {
   thuan: boolean;
   /** Tiết dùng để đếm ngày: tiết kế tiếp nếu đi thuận, tiết vừa qua nếu đi nghịch. */
   tietMoc: string;
+  /** Rỗng cùng tietMoc. */
+  tietMocEn: string;
+  tietMocZh: string;
   tietMocNgay: SolarDate;
   tietMocGio: number;
   tietMocPhut: number;
@@ -137,13 +177,22 @@ export interface LaSoBatTu {
   /** Vắng khi chưa biết giờ sinh. */
   truGio?: TruLaSo;
   nhatChu: string;
+  nhatChuZh: string;
   nhatChuHanh: string;
+  nhatChuHanhEn: string;
+  nhatChuHanhZh: string;
   /** "Dương" hay "Âm". */
   nhatChuAmDuong: string;
+  nhatChuAmDuongEn: string;
+  nhatChuAmDuongZh: string;
   /** Tiết khí đang diễn ra lúc sinh (có thể là một khí). */
   tietKhi: string;
+  tietKhiEn: string;
+  tietKhiZh: string;
   /** Tiết mở đầu tháng sinh, tức mốc đổi trụ tháng gần nhất trước lúc sinh. */
   tietDauThang: string;
+  tietDauThangEn: string;
+  tietDauThangZh: string;
   /** Năm dương lịch mà trụ năm lấy theo (khác năm sinh khi sinh trước Lập Xuân). */
   namTruNam: number;
   thaiNguyen: Tru;
@@ -151,6 +200,43 @@ export interface LaSoBatTu {
   menhCung?: Tru;
   thanSat: ThanSatBatTu[];
   daiVan: DaiVanBatTu;
+  /** School options used, only those that differ from the default (see `BaZiSchools`). */
+  schools?: BaZiSchools;
+}
+
+/**
+ * When the day pillar of a birth between 23:00 and 24:00 changes.
+ * - "next-day-from-23" (default): at 23:00, the start of the Zi (Tý) hour, as
+ *   most Zi Ping texts: the birth takes the next day's pillar.
+ * - "split-at-midnight": early and late Zi; the day pillar changes at
+ *   midnight, so the birth keeps the day pillar of the date entered, and the
+ *   hour pillar is the Zi hour of the next day (as lunar-javascript's
+ *   EightChar default, sect 2).
+ */
+export type ZiHourRule = "next-day-from-23" | "split-at-midnight";
+
+/** School options of a BaZi chart. Omitted keys take the default. */
+export interface BaZiSchools {
+  ziHour?: ZiHourRule;
+}
+
+/** Accepted values of each option, the default first. */
+export const BAZI_SCHOOL_VALUES = { ziHour: ["next-day-from-23", "split-at-midnight"] } as const;
+
+/** Bỏ giá trị mặc định, ném lỗi giá trị lạ (như bản Go); undefined khi mặc định. */
+export function normalizeBaZiSchools(o: unknown): BaZiSchools | undefined {
+  if (o === undefined || o === null) return undefined;
+  if (typeof o !== "object" || Array.isArray(o)) throw new TypeError("schools must be an object");
+  for (const k of Object.keys(o)) {
+    if (k !== "ziHour") throw new RangeError(`unknown school option ${JSON.stringify(k)}; use ziHour`);
+  }
+  const v = (o as Record<string, unknown>).ziHour;
+  if (v === undefined || v === null || v === "") return undefined;
+  const hopLe: readonly string[] = BAZI_SCHOOL_VALUES.ziHour;
+  if (typeof v !== "string" || !hopLe.includes(v)) {
+    throw new RangeError(`invalid ziHour ${JSON.stringify(v)}, expected one of: ${hopLe.join(", ")}`);
+  }
+  return v === hopLe[0] ? undefined : { ziHour: v as ZiHourRule };
 }
 
 /** Nhãn thay cho thập thần ở can ngày. */
@@ -207,7 +293,7 @@ export interface TuTru {
  * Lập bốn trụ từ ngày giờ sinh DƯƠNG LỊCH giờ Việt Nam. `gioSinh` 0 tới 23
  * (ngoài khoảng thì lấy 12), `phut` 0 tới 59 (ngoài khoảng thì lấy 0).
  */
-export function lapTuTru(dd: number, mm: number, yyyy: number, gioSinh: number, phut: number): TuTru {
+export function lapTuTru(dd: number, mm: number, yyyy: number, gioSinh: number, phut: number, nuaDem = false): TuTru {
   if (gioSinh < 0 || gioSinh > 23) gioSinh = 12;
   if (phut < 0 || phut > 59) phut = 0;
   const gioThapPhan = gioSinh + phut / 60;
@@ -217,8 +303,16 @@ export function lapTuTru(dd: number, mm: number, yyyy: number, gioSinh: number, 
   if (gioSinh >= 23) jdNgay++;
   const dNgay = jdToDate(jdNgay);
   const ccNgay = dayCanChi(dNgay.day, dNgay.month, dNgay.year);
-  const canNgayIdx = chiSoCan(ccNgay.can);
-  const chiNgayIdx = chiSoChi(ccNgay.chi);
+  let canNgayIdx = chiSoCan(ccNgay.can);
+  let chiNgayIdx = chiSoChi(ccNgay.chi);
+  // Can giờ suy từ can của ngày mà giờ Tý ấy mở đầu; lựa chọn "split-at-midnight"
+  // (nuaDem) chỉ giữ trụ NGÀY ở ngày đã nhập.
+  const canNgayChoGio = canNgayIdx;
+  if (nuaDem && gioSinh >= 23) {
+    const cc = dayCanChi(dd, mm, yyyy);
+    canNgayIdx = chiSoCan(cc.can);
+    chiNgayIdx = chiSoChi(cc.chi);
+  }
 
   // Trụ NĂM và trụ THÁNG theo kinh độ Mặt Trời.
   const deg = kinhDoMatTroi(dd, mm, yyyy, gioThapPhan, TIME_ZONE_VN);
@@ -234,7 +328,7 @@ export function lapTuTru(dd: number, mm: number, yyyy: number, gioSinh: number, 
   const canThangIdx = (canThangDan(canNamIdx) + thuTuThang) % 10;
 
   const chiGioIdx = chiGioTuGioDongHo(gioSinh);
-  const canGioIdx = (canGioDau(canNgayIdx) + chiGioIdx) % 10;
+  const canGioIdx = (canGioDau(canNgayChoGio) + chiGioIdx) % 10;
 
   return {
     truNam: truTuChiSo(canNamIdx, chiNamIdx),
@@ -330,6 +424,8 @@ function tinhDaiVan(
   const dv: DaiVanBatTu = {
     thuan,
     tietMoc: "",
+    tietMocEn: "",
+    tietMocZh: "",
     tietMocNgay: { ...NGAY_RONG },
     tietMocGio: 0,
     tietMocPhut: 0,
@@ -348,6 +444,9 @@ function tinhDaiVan(
   if (moc === null) return { dv, tietDauThang };
 
   dv.tietMoc = moc.ten;
+  const tm = tietKhiBaThu(moc.ten);
+  dv.tietMocEn = tm.en;
+  dv.tietMocZh = tm.zh;
   dv.tietMocNgay = { day: moc.ngay.day, month: moc.ngay.month, year: moc.ngay.year };
   dv.tietMocGio = moc.gio;
   dv.tietMocPhut = moc.phut;
@@ -365,13 +464,17 @@ function tinhDaiVan(
     const hi = chiThang + buoc * (i + 1);
     const t = truTuChiSo(ci, hi);
     const tt = thapThanCuaCan(nc, t.can);
+    const ts = truongSinhCuaCan(canNgay, mod(hi, 12));
+    const tsBa = truongSinhBaThu(ts);
     dv.cacVan.push({
       thuTu: i + 1,
       ...t,
       thapThanCan: tt ? tt.ten : "",
       thapThanCanEn: tt ? tt.tenEn : "",
       thapThanCanZh: tt ? tt.tenZh : "",
-      truongSinh: truongSinhCuaCan(canNgay, mod(hi, 12)),
+      truongSinh: ts,
+      truongSinhEn: tsBa.en,
+      truongSinhZh: tsBa.zh,
       tuoiTu: dv.tuoiKhoiNam + 10 * i,
       namTu: dv.ngayKhoiVan.year + 10 * i,
       namDen: dv.ngayKhoiVan.year + 10 * i + 9,
@@ -429,13 +532,15 @@ export function lapLaSoBatTu(
   gio: number | null,
   phut: number,
   gioiTinh: string,
+  schools?: BaZiSchools,
 ): LaSoBatTu {
+  const tc = normalizeBaZiSchools(schools);
   const gt = chuanHoaGioiTinh(gioiTinh);
   if (gt === "") throw new LoiThieuGioiTinh();
   const coGio = gio !== null && gio !== undefined && gio >= 0 && gio <= 23;
   const h = coGio ? (gio as number) : 12;
   if (phut < 0 || phut > 59 || !coGio) phut = 0;
-  const bt = coGio ? lapTuTru(dd, mm, yyyy, h, phut) : lapTuTru(dd, mm, yyyy, 12, 0);
+  const bt = coGio ? lapTuTru(dd, mm, yyyy, h, phut, tc?.ziHour === "split-at-midnight") : lapTuTru(dd, mm, yyyy, 12, 0);
 
   const nc = bt.truNgay.can;
   const canNgay = chiSoCan(nc);
@@ -450,15 +555,23 @@ export function lapLaSoBatTu(
     const ci = chiSoCan(t.can);
     const hi = chiSoChi(t.chi);
     const tt = thapThanCuaCan(nc, t.can);
+    const ts = truongSinhCuaCan(canNgay, hi);
+    const tuToa = truongSinhCuaCan(ci, hi);
     return {
       ...t,
       thapThanCan: tt ? tt.ten : "",
       thapThanCanEn: tt ? tt.tenEn : "",
       thapThanCanZh: tt ? tt.tenZh : "",
       tangCan: tangCanCuaChi(hi, nc),
-      truongSinh: truongSinhCuaCan(canNgay, hi),
-      tuToa: truongSinhCuaCan(ci, hi),
+      truongSinh: ts,
+      truongSinhEn: truongSinhBaThu(ts).en,
+      truongSinhZh: truongSinhBaThu(ts).zh,
+      tuToa,
+      tuToaEn: truongSinhBaThu(tuToa).en,
+      tuToaZh: truongSinhBaThu(tuToa).zh,
       thanSat: [],
+      thanSatEn: [],
+      thanSatZh: [],
     };
   };
 
@@ -479,10 +592,19 @@ export function lapLaSoBatTu(
     truThang: dungTru(bt.truThang),
     truNgay,
     nhatChu: nc,
+    nhatChuZh: zhCua(nc),
     nhatChuHanh: bt.truNgay.canHanh,
+    nhatChuHanhEn: enCua(bt.truNgay.canHanh),
+    nhatChuHanhZh: zhCua(bt.truNgay.canHanh),
     nhatChuAmDuong: canNgay % 2 === 0 ? "Dương" : "Âm",
+    nhatChuAmDuongEn: canNgay % 2 === 0 ? "Yang" : "Yin",
+    nhatChuAmDuongZh: canNgay % 2 === 0 ? "阳" : "阴",
     tietKhi: bt.tietKhi,
+    tietKhiEn: tietKhiBaThu(bt.tietKhi).en,
+    tietKhiZh: tietKhiBaThu(bt.tietKhi).zh,
     tietDauThang,
+    tietDauThangEn: tietKhiBaThu(tietDauThang).en,
+    tietDauThangZh: tietKhiBaThu(tietDauThang).zh,
     namTruNam: bt.namTruNam,
     // Thai nguyên: can tháng tiến một, chi tháng tiến ba (lối phổ biến).
     thaiNguyen: truTuChiSo(canThang + 1, chiThang + 3),
@@ -490,6 +612,7 @@ export function lapLaSoBatTu(
     daiVan: dv,
   };
   if (coGio) ls.truGio = dungTru(bt.truGio);
+  if (tc) ls.schools = tc;
 
   // Mệnh cung theo Tử Bình: chi (Tý = 0) là (5 - chi tháng - chi giờ) mod 12,
   // can theo Ngũ Hổ Độn từ can năm. Tháng lấy theo tiết như trụ tháng.
@@ -503,7 +626,13 @@ export function lapLaSoBatTu(
   ls.thanSat = tinhThanSat(canNgay, canNam, chiNam, chiNgay, [chiNam, chiThang, chiNgay, chiGio]);
   const truTheoViTri: Array<TruLaSo | undefined> = [ls.truNam, ls.truThang, ls.truNgay, ls.truGio];
   for (const ts of ls.thanSat) {
-    for (const v of ts.viTri) truTheoViTri[v]?.thanSat.push(ts.ten);
+    for (const v of ts.viTri) {
+      const t = truTheoViTri[v];
+      if (!t) continue;
+      t.thanSat.push(ts.ten);
+      t.thanSatEn.push(ts.tenEn);
+      t.thanSatZh.push(ts.tenZh);
+    }
   }
   return ls;
 }

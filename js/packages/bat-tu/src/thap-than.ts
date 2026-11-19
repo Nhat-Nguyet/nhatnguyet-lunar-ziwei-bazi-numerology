@@ -1,5 +1,5 @@
 // Thập Thần: mười quan hệ giữa Nhật Chủ và một Thiên Can khác. Chuyển ngữ
-// từ lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t thapthan.go.
+// từ lõi tính Go của Nhật Nguyệt thapthan.go.
 //
 // Bảng được SUY RA, không gõ tay một bảng 10 x 10: năm quan hệ ngũ hành
 // (cùng hành, mình sinh, mình khắc, khắc mình, sinh mình) nhân hai trạng thái

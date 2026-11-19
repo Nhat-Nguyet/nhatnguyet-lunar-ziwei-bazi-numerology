@@ -5,7 +5,7 @@
 // can Canh) ghi ngay tại bảng. Chỉ số vị trí: 0 là Tý, 11 là Hợi; can 0 là
 // Giáp.
 
-import { THIEN_CAN, mod } from "./phu-thuoc.ts";
+import { DIA_CHI, THIEN_CAN, mod } from "./phu-thuoc.ts";
 
 /** Một chữ có hai bản Việt và Anh. */
 export interface ViEn {
@@ -13,32 +13,37 @@ export interface ViEn {
   en: string;
 }
 
+/** Một chữ có ba bản Việt, Anh, Trung (chữ Hán giản thể). */
+export interface ViEnZh extends ViEn {
+  zh: string;
+}
+
 /**
  * Tên 12 cung chức năng, offset tính NGHỊCH từ cung Mệnh: 0 là Mệnh, 1 là
  * Huynh Đệ... 11 là Phụ Mẫu.
  */
-export const TEN_CUNG_THEO_OFFSET: readonly ViEn[] = [
-  { vi: "Mệnh", en: "Life Palace" },
-  { vi: "Huynh Đệ", en: "Siblings" },
-  { vi: "Phu Thê", en: "Spouse" },
-  { vi: "Tử Tức", en: "Children" },
-  { vi: "Tài Bạch", en: "Wealth" },
-  { vi: "Tật Ách", en: "Health" },
-  { vi: "Thiên Di", en: "Travel" },
-  { vi: "Nô Bộc", en: "Friends/Subordinates" },
-  { vi: "Quan Lộc", en: "Career" },
-  { vi: "Điền Trạch", en: "Property" },
-  { vi: "Phúc Đức", en: "Fortune/Virtue" },
-  { vi: "Phụ Mẫu", en: "Parents" },
+export const TEN_CUNG_THEO_OFFSET: readonly ViEnZh[] = [
+  { vi: "Mệnh", en: "Life Palace", zh: "命宫" },
+  { vi: "Huynh Đệ", en: "Siblings", zh: "兄弟宫" },
+  { vi: "Phu Thê", en: "Spouse", zh: "夫妻宫" },
+  { vi: "Tử Tức", en: "Children", zh: "子女宫" },
+  { vi: "Tài Bạch", en: "Wealth", zh: "财帛宫" },
+  { vi: "Tật Ách", en: "Health", zh: "疾厄宫" },
+  { vi: "Thiên Di", en: "Travel", zh: "迁移宫" },
+  { vi: "Nô Bộc", en: "Friends/Subordinates", zh: "奴仆宫" },
+  { vi: "Quan Lộc", en: "Career", zh: "官禄宫" },
+  { vi: "Điền Trạch", en: "Property", zh: "田宅宫" },
+  { vi: "Phúc Đức", en: "Fortune/Virtue", zh: "福德宫" },
+  { vi: "Phụ Mẫu", en: "Parents", zh: "父母宫" },
 ];
 
 /** Ngũ hành nạp âm sang số cục và tên cục. */
-export const HANH_TO_CUC: Readonly<Record<string, { so: number; ten: string }>> = {
-  "Thủy": { so: 2, ten: "Thủy Nhị Cục" },
-  "Mộc": { so: 3, ten: "Mộc Tam Cục" },
-  "Kim": { so: 4, ten: "Kim Tứ Cục" },
-  "Thổ": { so: 5, ten: "Thổ Ngũ Cục" },
-  "Hỏa": { so: 6, ten: "Hỏa Lục Cục" },
+export const HANH_TO_CUC: Readonly<Record<string, { so: number; ten: string; en: string; zh: string }>> = {
+  "Thủy": { so: 2, ten: "Thủy Nhị Cục", en: "Water Two", zh: "水二局" },
+  "Mộc": { so: 3, ten: "Mộc Tam Cục", en: "Wood Three", zh: "木三局" },
+  "Kim": { so: 4, ten: "Kim Tứ Cục", en: "Metal Four", zh: "金四局" },
+  "Thổ": { so: 5, ten: "Thổ Ngũ Cục", en: "Earth Five", zh: "土五局" },
+  "Hỏa": { so: 6, ten: "Hỏa Lục Cục", en: "Fire Six", zh: "火六局" },
 };
 
 /** Vị trí Lộc Tồn theo can năm (Dần, Mão, Tỵ, Ngọ, Tỵ, Ngọ, Thân, Dậu, Hợi, Tý). */
@@ -62,27 +67,27 @@ export const TRANG_SINH_THEO_CUC: Readonly<Record<number, number>> = {
 };
 
 /** 12 sao vòng Tràng Sinh theo thứ tự vòng. */
-export const TEN_VONG_TRUONG_SINH: readonly ViEn[] = [
-  { vi: "Tràng Sinh", en: "Growth" }, { vi: "Mộc Dục", en: "Bathing" }, { vi: "Quan Đới", en: "Youth" },
-  { vi: "Lâm Quan", en: "Prime" }, { vi: "Đế Vượng", en: "Peak" }, { vi: "Suy", en: "Decline" },
-  { vi: "Bệnh", en: "Illness" }, { vi: "Tử", en: "Death" }, { vi: "Mộ", en: "Tomb" },
-  { vi: "Tuyệt", en: "Extinction" }, { vi: "Thai", en: "Conception" }, { vi: "Dưỡng", en: "Nurture" },
+export const TEN_VONG_TRUONG_SINH: readonly ViEnZh[] = [
+  { vi: "Tràng Sinh", en: "Growth", zh: "长生" }, { vi: "Mộc Dục", en: "Bathing", zh: "沐浴" }, { vi: "Quan Đới", en: "Youth", zh: "冠带" },
+  { vi: "Lâm Quan", en: "Prime", zh: "临官" }, { vi: "Đế Vượng", en: "Peak", zh: "帝旺" }, { vi: "Suy", en: "Decline", zh: "衰" },
+  { vi: "Bệnh", en: "Illness", zh: "病" }, { vi: "Tử", en: "Death", zh: "死" }, { vi: "Mộ", en: "Tomb", zh: "墓" },
+  { vi: "Tuyệt", en: "Extinction", zh: "绝" }, { vi: "Thai", en: "Conception", zh: "胎" }, { vi: "Dưỡng", en: "Nurture", zh: "养" },
 ];
 
 /** 12 sao vòng Thái Tuế, luôn đi thuận từ cung chi năm. */
-export const TEN_VONG_THAI_TUE: readonly ViEn[] = [
-  { vi: "Thái Tuế", en: "Grand Duke" }, { vi: "Thiếu Dương", en: "Young Yang" }, { vi: "Tang Môn", en: "Mourning" },
-  { vi: "Thiếu Âm", en: "Young Yin" }, { vi: "Quan Phù", en: "Official Symbol" }, { vi: "Tử Phù", en: "Death Symbol" },
-  { vi: "Tuế Phá", en: "Year Breaker" }, { vi: "Long Đức", en: "Dragon Virtue" }, { vi: "Bạch Hổ", en: "White Tiger" },
-  { vi: "Phúc Đức", en: "Blessing Virtue" }, { vi: "Điếu Khách", en: "Mourning Guest" }, { vi: "Trực Phù", en: "Direct Symbol" },
+export const TEN_VONG_THAI_TUE: readonly ViEnZh[] = [
+  { vi: "Thái Tuế", en: "Grand Duke", zh: "太岁" }, { vi: "Thiếu Dương", en: "Young Yang", zh: "少阳" }, { vi: "Tang Môn", en: "Mourning", zh: "丧门" },
+  { vi: "Thiếu Âm", en: "Young Yin", zh: "少阴" }, { vi: "Quan Phù", en: "Official Symbol", zh: "官符" }, { vi: "Tử Phù", en: "Death Symbol", zh: "死符" },
+  { vi: "Tuế Phá", en: "Year Breaker", zh: "岁破" }, { vi: "Long Đức", en: "Dragon Virtue", zh: "龙德" }, { vi: "Bạch Hổ", en: "White Tiger", zh: "白虎" },
+  { vi: "Phúc Đức", en: "Blessing Virtue", zh: "福德" }, { vi: "Điếu Khách", en: "Mourning Guest", zh: "吊客" }, { vi: "Trực Phù", en: "Direct Symbol", zh: "直符" },
 ];
 
 /** 12 sao vòng Bác Sỹ, khởi ở cung Lộc Tồn, chiều theo âm dương nam nữ. */
-export const TEN_VONG_BAC_SY: readonly ViEn[] = [
-  { vi: "Bác Sỹ", en: "Scholar" }, { vi: "Lực Sĩ", en: "Strongman" }, { vi: "Thanh Long", en: "Green Dragon" },
-  { vi: "Tiểu Hao", en: "Small Loss" }, { vi: "Tướng Quân", en: "General" }, { vi: "Tấu Thư", en: "Petitioner" },
-  { vi: "Phi Liêm", en: "Flying Blade" }, { vi: "Hỷ Thần", en: "Joy Deity" }, { vi: "Bệnh Phù", en: "Illness Symbol" },
-  { vi: "Đại Hao", en: "Great Loss" }, { vi: "Phục Binh", en: "Hidden Soldier" }, { vi: "Quan Phủ", en: "Magistrate" },
+export const TEN_VONG_BAC_SY: readonly ViEnZh[] = [
+  { vi: "Bác Sỹ", en: "Scholar", zh: "博士" }, { vi: "Lực Sĩ", en: "Strongman", zh: "力士" }, { vi: "Thanh Long", en: "Green Dragon", zh: "青龙" },
+  { vi: "Tiểu Hao", en: "Small Loss", zh: "小耗" }, { vi: "Tướng Quân", en: "General", zh: "将军" }, { vi: "Tấu Thư", en: "Petitioner", zh: "奏书" },
+  { vi: "Phi Liêm", en: "Flying Blade", zh: "飞廉" }, { vi: "Hỷ Thần", en: "Joy Deity", zh: "喜神" }, { vi: "Bệnh Phù", en: "Illness Symbol", zh: "病符" },
+  { vi: "Đại Hao", en: "Great Loss", zh: "大耗" }, { vi: "Phục Binh", en: "Hidden Soldier", zh: "伏兵" }, { vi: "Quan Phủ", en: "Magistrate", zh: "官府" },
 ];
 
 /** Hai cung Triệt Lộ Không Vong theo can năm. */
@@ -151,12 +156,12 @@ export function thienMaViTri(chiNamIdx: number): number {
 }
 
 /** Nhãn đầy đủ của ký hiệu miếu, vượng, đắc, bình, hãm. */
-export const DIGNITY_LABEL: Readonly<Record<string, ViEn>> = {
-  "M": { vi: "Miếu", en: "Exalted" },
-  "V": { vi: "Vượng", en: "Prosperous" },
-  "Đ": { vi: "Đắc", en: "Favorable" },
-  "B": { vi: "Bình", en: "Neutral" },
-  "H": { vi: "Hãm", en: "Weak" },
+export const DIGNITY_LABEL: Readonly<Record<string, ViEnZh>> = {
+  "M": { vi: "Miếu", en: "Exalted", zh: "庙" },
+  "V": { vi: "Vượng", en: "Prosperous", zh: "旺" },
+  "Đ": { vi: "Đắc", en: "Favorable", zh: "得地" },
+  "B": { vi: "Bình", en: "Neutral", zh: "平" },
+  "H": { vi: "Hãm", en: "Weak", zh: "陷" },
 };
 
 /** Bảng miếu vượng đắc bình hãm của 14 chính tinh theo vị trí Tý tới Hợi. */
@@ -185,6 +190,83 @@ export const CHINH_TINH_NAME_EN: Readonly<Record<string, string>> = {
   "Cự Môn": "Giant Gate", "Thiên Tướng": "Celestial General", "Thiên Lương": "Celestial Beam",
   "Thất Sát": "Seven Killings", "Phá Quân": "Army Breaker",
 };
+
+/** Chữ Hán của 14 chính tinh (chinhTinhNameZh của Go). */
+export const CHINH_TINH_NAME_ZH: Readonly<Record<string, string>> = {
+  "Tử Vi": "紫微", "Thiên Cơ": "天机", "Thái Dương": "太阳", "Vũ Khúc": "武曲",
+  "Thiên Đồng": "天同", "Liêm Trinh": "廉贞", "Thiên Phủ": "天府", "Thái Âm": "太阴",
+  "Tham Lang": "贪狼", "Cự Môn": "巨门", "Thiên Tướng": "天相", "Thiên Lương": "天梁",
+  "Thất Sát": "七杀", "Phá Quân": "破军",
+};
+
+/** Chữ Hán của 13 phụ tinh gốc (phuTinhNameZh của Go). */
+export const PHU_TINH_NAME_ZH: Readonly<Record<string, string>> = {
+  "Lộc Tồn": "禄存", "Kình Dương": "擎羊", "Đà La": "陀罗",
+  "Thiên Khôi": "天魁", "Thiên Việt": "天钺",
+  "Tả Phù": "左辅", "Hữu Bật": "右弼",
+  "Văn Xương": "文昌", "Văn Khúc": "文曲",
+  "Địa Không": "地空", "Địa Kiếp": "地劫",
+  "Thiên Mã": "天马", "Đào Hoa": "桃花",
+};
+
+/**
+ * Thuật ngữ ba thứ tiếng cần trong kết quả, chép từ TuVung (tuvung.go): can,
+ * chi, Tứ Hóa, âm dương nam nữ, 30 nạp âm (hai lối viết Kim Bạch, Kim Bạc).
+ * Mỗi mục [tiếng Anh, chữ Hán]. Can, chi, Tứ Hóa giữ tên Hán Việt ở bản Anh.
+ */
+export const TU_VUNG_KET_QUA: Readonly<Record<string, readonly [string, string]>> = {
+  "Giáp": ["Giáp", "甲"], "Ất": ["Ất", "乙"], "Bính": ["Bính", "丙"], "Đinh": ["Đinh", "丁"], "Mậu": ["Mậu", "戊"],
+  "Kỷ": ["Kỷ", "己"], "Canh": ["Canh", "庚"], "Tân": ["Tân", "辛"], "Nhâm": ["Nhâm", "壬"], "Quý": ["Quý", "癸"],
+  "Tý": ["Tý", "子"], "Sửu": ["Sửu", "丑"], "Dần": ["Dần", "寅"], "Mão": ["Mão", "卯"], "Thìn": ["Thìn", "辰"],
+  "Tỵ": ["Tỵ", "巳"], "Ngọ": ["Ngọ", "午"], "Mùi": ["Mùi", "未"], "Thân": ["Thân", "申"], "Dậu": ["Dậu", "酉"],
+  "Tuất": ["Tuất", "戌"], "Hợi": ["Hợi", "亥"],
+  "Hóa Lộc": ["Hóa Lộc", "化禄"], "Hóa Quyền": ["Hóa Quyền", "化权"], "Hóa Khoa": ["Hóa Khoa", "化科"], "Hóa Kỵ": ["Hóa Kỵ", "化忌"],
+  "Dương Nam": ["Yang Male", "阳男"], "Âm Nam": ["Yin Male", "阴男"], "Dương Nữ": ["Yang Female", "阳女"], "Âm Nữ": ["Yin Female", "阴女"],
+  "Hải Trung Kim": ["Gold in the Sea", "海中金"], "Lư Trung Hỏa": ["Fire in the Furnace", "炉中火"],
+  "Đại Lâm Mộc": ["Wood of the Great Forest", "大林木"], "Lộ Bàng Thổ": ["Earth by the Roadside", "路旁土"],
+  "Kiếm Phong Kim": ["Gold of the Sword Edge", "剑锋金"], "Sơn Đầu Hỏa": ["Fire on the Hilltop", "山头火"],
+  "Giản Hạ Thủy": ["Water in the Ravine", "涧下水"], "Thành Đầu Thổ": ["Earth of the City Wall", "城头土"],
+  "Bạch Lạp Kim": ["Gold of the White Candle", "白蜡金"], "Dương Liễu Mộc": ["Wood of the Willow", "杨柳木"],
+  "Tuyền Trung Thủy": ["Water in the Spring", "泉中水"], "Ốc Thượng Thổ": ["Earth on the Roof", "屋上土"],
+  "Tích Lịch Hỏa": ["Fire of the Thunderbolt", "霹雳火"], "Tùng Bách Mộc": ["Wood of Pine and Cypress", "松柏木"],
+  "Trường Lưu Thủy": ["Water of the Long Stream", "长流水"], "Sa Trung Kim": ["Gold in the Sand", "沙中金"],
+  "Sơn Hạ Hỏa": ["Fire at the Foot of the Hill", "山下火"], "Bình Địa Mộc": ["Wood of the Plain", "平地木"],
+  "Bích Thượng Thổ": ["Earth on the Wall", "壁上土"], "Kim Bạch Kim": ["Gold of Foil", "金箔金"],
+  "Kim Bạc Kim": ["Gold of Foil", "金箔金"], "Phú Đăng Hỏa": ["Fire of the Lamp", "覆灯火"],
+  "Thiên Hà Thủy": ["Water of the Milky Way", "天河水"], "Đại Trạch Thổ": ["Earth of the Great Marsh", "大泽土"],
+  "Thoa Xuyến Kim": ["Gold of Hairpin and Bracelet", "钗钏金"], "Tang Đố Mộc": ["Wood of the Mulberry", "桑柘木"],
+  "Đại Khê Thủy": ["Water of the Great Brook", "大溪水"], "Sa Trung Thổ": ["Earth in the Sand", "沙中土"],
+  "Thiên Thượng Hỏa": ["Fire in the Sky", "天上火"], "Thạch Lựu Mộc": ["Wood of the Pomegranate", "石榴木"],
+  "Đại Hải Thủy": ["Water of the Great Sea", "大海水"],
+};
+
+/** Chữ Hán của một thuật ngữ hay một cặp can chi ("Bính Ngọ" ra 丙午); rỗng khi không có (zhCua của Go). */
+export function zhCua(vi: string): string {
+  const s = vi.trim();
+  if (s === "") return "";
+  const phan = s.split(/\s+/);
+  if (phan.length === 2 && THIEN_CAN.includes(phan[0]) && DIA_CHI.includes(phan[1])) {
+    return TU_VUNG_KET_QUA[phan[0]][1] + TU_VUNG_KET_QUA[phan[1]][1];
+  }
+  return TU_VUNG_KET_QUA[s]?.[1] ?? "";
+}
+
+/** Tên tiếng Anh của một thuật ngữ; rỗng khi không có (enCua của Go). */
+export function enCua(vi: string): string {
+  return TU_VUNG_KET_QUA[vi.trim()]?.[0] ?? "";
+}
+
+/** Tên tiếng Anh và chữ Hán của một cung theo tên Việt; rỗng khi không phải tên cung. */
+export function tenCungBaThu(vi: string): { en: string; zh: string } {
+  const c = TEN_CUNG_THEO_OFFSET.find((x) => x.vi === vi);
+  return c ? { en: c.en, zh: c.zh } : { en: "", zh: "" };
+}
+
+/** Tên tiếng Anh và chữ Hán của một cục ("Kim Tứ Cục"); rỗng khi không phải tên cục. */
+export function tenCucBaThu(ten: string): { en: string; zh: string } {
+  const c = Object.values(HANH_TO_CUC).find((x) => x.ten === ten);
+  return c ? { en: c.en, zh: c.zh } : { en: "", zh: "" };
+}
 
 /** Tên tiếng Anh của 13 phụ tinh gốc. */
 export const PHU_TINH_NAME_EN: Readonly<Record<string, string>> = {

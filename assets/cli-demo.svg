@@ -1,0 +1,313 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 749 1015" width="749" height="1015" role="img" aria-labelledby="t d">
+<title id="t">Nhat Nguyet command line</title>
+<desc id="d">Terminal recording: "npx @nhatnguyet/cli lunar 1985-01-21 --country CN" prints the Chinese lunar date (1984-12-01, still the 12th month while Vietnam celebrates Tết), then "npx @nhatnguyet/cli ziwei 1990-09-19 20:00 male" prints a Zi Wei Dou Shu chart as a 4x4 grid.</desc>
+<style>
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;font-size:13.5px;fill:#D7E1DE;white-space:pre;opacity:0}
+@keyframes k0{0%,4.57%{opacity:0}4.58%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k0{animation:k0 17.5s linear infinite}
+@keyframes k1{0%,4.83%{opacity:0}4.84%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k1{animation:k1 17.5s linear infinite}
+@keyframes k2{0%,5.09%{opacity:0}5.10%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k2{animation:k2 17.5s linear infinite}
+@keyframes k3{0%,5.34%{opacity:0}5.35%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k3{animation:k3 17.5s linear infinite}
+@keyframes k4{0%,5.86%{opacity:0}5.87%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k4{animation:k4 17.5s linear infinite}
+@keyframes k5{0%,6.11%{opacity:0}6.12%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k5{animation:k5 17.5s linear infinite}
+@keyframes k6{0%,6.37%{opacity:0}6.38%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k6{animation:k6 17.5s linear infinite}
+@keyframes k7{0%,6.63%{opacity:0}6.64%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k7{animation:k7 17.5s linear infinite}
+@keyframes k8{0%,6.89%{opacity:0}6.90%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k8{animation:k8 17.5s linear infinite}
+@keyframes k9{0%,7.14%{opacity:0}7.15%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k9{animation:k9 17.5s linear infinite}
+@keyframes k10{0%,7.40%{opacity:0}7.41%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k10{animation:k10 17.5s linear infinite}
+@keyframes k11{0%,7.66%{opacity:0}7.67%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k11{animation:k11 17.5s linear infinite}
+@keyframes k12{0%,7.91%{opacity:0}7.92%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k12{animation:k12 17.5s linear infinite}
+@keyframes k13{0%,8.17%{opacity:0}8.18%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k13{animation:k13 17.5s linear infinite}
+@keyframes k14{0%,8.43%{opacity:0}8.44%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k14{animation:k14 17.5s linear infinite}
+@keyframes k15{0%,8.69%{opacity:0}8.70%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k15{animation:k15 17.5s linear infinite}
+@keyframes k16{0%,8.94%{opacity:0}8.95%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k16{animation:k16 17.5s linear infinite}
+@keyframes k17{0%,9.20%{opacity:0}9.21%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k17{animation:k17 17.5s linear infinite}
+@keyframes k18{0%,9.46%{opacity:0}9.47%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k18{animation:k18 17.5s linear infinite}
+@keyframes k19{0%,9.97%{opacity:0}9.98%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k19{animation:k19 17.5s linear infinite}
+@keyframes k20{0%,10.23%{opacity:0}10.24%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k20{animation:k20 17.5s linear infinite}
+@keyframes k21{0%,10.49%{opacity:0}10.50%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k21{animation:k21 17.5s linear infinite}
+@keyframes k22{0%,10.74%{opacity:0}10.75%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k22{animation:k22 17.5s linear infinite}
+@keyframes k23{0%,11.00%{opacity:0}11.01%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k23{animation:k23 17.5s linear infinite}
+@keyframes k24{0%,11.51%{opacity:0}11.52%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k24{animation:k24 17.5s linear infinite}
+@keyframes k25{0%,11.77%{opacity:0}11.78%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k25{animation:k25 17.5s linear infinite}
+@keyframes k26{0%,12.03%{opacity:0}12.04%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k26{animation:k26 17.5s linear infinite}
+@keyframes k27{0%,12.29%{opacity:0}12.30%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k27{animation:k27 17.5s linear infinite}
+@keyframes k28{0%,12.54%{opacity:0}12.55%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k28{animation:k28 17.5s linear infinite}
+@keyframes k29{0%,12.80%{opacity:0}12.81%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k29{animation:k29 17.5s linear infinite}
+@keyframes k30{0%,13.06%{opacity:0}13.07%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k30{animation:k30 17.5s linear infinite}
+@keyframes k31{0%,13.31%{opacity:0}13.32%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k31{animation:k31 17.5s linear infinite}
+@keyframes k32{0%,13.57%{opacity:0}13.58%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k32{animation:k32 17.5s linear infinite}
+@keyframes k33{0%,13.83%{opacity:0}13.84%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k33{animation:k33 17.5s linear infinite}
+@keyframes k34{0%,14.34%{opacity:0}14.35%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k34{animation:k34 17.5s linear infinite}
+@keyframes k35{0%,14.60%{opacity:0}14.61%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k35{animation:k35 17.5s linear infinite}
+@keyframes k36{0%,14.86%{opacity:0}14.87%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k36{animation:k36 17.5s linear infinite}
+@keyframes k37{0%,15.11%{opacity:0}15.12%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k37{animation:k37 17.5s linear infinite}
+@keyframes k38{0%,15.37%{opacity:0}15.38%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k38{animation:k38 17.5s linear infinite}
+@keyframes k39{0%,15.63%{opacity:0}15.64%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k39{animation:k39 17.5s linear infinite}
+@keyframes k40{0%,15.89%{opacity:0}15.90%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k40{animation:k40 17.5s linear infinite}
+@keyframes k41{0%,16.14%{opacity:0}16.15%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k41{animation:k41 17.5s linear infinite}
+@keyframes k42{0%,16.40%{opacity:0}16.41%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k42{animation:k42 17.5s linear infinite}
+@keyframes k43{0%,16.91%{opacity:0}16.92%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k43{animation:k43 17.5s linear infinite}
+@keyframes k44{0%,17.17%{opacity:0}17.18%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k44{animation:k44 17.5s linear infinite}
+@keyframes k45{0%,20.60%{opacity:0}20.61%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k45{animation:k45 17.5s linear infinite}
+@keyframes k46{0%,20.76%{opacity:0}20.77%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k46{animation:k46 17.5s linear infinite}
+@keyframes k47{0%,20.92%{opacity:0}20.93%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k47{animation:k47 17.5s linear infinite}
+@keyframes k48{0%,21.08%{opacity:0}21.09%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k48{animation:k48 17.5s linear infinite}
+@keyframes k49{0%,21.24%{opacity:0}21.25%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k49{animation:k49 17.5s linear infinite}
+@keyframes k50{0%,21.40%{opacity:0}21.41%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k50{animation:k50 17.5s linear infinite}
+@keyframes k51{0%,21.56%{opacity:0}21.57%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k51{animation:k51 17.5s linear infinite}
+@keyframes k52{0%,21.72%{opacity:0}21.73%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k52{animation:k52 17.5s linear infinite}
+@keyframes k53{0%,21.88%{opacity:0}21.89%,36.90%{opacity:1}36.91%,100%{opacity:0}}.k53{animation:k53 17.5s linear infinite}
+@keyframes k54{0%,39.18%{opacity:0}39.19%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k54{animation:k54 17.5s linear infinite}
+@keyframes k55{0%,39.44%{opacity:0}39.45%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k55{animation:k55 17.5s linear infinite}
+@keyframes k56{0%,39.70%{opacity:0}39.71%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k56{animation:k56 17.5s linear infinite}
+@keyframes k57{0%,39.95%{opacity:0}39.96%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k57{animation:k57 17.5s linear infinite}
+@keyframes k58{0%,40.47%{opacity:0}40.48%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k58{animation:k58 17.5s linear infinite}
+@keyframes k59{0%,40.73%{opacity:0}40.74%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k59{animation:k59 17.5s linear infinite}
+@keyframes k60{0%,40.98%{opacity:0}40.99%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k60{animation:k60 17.5s linear infinite}
+@keyframes k61{0%,41.24%{opacity:0}41.25%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k61{animation:k61 17.5s linear infinite}
+@keyframes k62{0%,41.50%{opacity:0}41.51%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k62{animation:k62 17.5s linear infinite}
+@keyframes k63{0%,41.75%{opacity:0}41.76%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k63{animation:k63 17.5s linear infinite}
+@keyframes k64{0%,42.01%{opacity:0}42.02%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k64{animation:k64 17.5s linear infinite}
+@keyframes k65{0%,42.27%{opacity:0}42.28%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k65{animation:k65 17.5s linear infinite}
+@keyframes k66{0%,42.53%{opacity:0}42.54%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k66{animation:k66 17.5s linear infinite}
+@keyframes k67{0%,42.78%{opacity:0}42.79%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k67{animation:k67 17.5s linear infinite}
+@keyframes k68{0%,43.04%{opacity:0}43.05%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k68{animation:k68 17.5s linear infinite}
+@keyframes k69{0%,43.30%{opacity:0}43.31%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k69{animation:k69 17.5s linear infinite}
+@keyframes k70{0%,43.55%{opacity:0}43.56%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k70{animation:k70 17.5s linear infinite}
+@keyframes k71{0%,43.81%{opacity:0}43.82%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k71{animation:k71 17.5s linear infinite}
+@keyframes k72{0%,44.07%{opacity:0}44.08%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k72{animation:k72 17.5s linear infinite}
+@keyframes k73{0%,44.58%{opacity:0}44.59%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k73{animation:k73 17.5s linear infinite}
+@keyframes k74{0%,44.84%{opacity:0}44.85%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k74{animation:k74 17.5s linear infinite}
+@keyframes k75{0%,45.10%{opacity:0}45.11%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k75{animation:k75 17.5s linear infinite}
+@keyframes k76{0%,45.35%{opacity:0}45.36%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k76{animation:k76 17.5s linear infinite}
+@keyframes k77{0%,45.61%{opacity:0}45.62%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k77{animation:k77 17.5s linear infinite}
+@keyframes k78{0%,46.13%{opacity:0}46.14%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k78{animation:k78 17.5s linear infinite}
+@keyframes k79{0%,46.38%{opacity:0}46.39%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k79{animation:k79 17.5s linear infinite}
+@keyframes k80{0%,46.64%{opacity:0}46.65%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k80{animation:k80 17.5s linear infinite}
+@keyframes k81{0%,46.90%{opacity:0}46.91%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k81{animation:k81 17.5s linear infinite}
+@keyframes k82{0%,47.15%{opacity:0}47.16%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k82{animation:k82 17.5s linear infinite}
+@keyframes k83{0%,47.41%{opacity:0}47.42%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k83{animation:k83 17.5s linear infinite}
+@keyframes k84{0%,47.67%{opacity:0}47.68%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k84{animation:k84 17.5s linear infinite}
+@keyframes k85{0%,47.93%{opacity:0}47.94%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k85{animation:k85 17.5s linear infinite}
+@keyframes k86{0%,48.18%{opacity:0}48.19%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k86{animation:k86 17.5s linear infinite}
+@keyframes k87{0%,48.44%{opacity:0}48.45%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k87{animation:k87 17.5s linear infinite}
+@keyframes k88{0%,48.95%{opacity:0}48.96%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k88{animation:k88 17.5s linear infinite}
+@keyframes k89{0%,49.21%{opacity:0}49.22%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k89{animation:k89 17.5s linear infinite}
+@keyframes k90{0%,49.47%{opacity:0}49.48%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k90{animation:k90 17.5s linear infinite}
+@keyframes k91{0%,49.73%{opacity:0}49.74%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k91{animation:k91 17.5s linear infinite}
+@keyframes k92{0%,49.98%{opacity:0}49.99%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k92{animation:k92 17.5s linear infinite}
+@keyframes k93{0%,50.50%{opacity:0}50.51%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k93{animation:k93 17.5s linear infinite}
+@keyframes k94{0%,50.75%{opacity:0}50.76%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k94{animation:k94 17.5s linear infinite}
+@keyframes k95{0%,51.01%{opacity:0}51.02%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k95{animation:k95 17.5s linear infinite}
+@keyframes k96{0%,51.27%{opacity:0}51.28%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k96{animation:k96 17.5s linear infinite}
+@keyframes k97{0%,54.70%{opacity:0}54.71%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k97{animation:k97 17.5s linear infinite}
+@keyframes k98{0%,54.86%{opacity:0}54.87%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k98{animation:k98 17.5s linear infinite}
+@keyframes k99{0%,55.02%{opacity:0}55.03%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k99{animation:k99 17.5s linear infinite}
+@keyframes k100{0%,55.18%{opacity:0}55.19%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k100{animation:k100 17.5s linear infinite}
+@keyframes k101{0%,55.34%{opacity:0}55.35%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k101{animation:k101 17.5s linear infinite}
+@keyframes k102{0%,55.50%{opacity:0}55.51%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k102{animation:k102 17.5s linear infinite}
+@keyframes k103{0%,55.66%{opacity:0}55.67%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k103{animation:k103 17.5s linear infinite}
+@keyframes k104{0%,55.82%{opacity:0}55.83%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k104{animation:k104 17.5s linear infinite}
+@keyframes k105{0%,55.98%{opacity:0}55.99%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k105{animation:k105 17.5s linear infinite}
+@keyframes k106{0%,56.14%{opacity:0}56.15%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k106{animation:k106 17.5s linear infinite}
+@keyframes k107{0%,56.30%{opacity:0}56.31%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k107{animation:k107 17.5s linear infinite}
+@keyframes k108{0%,56.46%{opacity:0}56.47%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k108{animation:k108 17.5s linear infinite}
+@keyframes k109{0%,56.62%{opacity:0}56.63%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k109{animation:k109 17.5s linear infinite}
+@keyframes k110{0%,56.78%{opacity:0}56.79%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k110{animation:k110 17.5s linear infinite}
+@keyframes k111{0%,56.94%{opacity:0}56.95%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k111{animation:k111 17.5s linear infinite}
+@keyframes k112{0%,57.10%{opacity:0}57.11%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k112{animation:k112 17.5s linear infinite}
+@keyframes k113{0%,57.26%{opacity:0}57.27%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k113{animation:k113 17.5s linear infinite}
+@keyframes k114{0%,57.42%{opacity:0}57.43%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k114{animation:k114 17.5s linear infinite}
+@keyframes k115{0%,57.58%{opacity:0}57.59%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k115{animation:k115 17.5s linear infinite}
+@keyframes k116{0%,57.74%{opacity:0}57.75%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k116{animation:k116 17.5s linear infinite}
+@keyframes k117{0%,57.90%{opacity:0}57.91%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k117{animation:k117 17.5s linear infinite}
+@keyframes k118{0%,58.06%{opacity:0}58.07%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k118{animation:k118 17.5s linear infinite}
+@keyframes k119{0%,58.22%{opacity:0}58.23%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k119{animation:k119 17.5s linear infinite}
+@keyframes k120{0%,58.38%{opacity:0}58.39%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k120{animation:k120 17.5s linear infinite}
+@keyframes k121{0%,58.54%{opacity:0}58.55%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k121{animation:k121 17.5s linear infinite}
+@keyframes k122{0%,58.70%{opacity:0}58.71%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k122{animation:k122 17.5s linear infinite}
+@keyframes k123{0%,58.86%{opacity:0}58.87%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k123{animation:k123 17.5s linear infinite}
+@keyframes k124{0%,59.02%{opacity:0}59.03%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k124{animation:k124 17.5s linear infinite}
+@keyframes k125{0%,59.18%{opacity:0}59.19%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k125{animation:k125 17.5s linear infinite}
+@keyframes k126{0%,59.34%{opacity:0}59.35%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k126{animation:k126 17.5s linear infinite}
+@keyframes k127{0%,59.50%{opacity:0}59.51%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k127{animation:k127 17.5s linear infinite}
+@keyframes k128{0%,59.66%{opacity:0}59.67%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k128{animation:k128 17.5s linear infinite}
+@keyframes k129{0%,59.82%{opacity:0}59.83%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k129{animation:k129 17.5s linear infinite}
+@keyframes k130{0%,59.98%{opacity:0}59.99%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k130{animation:k130 17.5s linear infinite}
+@keyframes k131{0%,60.14%{opacity:0}60.15%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k131{animation:k131 17.5s linear infinite}
+@keyframes k132{0%,60.30%{opacity:0}60.31%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k132{animation:k132 17.5s linear infinite}
+@keyframes k133{0%,60.46%{opacity:0}60.47%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k133{animation:k133 17.5s linear infinite}
+@keyframes k134{0%,60.62%{opacity:0}60.63%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k134{animation:k134 17.5s linear infinite}
+@keyframes k135{0%,60.78%{opacity:0}60.79%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k135{animation:k135 17.5s linear infinite}
+@keyframes k136{0%,60.94%{opacity:0}60.95%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k136{animation:k136 17.5s linear infinite}
+@keyframes k137{0%,61.10%{opacity:0}61.11%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k137{animation:k137 17.5s linear infinite}
+@keyframes k138{0%,61.26%{opacity:0}61.27%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k138{animation:k138 17.5s linear infinite}
+@keyframes k139{0%,61.42%{opacity:0}61.43%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k139{animation:k139 17.5s linear infinite}
+@keyframes k140{0%,61.58%{opacity:0}61.59%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k140{animation:k140 17.5s linear infinite}
+@keyframes k141{0%,61.74%{opacity:0}61.75%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k141{animation:k141 17.5s linear infinite}
+@keyframes k142{0%,61.90%{opacity:0}61.91%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k142{animation:k142 17.5s linear infinite}
+@keyframes k143{0%,62.06%{opacity:0}62.07%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k143{animation:k143 17.5s linear infinite}
+@keyframes k144{0%,62.22%{opacity:0}62.23%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k144{animation:k144 17.5s linear infinite}
+@keyframes k145{0%,62.38%{opacity:0}62.39%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k145{animation:k145 17.5s linear infinite}
+@keyframes k146{0%,62.54%{opacity:0}62.55%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k146{animation:k146 17.5s linear infinite}
+@keyframes k147{0%,62.70%{opacity:0}62.71%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k147{animation:k147 17.5s linear infinite}
+@keyframes k148{0%,62.86%{opacity:0}62.87%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k148{animation:k148 17.5s linear infinite}
+@keyframes k149{0%,63.02%{opacity:0}63.03%,97.46%{opacity:1}97.47%,100%{opacity:0}}.k149{animation:k149 17.5s linear infinite}
+@media (prefers-reduced-motion:reduce){text{animation:none!important}.final{opacity:1}}
+</style>
+<rect width="749" height="1015" rx="10" fill="#0F1E1D"/>
+<rect width="749" height="34" rx="10" fill="#182A28"/>
+<rect y="24" width="749" height="10" fill="#182A28"/>
+<circle cx="20" cy="17" r="6" fill="#EE8D78"/><circle cx="40" cy="17" r="6" fill="#E6B866"/><circle cx="60" cy="17" r="6" fill="#7CCB98"/>
+<text x="374.5" y="21.5" text-anchor="middle" fill="#7F918C" style="opacity:1;font-size:12px">nhatnguyet</text>
+<text class="k0" x="18" y="65.5" fill="#7CC7BF" font-weight="700">$</text>
+<text class="k1" x="34.2" y="65.5">n</text>
+<text class="k2" x="42.3" y="65.5">p</text>
+<text class="k3" x="50.4" y="65.5">x</text>
+<text class="k4" x="66.6" y="65.5">@</text>
+<text class="k5" x="74.7" y="65.5">n</text>
+<text class="k6" x="82.8" y="65.5">h</text>
+<text class="k7" x="90.9" y="65.5">a</text>
+<text class="k8" x="99.0" y="65.5">t</text>
+<text class="k9" x="107.1" y="65.5">n</text>
+<text class="k10" x="115.2" y="65.5">g</text>
+<text class="k11" x="123.3" y="65.5">u</text>
+<text class="k12" x="131.4" y="65.5">y</text>
+<text class="k13" x="139.5" y="65.5">e</text>
+<text class="k14" x="147.6" y="65.5">t</text>
+<text class="k15" x="155.7" y="65.5">/</text>
+<text class="k16" x="163.8" y="65.5">c</text>
+<text class="k17" x="171.9" y="65.5">l</text>
+<text class="k18" x="180.0" y="65.5">i</text>
+<text class="k19" x="196.2" y="65.5">l</text>
+<text class="k20" x="204.3" y="65.5">u</text>
+<text class="k21" x="212.4" y="65.5">n</text>
+<text class="k22" x="220.5" y="65.5">a</text>
+<text class="k23" x="228.6" y="65.5">r</text>
+<text class="k24" x="244.8" y="65.5">1</text>
+<text class="k25" x="252.9" y="65.5">9</text>
+<text class="k26" x="261.0" y="65.5">8</text>
+<text class="k27" x="269.1" y="65.5">5</text>
+<text class="k28" x="277.2" y="65.5">-</text>
+<text class="k29" x="285.3" y="65.5">0</text>
+<text class="k30" x="293.4" y="65.5">1</text>
+<text class="k31" x="301.5" y="65.5">-</text>
+<text class="k32" x="309.6" y="65.5">2</text>
+<text class="k33" x="317.7" y="65.5">1</text>
+<text class="k34" x="333.9" y="65.5">-</text>
+<text class="k35" x="342.0" y="65.5">-</text>
+<text class="k36" x="350.1" y="65.5">c</text>
+<text class="k37" x="358.2" y="65.5">o</text>
+<text class="k38" x="366.3" y="65.5">u</text>
+<text class="k39" x="374.4" y="65.5">n</text>
+<text class="k40" x="382.5" y="65.5">t</text>
+<text class="k41" x="390.6" y="65.5">r</text>
+<text class="k42" x="398.7" y="65.5">y</text>
+<text class="k43" x="414.9" y="65.5">C</text>
+<text class="k44" x="423.0" y="65.5">N</text>
+<text class="k45" x="18" y="83" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">┌────────────┬──────────────┐</tspan></text>
+<text class="k46" x="18" y="100.5" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Gregorian</tspan>  <tspan fill="#7F918C">│</tspan> 1985-01-21   <tspan fill="#7F918C">│</tspan></text>
+<text class="k47" x="18" y="118" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Lunar</tspan>      <tspan fill="#7F918C">│</tspan> 1984-12-01   <tspan fill="#7F918C">│</tspan></text>
+<text class="k48" x="18" y="135.5" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Year</tspan>       <tspan fill="#7F918C">│</tspan> Jia Zi · Rat <tspan fill="#7F918C">│</tspan></text>
+<text class="k49" x="18" y="153" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Month</tspan>      <tspan fill="#7F918C">│</tspan> Ding Chou    <tspan fill="#7F918C">│</tspan></text>
+<text class="k50" x="18" y="170.5" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Day</tspan>        <tspan fill="#7F918C">│</tspan> Geng Shen    <tspan fill="#7F918C">│</tspan></text>
+<text class="k51" x="18" y="188" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Solar term</tspan> <tspan fill="#7F918C">│</tspan> Major Cold   <tspan fill="#7F918C">│</tspan></text>
+<text class="k52" x="18" y="205.5" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Calendar</tspan>   <tspan fill="#7F918C">│</tspan> CN (UTC+8)   <tspan fill="#7F918C">│</tspan></text>
+<text class="k53" x="18" y="223" textLength="234.9" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">└────────────┴──────────────┘</tspan></text>
+<text class="k54 final" x="18" y="65.5" fill="#7CC7BF" font-weight="700">$</text>
+<text class="k55 final" x="34.2" y="65.5">n</text>
+<text class="k56 final" x="42.3" y="65.5">p</text>
+<text class="k57 final" x="50.4" y="65.5">x</text>
+<text class="k58 final" x="66.6" y="65.5">@</text>
+<text class="k59 final" x="74.7" y="65.5">n</text>
+<text class="k60 final" x="82.8" y="65.5">h</text>
+<text class="k61 final" x="90.9" y="65.5">a</text>
+<text class="k62 final" x="99.0" y="65.5">t</text>
+<text class="k63 final" x="107.1" y="65.5">n</text>
+<text class="k64 final" x="115.2" y="65.5">g</text>
+<text class="k65 final" x="123.3" y="65.5">u</text>
+<text class="k66 final" x="131.4" y="65.5">y</text>
+<text class="k67 final" x="139.5" y="65.5">e</text>
+<text class="k68 final" x="147.6" y="65.5">t</text>
+<text class="k69 final" x="155.7" y="65.5">/</text>
+<text class="k70 final" x="163.8" y="65.5">c</text>
+<text class="k71 final" x="171.9" y="65.5">l</text>
+<text class="k72 final" x="180.0" y="65.5">i</text>
+<text class="k73 final" x="196.2" y="65.5">z</text>
+<text class="k74 final" x="204.3" y="65.5">i</text>
+<text class="k75 final" x="212.4" y="65.5">w</text>
+<text class="k76 final" x="220.5" y="65.5">e</text>
+<text class="k77 final" x="228.6" y="65.5">i</text>
+<text class="k78 final" x="244.8" y="65.5">1</text>
+<text class="k79 final" x="252.9" y="65.5">9</text>
+<text class="k80 final" x="261.0" y="65.5">9</text>
+<text class="k81 final" x="269.1" y="65.5">0</text>
+<text class="k82 final" x="277.2" y="65.5">-</text>
+<text class="k83 final" x="285.3" y="65.5">0</text>
+<text class="k84 final" x="293.4" y="65.5">9</text>
+<text class="k85 final" x="301.5" y="65.5">-</text>
+<text class="k86 final" x="309.6" y="65.5">1</text>
+<text class="k87 final" x="317.7" y="65.5">9</text>
+<text class="k88 final" x="333.9" y="65.5">2</text>
+<text class="k89 final" x="342.0" y="65.5">0</text>
+<text class="k90 final" x="350.1" y="65.5">:</text>
+<text class="k91 final" x="358.2" y="65.5">0</text>
+<text class="k92 final" x="366.3" y="65.5">0</text>
+<text class="k93 final" x="382.5" y="65.5">m</text>
+<text class="k94 final" x="390.6" y="65.5">a</text>
+<text class="k95 final" x="398.7" y="65.5">l</text>
+<text class="k96 final" x="406.8" y="65.5">e</text>
+<text class="k97 final" x="18" y="83" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">┌────────────────────┬────────────────────┬────────────────────┬────────────────────┐</tspan></text>
+<text class="k98 final" x="18" y="100.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Travel</tspan>             <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Health</tspan>             <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Wealth</tspan><tspan fill="#E6B866"> · Body</tspan>      <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Children</tspan>           <tspan fill="#7F918C">│</tspan></text>
+<text class="k99 final" x="18" y="118" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Xin Si</tspan>             <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Ren Wu</tspan><tspan fill="#8DB8E6"> Jie Kong</tspan>    <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Gui Wei</tspan><tspan fill="#8DB8E6"> Jie Kong</tspan>   <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Jia Shen</tspan>           <tspan fill="#7F918C">│</tspan></text>
+<text class="k100 final" x="18" y="135.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Celestial Mechanism</tspan><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Purple Star</tspan><tspan fill="#7F918C"> Ex</tspan>     <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Spinning Top,</tspan>      <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Army Breaker</tspan><tspan fill="#7F918C"> We</tspan>    <tspan fill="#7F918C">│</tspan></text>
+<text class="k101 final" x="18" y="153" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>  <tspan fill="#7F918C"> Pr</tspan>               <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Leader,</tspan>  <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Void</tspan>     <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Prosperity,</tspan>        <tspan fill="#7F918C">│</tspan></text>
+<text class="k102 final" x="18" y="170.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Talent,</tspan>  <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Fortune,</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Nurture</tspan>            <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Horse,</tspan>   <tspan fill="#7F918C">│</tspan></text>
+<text class="k103 final" x="18" y="188" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Bell Star,</tspan>         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Messen…</tspan>  <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Charm,</tspan>   <tspan fill="#7F918C">│</tspan></text>
+<text class="k104 final" x="18" y="205.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Shattering Star</tspan>    <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Conception</tspan>         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Physic…,</tspan> <tspan fill="#7F918C">│</tspan></text>
+<text class="k105 final" x="18" y="223" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Extinction</tspan>         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Solitary Star,</tspan>     <tspan fill="#7F918C">│</tspan></text>
+<text class="k106 final" x="18" y="240.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Flowing Haze</tspan>       <tspan fill="#7F918C">│</tspan></text>
+<text class="k107 final" x="18" y="258" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Growth</tspan>             <tspan fill="#7F918C">│</tspan></text>
+<text class="k108 final" x="18" y="275.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">├────────────────────┼────────────────────┴────────────────────┼────────────────────┤</tspan></text>
+<text class="k109 final" x="18" y="293" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Friends/Subordinat…</tspan><tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Spouse</tspan>             <tspan fill="#7F918C">│</tspan></text>
+<text class="k110 final" x="18" y="310.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Geng Chen</tspan>          <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Yi You</tspan>             <tspan fill="#7F918C">│</tspan></text>
+<text class="k111 final" x="18" y="328" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Seven Killings</tspan><tspan fill="#7F918C"> We</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Sword Ram,</tspan>         <tspan fill="#7F918C">│</tspan></text>
+<text class="k112 final" x="18" y="345.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Phoenix Pavilion,</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Earthly Robber,</tspan>    <tspan fill="#7F918C">│</tspan></text>
+<text class="k113 final" x="18" y="363" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Punish…,</tspan> <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Dipper Lord,</tspan>       <tspan fill="#7F918C">│</tspan></text>
+<text class="k114 final" x="18" y="380.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">State Seal,</tspan>        <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Red Phoenix</tspan>        <tspan fill="#7F918C">│</tspan></text>
+<text class="k115 final" x="18" y="398" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Releasing Spirit,</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Bathing</tspan>            <tspan fill="#7F918C">│</tspan></text>
+<text class="k116 final" x="18" y="415.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Terrace Aide,</tspan>      <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k117 final" x="18" y="433" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Injury,</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k118 final" x="18" y="450.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Net,</tspan>     <tspan fill="#7F918C">│</tspan>          <tspan fill="#E6B866" font-weight="700">ZI WEI DOU SHU CHART</tspan>           <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k119 final" x="18" y="468" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Widow Star</tspan>         <tspan fill="#7F918C">│</tspan>       Born 1990-09-19 20:00 (Xu)        <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k120 final" x="18" y="485.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Tomb</tspan>               <tspan fill="#7F918C">│</tspan>       Lunar 1990-08-01 · Geng Wu        <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k121 final" x="18" y="503" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">├────────────────────┤</tspan>                <tspan fill="#E6B866">Yang Male</tspan>                <tspan fill="#7F918C">├────────────────────┤</tspan></text>
+<text class="k122 final" x="18" y="520.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Career</tspan>             <tspan fill="#7F918C">│</tspan>           Bureau: Earth Five            <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Siblings</tspan>           <tspan fill="#7F918C">│</tspan></text>
+<text class="k123 final" x="18" y="538" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Ji Mao</tspan>             <tspan fill="#7F918C">│</tspan>      Na yin: Earth by the Roadside      <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Bing Xu</tspan><tspan fill="#8DB8E6"> Xun Kong</tspan>   <tspan fill="#7F918C">│</tspan></text>
+<text class="k124 final" x="18" y="555.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Sun</tspan><tspan fill="#7F918C"> Pr</tspan><tspan fill="#7CCB98"> Lu</tspan>          <tspan fill="#7F918C">│</tspan>          <tspan fill="#7F918C">Life: Hai · Body: Wei</tspan>          <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Purity</tspan><tspan fill="#7F918C"> Ex</tspan>          <tspan fill="#7F918C">│</tspan></text>
+<text class="k125 final" x="18" y="573" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Celestial Beam</tspan><tspan fill="#7F918C"> Pr</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Celestial Treasury</tspan> <tspan fill="#7F918C">│</tspan></text>
+<text class="k126 final" x="18" y="590.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Right Assistant,</tspan>   <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>  <tspan fill="#7F918C"> Pr</tspan>               <tspan fill="#7F918C">│</tspan></text>
+<text class="k127 final" x="18" y="608" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Peach Blossom,</tspan>     <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Dragon Pool,</tspan>       <tspan fill="#7F918C">│</tspan></text>
+<text class="k128 final" x="18" y="625.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Eight Seats,</tspan>       <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Earthly Snare,</tspan>     <tspan fill="#7F918C">│</tspan></text>
+<text class="k129 final" x="18" y="643" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Nobili…,</tspan> <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Canopy</tspan>             <tspan fill="#7F918C">│</tspan></text>
+<text class="k130 final" x="18" y="660.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Virtue,</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Youth</tspan>              <tspan fill="#7F918C">│</tspan></text>
+<text class="k131 final" x="18" y="678" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Joy,</tspan>     <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k132 final" x="18" y="695.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Release</tspan>  <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k133 final" x="18" y="713" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Death</tspan>              <tspan fill="#7F918C">│</tspan>                                         <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan></text>
+<text class="k134 final" x="18" y="730.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">├────────────────────┼────────────────────┬────────────────────┼────────────────────┤</tspan></text>
+<text class="k135 final" x="18" y="748" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Property</tspan>           <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Fortune/Virtue</tspan>     <tspan fill="#7F918C">│</tspan> <tspan font-weight="700">Parents</tspan>            <tspan fill="#7F918C">│</tspan> <tspan fill="#E6B866" font-weight="700">Life Palace</tspan>        <tspan fill="#7F918C">│</tspan></text>
+<text class="k136 final" x="18" y="765.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Wu Yin</tspan>             <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Ji Chou</tspan>            <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Wu Zi</tspan>              <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Ding Hai</tspan><tspan fill="#8DB8E6"> Xun Kong</tspan>  <tspan fill="#7F918C">│</tspan></text>
+<text class="k137 final" x="18" y="783" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Military Song</tspan>      <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Celestial Blessing</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Greedy Wolf</tspan><tspan fill="#7F918C"> We</tspan>     <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Moon</tspan><tspan fill="#7F918C"> Ex</tspan><tspan fill="#7CCB98"> Ji</tspan>         <tspan fill="#7F918C">│</tspan></text>
+<text class="k138 final" x="18" y="800.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>  <tspan fill="#7F918C"> Pr</tspan><tspan fill="#7CCB98"> Quan</tspan>          <tspan fill="#7F918C">│</tspan>  <tspan fill="#7F918C"> We</tspan><tspan fill="#7CCB98"> Ke</tspan>            <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Literary Glory,</tspan>    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Left Assistant,</tspan>    <tspan fill="#7F918C">│</tspan></text>
+<text class="k139 final" x="18" y="818" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Celestial Minister</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#EE8D78">Giant Gate</tspan><tspan fill="#7F918C"> We</tspan>      <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Weeping,</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Three Terraces,</tspan>    <tspan fill="#7F918C">│</tspan></text>
+<text class="k140 final" x="18" y="835.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>  <tspan fill="#7F918C"> Ex</tspan>               <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Earthly Void,</tspan>      <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Emptin…,</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Grace Light,</tspan>       <tspan fill="#7F918C">│</tspan></text>
+<text class="k141 final" x="18" y="853" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Halberd,</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Longev…,</tspan> <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Patent of Honour</tspan>   <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Offici…,</tspan> <tspan fill="#7F918C">│</tspan></text>
+<text class="k142 final" x="18" y="870.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Literary Melody,</tspan>   <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Court Tally</tspan>        <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Peak</tspan>               <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Fire Star,</tspan>         <tspan fill="#7F918C">│</tspan></text>
+<text class="k143 final" x="18" y="888" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Earthly Release,</tspan>   <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Decline</tspan>            <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Monthly Virtue,</tspan>    <tspan fill="#7F918C">│</tspan></text>
+<text class="k144 final" x="18" y="905.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Celestial Kitchen</tspan>  <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Robbery Sha,</tspan>       <tspan fill="#7F918C">│</tspan></text>
+<text class="k145 final" x="18" y="923" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Illness</tspan>            <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7CC7BF">Annual Literary …</tspan>  <tspan fill="#7F918C">│</tspan></text>
+<text class="k146 final" x="18" y="940.5" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan>                    <tspan fill="#7F918C">│</tspan> <tspan fill="#7F918C">Prime</tspan>              <tspan fill="#7F918C">│</tspan></text>
+<text class="k147 final" x="18" y="958" textLength="688.5" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">└────────────────────┴────────────────────┴────────────────────┴────────────────────┘</tspan></text>
+<text class="k148 final" x="18" y="975.5" textLength="704.7" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">Brightness: Ex exalted, Pr prosperous, Fa favorable, Ne neutral, We weak. Ages are East</tspan></text>
+<text class="k149 final" x="18" y="993" textLength="194.4" lengthAdjust="spacingAndGlyphs"><tspan fill="#7F918C">Asian ages (1 at birth).</tspan></text>
+</svg>

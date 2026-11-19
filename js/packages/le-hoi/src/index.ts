@@ -15,7 +15,8 @@ import type { LeHoi } from "./kieu.ts";
 import { DANH_SACH_LE_HOI } from "./du-lieu.ts";
 
 export type { LeHoi } from "./kieu.ts";
-export { DANH_SACH_LE_HOI, MA_PHAT_HANH, PHIEN_BAN_DU_LIEU } from "./du-lieu.ts";
+export type { Province } from "./kieu.ts";
+export { DANH_SACH_LE_HOI, MA_PHAT_HANH, PHIEN_BAN_DU_LIEU, DATA_UPDATED, PROVINCES } from "./du-lieu.ts";
 
 function tach(s: string): [number, number] {
   const i = s.indexOf("/");
@@ -63,3 +64,8 @@ export function leHoiTheoNgay(dd: number, mm: number, yyyy: number): LeHoi[] {
     return sd !== null && sd.day === dd && sd.month === mm;
   });
 }
+
+// Lớp API tiếng Anh (tham số đặt tên, kết quả theo lang).
+export * from "./en.ts";
+// iCalendar (RFC 5545).
+export { festivalsIcs } from "./ics.ts";

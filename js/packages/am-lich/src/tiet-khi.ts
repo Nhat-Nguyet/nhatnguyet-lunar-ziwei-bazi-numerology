@@ -1,13 +1,16 @@
 // 24 tiết khí: mốc chia năm theo kinh độ biểu kiến của Mặt Trời. Chuyển
 // ngữ từ lÃµi tÃ­nh Go cá»§a Nháº­t Nguyá»t tietkhi.go.
 //
-// Kinh độ biểu kiến theo Jean Meeus, "Astronomical Algorithms", chương 25:
-// kinh độ hình học (sunLongitude ở lich.ts) cộng quang sai và chương động
-// rút gọn, tính ở giờ động lực TT (giờ quốc tế UT cộng ΔT của Espenak và
-// Meeus, NASA 2006).
+// Kinh độ biểu kiến của Mặt Trời ở mat-troi.ts: VSOP87D rút gọn theo cách
+// tính của Jean Meeus, cộng FK5, chương động IAU 1980, quang sai và ΔT của
+// Espenak và Meeus (NASA 2006). Bộ đổi âm lịch (lich.ts) giữ sunLongitude
+// rút gọn của thuật toán Hồ Ngọc Đức, không dùng hàm ở đây.
 
-import { jdFromDate, jdToDate, sunLongitude, TIME_ZONE_VN } from "./lich.ts";
+import { jdFromDate, jdToDate, TIME_ZONE_VN } from "./lich.ts";
 import type { SolarDate } from "./lich.ts";
+import { kinhDoMatTroiUT, QUANG_SAI_K_GIAY } from "./mat-troi.ts";
+
+export { chuongDongKinhDoGiay, deltaTGiay, kinhDoBieuKienTT, kinhDoMatTroiUT, namThapPhan } from "./mat-troi.ts";
 
 /** Một trong 24 tiết khí. */
 export interface TietKhi {
@@ -77,33 +80,14 @@ export function allTietKhi(): TietKhi[] {
   return out;
 }
 
-/** Quang sai (độ): -20,5 giây cung. */
-export const QUANG_SAI_DO = -0.00569;
-/** Hệ số chương động rút gọn theo kinh độ nút lên của quỹ đạo Mặt Trăng (độ). */
+/** Hệ số quang sai (độ): -20,4898 giây cung; quang sai thật là hệ số này chia khoảng cách Mặt Trời R. */
+export const QUANG_SAI_DO = QUANG_SAI_K_GIAY / 3600;
+/**
+ * Số hạng chính của chương động theo kinh độ (độ, nhân sin Ω).
+ * @deprecated Không còn dùng: từ lõi tính 2.0.1 chương động tính đủ 63 số
+ * hạng IAU 1980 (chuongDongKinhDoGiay).
+ */
 export const CHUONG_DONG_HE_SO_DO = -0.00478;
-
-/** ΔT = TT - UT (giây) theo đa thức của Espenak và Meeus (NASA, 2006). */
-export function deltaTGiay(nam: number): number {
-  const y = nam + 0.5;
-  if (nam >= 2005 && nam <= 2050) {
-    const t = y - 2000;
-    return 62.92 + 0.32217 * t + 0.005589 * t * t;
-  }
-  if (nam >= 1986 && nam < 2005) {
-    const t = y - 2000;
-    return 63.86 + 0.3345 * t - 0.060374 * t * t + 0.0017275 * t * t * t + 0.000651814 * t * t * t * t + 0.00002373599 * t * t * t * t * t;
-  }
-  if (nam >= 1961 && nam < 1986) {
-    const t = y - 1975;
-    return 45.45 + 1.067 * t - (t * t) / 260 - (t * t * t) / 718;
-  }
-  if (nam >= 1941 && nam < 1961) {
-    const t = y - 1950;
-    return 29.07 + 0.407 * t - (t * t) / 233 + (t * t * t) / 2547;
-  }
-  const u = (y - 1820) / 100;
-  return -20 + 32 * u * u;
-}
 
 /**
  * Kinh độ biểu kiến của Mặt Trời (độ, 0 tới 360) tại một thời điểm giờ địa
@@ -111,13 +95,7 @@ export function deltaTGiay(nam: number): number {
  */
 export function kinhDoMatTroi(dd: number, mm: number, yy: number, gioLocal: number, timeZone: number = TIME_ZONE_VN): number {
   const jdUT = jdFromDate(dd, mm, yy) - 0.5 + gioLocal / 24 - timeZone / 24;
-  const jde = jdUT + deltaTGiay(yy) / 86400;
-  const T = (jde - 2451545.0) / 36525;
-  const omega = ((125.04 - 1934.136 * T) * Math.PI) / 180;
-  let deg = (sunLongitude(jde) * 180) / Math.PI + QUANG_SAI_DO + CHUONG_DONG_HE_SO_DO * Math.sin(omega);
-  deg = deg % 360;
-  if (deg < 0) deg += 360;
-  return deg;
+  return kinhDoMatTroiUT(jdUT);
 }
 
 /** Tiết khí ĐANG diễn ra tại một thời điểm giờ Việt Nam. */
@@ -149,12 +127,13 @@ export function ngayBatDauTietKhi(tk: TietKhi, namDuongLich: number): SolarDate 
   if (tk.index >= 19) offset -= 365.2422;
   const guess = jdXuanPhan + offset;
   const start = Math.trunc(guess) - 20;
+  // Kinh độ lúc 0h giờ Việt Nam của ngày số Julius jd; mỗi ngày tính một lần.
+  const dauNgay = (jd: number): number => kinhDoMatTroiUT(jd - 0.5 - TIME_ZONE_VN / 24);
+  let dau = dauNgay(start);
   for (let jd = start; jd <= start + 40; jd++) {
-    const d = jdToDate(jd);
-    const sau = jdToDate(jd + 1);
-    const dau = kinhDoMatTroi(d.day, d.month, d.year, 0, TIME_ZONE_VN);
-    const dauSau = kinhDoMatTroi(sau.day, sau.month, sau.year, 0, TIME_ZONE_VN);
-    if (mocRoiVaoNgay(dau, dauSau, tk.kinhDo)) return d;
+    const dauSau = dauNgay(jd + 1);
+    if (mocRoiVaoNgay(dau, dauSau, tk.kinhDo)) return jdToDate(jd);
+    dau = dauSau;
   }
   return jdToDate(Math.trunc(guess));
 }
@@ -190,51 +169,52 @@ function lamTron(x: number): number {
   return Math.abs(x - t) >= 0.5 ? t + Math.sign(x) : t;
 }
 
-/** Phép chia đôi dừng khi khoảng tìm còn dưới ngưỡng này (phút). */
-const NGUONG_CHIA_DOI_PHUT = 1.0;
+/** Phép lặp dừng khi bước hiệu chỉnh còn dưới ngưỡng này (phút), rồi làm tròn tới phút. */
+const NGUONG_DUNG_GIAI_PHUT = 0.001;
+/** Tốc độ trung bình của kinh độ Mặt Trời (độ mỗi ngày), đạo hàm cố định của phép lặp Newton. */
+const TOC_DO_TRUNG_BINH_DO_NGAY = 360 / 365.2422;
+
+// Đệm theo (năm, kinh độ): hàm thuần, Bát Tự và Quái khí gọi lại nhiều lần.
+const DEM_MOC_TIET = new Map<string, ThoiDiemTietKhi>();
 
 /**
  * Thời điểm kinh độ Mặt Trời chạm mốc của tiết khí trong năm dương cho
- * trước, dò bằng chia đôi tới dưới một phút, làm tròn tới phút giờ Việt Nam.
+ * trước, giải bằng lặp Newton (đạo hàm là tốc độ trung bình) tới dưới 0,06
+ * giây, làm tròn tới phút giờ Việt Nam; mốc trong nửa phút cuối của một ngày
+ * ghi 23:59 của ngày ấy.
  */
 export function mocTietKhi(tk: TietKhi, namDuongLich: number): ThoiDiemTietKhi {
+  const khoa = `${namDuongLich}/${tk.kinhDo}`;
+  let m = DEM_MOC_TIET.get(khoa);
+  if (!m) {
+    m = tinhMocTietKhi(tk, namDuongLich);
+    DEM_MOC_TIET.set(khoa, m);
+  }
+  return { ...tk, ngay: { ...m.ngay }, gio: m.gio, phut: m.phut };
+}
+
+function tinhMocTietKhi(tk: TietKhi, namDuongLich: number): ThoiDiemTietKhi {
   const muc = tk.kinhDo;
-  // Chênh lệch có dấu giữa kinh độ tại `jd` và mốc, đưa về [-180, 180).
+  // jd là ngày Julius theo giờ Việt Nam; chênh lệch có dấu đưa về [-180, 180).
   const lech = (jd: number): number => {
-    const sd = jdToDate(Math.floor(jd + 0.5));
-    const gio = (jd + 0.5 - Math.floor(jd + 0.5)) * 24;
-    let d = kinhDoMatTroi(sd.day, sd.month, sd.year, gio, TIME_ZONE_VN) - muc;
+    let d = kinhDoMatTroiUT(jd - TIME_ZONE_VN / 24) - muc;
     while (d >= 180) d -= 360;
     while (d < -180) d += 360;
     return d;
   };
 
-  const uoc = ngayBatDauTietKhi(tk, namDuongLich);
-  const giua = jdFromDate(uoc.day, uoc.month, uoc.year);
-  let lo = giua - 10;
-  let hi = giua + 10;
-  if (lech(lo) > 0 || lech(hi) < 0) {
-    lo = giua - 20;
-    hi = giua + 20;
-  }
-  for (let i = 0; i < 40 && hi - lo > NGUONG_CHIA_DOI_PHUT / 1440; i++) {
-    const mid = (lo + hi) / 2;
-    if (lech(mid) < 0) lo = mid;
-    else hi = mid;
+  let jd = jdFromDate(20, 3, namDuongLich) + (tk.index * 365.2422) / 24;
+  if (tk.index >= 19) jd -= 365.2422;
+  for (let i = 0; i < 30; i++) {
+    const buoc = lech(jd) / TOC_DO_TRUNG_BINH_DO_NGAY;
+    jd -= buoc;
+    if (Math.abs(buoc) * 1440 < NGUONG_DUNG_GIAI_PHUT) break;
   }
 
-  const jd = (lo + hi) / 2;
   const ngayJD = Math.floor(jd + 0.5);
-  let sd = jdToDate(ngayJD);
+  const sd = jdToDate(ngayJD);
   let phutTrongNgay = Math.trunc(lamTron((jd + 0.5 - ngayJD) * 1440));
-  if (phutTrongNgay >= 1440) {
-    phutTrongNgay -= 1440;
-    sd = jdToDate(ngayJD + 1);
-  }
-  if (phutTrongNgay < 0) {
-    phutTrongNgay += 1440;
-    sd = jdToDate(ngayJD - 1);
-  }
+  if (phutTrongNgay > 1439) phutTrongNgay = 1439;
   return { ...tk, ngay: sd, gio: Math.trunc(phutTrongNgay / 60), phut: phutTrongNgay % 60 };
 }
 

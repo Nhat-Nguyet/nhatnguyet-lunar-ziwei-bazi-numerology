@@ -1,0 +1,34 @@
+unit_id,symbolic_star,symbolic_star_vi,symbolic_star_en,symbolic_star_zh,text_kinds,text_ids,text_vi,text_en,text_zh,passage_ids,passage_count,lookup_keys,rule_ids,attribution
+symbolic-star/tian-yi-gui-ren,tian-yi-gui-ren,Thiên Ất Quý Nhân,Heavenly Noble,天乙贵人,lookup-rule;other-books,l71eb6f6f9b61e940;lbe9b536a0f68a8ba,"Tra theo can ngày (nhật chủ) và can năm.
+Lối chọn theo câu quyết ""Giáp Mậu Canh Ngưu Dương"". Có sách xếp Canh cùng Tân ở Ngọ Dần (""Canh Tân phùng Mã Hổ""), và có sách chỉ tra theo can ngày.","Looked up from the day stem (day master) and the year stem.
+This follows the rhyme that puts Giáp, Mậu and Canh at Sửu and Mùi. Some books put Canh with Tân at Ngọ and Dần instead, and some look it up from the day stem only.","以日干（日主）与年干查。
+此处依""甲戊庚牛羊""之诀。另有书以庚辛同在午寅（""庚辛逢马虎""），也有书只以日干查。",sc0103d2aa51fea66;s6678d565b9889146;s559226a5833d466f,3,kind=symbolic-star;symbolic_star=tian-yi-gui-ren,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/wen-chang,wen-chang,Văn Xương,Literary Glory,文昌,lookup-rule;other-books,l71eb6f6f9b61e940;l7545fa37a303462a,"Tra theo can ngày (nhật chủ) và can năm.
+Sao Văn Xương của Bát Tự tra theo can, khác sao Văn Xương của Tử Vi vốn an theo giờ sinh. Có sách chỉ tra theo can ngày. Can Tân ở đây theo câu quyết ""Tân Thử"" (ở Tý); Trương Quả tinh tông ghi can Tân ở Tuất.","Looked up from the day stem (day master) and the year stem.
+The Bát Tự Văn Xương is looked up from a stem, unlike the Tử Vi star of the same name, which is placed by birth hour. Some books use the day stem only. For the stem Tân this follows the rhyme that puts it at Tý; the Zhang Guo Xingzong puts Tân at Tuất.","以日干（日主）与年干查。
+八字之文昌以天干查，与紫微斗数按时辰安的文昌不同。也有书只以日干查。辛干此处依""辛鼠""之诀（在子）；《张果星宗》作辛在戌（""辛犬""）。",s879f3abbd154a653,1,kind=symbolic-star;symbolic_star=wen-chang,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/lu-shen,lu-shen,Lộc Thần,Prosperity Star,禄神,lookup-rule,lddba07853955dffe,Tra theo can ngày (nhật chủ).,Looked up from the day stem (day master).,以日干（日主）查。,sba837cbcc68ae3f1;s7e6c1b2ad4d3de0a,2,kind=symbolic-star;symbolic_star=lu-shen,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/yang-ren,yang-ren,Dương Nhận,Yang Blade,羊刃,lookup-rule;other-books,lddba07853955dffe;lc0497e45a154ed27,"Tra theo can ngày (nhật chủ).
+Với can âm các phái không thống nhất. Ở đây lấy ngôi ngay sau Lộc như can dương. Có phái lấy ngôi Đế Vượng của can âm (lùi một ngôi từ Lộc). Tam Mệnh Thông Hội ghi rằng Tử Bình cho năm can dương có Dương Nhận, còn năm can âm thì không.","Looked up from the day stem (day master).
+For yin stems the schools disagree. Here it is the branch right after the Lộc, as for yang stems. One school takes the yin stem's Peak position (one branch before the Lộc). The Sanming Tonghui records that Tử Bình gives a Dương Nhận to the five yang stems and none to the five yin stems.","以日干（日主）查。
+阴干羊刃各派不一。此处与阳干同，取禄前一位。有派取阴干帝旺之位（禄后一位）。《三命通会》记子平以甲丙戊庚壬五阳干有刃，乙丁己辛癸五阴干无刃。",s6ba6ef45d37a13e7,1,kind=symbolic-star;symbolic_star=yang-ren,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/tao-hua,tao-hua,Đào Hoa,Peach Blossom,桃花,lookup-rule;other-books,l1aabf8de4bb00f28;l3e9e14863455fda2,"Tra theo nhóm tam hợp của chi năm và chi ngày.
+Có sách chỉ tra theo chi năm, có sách chỉ tra theo chi ngày, nên một trụ có thể mang sao ở sách này mà không mang ở sách kia.","Looked up from the Three Harmony group of the year branch and the day branch.
+Some books look this up from the year branch only, others from the day branch only, so a pillar may carry the star in one book and not in another.","以年支与日支所属三合局查。
+有的书只以年支查，有的只以日支查，因此同一柱在此书有此星、在彼书则无。",s616b854aee1bc15a;s2a0bfed3dacb35b9,2,kind=symbolic-star;symbolic_star=tao-hua,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/yi-ma,yi-ma,Dịch Mã,Travelling Horse,驿马,lookup-rule;other-books,l1aabf8de4bb00f28;l3e9e14863455fda2,"Tra theo nhóm tam hợp của chi năm và chi ngày.
+Có sách chỉ tra theo chi năm, có sách chỉ tra theo chi ngày, nên một trụ có thể mang sao ở sách này mà không mang ở sách kia.","Looked up from the Three Harmony group of the year branch and the day branch.
+Some books look this up from the year branch only, others from the day branch only, so a pillar may carry the star in one book and not in another.","以年支与日支所属三合局查。
+有的书只以年支查，有的只以日支查，因此同一柱在此书有此星、在彼书则无。",sc7be2f1110ba5c40;sa16f8a4003f2678b;s5acdc9d6d09107e9;s7c1709797ae9c9fa;s441b6aac9ea8b6fc,5,kind=symbolic-star;symbolic_star=yi-ma,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/hua-gai,hua-gai,Hoa Cái,Canopy,华盖,lookup-rule;other-books,l1aabf8de4bb00f28;l3e9e14863455fda2,"Tra theo nhóm tam hợp của chi năm và chi ngày.
+Có sách chỉ tra theo chi năm, có sách chỉ tra theo chi ngày, nên một trụ có thể mang sao ở sách này mà không mang ở sách kia.","Looked up from the Three Harmony group of the year branch and the day branch.
+Some books look this up from the year branch only, others from the day branch only, so a pillar may carry the star in one book and not in another.","以年支与日支所属三合局查。
+有的书只以年支查，有的只以日支查，因此同一柱在此书有此星、在彼书则无。",s47e96c7c3dedebed,1,kind=symbolic-star;symbolic_star=hua-gai,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/jie-sha,jie-sha,Kiếp Sát,Robbery Sha,劫煞,lookup-rule;other-books,l1aabf8de4bb00f28;l3e9e14863455fda2,"Tra theo nhóm tam hợp của chi năm và chi ngày.
+Có sách chỉ tra theo chi năm, có sách chỉ tra theo chi ngày, nên một trụ có thể mang sao ở sách này mà không mang ở sách kia.","Looked up from the Three Harmony group of the year branch and the day branch.
+Some books look this up from the year branch only, others from the day branch only, so a pillar may carry the star in one book and not in another.","以年支与日支所属三合局查。
+有的书只以年支查，有的只以日支查，因此同一柱在此书有此星、在彼书则无。",s572e50bb0e90ea1a;s5bd07ee4b71a4c90;sdccdce7b293adf82,3,kind=symbolic-star;symbolic_star=jie-sha-and-wang-shen,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)
+symbolic-star/wang-shen,wang-shen,Vong Thần,Lost Spirit,亡神,lookup-rule;other-books,l1aabf8de4bb00f28;l3e9e14863455fda2,"Tra theo nhóm tam hợp của chi năm và chi ngày.
+Có sách chỉ tra theo chi năm, có sách chỉ tra theo chi ngày, nên một trụ có thể mang sao ở sách này mà không mang ở sách kia.","Looked up from the Three Harmony group of the year branch and the day branch.
+Some books look this up from the year branch only, others from the day branch only, so a pillar may carry the star in one book and not in another.","以年支与日支所属三合局查。
+有的书只以年支查，有的只以日支查，因此同一柱在此书有此星、在彼书则无。",s572e50bb0e90ea1a;s5bd07ee4b71a4c90;sdccdce7b293adf82,3,kind=symbolic-star;symbolic_star=jie-sha-and-wang-shen,phai.bat-tu.than-sat,Data: Nhat Nguyet (nhatnguyet.org)

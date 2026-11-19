@@ -1,0 +1,69 @@
+{
+  "name": "@nhatnguyet/ziwei",
+  "version": "0.3.0",
+  "description": "Zi Wei Dou Shu (Purple Star Astrology, 紫微斗数) charts on the Vietnamese or Chinese calendar: palaces, stars, Four Transformations, decade luck, patterns, SVG, iztro-compatible data. English-named alias of @nhatnguyet/tu-vi.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "ziwei",
+    "zi wei dou shu",
+    "purple star astrology",
+    "紫微斗数",
+    "chart",
+    "horoscope",
+    "iztro",
+    "ziwei doushu",
+    "chinese astrology",
+    "astrology chart",
+    "natal chart",
+    "four transformations",
+    "si hua",
+    "tu vi",
+    "tử vi",
+    "la so tu vi",
+    "tu vi dau so",
+    "紫微斗數",
+    "紫微排盘",
+    "四化",
+    "lunar calendar",
+    "nhat nguyet",
+    "vietnam",
+    "vietnamese",
+    "typescript",
+    "zero dependencies"
+  ],
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./iztro": {
+      "types": "./iztro.d.ts",
+      "default": "./iztro.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "iztro.d.ts",
+    "iztro.js"
+  ],
+  "dependencies": {
+    "@nhatnguyet/tu-vi": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/ziwei"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  }
+}

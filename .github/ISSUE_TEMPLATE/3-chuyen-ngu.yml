@@ -1,0 +1,45 @@
+name: Port to another language
+description: Implement the engine in Go, Rust, Dart, Swift, Java, C#... and pass the shared test cases. Viết lại bằng ngôn ngữ khác. 移植到其他语言。
+title: "[port] <language>: "
+labels: ["port"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The port challenge: pass all 17,291 cases in `ca-kiem/`. Rules, file format and a checker that works from any language are in [CONTRIBUTING.md](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/blob/main/CONTRIBUTING.md#port-challenge).
+        Open this issue before you start so nobody duplicates work, and update it as suites pass.
+  - type: input
+    id: ngon-ngu
+    attributes:
+      label: Language
+      placeholder: Rust
+    validations:
+      required: true
+  - type: input
+    id: kho
+    attributes:
+      label: Repository (if any)
+      placeholder: https://github.com/you/nhatnguyet-rs
+  - type: checkboxes
+    id: bo-ca
+    attributes:
+      label: Suites you plan to pass (tick the ones that already pass)
+      options:
+        - label: than-so-hoc (600 cases)
+        - label: am-lich (14,936 cases)
+        - label: le-hoi (201 cases)
+        - label: bat-tu (777 cases)
+        - label: tu-vi (777 cases)
+  - type: textarea
+    id: ket-qua
+    attributes:
+      label: Checker output
+      description: "Paste the last line of `python3 check.py ca-kiem/<suite>.json answers.jsonl` for each suite, and the `phienBanDongCo` of the case files."
+      render: text
+      placeholder: |
+        than-so-hoc: 600/600 passed   (phienBanDongCo 2.0.0)
+  - type: textarea
+    id: hoi
+    attributes:
+      label: Questions
+      description: Anything unclear in the cases or the reference code.

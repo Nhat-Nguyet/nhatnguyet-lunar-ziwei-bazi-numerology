@@ -1,0 +1,5 @@
+unit_id,transformation,transformation_vi,transformation_en,transformation_zh,text_kinds,text_ids,text_vi,text_en,text_zh,passage_ids,passage_count,lookup_keys,rule_ids,attribution
+four-transformations/hua-lu,hua-lu,Hóa Lộc,Hua Lu,化禄,,,,,,s1eaf3066f5f43f9a;sf2efa1fb0b31eec9;se237e35bc9c2d18d;s98b3ea27a71f832f;sff9c3b81cf182114;se5c528566c7182b0,6,kind=transformation;transformation=hua-lu,phai.tu-vi.tu-hoa,Data: Nhat Nguyet (nhatnguyet.org)
+four-transformations/hua-quan,hua-quan,Hóa Quyền,Hua Quan,化权,,,,,,sbd8d3628088f1c90;s776c5238af798e9c;s1008d7d1405b76e3;s78e3fe564b337caf;s83f613266b669581;sd985a8f0b3c0e188,6,kind=transformation;transformation=hua-quan,phai.tu-vi.tu-hoa,Data: Nhat Nguyet (nhatnguyet.org)
+four-transformations/hua-ke,hua-ke,Hóa Khoa,Hua Ke,化科,,,,,,sdc6dea56cd6c9b30;sf8fad3558f491c78;s8d79036bc8307f52;sc087c69e442d99ea;se5f9019b5475f561,5,kind=transformation;transformation=hua-ke,phai.tu-vi.tu-hoa,Data: Nhat Nguyet (nhatnguyet.org)
+four-transformations/hua-ji,hua-ji,Hóa Kỵ,Hua Ji,化忌,,,,,,s880f8f7e1dc1a2f3;sca2b40aaccf020a9,2,kind=transformation;transformation=hua-ji,phai.tu-vi.tu-hoa,Data: Nhat Nguyet (nhatnguyet.org)

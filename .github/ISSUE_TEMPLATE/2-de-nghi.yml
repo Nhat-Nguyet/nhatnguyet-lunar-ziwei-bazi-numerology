@@ -1,0 +1,44 @@
+name: Feature request
+description: A function, option, school variant or dataset you need. Đề nghị tính năng. 功能建议。
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us what you are building and what is missing. Viết tiếng Việt hay 中文 cũng được.
+  - type: textarea
+    id: muc-dich
+    attributes:
+      label: What are you building?
+      placeholder: A calendar app for the Vietnamese community in Australia; a BaZi chart website; a research notebook...
+    validations:
+      required: true
+  - type: textarea
+    id: can-gi
+    attributes:
+      label: What do you need?
+      description: The function or option, with the input you would pass and the output you expect.
+    validations:
+      required: true
+  - type: textarea
+    id: can-cu
+    attributes:
+      label: Rule and source
+      description: For a new calculation or a school variant (leap month, Rat hour, true solar time...), the book or standard it comes from.
+  - type: dropdown
+    id: ngon-ngu
+    attributes:
+      label: Which package?
+      multiple: true
+      options:
+        - TypeScript, JavaScript (npm)
+        - Python (PyPI)
+        - Datasets
+        - All
+  - type: checkboxes
+    id: dong-gop
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to send a pull request for this.

@@ -1,0 +1,73 @@
+{
+  "name": "@nhatnguyet/mcp",
+  "version": "0.3.0",
+  "description": "MCP server for Nhat Nguyet: deterministic Vietnamese/Chinese lunar calendar, solar terms, Zi Wei Dou Shu (Tử Vi), BaZi, numerology and Vietnamese festivals for AI assistants. No network, Vietnam time (UTC+7) by default.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "mcp",
+    "model context protocol",
+    "mcp server",
+    "claude",
+    "ai assistant",
+    "lunar calendar",
+    "vietnamese lunar calendar",
+    "chinese calendar",
+    "solar terms",
+    "zi wei dou shu",
+    "ziwei",
+    "tu vi",
+    "bazi",
+    "four pillars",
+    "numerology",
+    "nhat nguyet"
+  ],
+  "type": "module",
+  "bin": {
+    "nhatnguyet-mcp": "./dist/bin.js"
+  },
+  "main": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/server.ts",
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/bin.js",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@nhatnguyet/am-lich": "^0.3.0",
+    "@nhatnguyet/bat-tu": "^0.3.0",
+    "@nhatnguyet/le-hoi": "^0.3.0",
+    "@nhatnguyet/than-so-hoc": "^0.3.0",
+    "@nhatnguyet/tu-vi": "^0.3.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

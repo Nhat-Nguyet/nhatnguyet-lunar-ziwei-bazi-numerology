@@ -1,0 +1,5 @@
+# pip install -r requirements.txt   (then: jupyter lab, or open the notebook in VS Code)
+# From version 0.3.0 use: nhatnguyet>=0.3.0 . Inside this repository the test
+# script installs the local package from ../../python instead.
+nhatnguyet>=0.2.0
+matplotlib==3.11.2

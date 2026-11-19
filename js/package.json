@@ -1,7 +1,7 @@
 {
   "name": "nhatnguyet-thu-vien-mo",
   "private": true,
-  "description": "Không gian làm việc của thư viện mở Nhật Nguyệt (TypeScript).",
+  "description": "Workspace of the Nhat Nguyet open libraries (TypeScript).",
   "license": "MIT",
   "type": "module",
   "workspaces": [
@@ -9,9 +9,12 @@
   ],
   "scripts": {
     "test": "node --conditions=source --test \"packages/*/test/**/*.test.ts\"",
-    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi"
+    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi -w @nhatnguyet/widgets && npm run build -w @nhatnguyet/cli -w @nhatnguyet/mcp",
+    "docs": "typedoc --options typedoc.json"
   },
   "devDependencies": {
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.14.1",
     "typescript": "^5.9.3"
   },
   "engines": {
