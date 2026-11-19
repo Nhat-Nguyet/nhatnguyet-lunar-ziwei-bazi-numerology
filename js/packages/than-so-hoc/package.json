@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/than-so-hoc",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pythagorean numerology for JS/TS with correct handling of Vietnamese names: life path, expression, soul urge, personality, pinnacles, challenges, personal year, month and day numbers, birth chart grid. Zero dependencies.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -51,11 +51,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/than-so-hoc"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -33,7 +33,7 @@ from .en import (  # noqa: F401
 
 from .van_ban import bazi_to_text, chart_to_text, numerology_to_text, zi_wei_to_text  # noqa: F401
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 # Phiên bản lõi tính Go mà bộ ca kiểm đã sinh ra (phienBanDongCo).
 PHIEN_BAN_DONG_CO = "2.0.1"
 

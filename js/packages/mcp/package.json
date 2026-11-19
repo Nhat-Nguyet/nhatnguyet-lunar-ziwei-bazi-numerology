@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server for Nhat Nguyet: deterministic Vietnamese/Chinese lunar calendar, solar terms, Zi Wei Dou Shu (Tử Vi), BaZi, numerology and Vietnamese festivals for AI assistants. No network, Vietnam time (UTC+7) by default.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -46,11 +46,11 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.2",
-    "@nhatnguyet/am-lich": "^0.1.0",
-    "@nhatnguyet/bat-tu": "^0.1.0",
-    "@nhatnguyet/le-hoi": "^0.1.0",
-    "@nhatnguyet/than-so-hoc": "^0.1.0",
-    "@nhatnguyet/tu-vi": "^0.1.0",
+    "@nhatnguyet/am-lich": "^0.2.0",
+    "@nhatnguyet/bat-tu": "^0.2.0",
+    "@nhatnguyet/le-hoi": "^0.2.0",
+    "@nhatnguyet/than-so-hoc": "^0.2.0",
+    "@nhatnguyet/tu-vi": "^0.2.0",
     "zod": "4.6.7"
   },
   "devDependencies": {
@@ -61,11 +61,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/mcp"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"

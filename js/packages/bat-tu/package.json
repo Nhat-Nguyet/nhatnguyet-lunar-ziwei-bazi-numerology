@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/bat-tu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "BaZi (八字, Four Pillars of Destiny, Bát Tự) chart calculator for JS/TS: pillars by solar term to the minute, hidden stems, Ten Gods (十神), symbolic stars (神煞), luck pillars (大运). Names in Vietnamese, English, Chinese.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -52,18 +52,18 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.1.0"
+    "@nhatnguyet/am-lich": "^0.2.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/bat-tu"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Command line for Nhat Nguyet: Zi Wei Dou Shu chart as a 4x4 grid, BaZi, Vietnamese/Chinese/Korean/Japanese lunar calendar, numerology, Vietnamese festivals. English, Vietnamese, Chinese. Nhat Nguyet (nhatnguyet.org)",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -41,11 +41,11 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.1.0",
-    "@nhatnguyet/bat-tu": "^0.1.0",
-    "@nhatnguyet/le-hoi": "^0.1.0",
-    "@nhatnguyet/than-so-hoc": "^0.1.0",
-    "@nhatnguyet/tu-vi": "^0.1.0"
+    "@nhatnguyet/am-lich": "^0.2.0",
+    "@nhatnguyet/bat-tu": "^0.2.0",
+    "@nhatnguyet/le-hoi": "^0.2.0",
+    "@nhatnguyet/than-so-hoc": "^0.2.0",
+    "@nhatnguyet/tu-vi": "^0.2.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
@@ -55,11 +55,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"

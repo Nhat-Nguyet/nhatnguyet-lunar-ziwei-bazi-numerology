@@ -1,10 +1,10 @@
 {
   "name": "@nhatnguyet/widgets",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vietnamese lunar calendar web components (Custom Elements): today's date, month grid, auspicious hours, Tết countdown, date converter. Run in the browser with no server. Nhat Nguyet (nhatnguyet.org)",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
-  "homepage": "https://github.com/Nhat-Nguyet/nhatnguyet/tree/main/widgets",
+  "homepage": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/tree/main/widgets",
   "keywords": [
     "web components",
     "custom elements",
@@ -49,7 +49,7 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.1.0"
+    "@nhatnguyet/am-lich": "^0.2.0"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
@@ -57,11 +57,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/widgets"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"

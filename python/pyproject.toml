@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nhatnguyet"
-version = "0.1.0"
+version = "0.2.0"
 description = "Vietnamese lunar calendar, Zi Wei Dou Shu (Purple Star Astrology), BaZi (Four Pillars), Pythagorean numerology and Vietnamese festivals in pure Python, no dependencies. Âm lịch, Tử Vi, Bát Tự; 紫微斗数, 八字, 农历."
 readme = "README.md"
 license = { text = "MIT" }
@@ -75,10 +75,10 @@ nhatnguyet = "nhatnguyet.__main__:main"
 
 [project.urls]
 Homepage = "https://nhatnguyet.org/en/ma-nguon-mo"
-Repository = "https://github.com/Nhat-Nguyet/nhatnguyet"
+Repository = "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology"
 Documentation = "https://nhatnguyet.org/en/ma-nguon-mo"
 "Open data" = "https://nhatnguyet.org/en/du-lieu"
-Issues = "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+Issues = "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
 
 [tool.setuptools.packages.find]
 include = ["nhatnguyet*"]

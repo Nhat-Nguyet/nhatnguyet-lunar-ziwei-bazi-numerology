@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/tu-vi",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Zi Wei Dou Shu (紫微斗数, Purple Star Astrology, Tử Vi) chart calculator for JS/TS: 12 palaces, 14 major stars and minor stars, brightness, Four Transformations (四化), decade and yearly periods, Quan Shu patterns. Names in Vietnamese, English, Chinese.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -56,18 +56,18 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.1.0"
+    "@nhatnguyet/am-lich": "^0.2.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet.git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
     "directory": "js/packages/tu-vi"
   },
   "bugs": {
-    "url": "https://github.com/Nhat-Nguyet/nhatnguyet/issues"
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
   },
   "publishConfig": {
     "access": "public"
