@@ -19,6 +19,7 @@
   <a href="./DATA-LICENSE"><img alt="Dữ liệu: CC BY 4.0" src="https://img.shields.io/badge/d%E1%BB%AF%20li%E1%BB%87u-CC%20BY%204.0-1f6f6b.svg"></a>
   <a href="./ca-kiem"><img alt="Ca kiểm: 17.291 đạt" src="https://img.shields.io/badge/ca%20ki%E1%BB%83m-17.291%20%C4%91%E1%BA%A1t-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="Kiểm tự động" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
+  <a href="https://doi.org/10.5281/zenodo.24358014"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358014.svg"></a>
 </p>
 
 <p align="center">
@@ -222,7 +223,8 @@ hoặc được Nhật Nguyệt bảo trợ.
   author = {{Nhật Nguyệt}},
   title  = {Nhật Nguyệt: mã và dữ liệu mở về Tử Vi, Bát Tự, Thần số học},
   year   = {2026},
-  url    = {https://nhatnguyet.org/ma-nguon-mo}
+  url    = {https://nhatnguyet.org/ma-nguon-mo},
+  doi    = {10.5281/zenodo.24358014}
 }
 ```
 

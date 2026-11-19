@@ -19,6 +19,7 @@
   <a href="./DATA-LICENSE"><img alt="数据：CC BY 4.0" src="https://img.shields.io/badge/%E6%95%B0%E6%8D%AE-CC%20BY%204.0-1f6f6b.svg"></a>
   <a href="./ca-kiem"><img alt="测试用例：17,291 通过" src="https://img.shields.io/badge/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B-17%2C291%20%E9%80%9A%E8%BF%87-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="自动检查" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
+  <a href="https://doi.org/10.5281/zenodo.24358014"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358014.svg"></a>
 </p>
 
 <p align="center">
