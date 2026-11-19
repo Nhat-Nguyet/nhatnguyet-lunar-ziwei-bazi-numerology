@@ -278,11 +278,11 @@ festivalsIcs(2027);       // iCalendar (RFC 5545) text of the same list
 
 The dataset holds 206 festivals. `festivals(year)` returns the 164 that have a
 fixed lunar or Gregorian date (the same 164 for every year from 1900 to
-2100), sorted by date; the other 42 are dated by their organisers each year
+2100), sorted by date; the other 42 are dated by their organizers each year
 and are listed in `DANH_SACH_LE_HOI` with their announced schedule in
 `lich_cong_bo`. Vietnamese place and person names keep their diacritics in
 English. `group` is `holiday`, `folk-religion` or `other` and `scope`
-`national`, `regional`, `local`, `representative` or `""`, English codes in
+`national`, `regional`, `local`, `representative`, or `null` when the dataset has not classified the festival yet; English codes in
 every `lang` (the dataset codes stay in `raw`).
 `lang: "zh"` gives 越南春节.
 
@@ -477,5 +477,5 @@ AUSPICIOUS HOURS  2027-02-06 · Day Bing Chen
 also writes the chart as SVG (ziwei, bazi, numerology). The MCP tool names
 work as command aliases too (`cast_ziwei`, `cast_bazi`, `lunar_convert`,
 `solar_terms`, `auspicious_hours`; the older `cast_zi_wei`, `zi_wei` as well).
-Colours are used only on a terminal and are turned off by `NO_COLOR` or
+Colors are used only on a terminal and are turned off by `NO_COLOR` or
 `--no-color`.

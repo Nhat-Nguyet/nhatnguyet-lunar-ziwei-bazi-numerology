@@ -22,7 +22,8 @@ or later.
 
 Results carry Vietnamese, English and Chinese names. Every result matches,
 field by field, the engine behind [nhatnguyet.org](https://nhatnguyet.org/en/ma-nguon-mo)
-and the Nhat Nguyet app, in 17,291 shared test cases.
+and the Nhat Nguyet app, in 17,291 core test vectors (18,819 including school
+options and auspicious hours).
 
 ## Install
 
@@ -236,7 +237,8 @@ Code: MIT. Festival data: CC BY 4.0. Please credit
 Bản Python của lõi tính Nhật Nguyệt: âm lịch Việt Nam (giờ UTC+7), can chi, 24
 tiết khí tới phút, Nhị Thập Bát Tú, nạp âm; lá số Tử Vi, Bát Tự; thần số học
 cho tên tiếng Việt; 206 lễ hội, xuất iCalendar. Chỉ dùng thư viện chuẩn, Python 3.9 trở lên,
-khớp lõi tính gốc trong 17.291 ca kiểm. Cài: `pip install nhatnguyet`. Tài
+khớp lõi tính gốc trong 17.291 ca kiểm lõi (18.819 ca nếu tính cả tuỳ chọn
+trường phái và giờ hoàng đạo). Cài: `pip install nhatnguyet`. Tài
 liệu: <https://nhatnguyet.org/ma-nguon-mo>.
 
 ## 中文

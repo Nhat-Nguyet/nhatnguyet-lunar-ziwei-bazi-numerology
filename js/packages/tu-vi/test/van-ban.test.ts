@@ -59,14 +59,14 @@ function chayTs(ca: CaVanBan): string {
   return chartToText(c, { lang: ca.lang, detail: ca.detail, year: ca.year, terms: ca.terms });
 }
 
-test("chartToText: khuôn văn bản Tử Vi", () => {
+test("chartToText: Zi Wei text layout", () => {
   for (const ca of cacCa()) {
     const s = chayTs(ca);
     const dong = s.trimEnd().split("\n");
     const lang = ca.lang ?? (ca.cach === "en" ? ((ca.vao.lang as string) ?? "en") : "en");
     assert.equal(dong.at(-1), { vi: "Dữ liệu: Nhật Nguyệt (nhatnguyet.org)", en: "Data: Nhat Nguyet (nhatnguyet.org)", zh: "数据：Nhat Nguyet (nhatnguyet.org)" }[lang]);
-    assert.equal(dong.filter((x) => x.startsWith("### ")).length, 12, "đủ 12 cung");
-    assert.ok(s.endsWith("\n") && !s.includes("\n\n\n"), "không dòng trống kép");
+    assert.equal(dong.filter((x) => x.startsWith("### ")).length, 12, "all 12 palaces");
+    assert.ok(s.endsWith("\n") && !s.includes("\n\n\n"), "no double blank lines");
     assert.ok(!s.includes("—") && !s.includes("undefined") && !s.includes("null"), s);
   }
   const en = chayTs({ mon: "tu-vi", cach: "en", vao: LA_EN[0], lang: "en", year: 2026 });
@@ -79,13 +79,13 @@ test("chartToText: khuôn văn bản Tử Vi", () => {
   assert.match(hv, /^### Life Palace \(Hợi, Đinh Hợi\) · Tuần void\n- Major stars: Moon \(Exalted, Hóa Kỵ\)$/m);
   const zh = chayTs({ mon: "tu-vi", cach: "en", vao: LA_EN[0], lang: "zh", detail: "summary" });
   assert.match(zh, /^### 命宫 \(亥, 丁亥\) · 旬空\n- 主星：太阴 \(庙, 化忌\)$/m);
-  assert.ok(!zh.includes("## 大限"), "bản tóm tắt không có đại vận");
+  assert.ok(!zh.includes("## 大限"), "the summary has no decade periods");
   const nhuan = chayTs({ mon: "tu-vi", cach: "en", vao: LA_EN[2], lang: "en" });
   assert.match(nhuan, /^- Birth date \(lunar\): 2023-02-20 \(leap month\)$/m);
   assert.throws(() => chartToText(castZiWei(LA_EN[0] as never), { detail: "short" as never }), TypeError);
 });
 
-test("chartToText: Python ra đúng từng byte như TypeScript", (t) => {
+test("chartToText: Python prints the same bytes as TypeScript", (t) => {
   const ca = cacCa();
   const py = vanBanPython(ca);
   if (!py) return t.skip("không có python3");

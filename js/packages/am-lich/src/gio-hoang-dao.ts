@@ -11,7 +11,7 @@
 
 import { DIA_CHI, dayCanChi, mod } from "./can-chi.ts";
 import type { CanChi } from "./can-chi.ts";
-import { checkLang, checkTerms, formatDate, parseDate, stemBranchName, termName, zodiacName } from "./en.ts";
+import { checkLang, checkTerms, formatDate, parseDateInRange, stemBranchName, termName, zodiacName } from "./en.ts";
 import type { DateInput, Lang, Terms } from "./en.ts";
 
 // Sáu giờ hoàng đạo (chỉ số chi, 0 là Tý) theo chi ngày mod 6: Tý Ngọ, Sửu
@@ -136,7 +136,7 @@ export interface AuspiciousHoursResult {
 export function auspiciousHours(date: DateInput, opts: { lang?: Lang; terms?: Terms } = {}): AuspiciousHoursResult {
   const lang = checkLang(opts.lang);
   const terms = checkTerms(opts.terms, lang);
-  const d = parseDate(date);
+  const d = parseDateInRange(date);
   const raw = gioHoangDaoKemThan(d.day, d.month, d.year);
   const p = (n: number) => String(n).padStart(2, "0");
   const hours = raw.gio.map((g, i): AuspiciousHour => {

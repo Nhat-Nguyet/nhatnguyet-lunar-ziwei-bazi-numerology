@@ -36,7 +36,7 @@ from .tu_vi_ve_svg import ve_la_so_svg
 from .tu_vi_ten_en import PATTERN_EN, PATTERN_HAN_FIX, en_text as _tv_en_text, star_en
 
 __all__ = [
-    "parse_date", "parse_time", "hour_branch", "auspicious_hours", "AUSPICIOUS_SPIRITS", "HOUR_SPIRIT_PINYIN", "term", "to_lunar", "to_solar",
+    "parse_date", "parse_date_in_range", "check_year", "YEAR_RANGE", "parse_time", "hour_branch", "auspicious_hours", "AUSPICIOUS_SPIRITS", "HOUR_SPIRIT_PINYIN", "term", "to_lunar", "to_solar",
     "solar_terms", "solar_term_on", "day_pillar", "year_pillar", "cast_zi_wei", "check_terms",
     "term_name", "transformation_short", "stem_branch_name", "convert_terms", "STEM_PINYIN", "BRANCH_PINYIN",
     "decade_luck", "yearly_luck", "yearly_stars", "find_patterns", "cast_bazi",
@@ -232,6 +232,26 @@ def _iso(d: Dict[str, int]) -> str:
     return "%04d-%02d-%02d" % (d["year"], d["month"], d["day"])
 
 
+#: Years the English API accepts, inclusive: the span the engine is checked
+#: over (new moons against NASA, solar terms against IMCCE, every test vector).
+YEAR_RANGE = (1900, 2100)
+
+
+def check_year(year: int, what: Optional[str] = None) -> None:
+    """Raise ValueError when ``year`` is outside ``YEAR_RANGE`` (1900 to 2100).
+    ``what`` names the input in the message, e.g. ``"date 2200-01-01"``."""
+    if not (YEAR_RANGE[0] <= year <= YEAR_RANGE[1]):
+        raise ValueError("%s is outside the supported range: years %d to %d"
+                         % (what or "year %s" % year, YEAR_RANGE[0], YEAR_RANGE[1]))
+
+
+def parse_date_in_range(value: DateInput, what: str = "date") -> Dict[str, int]:
+    """``parse_date`` plus ``check_year``: a valid date in 1900 to 2100."""
+    d = parse_date(value)
+    check_year(d["year"], "%s %s" % (what, _iso(d)))
+    return d
+
+
 def parse_time(value: Union[str, int, None]) -> Optional[Dict[str, int]]:
     """Parse ``"20:00"``, ``"8:05"``, ``"20"`` or ``20``; ``None`` means unknown."""
     if value is None or value == "":
@@ -284,7 +304,7 @@ def auspicious_hours(date: DateInput, lang: str = "en", terms: Optional[str] = N
     """
     lang = _lang(lang)
     t = check_terms(terms, lang)
-    d = parse_date(date)
+    d = parse_date_in_range(date)
     raw = _gio_hoang_dao_kem_than(d["day"], d["month"], d["year"])
     hours = []
     for i, g in enumerate(raw["gio"]):
@@ -355,7 +375,7 @@ def to_lunar(date: DateInput, country: Optional[str] = None, time_zone: Optional
     stem-branch names are written in English."""
     lang = _lang(lang)
     terms = check_terms(terms, lang)
-    d = parse_date(date)
+    d = parse_date_in_range(date)
     c, tz = _country(country, time_zone)
     l = am_lich.solar_to_lunar(d["day"], d["month"], d["year"], tz)
     return {
@@ -365,19 +385,27 @@ def to_lunar(date: DateInput, country: Optional[str] = None, time_zone: Optional
         "monthName": _stem_branch(am_lich.lunar_month_can_chi(l["month"], l["year"])["label"], lang, terms),
         "dayName": _stem_branch(am_lich.day_can_chi(d["day"], d["month"], d["year"])["label"], lang, terms),
         "zodiac": _zodiac((l["year"] - 4) % 12, lang, c),
-        "solarTerm": solar_term_on(d, country=c, time_zone=tz, lang=lang)["current"]["name"],
+        "solarTerm": _term_on(d, c, tz, lang)["current"]["name"],
         "lang": lang,
     }
 
 
 def to_solar(year: int, month: int, day: int, leap: bool = False, country: Optional[str] = None,
              time_zone: Optional[float] = None) -> Dict[str, Any]:
-    """Lunar date back to Gregorian. Raises ValueError when the lunar date does
-    not exist (no such leap month, or day 30 of a 29-day month)."""
+    """Lunar date back to Gregorian. Raises ValueError when the lunar year is
+    outside 1900 to 2100 or the lunar date does not exist (no such leap month,
+    or day 30 of a 29-day month)."""
     _, tz = _country(country, time_zone)
     ten = "%s-%s%s-%s" % (year, month, " (leap)" if leap else "", day)
+    check_year(year, "lunar year %s" % year)
     if not (1 <= month <= 12 and 1 <= day <= 30):
         raise ValueError("no such lunar date: " + ten)
+    if leap:
+        nhuan = _thang_nhuan(year, tz)
+        if nhuan != month:
+            raise ValueError("no such lunar date: %s (%s has no leap month %s; %s)" % (
+                ten, year, month, "the leap month of %s is month %s" % (year, nhuan) if nhuan
+                else "the lunar year %s has no leap month" % year))
     sd, ok = am_lich.lunar_to_solar(day, month, year, bool(leap), tz)
     if not ok:
         raise ValueError("no such lunar date: %s (that year has no such leap month)" % ten)
@@ -385,6 +413,19 @@ def to_solar(year: int, month: int, day: int, leap: bool = False, country: Optio
     if (k["day"], k["month"], k["year"], k["leap"]) != (day, month, year, bool(leap)):
         raise ValueError("no such lunar date: %s (the month has only 29 days)" % ten)
     return {"day": sd["day"], "month": sd["month"], "year": sd["year"], "date": _iso(sd)}
+
+
+def _thang_nhuan(lunar_year: int, tz: float) -> int:
+    """Tháng nhuận của một năm âm ở múi giờ tz, 0 khi không có; thử từng tháng
+    bằng chính hai phép đổi của gói."""
+    for m in range(1, 13):
+        sd, ok = am_lich.lunar_to_solar(1, m, lunar_year, True, tz)
+        if not ok:
+            continue
+        k = am_lich.solar_to_lunar(sd["day"], sd["month"], sd["year"], tz)
+        if k["leap"] and k["month"] == m and k["year"] == lunar_year and k["day"] == 1:
+            return m
+    return 0
 
 
 @lru_cache(maxsize=512)
@@ -402,8 +443,17 @@ def _ten_tiet(ten: str, ten_en: str, lang: str) -> str:
 
 def solar_terms(year: int, country: Optional[str] = None, time_zone: Optional[float] = None,
                 lang: str = "en") -> List[Dict[str, Any]]:
-    """The 24 solar-term moments that fall in a Gregorian year, local time of
-    the chosen country. Wraps ``moc_tiet_khi_trong_nam`` (UTC+7, shifted)."""
+    """The 24 solar-term moments that fall in a Gregorian year (1900 to 2100),
+    local time of the chosen country. Wraps ``moc_tiet_khi_trong_nam`` (UTC+7,
+    shifted)."""
+    if not isinstance(year, int) or isinstance(year, bool):
+        raise TypeError("year must be an integer")
+    check_year(year)
+    return _tiet_cua_nam(year, country, time_zone, lang)
+
+
+def _tiet_cua_nam(year: int, country: Optional[str], time_zone: Optional[float], lang: str) -> List[Dict[str, Any]]:
+    # Không kiểm năm: _term_on cần cả năm liền trước, liền sau (1899, 2101).
     lang = _lang(lang)
     _, tz = _country(country, time_zone)
     lech = int(round((tz - am_lich.TIME_ZONE_VN) * 60))
@@ -423,10 +473,15 @@ def solar_terms(year: int, country: Optional[str] = None, time_zone: Optional[fl
 def solar_term_on(date: DateInput, country: Optional[str] = None, time_zone: Optional[float] = None,
                   lang: str = "en") -> Dict[str, Dict[str, Any]]:
     """The solar term in effect on a date (by local date) and the next one."""
-    d = _iso(parse_date(date))
-    y = int(d[:4])
-    ds = solar_terms(y - 1, country, time_zone, lang) + solar_terms(y, country, time_zone, lang) \
-        + solar_terms(y + 1, country, time_zone, lang)
+    return _term_on(parse_date_in_range(date), country, time_zone, lang)
+
+
+def _term_on(date: Dict[str, int], country: Optional[str], time_zone: Optional[float],
+             lang: str) -> Dict[str, Dict[str, Any]]:
+    d = _iso(date)
+    y = date["year"]
+    ds = _tiet_cua_nam(y - 1, country, time_zone, lang) + _tiet_cua_nam(y, country, time_zone, lang) \
+        + _tiet_cua_nam(y + 1, country, time_zone, lang)
     i = max(k for k, t in enumerate(ds) if t["date"] <= d)
     return {"current": ds[i], "next": ds[i + 1]}
 
@@ -588,7 +643,7 @@ def cast_zi_wei(date: DateInput, gender: str, time: Union[str, int, None] = None
     """
     lang = _lang(lang)
     terms = check_terms(terms, lang)
-    d = parse_date(date)
+    d = parse_date_in_range(date)
     g = _gender(gender)
     t = parse_time(time)
     if t is not None:
@@ -883,7 +938,7 @@ def cast_bazi(date: DateInput, gender: str, time: Union[str, int, None] = None, 
     ``lang="en"``, ``terms`` is "pinyin" (default), "han" or "vi"."""
     lang = _lang(lang)
     terms = check_terms(terms, lang)
-    d = parse_date(date)
+    d = parse_date_in_range(date)
     g = _gender(gender)
     t = parse_time(time)
     raw = bat_tu.lap_la_so_bat_tu(d["day"], d["month"], d["year"], t["hour"] if t else None,
@@ -932,8 +987,8 @@ def numerology(name: str, birth_date: DateInput, today: Optional[DateInput] = No
     lang = _lang(lang)
     if not isinstance(name, str) or not name.strip():
         raise ValueError("name must be a non-empty string")
-    b = parse_date(birth_date)
-    t = parse_date(today if today is not None else _dt.date.today())
+    b = parse_date_in_range(birth_date, "birthDate")
+    t = parse_date_in_range(today if today is not None else _dt.date.today(), "today")
     r = than_so_hoc.tinh_ho_so_than_so_hoc_sau(name, b["day"], b["month"], b["year"], t["year"], t["month"], t["day"])
     p, c = r["soDinhCao"], r["soThachThuc"]
     return {
@@ -955,7 +1010,7 @@ def numerology(name: str, birth_date: DateInput, today: Optional[DateInput] = No
 # ── Lễ hội ───────────────────────────────────────────────────────────────
 
 FESTIVAL_GROUP_EN = {"le-tet": "holiday", "tin-nguong": "folk-religion", "khac": "other"}
-FESTIVAL_SCOPE_EN = {"quoc-gia": "national", "vung": "regional", "dia-phuong": "local", "dai-dien": "representative", "": ""}
+FESTIVAL_SCOPE_EN = {"quoc-gia": "national", "vung": "regional", "dia-phuong": "local", "dai-dien": "representative"}
 
 
 def _o_ds(s: str) -> List[str]:
@@ -992,12 +1047,14 @@ def festivals(year: int, lang: str = "en") -> List[Dict[str, Any]]:
     date and are returned for every year; the other 42 are dated by their
     organisers each year and are not included (see ``lich_cong_bo``).
     ``group`` ("holiday", "folk-religion", "other") and ``scope`` ("national",
-    "regional", "local", "representative", "") are English codes in every
-    ``lang``; the dataset codes stay in ``raw``. ``provinces``,
+    "regional", "local", "representative", or None when the dataset has not
+    classified the festival yet) are English codes in every ``lang``; the
+    dataset codes stay in ``raw``. ``provinces``,
     ``nationwide``, ``ethnicGroups`` and ``venues`` come from ``festival_places``."""
     lang = _lang(lang)
     if not isinstance(year, int) or isinstance(year, bool):
         raise TypeError("year must be an integer")
+    check_year(year)
     out = []
     for le in le_hoi.danh_sach_le_hoi():
         sd = le_hoi.ngay_duong_cua_le(le, year)
@@ -1014,7 +1071,7 @@ def festivals(year: int, lang: str = "en") -> List[Dict[str, Any]]:
             "fixedDate": le["ngay_am"] if am else le["ngay_duong"],
             "level": le["muc_do"],
             "group": FESTIVAL_GROUP_EN.get(le["nhom"], "other"),
-            "scope": FESTIVAL_SCOPE_EN.get(le["pham_vi"], ""),
+            "scope": FESTIVAL_SCOPE_EN.get(le["pham_vi"]),
             "publicHoliday": le["ngay_nghi_le"] == "co",
             "daysBefore": int(le.get("ngay_truoc") or 0), "daysAfter": int(le.get("ngay_sau") or 0),
         }

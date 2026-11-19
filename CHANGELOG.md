@@ -17,8 +17,9 @@ release passes all of them in TypeScript and in Python.
 
 ## [0.3.0] - 2026-11-19
 
-Engine 2.2.0 (was 2.0.1 in 0.2.0). Every release passes all 18,819 shared
-test vectors in `ca-kiem/` in TypeScript and in Python.
+Engine 2.2.0 (was 2.0.1 in 0.2.0). Every release passes all 17,291 core test
+vectors in `ca-kiem/` (18,819 including school options and auspicious hours) in
+TypeScript and in Python.
 
 ### Changed
 
@@ -41,9 +42,22 @@ test vectors in `ca-kiem/` in TypeScript and in Python.
   for a Tý-hour birth, `ghiChuGioTy*`, as the TypeScript `lapLaSoTuVi` does.
 - `@nhatnguyet/widgets` computes its auspicious hours with `auspiciousHours`
   of `@nhatnguyet/am-lich` instead of its own table (same output).
-- Python package metadata: the licence is the SPDX expression `MIT` with
+- Python package metadata: the license is the SPDX expression `MIT` with
   `license-files`, so building no longer prints the setuptools deprecation
   warning; building from source needs setuptools 77 or newer.
+- **Breaking**: the English API refuses years outside 1900 to 2100, the span
+  the engine is checked over: `toLunar`, `toSolar`, `solarTerms`,
+  `solarTermOn`, `auspiciousHours`, `castZiWei`, `castBaZi`, `numerology` and
+  `festivals` throw a `RangeError` (Python `ValueError`) that states the
+  range. The core functions (`solarToLunar`, `lapLaSoTuVi`...) are unchanged.
+- `festivals()`: `scope` is `null` (Python `None`) for a festival the dataset
+  has not classified yet (59 of 164), instead of `""`.
+- `@nhatnguyet/widgets`: in English, stem-branch names follow the new `terms`
+  attribute (pinyin by default: "Day Ding You", "Year of the Goat (Ding
+  Wei)"), and hour ranges read as the `range` of `auspiciousHours`
+  (`23:00-00:59`, was `23:00-01:00`).
+- CLI: `nhatnguyet terms` in English prints the English name only; `--terms
+  han` or `--terms vi` adds the Chinese or Vietnamese name in brackets.
 
 ### Added
 
@@ -137,6 +151,11 @@ test vectors in `ca-kiem/` in TypeScript and in Python.
   and PyPI.
 - Releases are published from GitHub Actions with npm provenance and PyPI
   trusted publishing.
+- `YEAR_RANGE`, `checkYear` and `parseDateInRange` in `@nhatnguyet/am-lich`
+  (Python `YEAR_RANGE`, `check_year`, `parse_date_in_range`).
+- CI runs every test vector on the built packages under Node 18, 20, 22 and
+  24 (`.github/scripts/check-dist.mjs`), locally and against npm after each
+  release; `js/package-lock.json` pins the workspace, installed with `npm ci`.
 
 ### Fixed
 
@@ -147,6 +166,11 @@ test vectors in `ca-kiem/` in TypeScript and in Python.
   `PATTERN_HAN_FIX` now only repeats them and is deprecated.
 - `nhatnguyet --version` and the MCP server reported 0.1.0 in 0.2.0; the
   version constants now follow `package.json` (a test checks it).
+- `toSolar` with a leap month the year does not have names the year's real
+  leap month ("2025 has no leap month 2; the leap month of 2025 is month 6")
+  instead of "the month has only 29 days".
+- `@nhatnguyet/widgets`: the inauspicious hour cells and the Rooster cell of
+  `<nn-gio-hoang-dao>` reach a 4.5:1 contrast in light and dark themes.
 
 ## [0.2.0] - 2026-11-19
 
@@ -221,6 +245,6 @@ First release.
   needs only the standard library (3.9 or newer).
 
 [Unreleased]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.1.0...v0.2.0
+[0.3.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.1.0...v0.3.0
+[0.2.0]: https://pypi.org/project/nhatnguyet/0.2.0/
 [0.1.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/releases/tag/v0.1.0

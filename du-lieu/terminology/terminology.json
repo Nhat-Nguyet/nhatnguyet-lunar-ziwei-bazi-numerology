@@ -121,7 +121,7 @@
       "count": 5
     },
     "ziwei-pattern": {
-      "description": "Named chart patterns (cách cục, 格局) the library recognises.",
+      "description": "Named chart patterns (cách cục, 格局) the library recognizes.",
       "count": 34
     },
     "bazi-ten-god": {
@@ -6371,7 +6371,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6389,7 +6389,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6407,7 +6407,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6425,7 +6425,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6443,7 +6443,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6461,7 +6461,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6479,7 +6479,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6497,7 +6497,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6515,7 +6515,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {
@@ -6533,7 +6533,7 @@
       "definition_en": "",
       "definition_vi": "",
       "definition_zh": "",
-      "note": "Recognised by the core rules (tuvi_cachcuc.go).",
+      "note": "Recognized by the core rules (tuvi_cachcuc.go).",
       "source": "tu-vi/src/cach-cuc.ts; English name: ten-en.ts (PATTERN_EN)"
     },
     {

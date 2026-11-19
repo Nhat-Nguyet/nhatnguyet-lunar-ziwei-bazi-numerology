@@ -121,7 +121,7 @@ the ~16 s discussed in lunar-javascript issue #56) because it keeps the second;
 Nhat Nguyet solves each instant from a truncated VSOP87D series and then rounds
 it to the minute, which accounts for most of its 0.27-minute mean difference.
 Before engine 2.0.1, Nhat Nguyet used a shorter Meeus series that ran about 3
-minutes early on average (14.5 minutes at most, 10 terms on the neighbouring
+minutes early on average (14.5 minutes at most, 10 terms on the neighboring
 day). The lunar months do not depend on this: Nhat Nguyet's month boundaries
 are checked separately against NASA new moons and a calendar rebuilt from NASA
 and IMCCE in its core test suite.

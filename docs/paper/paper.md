@@ -603,7 +603,8 @@ for this version with engine 2.2.0.
 ## Test vectors
 
 The reference engine writes input and output pairs to `ca-kiem/`
-(18,819 in total, 14,936 calendar cases,
+(17,291 core test vectors, 18,819 including school
+options and auspicious hours; 14,936 calendar cases,
 engine 2.2.0). The TypeScript
 port (`npm test`) and the Python port (`python -m unittest discover -s
 tests`) must reproduce all of them on every change (continuous integration

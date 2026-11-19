@@ -51,9 +51,9 @@ School options (where the books disagree; default first, sources in docs/schools
   -h, --help        this help
   -v, --version     version
 
-Times are clock times; the Tý double hour runs 23:00 to 00:59. Dates and times
+Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms). Docs: https://nhatnguyet.org/ma-nguon-mo"""
+terms). Docs: https://nhatnguyet.org/en/ma-nguon-mo"""
 
 # ── Bề rộng hiển thị ─────────────────────────────────────────────────────
 
@@ -436,8 +436,14 @@ def render_lunar(r: Dict, color: bool = False) -> str:
     return table(None, rows, color)
 
 
-def render_solar_terms(year: int, terms: List[Dict], lang: str, color: bool = False) -> str:
-    rows = [[[t["date"]], [t["time"]], [t["name"] + ("" if lang == "vi" else " (%s)" % t["nameVi"])], ["%d°" % t["longitude"]]]
+def render_solar_terms(year: int, terms: List[Dict], lang: str, color: bool = False, name_terms: str = "pinyin") -> str:
+    """Bảng 24 tiết khí. Tên theo `lang`; chỉ ở tiếng Anh, name_terms "han" hay
+    "vi" thêm tên chữ Hán hay tên Việt trong ngoặc, "pinyin" không thêm gì."""
+    def kem(t: Dict) -> str:
+        if lang != "en" or name_terms == "pinyin":
+            return ""
+        return " (%s)" % (t["nameVi"] if name_terms == "vi" else en.term(t["nameVi"], "zh"))
+    rows = [[[t["date"]], [t["time"]], [t["name"] + kem(t)], ["%d°" % t["longitude"]]]
             for t in terms]
     return paint("%s %d" % (UI[lang]["terms"], year), "title", color) + "\n" + table(None, rows, color)
 
@@ -616,7 +622,7 @@ def run(argv: Sequence[str], color: bool = False, width: int = 88, write_file=No
     if cmd == "terms":
         can(1, "terms <year>")
         t = en.solar_terms(int(p[0]), country=country, lang=lang)
-        return _dump(t) if js else render_solar_terms(int(p[0]), t, lang, color)
+        return _dump(t) if js else render_solar_terms(int(p[0]), t, lang, color, terms)
     if cmd == "hours":
         can(1, "hours <YYYY-MM-DD>")
         r = en.auspicious_hours(p[0], lang=lang, terms=terms)

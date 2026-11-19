@@ -28,40 +28,40 @@ function ve(c: CaVe): string {
 
 const CA = docHoacGhiBam("tu_vi", CAC_VAO, ve, true);
 
-test("SVG hợp lệ, có <title>, và khớp băm chung với bản Python", () => {
+test("SVG is valid, has a <title> and matches the hash shared with Python", () => {
   assert.ok(CA.length >= 24);
   for (const c of CA) {
     const svg = ve(c);
     assert.equal(loiXml(svg), null, JSON.stringify(c.vao));
     assert.match(svg, /<title id="nn-tieu-de">[^<]+<\/title>/);
     assert.ok(svg.includes(`lang="${c.lang}"`));
-    assert.ok(!svg.includes("—"), "không gạch dài");
+    assert.ok(!svg.includes("—"), "no em dash");
     assert.equal(bam(svg), c.sha256, `${JSON.stringify(c.vao)} ${c.lang} ${c.terms ?? ""} ${c.theme}`);
   }
 });
 
-test("đủ 12 cung và 14 chính tinh, đúng ngôn ngữ", () => {
+test("12 palaces and 14 main stars, right language", () => {
   for (const v of CAC_VAO) {
     const ls = laSo(v);
     for (const lang of ["vi", "en", "zh"] as const) {
       const chu = chuTrongHinh(veLaSoSvg(ls, { lang }));
       const tat = chu.join("\n");
       const cung = lang === "vi" ? TEN_CUNG_THEO_OFFSET.map((c) => c.vi) : lang === "en" ? TEN_CUNG_THEO_OFFSET.map((c) => c.en) : CUNG_ZH;
-      for (const t of cung) assert.ok(chu.includes(t), `${lang}: thiếu cung ${t}`);
+      for (const t of cung) assert.ok(chu.includes(t), `${lang}: palace missing ${t}`);
       for (const s of CHINH_TINH) {
         const ten = lang === "vi" ? s : lang === "en" ? starEn(s, CHINH_TINH_NAME_EN[s]) : TU_VUNG_SAO[s].zh;
-        assert.ok(chu.some((x) => x.startsWith(ten)), `${lang}: thiếu chính tinh ${ten}`);
+        assert.ok(chu.some((x) => x.startsWith(ten)), `${lang}: main star missing ${ten}`);
       }
       if (lang === "zh") {
-        assert.ok(!tat.includes("Life Palace") && !tat.includes("Mệnh ở"), "bản Trung lẫn chữ Anh, Việt");
+        assert.ok(!tat.includes("Life Palace") && !tat.includes("Mệnh ở"), "Chinese version mixes in English or Vietnamese");
       }
-      if (lang === "en") assert.ok(!tat.includes("Phu Thê") && !tat.includes("Dương lịch"), "bản Anh lẫn tiếng Việt");
-      if (lang === "vi") assert.ok(!tat.includes("Life Palace") && !tat.includes("命宫"), "bản Việt lẫn tiếng khác");
+      if (lang === "en") assert.ok(!tat.includes("Phu Thê") && !tat.includes("Dương lịch"), "English version mixes in Vietnamese");
+      if (lang === "vi") assert.ok(!tat.includes("Life Palace") && !tat.includes("命宫"), "Vietnamese version mixes in another language");
     }
   }
 });
 
-test("width chỉ đổi kích thước hiển thị; bí danh tiếng Anh", () => {
+test("width only changes the display size; English aliases", () => {
   const ls = laSo(CAC_VAO[0]);
   const a = veLaSoSvg(ls, { width: 360 });
   assert.ok(a.includes(`width="360" height="370.1"`));

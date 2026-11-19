@@ -40,12 +40,12 @@ function tinh(vao: Record<string, unknown>): unknown {
 for (const phep of ["duong-sang-am", "am-sang-duong", "moc-tiet-khi"]) {
   test(`am-lich: ${phep}`, () => {
     const kq = kiemCa(tep, tinh, { loc: (vao) => vao.phep === phep });
-    assert.ok(kq.tong > 0, "không có ca nào");
+    assert.ok(kq.tong > 0, "no vectors");
     assert.equal(kq.soLech, 0, baoCao(`am-lich ${phep}`, kq));
   });
 }
 
-test("am-lich: ba loại phép phủ đủ mọi ca của tệp", () => {
+test("am-lich: the three operations cover every vector of the file", () => {
   const phep = new Set(["duong-sang-am", "am-sang-duong", "moc-tiet-khi"]);
   assert.equal(tep.ca.length, tep.soCa);
   assert.ok(tep.ca.every((c) => phep.has(c.vao.phep as string)));

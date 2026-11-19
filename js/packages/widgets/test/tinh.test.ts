@@ -6,9 +6,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { auspiciousHours } from "@nhatnguyet/am-lich";
+import { chuTren } from "../src/thanh-phan.ts";
 import {
+  canChiTheo,
   chuCanChiNgay,
   docLang,
+  docTerms,
   docNgay,
   gioHoangDao,
   khungGio,
@@ -33,7 +37,7 @@ const BO = JSON.parse(readFileSync(new URL("./fixtures/doi-chieu-site.json", imp
   }[];
 };
 
-test("ngày âm, can chi, tiết khí khớp widget trên site", () => {
+test("lunar date, stem-branch and solar term match the site widget", () => {
   assert.ok(BO.ca.length >= 50);
   for (const c of BO.ca) {
     const sd = docNgay(c.ngay)!;
@@ -44,14 +48,14 @@ test("ngày âm, can chi, tiết khí khớp widget trên site", () => {
   }
 });
 
-test("giờ hoàng đạo khớp widget trên site", () => {
+test("auspicious hours match the site widget", () => {
   for (const c of BO.ca) {
     const tot = gioHoangDao(docNgay(c.ngay)!).filter((g) => g.hoangDao).map((g) => CHI_VI[g.chi]);
     assert.deepEqual(tot, c.gioHoangDao, c.ngay);
   }
 });
 
-test("Tết sắp tới khớp widget trên site", () => {
+test("next Tết matches the site widget", () => {
   for (const c of BO.ca) {
     const k = tetSapToi(docNgay(c.ngay)!);
     const p = (n: number) => String(n).padStart(2, "0");
@@ -63,7 +67,7 @@ test("Tết sắp tới khớp widget trên site", () => {
   }
 });
 
-test("chữ ba thứ tiếng", () => {
+test("text in three languages", () => {
   const am = { day: 11, month: 10, year: 2026, leap: false };
   assert.equal(nhanAm("vi", am), "11/10 âm lịch");
   assert.equal(nhanAm("en", am), "Lunar day 11, month 10");
@@ -75,25 +79,75 @@ test("chữ ba thứ tiếng", () => {
   assert.equal(thangNam("vi", 11, 2026), "Tháng 11 · 2026");
   const sd = docNgay("2026-11-19")!;
   assert.equal(chuCanChiNgay("vi", sd), "ngày Đinh Dậu");
-  assert.equal(chuCanChiNgay("en", sd), "Day Đinh Dậu");
+  assert.equal(chuCanChiNgay("en", sd), "Day Ding You");
+  assert.equal(chuCanChiNgay("en", sd, false, "han"), "Day 丁酉");
+  assert.equal(chuCanChiNgay("en", sd, false, "vi"), "Day Đinh Dậu");
   assert.equal(chuCanChiNgay("zh", sd), "丁酉日");
+  assert.equal(chuCanChiNgay("zh", sd, false, "vi"), "丁酉日");
+  assert.equal(chuCanChiNgay("vi", sd, false, "pinyin"), "ngày Đinh Dậu");
+  assert.equal(canChiTheo("en", "Đinh", "Mùi"), "Ding Wei");
   assert.equal(tenCanhGio("en", 3), "Cat");
   assert.equal(tenCanhGio("zh", 0), "子");
-  assert.equal(khungGio("vi", 0), "23h-1h");
-  assert.equal(khungGio("en", 6), "11:00-13:00");
+  assert.equal(khungGio("vi", 0), "23:00-00:59");
+  assert.equal(khungGio("en", 6), "11:00-12:59");
 });
 
-test("thuộc tính lạ rơi về mặc định an toàn", () => {
+test("terms attribute follows the library terms option", () => {
+  assert.equal(docTerms(null, "en"), "pinyin");
+  assert.equal(docTerms("han", "en"), "han");
+  assert.equal(docTerms("vi", "en"), "vi");
+  assert.equal(docTerms("xx", "en"), "pinyin");
+  assert.equal(docTerms("pinyin", "zh"), "han");
+  assert.equal(docTerms("pinyin", "vi"), "vi");
+});
+
+test("hour ranges are the library's auspiciousHours range", () => {
+  for (const c of BO.ca.slice(0, 10)) {
+    const sd = docNgay(c.ngay)!;
+    const lib = auspiciousHours(sd).hours.map((h) => h.range);
+    assert.deepEqual(gioHoangDao(sd).map((g) => g.range), lib, c.ngay);
+    assert.deepEqual(gioHoangDao(sd).map((g) => khungGio("en", g.chi)), lib, c.ngay);
+  }
+});
+
+// WCAG 2 contrast of the hour cells, light and dark: the inauspicious cells
+// (sky colour under a paper overlay at .85, label in --nn-mucNhat) and the
+// auspicious ones (label chosen by chuTren) must reach 4.5:1.
+test("hour cells reach 4.5:1 contrast in light and dark themes", () => {
+  const TROI = ["#1e2a44", "#243352", "#33456b", "#5a6f92", "#8fa6c0", "#c3d2df", "#e2e6e0", "#dfd9c8", "#cbb894", "#94849a", "#4e4468", "#2a2f4d"];
+  const rgb = (x: string) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const lin = (c: number) => ((c /= 255) <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  const L = (c: number[]) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
+  const ti = (a: number[], b: number[]) => (Math.max(L(a), L(b)) + 0.05) / (Math.min(L(a), L(b)) + 0.05);
+  const tron = (tren: number[], duoi: number[], a: number) => tren.map((v, i) => v * a + duoi[i] * (1 - a));
+  for (const [giay, chu] of [["#ffffff", "#4a5250"], ["#182a28", "#b4c0bd"]]) {
+    for (const t of TROI) {
+      const nen = tron(rgb(giay), rgb(t), 0.85);
+      assert.ok(ti(rgb(chu), nen) >= 4.5, `inauspicious ${t} on ${giay}: ${ti(rgb(chu), nen).toFixed(2)}`);
+    }
+  }
+  for (const t of TROI) assert.ok(ti(rgb(chuTren(t)), rgb(t)) >= 4.5, `auspicious ${t}: ${ti(rgb(chuTren(t)), rgb(t)).toFixed(2)}`);
+  const css = readFileSync(new URL("../src/thanh-phan.ts", import.meta.url), "utf8");
+  assert.match(css, /\.o \.phu\{[^}]*opacity:\.85\}/);
+  assert.doesNotMatch(css, /\.o span\{[^}]*opacity/);
+  const gd = readFileSync(new URL("../src/giao-dien.ts", import.meta.url), "utf8");
+  assert.match(gd, /mucNhat: "#4a5250"/);
+  assert.match(gd, /mucNhat: "#b4c0bd"/);
+});
+
+test("unknown attributes fall back to safe defaults", () => {
   assert.equal(docLang("fr"), "vi");
   assert.equal(docLang("zh"), "zh");
   assert.equal(docNgay("2026-02-30"), null);
   assert.equal(docNgay("19/11/2026"), null);
+  assert.equal(docNgay("2101-01-01"), null);
+  assert.equal(docNgay("1899-12-31"), null);
   assert.equal(muiGio(undefined), 7);
   assert.equal(muiGio("cn"), 8);
   assert.equal(muiGio("XX"), 7);
 });
 
-test("lưới tháng: tuần bắt đầu từ Thứ Hai, đủ ngày", () => {
+test("month grid: weeks start on Monday, every day present", () => {
   const t = thangLich(11, 2026);
   assert.equal(t.ngay.length, 30);
   assert.equal(t.dauTuan, 6); // 1/11/2026 là Chủ nhật
@@ -101,7 +155,7 @@ test("lưới tháng: tuần bắt đầu từ Thứ Hai, đủ ngày", () => {
   assert.equal(t2.ngay.length, 29);
 });
 
-test("Tết theo múi giờ nước: Trung Quốc và Việt Nam lệch năm 2030", () => {
+test("Tết by country time zone: China and Vietnam differ in 2030", () => {
   // Tết 2030: Việt Nam 2/2, Trung Quốc 3/2 (điểm sóc rơi giữa hai múi giờ).
   const vn = tetSapToi({ day: 1, month: 12, year: 2029 }, 7).tet;
   const cn = tetSapToi({ day: 1, month: 12, year: 2029 }, 8).tet;

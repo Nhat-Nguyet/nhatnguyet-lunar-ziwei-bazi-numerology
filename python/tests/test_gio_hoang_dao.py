@@ -16,7 +16,7 @@ from so_sanh import doc_ca_kiem, so_mon  # noqa: E402
 class TestGioHoangDao(unittest.TestCase):
     def test_ca_kiem(self):
         dat, tong, lech = so_mon("auspicious-hours", lambda v: gio_hoang_dao_kem_than(v["dd"], v["mm"], v["yyyy"]))
-        print("\nauspicious-hours: %d/%d ca đạt" % (dat, tong))
+        print("\nauspicious-hours: %d/%d vectors pass" % (dat, tong))
         self.assertEqual(tong, doc_ca_kiem("auspicious-hours")["soCa"])
         self.assertEqual(dat, tong, "\n".join(lech))
 

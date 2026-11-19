@@ -130,7 +130,7 @@ function cacViec(): { viec: ViecPython; ts: () => unknown }[] {
   return ds;
 }
 
-test("lớp API tiếng Anh và lệnh dòng lệnh: Python ra đúng như TypeScript", (t) => {
+test("English API and command line: Python prints the same as TypeScript", (t) => {
   const ds = cacViec();
   const py = chayPython(ds.map((x) => x.viec));
   if (!py) return t.skip("không có python3");

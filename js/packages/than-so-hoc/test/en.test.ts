@@ -7,7 +7,7 @@ import { NUMEROLOGY_LABELS, numerology, tinhHoSoThanSoHocSau } from "../src/inde
 const tep = docCaKiem("than-so-hoc");
 type R = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-test("en: numerology khớp mọi ca kiểm", () => {
+test("en: numerology matches every vector", () => {
   for (const c of tep.ca) {
     const v = c.vao as R;
     const ra = c.ra as R;
@@ -30,7 +30,7 @@ test("en: numerology khớp mọi ca kiểm", () => {
   }
 });
 
-test("en: ngày dạng chuỗi, nhãn ba thứ tiếng, lỗi đầu vào", () => {
+test("en: string dates, labels in three languages, input errors", () => {
   const a = numerology({ name: "Nguyễn Văn An", birthDate: "1990-09-19", today: "2026-11-19", lang: "zh" });
   assert.equal(a.birthDate, "1990-09-19");
   assert.equal(a.labels.lifePath, "生命灵数");
@@ -40,11 +40,16 @@ test("en: ngày dạng chuỗi, nhãn ba thứ tiếng, lỗi đầu vào", () =
   assert.throws(() => numerology({ name: "An", birthDate: "1990-09-19", lang: "fr" as "en" }), /lang/);
 });
 
-test("en: numerologySvg và result.toSvg vẽ đúng renderNumerologySvg", async () => {
+test("en: numerologySvg and result.toSvg draw renderNumerologySvg", async () => {
   const { numerologySvg, renderNumerologySvg } = await import("../src/index.ts");
   const r = numerology({ name: "Nguyen Van An", birthDate: "1990-09-19", today: "2026-11-19", lang: "zh" });
   const goc = renderNumerologySvg({ hoTen: "Nguyen Van An", dd: 19, mm: 9, yyyy: 1990, namXem: 2026 }, { lang: "zh" });
   assert.equal(r.toSvg(), goc);
   assert.equal(numerologySvg(r, { theme: "dark", lang: "en" }), renderNumerologySvg({ hoTen: "Nguyen Van An", dd: 19, mm: 9, yyyy: 1990, namXem: 2026 }, { lang: "en", theme: "dark" }));
   assert.ok(!Object.keys(r).includes("toSvg"));
+});
+
+test("numerology: dates outside 1900 to 2100 throw a RangeError", () => {
+  assert.throws(() => numerology({ name: "An", birthDate: "1899-01-01" }), /birthDate 1899-01-01 is outside the supported range: years 1900 to 2100/);
+  assert.throws(() => numerology({ name: "An", birthDate: "1990-01-01", today: "2200-01-01" }), /today 2200-01-01 is outside/);
 });

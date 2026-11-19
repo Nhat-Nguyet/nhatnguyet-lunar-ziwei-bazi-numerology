@@ -14,7 +14,7 @@ from so_sanh import so_mon  # noqa: E402
 class TestLeHoi(unittest.TestCase):
     def test_ca_kiem(self):
         dat, tong, lech = so_mon("le-hoi", lambda vao: le_hoi.le_hoi_trong_nam(vao["nam"]) or None)
-        print("\nle-hoi: %d/%d ca đạt" % (dat, tong))
+        print("\nle-hoi: %d/%d vectors pass" % (dat, tong))
         self.assertGreater(tong, 0)
         self.assertEqual(dat, tong, "\n".join(lech))
 
@@ -99,7 +99,7 @@ class TestFestivalsIcs(unittest.TestCase):
         for lang in ("en", "vi", "zh"):
             for f in en.festivals(2027, lang=lang):
                 self.assertIn(f["group"], ("holiday", "folk-religion", "other"))
-                self.assertIn(f["scope"], ("national", "regional", "local", "representative", ""))
+                self.assertIn(f["scope"], ("national", "regional", "local", "representative", None))
                 di({k: v for k, v in f.items() if k != "raw"}, f["id"])
         self.assertTrue(any(f["nationwide"] for f in ds))
 

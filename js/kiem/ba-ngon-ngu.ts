@@ -80,11 +80,11 @@ export function doBaNgonNgu(v: unknown, dem: DemBaNgonNgu, duong = ""): void {
 export function tomTatThieu(dem: DemBaNgonNgu, toiDa = 20): string {
   const theoDuong = new Map<string, { n: number; vd: string }>();
   for (const t of dem.thieu) {
-    const khoa = t.duong + " (thiếu " + t.thieu + ")";
+    const khoa = t.duong + " (missing " + t.thieu + ")";
     const cu = theoDuong.get(khoa);
     if (cu) cu.n++;
     else theoDuong.set(khoa, { n: 1, vd: t.vi });
   }
-  const dong = [...theoDuong.entries()].slice(0, toiDa).map(([k, x]) => `${k}: ${x.n} chỗ, ví dụ "${x.vd}"`);
-  return `${dem.thieu.length} chỗ thiếu trên ${dem.tong} tên\n` + dong.join("\n");
+  const dong = [...theoDuong.entries()].slice(0, toiDa).map(([k, x]) => `${k}: ${x.n} places, e.g. "${x.vd}"`);
+  return `${dem.thieu.length} missing translations in ${dem.tong} names\n` + dong.join("\n");
 }

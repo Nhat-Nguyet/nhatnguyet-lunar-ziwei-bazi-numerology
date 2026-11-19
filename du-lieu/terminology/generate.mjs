@@ -60,7 +60,7 @@ export const CATEGORIES = {
   "ziwei-scholar-ring": "The twelve stars of the Bác Sỹ (博士) ring.",
   "ziwei-void": "The two void markers Tuần (旬空) and Triệt (截空).",
   "ziwei-yearly-star": "Flowing (yearly) stars placed for a viewing year.",
-  "ziwei-pattern": "Named chart patterns (cách cục, 格局) the library recognises.",
+  "ziwei-pattern": "Named chart patterns (cách cục, 格局) the library recognizes.",
   "bazi-ten-god": "The Ten Gods (thập thần, 十神) of BaZi.",
   "bazi-hidden-stem-role": "Roles of the stems hidden in a branch (tàng can, 藏干).",
   "bazi-symbolic-star": "Symbolic stars (thần sát, 神煞) the BaZi library looks up.",
@@ -488,7 +488,7 @@ export function buildGlossary() {
       en: TV.PATTERN_EN[p.vi],
       alt: [[p.vi, 'terms: "vi" (Sino-Vietnamese)']],
       iztro: false,
-      note: p.quanShu ? "From the pattern tables of the Zi Wei Dou Shu Quan Shu (定富局, 定貴局, 定貧賤局)." : "Recognised by the core rules (tuvi_cachcuc.go).",
+      note: p.quanShu ? "From the pattern tables of the Zi Wei Dou Shu Quan Shu (定富局, 定貴局, 定貧賤局)." : "Recognized by the core rules (tuvi_cachcuc.go).",
       source: `tu-vi/src/${p.quanShu ? "cach-cuc-toan-thu.ts" : "cach-cuc.ts"}; English name: ten-en.ts (PATTERN_EN)`,
     });
   }

@@ -8,7 +8,7 @@ import { daiVan, tinhHanNam, tinhSaoLuu } from "../src/index.ts";
 
 const banTho = (a: object) => JSON.parse(JSON.stringify(a));
 
-test("hàm không liệt kê, JSON giữ khuôn dữ liệu", () => {
+test("methods are not enumerable, JSON keeps the data shape", () => {
   const a = astro.bySolar("1990-9-19", 10, "男", true, "zh-CN");
   assert.equal(Object.keys(a).includes("horoscope"), false);
   assert.equal(Object.keys(a.palaces[0]).includes("has"), false);
@@ -22,13 +22,13 @@ test("hàm không liệt kê, JSON giữ khuôn dữ liệu", () => {
   assert.deepEqual(Object.keys(banTho(h)), ["lunarDate", "solarDate", "decadal", "age", "yearly", "monthly", "daily", "hourly"]);
 });
 
-test("palace, star, surroundedPalaces như iztro", () => {
+test("palace, star, surroundedPalaces as iztro", () => {
   const a = bySolar("1990-9-19", 10, "男", true, "zh-CN", { country: "CN" });
   const menh = a.palace("命宫")!;
   assert.equal(menh.index, 9);
   assert.equal(a.palace(9), menh);
   assert.equal(a.palace("身宫")!.isBodyPalace, true);
-  assert.equal(a.palace("soulPalace"), menh, "nhận cả khoá iztro");
+  assert.equal(a.palace("soulPalace"), menh, "accepts iztro keys too");
   assert.throws(() => a.palace(12), /invalid palace index/);
   const tv = a.star("紫微");
   assert.equal(tv.palace()!.name, "疾厄");
@@ -50,7 +50,7 @@ test("palace, star, surroundedPalaces như iztro", () => {
   assert.equal(vi.palace("Mệnh")!.has(["太阴"]), vi.palace("Mệnh")!.has(["Thái Âm"]));
 });
 
-test("fliesTo, selfMutaged, mutagedPlaces theo bảng Tứ Hóa của lõi", () => {
+test("fliesTo, selfMutaged, mutagedPlaces follow the engine's Four Transformations table", () => {
   const a = bySolar("1990-9-19", 10, "男", true, "zh-CN");
   for (const p of a.palaces) {
     const noi = p.mutagedPlaces();
@@ -63,7 +63,7 @@ test("fliesTo, selfMutaged, mutagedPlaces theo bảng Tứ Hóa của lõi", () 
   }
 });
 
-test("horoscope lấy đại hạn, tiểu hạn, lưu niên, lưu nguyệt của lõi", () => {
+test("horoscope takes the engine's decadal, age, yearly and monthly periods", () => {
   const a = bySolar("1990-9-19", 10, "男", true, "zh-CN", { country: "CN" });
   const h = a.horoscope("2026-11-19", 3);
   assert.equal(h.solarDate, "2026-11-19");

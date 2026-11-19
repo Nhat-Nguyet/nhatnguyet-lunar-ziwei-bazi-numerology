@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { docCaKiem } from "../../../kiem/so-sanh.ts";
 import {
+  auspiciousHours,
   chiGioTuGioDongHo,
   convertTerms,
   dayPillar,
@@ -27,7 +28,7 @@ import {
 const tep = docCaKiem("am-lich");
 type V = Record<string, number | boolean | string>;
 
-test("en: toLunar khớp ca kiểm duong-sang-am (cả múi giờ khác)", () => {
+test("en: toLunar matches the duong-sang-am vectors (other time zones too)", () => {
   let n = 0;
   let kiem = 0;
   for (const c of tep.ca) {
@@ -47,7 +48,7 @@ test("en: toLunar khớp ca kiểm duong-sang-am (cả múi giờ khác)", () =>
   assert.ok(kiem > 2000, "quá ít ca: " + kiem);
 });
 
-test("en: toSolar khớp lunarToSolar trên ca kiểm am-sang-duong", () => {
+test("en: toSolar matches lunarToSolar on the am-sang-duong vectors", () => {
   let kiem = 0;
   for (const c of tep.ca) {
     const v = c.vao as V;
@@ -67,13 +68,13 @@ test("en: toSolar khớp lunarToSolar trên ca kiểm am-sang-duong", () => {
       kiem++;
     } else {
       // Ngày 30 của tháng thiếu: hàm gốc trả mùng 1 tháng sau, API tiếng Anh báo lỗi.
-      assert.throws(() => toSolar(vao, { timeZone: tz }), /29 days/);
+      assert.throws(() => toSolar(vao, { timeZone: tz }), vao.leap ? /29 days|has no leap month/ : /29 days/);
     }
   }
   assert.ok(kiem > 1500, "quá ít ca: " + kiem);
 });
 
-test("en: solarTerms khớp ca kiểm moc-tiet-khi, CN dời đúng một giờ", () => {
+test("en: solarTerms matches the moc-tiet-khi vectors, CN shifted by exactly one hour", () => {
   let kiem = 0;
   for (const c of tep.ca) {
     const v = c.vao as V;
@@ -98,7 +99,7 @@ test("en: solarTerms khớp ca kiểm moc-tiet-khi, CN dời đúng một giờ"
   assert.ok(kiem >= 20);
 });
 
-test("en: đổi nước là đổi múi giờ (Tết 1985 Việt Nam khác Trung Quốc)", () => {
+test("en: a country is a time zone (Tết 1985 differs between Vietnam and China)", () => {
   assert.deepEqual(toLunar("1985-01-21"), { ...toLunar("1985-01-21") });
   const vn = toLunar("1985-01-21");
   const cn = toLunar("1985-01-21", { country: "CN" });
@@ -113,7 +114,7 @@ test("en: đổi nước là đổi múi giờ (Tết 1985 Việt Nam khác Trun
   assert.equal(toLunar("2023-02-01", { lang: "zh" }).zodiac, "猫");
 });
 
-test("en: toSolar báo lỗi tháng nhuận không có và trả đúng tháng nhuận có thật", () => {
+test("en: toSolar rejects a missing leap month and returns a real one", () => {
   // 2023 nhuận tháng 2 ở Việt Nam.
   const r = toSolar({ year: 2023, month: 2, day: 1, leap: true });
   const g = lunarToSolar(1, 2, 2023, true, 7);
@@ -122,7 +123,7 @@ test("en: toSolar báo lỗi tháng nhuận không có và trả đúng tháng n
   assert.throws(() => toSolar({ year: 2023, month: 13, day: 1 }), RangeError);
 });
 
-test("en: đọc ngày, giờ", () => {
+test("en: parsing dates and times", () => {
   assert.deepEqual(parseDate("1990-09-19"), { year: 1990, month: 9, day: 19 });
   assert.deepEqual(parseDate({ year: 1990, month: 9, day: 19 }), { year: 1990, month: 9, day: 19 });
   assert.deepEqual(parseDate(new Date(1990, 8, 19, 23, 0)), { year: 1990, month: 9, day: 19 });
@@ -136,7 +137,7 @@ test("en: đọc ngày, giờ", () => {
   assert.throws(() => parseTime("8h"), RangeError);
 });
 
-test("en: hourBranch dùng đúng chiGioTuGioDongHo, giờ Tý từ 23h", () => {
+test("en: hourBranch uses chiGioTuGioDongHo, the Zi hour from 23:00", () => {
   for (let h = 0; h < 24; h++) assert.equal(hourBranch(h).index, chiGioTuGioDongHo(h));
   assert.deepEqual(hourBranch("23:30"), { index: 0, name: "Zi", animal: "Rat", range: "23:00-00:59" });
   assert.equal(hourBranch("23:30", "en", "vi").name, "Tý");
@@ -145,7 +146,7 @@ test("en: hourBranch dùng đúng chiGioTuGioDongHo, giờ Tý từ 23h", () => 
   assert.deepEqual(hourBranch("20:00", "zh"), { index: 10, name: "戌", animal: "狗", range: "19:00-20:59" });
 });
 
-test("en: trụ ngày, trụ năm, tên can chi ba thứ tiếng", () => {
+test("en: day and year pillars, stem-branch names in three languages", () => {
   const d = dayPillar("1990-09-19", { lang: "zh" });
   assert.equal(d.label, "丁亥");
   assert.equal(d.naYin, "屋上土");
@@ -172,4 +173,25 @@ test("en: trụ ngày, trụ năm, tên can chi ba thứ tiếng", () => {
   assert.equal(on.next.nameVi, "Vũ Thủy");
   // Mọi tên tiết khí có bản tiếng Trung, không rơi về tiếng Anh.
   for (const t of mocTietKhiTrongNam(2026)) assert.match(term(t.ten, "zh"), /^[一-鿿]+$/);
+});
+
+test("English API: years outside 1900 to 2100 throw a RangeError naming the range", () => {
+  const msg = /outside the supported range: years 1900 to 2100/;
+  assert.throws(() => toLunar("2200-01-01"), msg);
+  assert.throws(() => toLunar("1899-12-31"), msg);
+  assert.throws(() => toSolar({ year: 2101, month: 1, day: 1 }), msg);
+  assert.throws(() => solarTerms(1899), msg);
+  assert.throws(() => solarTermOn("2101-01-01"), msg);
+  assert.throws(() => auspiciousHours("2200-01-01"), msg);
+  // The ends of the range still work, including the solar term of 1 January 1900.
+  assert.equal(toLunar("1900-01-01").solarTerm, "Winter Solstice");
+  assert.equal(toLunar("2100-12-31").solarTerm, "Winter Solstice");
+  assert.equal(solarTerms(1900).length, 24);
+  assert.equal(solarTerms(2100).length, 24);
+});
+
+test("toSolar: a missing leap month names the year's real leap month", () => {
+  assert.throws(() => toSolar({ year: 2024, month: 2, day: 1, leap: true }), /2024 has no leap month 2; the lunar year 2024 has no leap month/);
+  assert.throws(() => toSolar({ year: 2025, month: 2, day: 1, leap: true }), /2025 has no leap month 2; the leap month of 2025 is month 6/);
+  assert.equal(toSolar({ year: 2025, month: 6, day: 1, leap: true }).date, "2025-07-25");
 });

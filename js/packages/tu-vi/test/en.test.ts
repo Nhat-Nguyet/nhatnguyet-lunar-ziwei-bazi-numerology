@@ -43,7 +43,7 @@ function vao(c: (typeof tep.ca)[number], lang: "vi" | "en" | "zh") {
   };
 }
 
-test("en: castZiWei đổi giờ đồng hồ ra đúng chỉ số chi và ra đúng lapLaSoTuVi", () => {
+test("en: castZiWei maps clock time to the branch index and gives lapLaSoTuVi", () => {
   for (const c of mau) {
     const v = c.vao as R;
     const chart = castZiWei(vao(c, "vi"));
@@ -55,7 +55,7 @@ test("en: castZiWei đổi giờ đồng hồ ra đúng chỉ số chi và ra đ
   assert.ok(mau.length > 50);
 });
 
-test("en: tên cung, sao, cục ba thứ tiếng khớp ca kiểm", () => {
+test("en: palace, star and bureau names in three languages match the vectors", () => {
   const thieuZh = new Set<string>();
   for (const c of mau) {
     const ra = (c.ra as R).laSo as R;
@@ -80,10 +80,10 @@ test("en: tên cung, sao, cục ba thứ tiếng khớp ca kiểm", () => {
     if (ra.banMenhNapAmZh) assert.equal(zh.naYin, ra.banMenhNapAmZh);
     if (ra.canChiNamZh) assert.equal(zh.yearPillar, ra.canChiNamZh);
   }
-  for (const t of thieuZh) assert.ok(SAO_CHUA_CO_ZH.has(t), `sao ${t}: bản zh lệch ca kiểm`);
+  for (const t of thieuZh) assert.ok(SAO_CHUA_CO_ZH.has(t), `star ${t}: zh differs from the vectors`);
 });
 
-test("en: decadeLuck, yearlyLuck, yearlyStars, findPatterns khớp hàm gốc và ca kiểm", () => {
+test("en: decadeLuck, yearlyLuck, yearlyStars, findPatterns match the core functions and vectors", () => {
   for (const c of mau) {
     const ra = c.ra as R;
     const en = castZiWei(vao(c, "en"));
@@ -125,7 +125,7 @@ test("en: decadeLuck, yearlyLuck, yearlyStars, findPatterns khớp hàm gốc v�
   }
 });
 
-test("en: lỗi đầu vào nói rõ việc phải làm", () => {
+test("en: input errors say what to do", () => {
   assert.throws(() => castZiWei({ date: "1990-09-19", gender: "male" }), /pass time/);
   assert.throws(() => castZiWei({ date: "1990-09-19", time: "20:00", gender: "x" }), /gender must be/);
   assert.throws(() => castZiWei({ date: "1990-09-19", time: "20:00", hourBranch: 3, gender: "f" }), /branch 10/);
@@ -134,7 +134,7 @@ test("en: lỗi đầu vào nói rõ việc phải làm", () => {
   assert.equal(parseGender("Nữ"), "female");
 });
 
-test("en: giờ Tý từ 23h giữ ngày đã nhập, kèm ghi chú", () => {
+test("en: the Zi hour from 23:00 keeps the given date, with a note", () => {
   const a = castZiWei({ date: "1990-09-19", time: "23:30", gender: "male" });
   const b = castZiWei({ date: "1990-09-19", time: "00:10", gender: "male" });
   assert.equal(a.hour.index, 0);
@@ -146,7 +146,7 @@ test("en: giờ Tý từ 23h giữ ngày đã nhập, kèm ghi chú", () => {
   assert.equal(localizeZiWei(a.raw, "zh").notes.length, 2);
 });
 
-test("en: terms đổi can chi, Tứ Hóa, tên cách cục; tên Hán đủ chữ", () => {
+test("en: terms changes stems, branches, Four Transformations, pattern names; full Chinese names", () => {
   const c = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
   const life = c.palaces[c.lifePalace];
   assert.equal(c.terms, "pinyin");
@@ -170,7 +170,7 @@ test("en: terms đổi can chi, Tứ Hóa, tên cách cục; tên Hán đủ ch�
   assert.equal(decadeLuck(zh, { lang: "en" })[0].branch, decadeLuck(c)[0].branch);
 });
 
-test("en: ziWeiSvg và chart.toSvg vẽ đúng renderChartSvg của lá số thô, theo lang của lá số", async () => {
+test("en: ziWeiSvg and chart.toSvg draw renderChartSvg of the raw chart, in the chart's lang", async () => {
   const { renderChartSvg, ziWeiSvg } = await import("../src/index.ts");
   const c = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male", lang: "zh" });
   assert.equal(c.toSvg(), renderChartSvg(c.raw, { lang: "zh" }));
@@ -180,7 +180,7 @@ test("en: ziWeiSvg và chart.toSvg vẽ đúng renderChartSvg của lá số th�
   assert.ok(!JSON.stringify(c).includes("toSvg"));
 });
 
-test("en: đầu ra tiếng Anh không mang khoá hay mã tiếng Việt (mọi ca kiểm tu-vi, bat-tu)", async () => {
+test("en: English output has no Vietnamese keys or codes (every tu-vi, bat-tu vector)", async () => {
   const { slugViet } = await import("../../../kiem/slug-viet.ts");
   const { castBaZi, minorLuck } = await import("@nhatnguyet/bat-tu");
   const { numerology } = await import("@nhatnguyet/than-so-hoc");
@@ -201,4 +201,8 @@ test("en: đầu ra tiếng Anh không mang khoá hay mã tiếng Việt (mọi 
     slugViet({ l: toLunar(`${y}-02-03`), t: solarTerms(y), n: numerology({ name: "Nguyen Van An", birthDate: `${y}-02-03`, today: "2026-01-01" }) }, String(y), loi);
   }
   assert.deepEqual([...new Set(loi.map((x) => x.replace(/^[^.:= ]*/, "").replace(/\[\d+\]/g, "[]")))].slice(0, 20), []);
+});
+
+test("castZiWei: a birth date outside 1900 to 2100 throws a RangeError", () => {
+  assert.throws(() => castZiWei({ date: "1899-12-31", time: "08:00", gender: "male" }), /date 1899-12-31 is outside the supported range: years 1900 to 2100/);
 });

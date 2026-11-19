@@ -58,9 +58,9 @@ School options (where the books disagree; default first, sources in docs/schools
   -h, --help        this help
   -v, --version     version
 
-Times are clock times; the Tý double hour runs 23:00 to 00:59. Dates and times
+Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms). Docs: https://nhatnguyet.org/ma-nguon-mo`;
+terms). Docs: https://nhatnguyet.org/en/ma-nguon-mo`;
 
 // Mọi tên công cụ MCP cũng là bí danh của lệnh tương ứng (cast_ziwei, solar_terms...).
 const ALIAS: Readonly<Record<string, string>> = {
@@ -184,7 +184,7 @@ export function run(argv: string[], env: RunEnv): string {
       can(1, "terms <year>");
       const y = Number(p[0]);
       const t = solarTerms(y, { country, lang });
-      return json ? dumpJson(t) : renderSolarTerms(y, t, lang, opts);
+      return json ? dumpJson(t) : renderSolarTerms(y, t, lang, opts, terms);
     }
     case "hours": {
       can(1, "hours <YYYY-MM-DD>");

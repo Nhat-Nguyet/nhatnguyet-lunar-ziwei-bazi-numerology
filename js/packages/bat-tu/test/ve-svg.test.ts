@@ -23,37 +23,37 @@ function ve(c: CaVe): string {
 
 const CA = docHoacGhiBam("bat_tu", CAC_VAO, ve, true);
 
-test("SVG hợp lệ, có <title>, và khớp băm chung với bản Python", () => {
+test("SVG is valid, has a <title> and matches the hash shared with Python", () => {
   assert.ok(CA.length >= 24);
   for (const c of CA) {
     const svg = ve(c);
     assert.equal(loiXml(svg), null, JSON.stringify(c.vao));
     assert.match(svg, /<title id="nn-tieu-de">[^<]+<\/title>/);
     assert.ok(svg.includes(`lang="${c.lang}"`));
-    assert.ok(!svg.includes("—"), "không gạch dài");
+    assert.ok(!svg.includes("—"), "no em dash");
     assert.equal(bam(svg), c.sha256, `${JSON.stringify(c.vao)} ${c.lang} ${c.theme}`);
   }
 });
 
-test("đủ bốn trụ, tàng can, thập thần, mười đại vận, đúng ngôn ngữ", () => {
+test("four pillars, hidden stems, ten gods, ten luck periods, right language", () => {
   const ls = laSo(CAC_VAO[0]);
   const vi = chuTrongHinh(veBatTuSvg(ls));
   for (const s of ["Trụ năm", "Trụ tháng", "Trụ ngày", "Trụ giờ", "Canh", "Ngọ", "Ất", "Dậu", "Đinh", "Hợi", "Tuất", "Nhật chủ", "Chính Tài", "Đại vận", "Lộ Bàng Thổ"]) {
-    assert.ok(vi.includes(s), `vi thiếu ${s}`);
+    assert.ok(vi.includes(s), `vi lacks ${s}`);
   }
-  for (const v of ls.daiVan.cacVan) assert.ok(vi.includes(`${v.tuoiTu} tuổi`), `thiếu vận ${v.tuoiTu}`);
+  for (const v of ls.daiVan.cacVan) assert.ok(vi.includes(`${v.tuoiTu} tuổi`), `luck period missing ${v.tuoiTu}`);
   for (const t of [ls.truNam, ls.truThang, ls.truNgay, ls.truGio!]) {
-    for (const tc of t.tangCan) assert.ok(vi.includes(tc.thapThan), `thiếu thập thần tàng can ${tc.thapThan}`);
+    for (const tc of t.tangCan) assert.ok(vi.includes(tc.thapThan), `hidden-stem ten god missing ${tc.thapThan}`);
   }
   const en = chuTrongHinh(veBatTuSvg(ls, { lang: "en" })).join("\n");
-  for (const s of ["Year", "Month", "Day", "Hour", "Day Master", "Direct Wealth", "Luck pillars", "Yang Metal"]) assert.ok(en.includes(s), `en thiếu ${s}`);
-  assert.ok(!en.includes("Trụ năm") && !en.includes("Đại vận"), "bản Anh lẫn tiếng Việt");
+  for (const s of ["Year", "Month", "Day", "Hour", "Day Master", "Direct Wealth", "Luck pillars", "Yang Metal"]) assert.ok(en.includes(s), `en lacks ${s}`);
+  assert.ok(!en.includes("Trụ năm") && !en.includes("Đại vận"), "English version mixes in Vietnamese");
   const zh = chuTrongHinh(veBatTuSvg(ls, { lang: "zh" })).join("\n");
-  for (const s of ["年柱", "日主", "庚", "午", "乙", "酉", "丁", "亥", "戌", "正财", "大运", "路旁土"]) assert.ok(zh.includes(s), `zh thiếu ${s}`);
-  assert.ok(!zh.includes("Year") && !zh.includes("Trụ năm") && !zh.includes("Canh"), "bản Trung lẫn tiếng khác");
+  for (const s of ["年柱", "日主", "庚", "午", "乙", "酉", "丁", "亥", "戌", "正财", "大运", "路旁土"]) assert.ok(zh.includes(s), `zh lacks ${s}`);
+  assert.ok(!zh.includes("Year") && !zh.includes("Trụ năm") && !zh.includes("Canh"), "Chinese version mixes in another language");
 });
 
-test("chưa biết giờ thì cột giờ báo chưa rõ; bí danh tiếng Anh", () => {
+test("unknown time shows an unknown hour column; English aliases", () => {
   const ls = laSo(CAC_VAO[1]);
   assert.ok(chuTrongHinh(veBatTuSvg(ls)).includes("Chưa rõ giờ"));
   assert.equal(renderBaziSvg(ls, { lang: "en" }), veBatTuSvg(ls, { lang: "en" }));

@@ -43,7 +43,7 @@ Mão Mùi at Dậu and Tuất (Fire first, Bell second).
 | `swap-for-yin-male-yang-female` | Both count forward; for yin-year men and yang-year women the two starting palaces are swapped. | Quan Xuân Thịnh, *Số Tử Vi Kinh Nghiệm*, vol. 2, pp. 57 to 60: the three printed charts (all yin-year men) are placed this way (Kỷ Sửu, Dậu hour: Fire Mùi, Bell Tý; Ất Dậu, Tý hour: Fire Tuất, Bell Mão; Kỷ Dậu, Thân hour: Fire Ngọ, Bell Hợi). Việt Viêm Tử's worked example, a yang-year woman, fits this reading too. |
 
 The Hợi Mão Mùi start at Dậu follows Việt Viêm Tử (p. 93), Thiên Lương (*Tử Vi
-nghiệm lý toàn thư*, p. 171) and the Quan Shu (亥卯未人酉戌房); the digitised
+nghiệm lý toàn thư*, p. 171) and the Quan Shu (亥卯未人酉戌房); the digitized
 Tân Biên prints Dần there, read as a transcription error.
 
 Why the default: the chart follows Tân Biên for every other star ring, and its
@@ -190,7 +190,7 @@ astro.bySolar("1990-9-19", 10, "女", true, "en-US",
 - `notes` (and so `chartToText`) gain one line, e.g. "School options (not the
   default): Fire and Bell stars: both forward (Quan Shu); Leap month: split at
   day 15."
-- The Zi Wei SVG adds a "Schools" row in the centre panel; the BaZi SVG adds
+- The Zi Wei SVG adds a "Schools" row in the center panel; the BaZi SVG adds
   "day turns at midnight" next to the solar term.
 - The raw chart's `caveat` names the rule used and the rule it replaced, in
   three languages.
@@ -218,7 +218,7 @@ remain are counted, not errors:
 
 These disagreements are documented in the engine but are not options yet:
 
-- **Tân (Xin) stem transformations.** Only the digitised Tân Biên gives Thiên
+- **Tân (Xin) stem transformations.** Only the digitized Tân Biên gives Thiên
   Lương as Hóa Quyền, and it has not been checked against a printed copy; every
   other book in the library gives Thái Dương.
 - **Nhâm (Ren) stem, Thiên Phủ as Hóa Khoa.** Attributed to "some schools"; no

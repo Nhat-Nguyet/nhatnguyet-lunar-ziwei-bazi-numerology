@@ -52,25 +52,40 @@ jobs:
           - node: 24
             python: "3.13"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - name: npm install and pip install the published version, run every README example
         run: node .github/scripts/run-readme-code.mjs --published "${{ needs.version.outputs.version }}"
+  node-versions:
+    name: npm ${{ needs.version.outputs.version }} on Node ${{ matrix.node }} (every test vector)
+    needs: version
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22, 24]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+      - name: npm install the published packages, run every test vector, the CLI and the MCP server
+        run: node .github/scripts/check-dist.mjs --published "${{ needs.version.outputs.version }}"
   datasets:
     name: README dataset examples (Hugging Face)
     needs: version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
       - run: node .github/scripts/run-readme-code.mjs --published "${{ needs.version.outputs.version }}" --network README.md

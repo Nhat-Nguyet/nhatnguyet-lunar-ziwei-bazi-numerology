@@ -25,7 +25,7 @@ async function goi(name: string, args: Record<string, unknown>): Promise<KQ> {
   return (await client.callTool({ name, arguments: args })) as KQ;
 }
 
-test("tám công cụ (cộng bí danh cast_zi_wei), mô tả tiếng Anh nói rõ giờ Việt Nam", async () => {
+test("eight tools (plus the cast_zi_wei alias), English descriptions state Vietnam time", async () => {
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
     "auspicious_hours", "cast_bazi", "cast_zi_wei", "cast_ziwei", "festivals", "lunar_convert", "numerology", "render_chart_svg", "solar_terms",
@@ -42,7 +42,7 @@ test("tám công cụ (cộng bí danh cast_zi_wei), mô tả tiếng Anh nói r
   assert.match(client.getInstructions() ?? "", /Do not compute lunar dates/);
 });
 
-test("auspicious_hours: mười hai canh giờ, sáu giờ hoàng đạo, đúng như auspiciousHours", async () => {
+test("auspicious_hours: twelve double hours, six auspicious, same as auspiciousHours", async () => {
   const r = await goi("auspicious_hours", { date: "2027-02-06" });
   const ra = JSON.parse(r.content[0].text);
   assert.deepEqual(ra, JSON.parse(JSON.stringify(auspiciousHours("2027-02-06"))));
@@ -55,7 +55,7 @@ test("auspicious_hours: mười hai canh giờ, sáu giờ hoàng đạo, đúng
   assert.equal(loi.isError, true);
 });
 
-test("lunar_convert, solar_terms: lịch Việt Nam mặc định, nước khác theo country", async () => {
+test("lunar_convert, solar_terms: Vietnamese calendar by default, other countries by country", async () => {
   const vn = JSON.parse((await goi("lunar_convert", { date: "1985-01-21" })).content[0].text);
   assert.deepEqual([vn.year, vn.month, vn.day, vn.timeZone], [1985, 1, 1, 7]);
   const cn = JSON.parse((await goi("lunar_convert", { date: "1985-01-21", country: "CN", lang: "zh" })).content[0].text);
@@ -69,7 +69,7 @@ test("lunar_convert, solar_terms: lịch Việt Nam mặc định, nước khác
   assert.equal(r.content[1].text, "Data: Nhat Nguyet (nhatnguyet.org)");
 });
 
-test("cast_ziwei (và tên cũ cast_zi_wei) trả chartToText và JSON gọn", async () => {
+test("cast_ziwei (and the old cast_zi_wei) returns chartToText and compact JSON", async () => {
   const cu = await goi("cast_zi_wei", { date: "1990-09-19", time: "20:00", gender: "male", name: "Nguyen Van An", year: 2026 });
   const r = await goi("cast_ziwei", { date: "1990-09-19", time: "20:00", gender: "male", name: "Nguyen Van An", year: 2026 });
   assert.equal(r.isError, undefined);
@@ -99,7 +99,7 @@ test("cast_bazi, numerology, festivals", async () => {
   assert.ok(f.every((x: { date: string }) => x.date.startsWith("2027-02")));
 });
 
-test("render_chart_svg và lỗi đầu vào", async () => {
+test("render_chart_svg and input errors", async () => {
   for (const args of [
     { kind: "ziwei", date: "1990-09-19", time: "20:00", gender: "male", theme: "dark" },
     { kind: "zi_wei", date: "1990-09-19", time: "20:00", gender: "male", terms: "han" },
@@ -118,7 +118,7 @@ test("render_chart_svg và lỗi đầu vào", async () => {
   assert.equal(sai.isError, true);
 });
 
-test("lựa chọn phái: tham số fire_bell, leap_month..., zi_hour; giá trị lạ thành isError", async () => {
+test("school options: fire_bell, leap_month..., zi_hour; an unknown value is isError", async () => {
   const r = await goi("cast_ziwei", { date: "1990-09-19", time: "20:00", gender: "female", fire_bell: "quanshu", transformations: "zhongzhou" });
   const j = JSON.parse(r.content[1].text);
   assert.deepEqual(j.schools, { fireBell: "quanshu", transformations: "zhongzhou" });
@@ -135,7 +135,7 @@ test("lựa chọn phái: tham số fire_bell, leap_month..., zi_hour; giá tr�
   assert.equal(sai.isError, true);
 });
 
-test("VERSION của máy chủ khớp package.json (release-tools set ghi cả hai)", () => {
+test("server VERSION matches package.json (release-tools set writes both)", () => {
   const goi = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string };
   assert.equal(VERSION, goi.version);
   assert.equal(client.getServerVersion()?.version, goi.version);

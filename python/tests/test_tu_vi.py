@@ -42,7 +42,7 @@ def tinh_phai(vao):
 class TestTuViPhai(unittest.TestCase):
     def test_ca_kiem_phai(self):
         dat, tong, lech = so_mon("tu-vi-phai", tinh_phai)
-        print("\ntu-vi-phai: %d/%d ca đạt" % (dat, tong))
+        print("\ntu-vi-phai: %d/%d vectors pass" % (dat, tong))
         self.assertEqual(tong, doc_ca_kiem("tu-vi-phai")["soCa"])
         self.assertEqual(dat, tong, "\n".join(lech))
 
@@ -75,7 +75,7 @@ class TestTuViPhai(unittest.TestCase):
 class TestTuVi(unittest.TestCase):
     def test_ca_kiem(self):
         dat, tong, lech = so_mon("tu-vi", tinh)
-        print("\ntu-vi: %d/%d ca đạt" % (dat, tong))
+        print("\ntu-vi: %d/%d vectors pass" % (dat, tong))
         self.assertGreater(tong, 0)
         self.assertEqual(dat, tong, "\n".join(lech))
 
@@ -97,7 +97,7 @@ class TestTuVi(unittest.TestCase):
         dem = {"tong": 0, "thieu": []}
         for c in doc_ca_kiem("tu-vi")["ca"]:
             do_ba_ngon_ngu(tinh(c["vao"]), dem)
-        print("\ntu-vi: %d tên, %d chỗ thiếu bản dịch" % (dem["tong"], len(dem["thieu"])))
+        print("\ntu-vi: %d names, %d missing translations" % (dem["tong"], len(dem["thieu"])))
         self.assertGreater(dem["tong"], 0)
         self.assertEqual(dem["thieu"], [], tom_tat_thieu(dem))
 

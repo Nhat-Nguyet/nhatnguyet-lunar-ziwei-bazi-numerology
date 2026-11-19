@@ -21,7 +21,8 @@ abstract: >-
   Zi Wei Dou Shu, BaZi, Pythagorean numerology and 206 Vietnamese festivals,
   with an English API and named school options where the books disagree.
   Every result reproduces the engine behind nhatnguyet.org (engine 2.2.0)
-  and is checked by 18,819 shared test vectors. The calendar is checked
+  and is checked by 17,291 core test vectors (18,819 including school
+  options and auspicious hours). The calendar is checked
   against NASA new moons and IMCCE solar terms from 1900 to 2100; on 2,724
   of those 73,414 days the Vietnamese lunar date differs from
   lunar-javascript. Code is MIT; data, readings and test vectors are CC BY
@@ -47,5 +48,5 @@ references:
         website: "https://nhatnguyet.org"
     year: 2026
     month: 11
-    notes: "Technical report of the project, version 3. Method and verification of the calendar computed by these libraries; every number is reproduced by docs/paper/reproduce.sh."
+    notes: "Technical report of the project, version 4. Method and verification of the calendar computed by these libraries; every number is reproduced by docs/paper/reproduce.sh."
     url: "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/blob/main/docs/paper/paper.pdf"

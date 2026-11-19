@@ -36,7 +36,8 @@ from .en import (  # noqa: F401
     AUSPICIOUS_SPIRITS, BRANCH_PINYIN, FESTIVAL_GROUP_EN, FESTIVAL_SCOPE_EN, HOUR_SPIRIT_PINYIN, NUMEROLOGY_LABELS,
     STAR_GROUP_EN, STEM_PINYIN, YEARLY_STAR_CODE_EN, auspicious_hours, bazi_svg, cast_bazi, cast_zi_wei,
     check_terms, convert_terms, day_pillar, decade_luck, festival_places, festivals, festivals_ics, find_patterns,
-    hour_branch, minor_luck, numerology, numerology_svg, parse_date, parse_time, school_note, solar_term_on,
+    YEAR_RANGE, check_year, hour_branch, minor_luck, numerology, numerology_svg, parse_date, parse_date_in_range,
+    parse_time, school_note, solar_term_on,
     solar_terms, stem_branch_name, term, term_name, to_lunar, to_solar, transformation_short, year_pillar,
     yearly_luck, yearly_stars, zi_wei_svg,
 )
@@ -70,6 +71,7 @@ __all__ = [
     # lịch
     "to_lunar", "to_solar", "solar_terms", "solar_term_on", "day_pillar", "year_pillar", "hour_branch",
     "auspicious_hours", "AUSPICIOUS_SPIRITS", "HOUR_SPIRIT_PINYIN", "parse_date", "parse_time",
+    "parse_date_in_range", "check_year", "YEAR_RANGE",
     "term", "term_name", "stem_branch_name", "transformation_short", "convert_terms", "check_terms",
     "STEM_PINYIN", "BRANCH_PINYIN",
     # thần số học, lễ hội (cũng là mô-đun bí danh gọi được)

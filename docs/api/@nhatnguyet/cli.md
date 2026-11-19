@@ -221,20 +221,25 @@ function renderSolarTerms(
    year, 
    terms, 
    lang, 
-   opts?
+   opts?, 
+   nameTerms?
 ): string;
 ```
 
-The 24 solar terms of a year as a table.
+The 24 solar terms of a year as a table. The name is in `lang` only; in
+English, `nameTerms` "han" or "vi" adds the Chinese or Vietnamese name in
+brackets ("Minor Cold (小寒)", "Minor Cold (Tiểu Hàn)"), "pinyin" (default)
+adds nothing.
 
 #### Parameters
 
-| Parameter | Type |
-| ------ | ------ |
-| `year` | `number` |
-| `terms` | [`SolarTerm`](am-lich.md#solarterm)[] |
-| `lang` | `Lang` |
-| `opts?` | [`RenderOptions`](#renderoptions) |
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `year` | `number` | `undefined` |
+| `terms` | [`SolarTerm`](am-lich.md#solarterm)[] | `undefined` |
+| `lang` | `Lang` | `undefined` |
+| `opts?` | [`RenderOptions`](#renderoptions) | `{}` |
+| `nameTerms?` | [`Terms`](am-lich.md#terms) | `"pinyin"` |
 
 #### Returns
 

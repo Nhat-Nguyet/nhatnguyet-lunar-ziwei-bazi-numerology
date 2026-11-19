@@ -7,7 +7,7 @@ numerology numbers, festival categories), with its Vietnamese name, traditional 
 simplified Chinese, tone-marked pinyin, the English name the libraries use, other English
 renderings, and a short definition where the engine already has one.
 
-Data: Nhat Nguyet (nhatnguyet.org). Licence: [CC BY 4.0](../../DATA-LICENSE).
+Data: Nhat Nguyet (nhatnguyet.org). License: [CC BY 4.0](../../DATA-LICENSE).
 Planned on Hugging Face as `nhatnguyet/terminology`.
 
 - [`terminology.csv`](terminology.csv): one row per term, UTF-8, header row.
@@ -43,7 +43,7 @@ Planned on Hugging Face as `nhatnguyet/terminology`.
 | `ziwei-scholar-ring` | 12 | The twelve stars of the Bác Sỹ (博士) ring. |
 | `ziwei-void` | 2 | The two void markers Tuần (旬空) and Triệt (截空). |
 | `ziwei-yearly-star` | 5 | Flowing (yearly) stars placed for a viewing year. |
-| `ziwei-pattern` | 34 | Named chart patterns (cách cục, 格局) the library recognises. |
+| `ziwei-pattern` | 34 | Named chart patterns (cách cục, 格局) the library recognizes. |
 | `bazi-ten-god` | 11 | The Ten Gods (thập thần, 十神) of BaZi. |
 | `bazi-hidden-stem-role` | 3 | Roles of the stems hidden in a branch (tàng can, 藏干). |
 | `bazi-symbolic-star` | 9 | Symbolic stars (thần sát, 神煞) the BaZi library looks up. |
@@ -115,5 +115,5 @@ node --conditions=source --test du-lieu/terminology/check.test.mjs
 - Festival categories are codes in the festival dataset; with `lang` "vi" and "zh" the
   libraries return the code itself, so those rows have no Chinese.
 - `en_alt` from iztro reproduces display strings of [iztro](https://github.com/SylarLong/iztro)
-  2.6.5 (MIT licence, Copyright (c) 2023 All Contributors), so users of that library can
+  2.6.5 (MIT license, Copyright (c) 2023 All Contributors), so users of that library can
   map its names to these.

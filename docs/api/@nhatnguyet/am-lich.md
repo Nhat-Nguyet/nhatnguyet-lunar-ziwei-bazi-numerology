@@ -80,6 +80,49 @@ prefer the "YYYY-MM-DD" string to avoid surprises. Throws on invalid dates.
 
 ***
 
+### checkYear()
+
+```ts
+function checkYear(year, what?): void;
+```
+
+Throw a RangeError when `year` is outside `YEAR_RANGE` (1900 to 2100).
+`what` names the input in the message, e.g. "date 2200-01-01".
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `year` | `number` |
+| `what?` | `string` |
+
+#### Returns
+
+`void`
+
+***
+
+### parseDateInRange()
+
+```ts
+function parseDateInRange(input, what?): YMD;
+```
+
+`parseDate` plus `checkYear`: a valid date in 1900 to 2100.
+
+#### Parameters
+
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `input` | [`DateInput`](#dateinput) | `undefined` |
+| `what?` | `string` | `"date"` |
+
+#### Returns
+
+[`YMD`](#ymd)
+
+***
+
 ### formatDate()
 
 ```ts
@@ -527,8 +570,8 @@ function toSolar(lunar, opts?): SolarResult;
 ```
 
 Convert a lunar date back to Gregorian. Throws RangeError when the lunar
-date does not exist (no such leap month that year, or day 30 of a 29-day
-month). Wraps `lunarToSolar`.
+year is outside 1900 to 2100 or the lunar date does not exist (no such leap
+month that year, or day 30 of a 29-day month). Wraps `lunarToSolar`.
 
 #### Parameters
 
@@ -551,9 +594,9 @@ month). Wraps `lunarToSolar`.
 function solarTerms(year, opts?): SolarTerm[];
 ```
 
-The 24 solar-term moments that fall in a Gregorian year, in time order,
-local time of the chosen country. Wraps `mocTietKhiTrongNam` (computed at
-UTC+7, then shifted by whole hours).
+The 24 solar-term moments that fall in a Gregorian year (1900 to 2100), in
+time order, local time of the chosen country. Wraps `mocTietKhiTrongNam`
+(computed at UTC+7, then shifted by whole hours).
 
 #### Parameters
 
@@ -648,6 +691,20 @@ auspiciousHours("2027-02-06").hours.filter((h) => h.auspicious).map((h) => h.ran
 ```
 
 ## Variables
+
+### YEAR\_RANGE
+
+```ts
+const YEAR_RANGE: Readonly<{
+  min: number;
+  max: number;
+}>;
+```
+
+Years the English API accepts, inclusive: the span the engine is checked
+over (new moons against NASA, solar terms against IMCCE, every test vector).
+
+***
 
 ### STEM\_PINYIN
 

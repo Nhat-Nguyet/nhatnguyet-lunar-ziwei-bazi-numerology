@@ -38,12 +38,12 @@ function quet(v: unknown, duong: string, loi: string[], boDuong: ReadonlySet<str
 }
 
 function bao(loi: string[]): void {
-  assert.equal(loi.length, 0, `${loi.length} chuỗi tiếng Việt ở bản tiếng Anh, ví dụ:\n${[...new Set(loi)].sort().slice(0, 30).join("\n")}`);
+  assert.equal(loi.length, 0, `${loi.length} Vietnamese strings in the English output, for example:\n${[...new Set(loi)].sort().slice(0, 30).join("\n")}`);
 }
 
 const ngay = (v: R) => ({ year: v.yyyy, month: v.mm, day: v.dd });
 
-test("không chữ Việt: Tử Vi, mọi ca kiểm", () => {
+test("no Vietnamese text: Zi Wei, every vector", () => {
   const loi: string[] = [];
   docCaKiem("tu-vi").ca.forEach((c, i) => {
     const v = c.vao as R;
@@ -59,7 +59,7 @@ test("không chữ Việt: Tử Vi, mọi ca kiểm", () => {
   bao(loi);
 });
 
-test("không chữ Việt: Bát Tự, mọi ca kiểm", () => {
+test("no Vietnamese text: BaZi, every vector", () => {
   const loi: string[] = [];
   docCaKiem("bat-tu").ca.forEach((c, i) => {
     const v = c.vao as R;
@@ -77,7 +77,7 @@ test("không chữ Việt: Bát Tự, mọi ca kiểm", () => {
   bao(loi);
 });
 
-test("không chữ Việt: âm lịch, tiết khí, thần số học, mã lễ hội", () => {
+test("no Vietnamese text: lunar calendar, solar terms, numerology, festival codes", () => {
   const loi: string[] = [];
   let n = 0;
   for (const c of docCaKiem("am-lich").ca) {
@@ -98,13 +98,13 @@ test("không chữ Việt: âm lịch, tiết khí, thần số học, mã lễ 
     for (const f of festivals(y)) {
       quet({ id: f.id, date: f.date, calendar: f.calendar, fixedDate: f.fixedDate, level: f.level, group: f.group, scope: f.scope }, "$", loi);
       assert.ok(["holiday", "folk-religion", "other"].includes(f.group), f.group);
-      assert.ok(["national", "local", ""].includes(f.scope), f.scope);
+      assert.ok(["national", "local", null].includes(f.scope), String(f.scope));
     }
   }
   bao(loi);
 });
 
-test("phép quét bắt được chữ Việt khi terms là vi", () => {
+test("the scan catches Vietnamese text when terms is vi", () => {
   const loi: string[] = [];
   quet(castZiWei({ date: "1990-09-19", time: "20:00", gender: "male", terms: "vi" }), "$", loi);
   assert.ok(loi.length > 10);

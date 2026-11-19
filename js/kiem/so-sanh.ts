@@ -59,7 +59,7 @@ export function chuanHoa(v: unknown, khoaBo: ReadonlySet<string>): unknown {
 
 function kieu(x: unknown): string {
   if (x === null) return "null";
-  if (Array.isArray(x)) return "mảng";
+  if (Array.isArray(x)) return "array";
   return typeof x;
 }
 
@@ -75,15 +75,15 @@ function tom(x: unknown): string {
 export function soSanhSau(mong: unknown, nhan: unknown, duong = "ra"): string | null {
   if (typeof mong === "number" && typeof nhan === "number") {
     if (mong === nhan || Math.abs(mong - nhan) <= SAI_SO) return null;
-    return `${duong}: mong ${mong}, nhận ${nhan}`;
+    return `${duong}: expected ${mong}, got ${nhan}`;
   }
   if (kieu(mong) !== kieu(nhan)) {
-    return `${duong}: mong kiểu ${kieu(mong)} ${tom(mong)}, nhận kiểu ${kieu(nhan)} ${tom(nhan)}`;
+    return `${duong}: expected type ${kieu(mong)} ${tom(mong)}, got type ${kieu(nhan)} ${tom(nhan)}`;
   }
   if (Array.isArray(mong)) {
     const b = nhan as unknown[];
     if (mong.length !== b.length) {
-      return `${duong}: mong mảng ${mong.length} phần tử, nhận ${b.length}`;
+      return `${duong}: expected an array of ${mong.length} items, got ${b.length}`;
     }
     for (let i = 0; i < mong.length; i++) {
       const lech = soSanhSau(mong[i], b[i], `${duong}[${i}]`);
@@ -97,10 +97,10 @@ export function soSanhSau(mong: unknown, nhan: unknown, duong = "ra"): string | 
     const ka = Object.keys(a).sort();
     const kb = Object.keys(b).sort();
     for (const k of ka) {
-      if (!(k in b)) return `${duong}.${k}: thiếu khoá (mong ${tom(a[k])})`;
+      if (!(k in b)) return `${duong}.${k}: missing key (expected ${tom(a[k])})`;
     }
     for (const k of kb) {
-      if (!(k in a)) return `${duong}.${k}: thừa khoá (nhận ${tom(b[k])})`;
+      if (!(k in a)) return `${duong}.${k}: extra key (got ${tom(b[k])})`;
     }
     for (const k of ka) {
       const lech = soSanhSau(a[k], b[k], `${duong}.${k}`);
@@ -109,7 +109,7 @@ export function soSanhSau(mong: unknown, nhan: unknown, duong = "ra"): string | 
     return null;
   }
   if (mong === nhan) return null;
-  return `${duong}: mong ${tom(mong)}, nhận ${tom(nhan)}`;
+  return `${duong}: expected ${tom(mong)}, got ${tom(nhan)}`;
 }
 
 export interface KetQuaKiem {
@@ -149,13 +149,13 @@ export function kiemCa(
     try {
       lech = soSanhSau(chuanHoa(ca.ra, khoaBo), chuanHoa(tinh(ca.vao), khoaBo));
     } catch (e) {
-      lech = `ném lỗi: ${(e as Error).message}`;
+      lech = `threw: ${(e as Error).message}`;
     }
     if (lech === null) {
       dat++;
     } else {
       soLech++;
-      if (loi.length < toiDaIn) loi.push(`vào ${JSON.stringify(ca.vao)}\n    ${lech}`);
+      if (loi.length < toiDaIn) loi.push(`input ${JSON.stringify(ca.vao)}\n    ${lech}`);
     }
   }
   return { dat, tong, loi, soLech };
@@ -163,7 +163,7 @@ export function kiemCa(
 
 /** Câu báo ngắn cho assert: số ca đạt và các ca lệch đầu tiên. */
 export function baoCao(mon: string, kq: KetQuaKiem): string {
-  const dau = `${mon}: đạt ${kq.dat}/${kq.tong}`;
+  const dau = `${mon}: ${kq.dat}/${kq.tong} vectors pass`;
   if (kq.soLech === 0) return dau;
-  return `${dau}, lệch ${kq.soLech}. Các ca lệch đầu tiên:\n  ${kq.loi.join("\n  ")}`;
+  return `${dau}, ${kq.soLech} differ. First differences:\n  ${kq.loi.join("\n  ")}`;
 }

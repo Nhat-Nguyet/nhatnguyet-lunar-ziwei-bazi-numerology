@@ -13,6 +13,14 @@
 //     the label of an img.shields.io badge and the thousands separator of
 //     its number are removed (both are translated).
 //
+// It also checks the counts that drift when the data changes. They are read
+// from the source files (du-lieu/terminology/terminology.json,
+// ai-eval/questions.jsonl, ca-kiem/*.json, du-lieu/le-hoi-viet-nam.json and the
+// festival test vectors); README.md must state them in the sentences listed in
+// FACTS below, and every translation must carry each of these numbers as many
+// times as README.md does (thousands separators ignored: 17,291 = 17.291 =
+// 17 291).
+//
 // Usage: node cong-cu/kiem-readme.mjs [repo folder]   (exit 1 on any mismatch)
 // No dependencies; Node 18+.
 import { readFileSync, existsSync } from "node:fs";
@@ -93,6 +101,72 @@ function normUrl(u) {
 }
 
 const read = (f) => readFileSync(join(ROOT, f), "utf8");
+
+// ---------------------------------------------------------------- counts
+const fmt = (n) => n.toLocaleString("en-US");
+function sourceCounts() {
+  const json = (f) => JSON.parse(read(f));
+  const terms = json("du-lieu/terminology/terminology.json");
+  const questions = read("ai-eval/questions.jsonl").trim().split("\n").map((l) => JSON.parse(l));
+  const hard = questions.filter((q) => q.difficulty === "hard").length;
+  const ca = (name) => json(`ca-kiem/${name}.json`).ca;
+  const n = (name) => ca(name).length;
+  const core = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi"].reduce((a, k) => a + n(k), 0);
+  const schools = n("tu-vi-phai") + n("bat-tu-phai");
+  const hours = n("auspicious-hours");
+  const fest = json("du-lieu/le-hoi-viet-nam.json");
+  const dated = new Set();
+  for (const c of ca("le-hoi")) for (const r of c.ra ?? []) if (r.ngay) dated.add(r.id);
+  return {
+    terms: terms.terms.length,
+    questions: questions.length,
+    hard,
+    hardPct: Math.round((100 * hard) / questions.length),
+    calendar: n("am-lich"),
+    ziwei: n("tu-vi"),
+    bazi: n("bat-tu"),
+    numerology: n("than-so-hoc"),
+    festivalYears: n("le-hoi"),
+    core,
+    schools,
+    hours,
+    all: core + schools + hours,
+    festivals: fest.length,
+    fixed: dated.size,
+    other: fest.length - dated.size,
+  };
+}
+const C = sourceCounts();
+if (C.terms !== JSON.parse(read("du-lieu/terminology/terminology.json")).count) {
+  console.log("du-lieu/terminology/terminology.json: count field disagrees with the number of terms");
+  process.exit(1);
+}
+// [what, regex on README.md (whitespace-tolerant), expected values of its groups]
+const FACTS = [
+  ["terminology", /\| (\S+) terms in Vietnamese/, [C.terms]],
+  ["AI evaluation questions", /\| (\S+) computed questions in English/, [C.questions]],
+  ["AI evaluation hard cases", /(\S+) of them \((\d+)%\) hard cases/, [C.hard, `${C.hardPct}`]],
+  ["test vectors, intro", /(\S+) shared test vectors\s*\n/, [C.core]],
+  ["test vectors, badge", /test%20vectors-(\d+)%2C(\d+)-/, [String(C.core).slice(0, -3), String(C.core).slice(-3)]],
+  ["test vectors, core", /holds \*\*(\S+) core cases\*\*/, [C.core]],
+  ["test vectors, by suite", /: (\S+) calendar cases, (\S+) Zi\s+Wei charts, (\S+) BaZi charts, (\S+) numerology profiles and (\S+) festival years,\s+plus (\S+) cases for the school options and (\S+) days of auspicious hours\s+\((\S+) in all\)/,
+    [C.calendar, C.ziwei, C.bazi, C.numerology, C.festivalYears, C.schools, C.hours, C.all]],
+  ["test vectors, port challenge", /pass all (\S+) test vectors/, [C.core]],
+  ["festivals, install table", /\| (\S+) Vietnamese festivals with their dates/, [C.festivals]],
+  ["festivals, fixed dates", /gives the (\S+) festivals with a\s+fixed lunar or Gregorian date for any year from 1900 to 2100, out of (\S+) in\s+the dataset \(the other (\S+) are dated/,
+    [C.fixed, C.festivals, C.other]],
+  ["festivals, open datasets", /78 Tarot cards, (\S+) festivals/, [C.festivals]],
+];
+const TRACKED = new Set(Object.values(C).map(String));
+// Numbers in a text, thousands separators removed; returns a count per tracked number.
+function trackedNumbers(text) {
+  const out = new Map();
+  const flat = text.replace(/(\d)(?:[.,\u00a0\u202f ]|%2C)(?=\d{3}(?!\d))/g, "$1");
+  // a number right after "3," or "10." is the decimal part of another number
+  for (const m of flat.matchAll(/(?<!\d[.,])(?<!\d)\d+(?!\d)/g)) if (TRACKED.has(m[0])) out.set(m[0], (out.get(m[0]) ?? 0) + 1);
+  return out;
+}
+
 const ref = parse(read(REFERENCE));
 const refUrls = new Set(ref.urls.map(normUrl));
 const refImages = ref.images.map(normImage);
@@ -101,6 +175,20 @@ const fail = (file, msg) => {
   errors++;
   console.log(`${file}: ${msg}`);
 };
+
+const refText = read(REFERENCE);
+for (const [what, re, want] of FACTS) {
+  const m = refText.match(re);
+  if (!m) {
+    fail(REFERENCE, `${what}: sentence not found (${re})`);
+    continue;
+  }
+  const got = m.slice(1).map((g) => g.replace(/,/g, ""));
+  const exp = want.map((w) => String(w).replace(/,/g, ""));
+  if (got.join("|") !== exp.join("|"))
+    fail(REFERENCE, `${what}: "${m[0].replace(/\s+/g, " ")}" but the source files give ${exp.map((x) => (/^\d{4,}$/.test(x) ? fmt(Number(x)) : x)).join(", ")}`);
+}
+const refNumbers = trackedNumbers(refText);
 
 for (const file of TRANSLATIONS) {
   if (!existsSync(join(ROOT, file))) {
@@ -132,13 +220,17 @@ for (const file of TRANSLATIONS) {
   const urls = new Set(t.urls.map(normUrl));
   for (const u of refUrls) if (!urls.has(u)) fail(file, `missing link ${u}`);
   for (const u of urls) if (!refUrls.has(u)) fail(file, `extra link ${u}`);
+  const nums = trackedNumbers(read(file));
+  for (const k of new Set([...refNumbers.keys(), ...nums.keys()]))
+    if ((nums.get(k) ?? 0) !== (refNumbers.get(k) ?? 0))
+      fail(file, `the number ${fmt(Number(k))} appears ${nums.get(k) ?? 0} time(s), ${refNumbers.get(k) ?? 0} in ${REFERENCE}`);
 }
 for (const key of Object.keys(ALLOWED)) {
   const [file] = key.split("#");
   if (!TRANSLATIONS.includes(file)) fail(key, "ALLOWED entry for an unknown file");
 }
 
-const summary = `headings ${ref.headings.length}, code blocks ${ref.code.length}, tables ${ref.tables.length} (${ref.tables.reduce((a, b) => a + b, 0)} rows), images ${ref.images.length}, external links ${refUrls.size}`;
+const summary = `counts ${FACTS.length} checked against the source files, headings ${ref.headings.length}, code blocks ${ref.code.length}, tables ${ref.tables.length} (${ref.tables.reduce((a, b) => a + b, 0)} rows), images ${ref.images.length}, external links ${refUrls.size}`;
 if (errors) {
   console.log(`\n${errors} mismatch(es) against ${REFERENCE} (${summary}).`);
   process.exit(1);

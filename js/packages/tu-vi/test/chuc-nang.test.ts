@@ -14,7 +14,7 @@ import { castZiWei as castZiWeiData } from "../src/en.ts";
 
 const THU_MUC_PY = join(dirname(fileURLToPath(import.meta.url)), "../../../../python");
 
-test("castZiWei có hàm nhưng JSON không đổi", () => {
+test("castZiWei has methods but its JSON is unchanged", () => {
   const c = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male", viewYear: 2026 });
   const d = castZiWeiData({ date: "1990-09-19", time: "20:00", gender: "male", viewYear: 2026 });
   assert.equal(JSON.stringify(c), JSON.stringify(d));
@@ -24,7 +24,7 @@ test("castZiWei có hàm nhưng JSON không đổi", () => {
   }
 });
 
-test("tra cung, sao theo tên ở ba thứ tiếng", () => {
+test("palace and star lookup by name in three languages", () => {
   const c = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
   const menh = c.palaces[c.lifePalace];
   for (const ten of ["Life Palace", "life palace", "Mệnh", "命宫", c.lifePalace]) assert.equal(c.palace(ten), menh, String(ten));
@@ -44,7 +44,7 @@ test("tra cung, sao theo tên ở ba thứ tiếng", () => {
   for (const p of c.palaces) assert.equal(palaceIsEmpty(c, p.index), !p.stars.some((x) => x.kind === "major"));
 });
 
-test("đường bay Tứ Hóa đúng bảng của lõi áp cho can cung", () => {
+test("flying Four Transformations follow the engine table for the palace stem", () => {
   for (const [ngay, gio, gioi] of [["1990-09-19", 10, "Nam"], ["1985-01-21", 5, "Nữ"], ["2001-07-30", 0, "Nam"]] as const) {
     const raw = lapLaSoTuVi("", gioi, Number(ngay.slice(8)), Number(ngay.slice(5, 7)), Number(ngay.slice(0, 4)), gio);
     for (let i = 0; i < 12; i++) {
@@ -64,7 +64,7 @@ test("đường bay Tứ Hóa đúng bảng của lõi áp cho can cung", () => 
   assert.throws(() => fliesTo(castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" }), 0, 1, "fortune"), RangeError);
 });
 
-test("horoscope lấy đúng đại vận, tiểu vận, lưu niên, nguyệt hạn của lõi", () => {
+test("horoscope takes the engine's decade, minor, yearly and monthly periods", () => {
   const c = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
   const h = c.horoscope({ date: "2026-11-19" });
   assert.deepEqual(h.lunar, { year: 2026, month: 10, day: 11, leap: false });
@@ -119,7 +119,7 @@ for v in json.load(sys.stdin):
 sys.stdout.write(json.dumps(ra, ensure_ascii=False))
 `;
 
-test("bản Python ra JSON trùng từng byte", (t) => {
+test("Python prints byte-identical JSON", (t) => {
   try {
     execFileSync("python3", ["-c", "import sys; assert sys.version_info >= (3, 9)"], { stdio: "ignore" });
   } catch {
@@ -167,6 +167,6 @@ test("bản Python ra JSON trùng từng byte", (t) => {
       empty: Array.from({ length: 12 }, (_, i) => palaceIsEmpty(c, i)),
       has: palaceHas(c, c.lifePalace, [v.tenSao]),
     };
-    assert.equal(JSON.stringify(r), py[k], `việc ${k}: ${JSON.stringify(v)}`);
+    assert.equal(JSON.stringify(r), py[k], `task ${k}: ${JSON.stringify(v)}`);
   });
 });

@@ -9,13 +9,13 @@ import { AUSPICIOUS_SPIRITS, auspiciousHours } from "../src/index.ts";
 const tep = docCaKiem("auspicious-hours");
 const n = (v: Record<string, unknown>, k: string) => v[k] as number;
 
-test("auspicious-hours: mọi ca khớp lõi Go", () => {
+test("auspicious-hours: every vector matches the Go engine", () => {
   const kq = kiemCa(tep, (v) => gioHoangDaoKemThan(n(v, "dd"), n(v, "mm"), n(v, "yyyy")));
   assert.equal(kq.tong, tep.soCa);
   assert.equal(kq.soLech, 0, baoCao("auspicious-hours", kq));
 });
 
-test("auspiciousHours: cùng cờ, cùng thần với hàm lõi ở cả ba thứ tiếng", () => {
+test("auspiciousHours: same flags and spirits as the core function in all three languages", () => {
   for (const c of tep.ca.slice(0, 200)) {
     const v = c.vao;
     const ra = c.ra as { canChiNgay: string; canChiNgayZh: string; gio: { chi: string; hoangDao: boolean; than: string; thanZh: string; thuTuThan: number }[] };

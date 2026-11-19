@@ -7,7 +7,7 @@ star positions of a Zi Wei Dou Shu chart, the four pillars of a BaZi chart, and 
 numerology numbers. Every answer comes from the Nhat Nguyet engine, the same code that
 passes the shared test vectors in [`../ca-kiem`](../ca-kiem).
 
-Data: Nhat Nguyet (nhatnguyet.org). Licence: [CC BY 4.0](../DATA-LICENSE).
+Data: Nhat Nguyet (nhatnguyet.org). License: [CC BY 4.0](../DATA-LICENSE).
 
 ## Why
 

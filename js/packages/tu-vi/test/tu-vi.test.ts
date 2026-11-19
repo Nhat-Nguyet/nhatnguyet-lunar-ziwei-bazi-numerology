@@ -32,29 +32,29 @@ function tinh(vao: Record<string, unknown>): unknown {
   };
 }
 
-test("tu-vi: mọi ca kiểm khớp bản Go", () => {
+test("tu-vi: every vector matches Go", () => {
   assert.equal(tep.ca.length, tep.soCa);
   const kq = kiemCa(tep, tinh);
-  assert.ok(kq.tong > 0, "không có ca nào");
+  assert.ok(kq.tong > 0, "no vectors");
   assert.equal(kq.soLech, 0, baoCao("tu-vi", kq));
 });
 
-test("tu-vi: đầu vào sai ném lỗi như bản Go trả error", () => {
+test("tu-vi: bad input throws where Go returns an error", () => {
   assert.throws(() => lapLaSoTuVi("", "Khác", 1, 1, 2000, 0));
   assert.throws(() => lapLaSoTuVi("", "Nam", 1, 1, 2000, 12));
   assert.throws(() => lapLaSoTuVi("", "Nữ", 1, 1, 2000, -1));
 });
 
-test("tu-vi: an Tử Vi theo cục và ngày", () => {
+test("tu-vi: placing the Zi Wei star by bureau and day", () => {
   // Thủy Nhị Cục, mùng 1: Tử Vi ở Sửu; Hỏa Lục Cục, mùng 1: Tử Vi ở Dậu.
   assert.equal(viTriTuVi(2, 1), 1);
   assert.equal(viTriTuVi(6, 1), 9);
 });
 
-test("tu-vi: mọi tên trên mọi lá của ca kiểm có đủ ba thứ tiếng", () => {
+test("tu-vi: every name on every chart of the vectors has all three languages", () => {
   const dem: DemBaNgonNgu = { tong: 0, thieu: [] };
   for (const c of tep.ca) doBaNgonNgu(tinh(c.vao), dem);
-  assert.ok(dem.tong > 0, "không đo được tên nào");
+  assert.ok(dem.tong > 0, "no names measured");
   assert.equal(dem.thieu.length, 0, tomTatThieu(dem));
 });
 
@@ -73,13 +73,13 @@ function tinhPhai(vao: Record<string, unknown>): unknown {
   };
 }
 
-test("tu-vi-phai: mọi ca kiểm lựa chọn phái khớp bản Go", () => {
+test("tu-vi-phai: every school vector matches Go", () => {
   assert.equal(tepPhai.ca.length, tepPhai.soCa);
   const kq = kiemCa(tepPhai, tinhPhai);
   assert.equal(kq.soLech, 0, baoCao("tu-vi-phai", kq));
 });
 
-test("tu-vi-phai: mặc định (vắng, rỗng, ghi rõ) ra đúng lá số cũ; giá trị lạ ném lỗi", () => {
+test("tu-vi-phai: defaults (absent, empty, explicit) give the old chart; unknown value throws", () => {
   const goc = JSON.stringify(lapLaSoTuVi("", "Nữ", 15, 8, 1993, 3));
   for (const s of [undefined, {}, { fireBell: "vietnamese", leapMonth: "whole", transformations: "vietnamese", heavenlyKitchen: "vietnamese", injuryMessenger: "standard" }] as ZiWeiSchools[]) {
     assert.equal(JSON.stringify(lapLaSoTuVi("", "Nữ", 15, 8, 1993, 3, s)), goc);
@@ -88,7 +88,7 @@ test("tu-vi-phai: mặc định (vắng, rỗng, ghi rõ) ra đúng lá số cũ
   assert.throws(() => lapLaSoTuVi("", "Nam", 1, 1, 2000, 0, { hoaLinh: "quanshu" } as never), /unknown school option/);
 });
 
-test("tu-vi-phai: Hỏa Linh theo từng lối (19/9/1990 giờ Tuất)", () => {
+test("tu-vi-phai: Fire and Bell stars per school (1990-09-19, Xu hour)", () => {
   const viTri = (ls: ReturnType<typeof lapLaSoTuVi>, ten: string) => ls.cung.findIndex((c) => c.sao.some((s) => s.ten === ten));
   const ca: [string, ZiWeiSchools["fireBell"], number, number][] = [
     ["Nam", undefined, 11, 5], ["Nam", "quanshu", 11, 1], ["Nữ", undefined, 3, 1], ["Nữ", "quanshu", 11, 1],

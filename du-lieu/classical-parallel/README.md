@@ -76,7 +76,7 @@ kept as a historical source and may carry the views of its time.
 
 ## How the alignment was made
 
-1. **Chinese**: each hexagram chapter is parsed into its judgment, line statements (labelled 初九, 六二 ... 上六,
+1. **Chinese**: each hexagram chapter is parsed into its judgment, line statements (labeled 初九, 六二 ... 上六,
    用九, 用六), the commentary on the judgment (彖曰), the great image and the small images (象曰). Variant-reading
    notes added by the digital source (`X一作「Y」`, `〈…〉`) are removed. Nothing else is changed.
 2. **English**: the translation has a numbered layout (hexagram headings, numbered lines, numbered paragraphs in the
@@ -109,7 +109,7 @@ small-image numbering is unreadable).
 ## Known limitations
 
 - Both translations are **OCR of 19th-century printed books**. They keep OCR errors (`Kh ien`, `V arrangement`, stray
-  quotation marks) and old romanisation of Chinese names. They are not corrected.
+  quotation marks) and old romanization of Chinese names. They are not corrected.
 - The English translation adds words in parentheses to make the terse Chinese readable, and the French follows the
   reading of the Song commentators. They are translations of their time, not modern scholarly ones.
 - The commentary on the judgment is one segment per hexagram; it is not split further into sentences.
@@ -143,7 +143,7 @@ tri = [(r["unit_id"], r["original"], r["translation"], fr[r["unit_id"]])
 print(len(tri))
 ```
 
-## Licence and citation
+## License and citation
 
 The texts are in the public domain. The segmentation, alignment, checks and metadata are released under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Credit line: **Data: Nhat Nguyet (nhatnguyet.org)**.

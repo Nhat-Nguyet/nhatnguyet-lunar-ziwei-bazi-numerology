@@ -4,7 +4,8 @@
 //
 // Renders results of the English API as terminal text.
 
-import type { AuspiciousHoursResult, LunarResult, SolarTerm } from "@nhatnguyet/am-lich";
+import { term } from "@nhatnguyet/am-lich";
+import type { AuspiciousHoursResult, LunarResult, SolarTerm, Terms } from "@nhatnguyet/am-lich";
 import type { ZiWeiChart, ZiWeiPalace, DecadeLuck, YearlyLuck, ZiWeiPattern } from "@nhatnguyet/tu-vi";
 import type { BaZiChart, BaZiPillar } from "@nhatnguyet/bat-tu";
 import type { NumerologyResult } from "@nhatnguyet/than-so-hoc";
@@ -457,11 +458,17 @@ export function renderLunar(r: LunarResult, opts: RenderOptions = {}): string {
   return bang(null, rows, color);
 }
 
-/** The 24 solar terms of a year as a table. */
-export function renderSolarTerms(year: number, terms: SolarTerm[], lang: Lang, opts: RenderOptions = {}): string {
+/**
+ * The 24 solar terms of a year as a table. The name is in `lang` only; in
+ * English, `nameTerms` "han" or "vi" adds the Chinese or Vietnamese name in
+ * brackets ("Minor Cold (小寒)", "Minor Cold (Tiểu Hàn)"), "pinyin" (default)
+ * adds nothing.
+ */
+export function renderSolarTerms(year: number, terms: SolarTerm[], lang: Lang, opts: RenderOptions = {}, nameTerms: Terms = "pinyin"): string {
   const color = opts.color === true;
   const u = ui(lang);
-  const rows = terms.map((t) => [[t.date], [t.time], [t.name + (lang === "vi" ? "" : ` (${t.nameVi})`)], [String(t.longitude) + "°"]]);
+  const kem = (t: SolarTerm) => (lang !== "en" || nameTerms === "pinyin" ? "" : ` (${nameTerms === "vi" ? t.nameVi : term(t.nameVi, "zh")})`);
+  const rows = terms.map((t) => [[t.date], [t.time], [t.name + kem(t)], [String(t.longitude) + "°"]]);
   return paint(`${u.terms} ${year}`, "title", color) + "\n" + bang(null, rows, color);
 }
 

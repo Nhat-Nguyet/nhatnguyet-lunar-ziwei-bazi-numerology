@@ -3,6 +3,7 @@
 //
 // English API layer for the Vietnamese festival calendar.
 
+import { checkYear } from "@nhatnguyet/am-lich";
 import { DANH_SACH_LE_HOI, ngayDuongCuaLe } from "./index.ts";
 import { PROVINCES } from "./du-lieu.ts";
 import type { LeHoi, Province } from "./kieu.ts";
@@ -33,10 +34,11 @@ export interface Festival {
   group: string;
   /**
    * Scope, an English code in every `lang`: "national", "regional", "local",
-   * "representative" (one row for a festival held in many places) or "" (not
-   * classified yet). The dataset's code stays in `raw.pham_vi`.
+   * "representative" (one row for a festival held in many places), or null
+   * when the dataset has not classified the festival yet (about a third of
+   * them). The dataset's code stays in `raw.pham_vi`.
    */
-  scope: string;
+  scope: "national" | "regional" | "local" | "representative" | null;
   /** True for the official days off in Vietnam. */
   publicHoliday: boolean;
   /** Days the festival customarily opens before `date` (its main day) and continues after it. */
@@ -108,11 +110,11 @@ export const FESTIVAL_SCOPE_EN: Readonly<Record<string, string>> = {
   vung: "regional",
   "dia-phuong": "local",
   "dai-dien": "representative",
-  "": "",
 };
 
 /**
- * Festivals with a fixed date (lunar or Gregorian) in a year, sorted by date.
+ * Festivals with a fixed date (lunar or Gregorian) in a year (1900 to 2100,
+ * RangeError outside), sorted by date.
  * The dataset holds 206 festivals: 164 have a fixed lunar or Gregorian date
  * and are returned for every year (1900 to 2100: always 164); the other 42
  * are dated by their organisers each year and are not included (see
@@ -123,6 +125,7 @@ export const FESTIVAL_SCOPE_EN: Readonly<Record<string, string>> = {
  */
 export function festivals(year: number, opts: { lang?: FestivalLang } = {}): Festival[] {
   if (!Number.isInteger(year)) throw new TypeError("year must be an integer");
+  checkYear(year);
   const lang = opts.lang ?? "en";
   if (lang !== "vi" && lang !== "en" && lang !== "zh") throw new TypeError(`lang must be "vi", "en" or "zh", got ${JSON.stringify(lang)}`);
   const out: Festival[] = [];
@@ -139,7 +142,7 @@ export function festivals(year: number, opts: { lang?: FestivalLang } = {}): Fes
       fixedDate: le.loai_ngay === "lunar" ? le.ngay_am : le.ngay_duong,
       level: le.muc_do,
       group: FESTIVAL_GROUP_EN[le.nhom] ?? "other",
-      scope: FESTIVAL_SCOPE_EN[le.pham_vi] ?? "",
+      scope: (FESTIVAL_SCOPE_EN[le.pham_vi] as Festival["scope"] | undefined) ?? null,
       publicHoliday: le.ngay_nghi_le === "co",
       daysBefore: Number(le.ngay_truoc) || 0,
       daysAfter: Number(le.ngay_sau) || 0,

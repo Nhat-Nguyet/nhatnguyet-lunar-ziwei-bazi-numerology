@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>越南农历不是中国农历：常用的库在 1900 至 2100 年间有 2,724 天给出错误的越南农历日期。</b><br>
-  在正确的历法上排紫微斗数、八字、数字命理，查节庆与黄道吉时，支持 JavaScript、Python 和 MCP · 结果有 English、Tiếng Việt、中文 · 17,291 组共享测试用例
+  在正确的历法上排紫微斗数、八字、数字命理，查节庆与黄道吉时，支持 JavaScript、Python 和 MCP · 360 万份公开命盘，论断引用古籍并注明书名与篇章 · 结果有 English、Tiếng Việt、中文 · 17,291 组共享测试用例
 </p>
 
 <p align="center">
@@ -207,7 +207,7 @@ Vietnamese calendar (UTC+7).
 | 越南（UTC+7）与中国（UTC+8），规则相同 | 2,814 天、10 个春节日期不同 |
 
 - **技术论文**：[越南阴阳历的计算](./docs/paper/paper.pdf)（PDF）给出方法、误差预算、与 NASA、IMCCE 和 JPL DE440 的核对，并逐一解释越南与中国农历不同的每一天。文中每个数字都由 `docs/paper/reproduce.sh` 重新计算。
-- **共享测试用例**：[`ca-kiem/`](./ca-kiem) 收录 **17,291 组测试用例**（输入 `vao`，期望输出 `ra`），由驱动 [nhatnguyet.org](https://nhatnguyet.org) 的参考引擎生成：历法 14,936 组、紫微命盘 777 个、八字命盘 777 个、数字命理档案 600 份、节庆年份 201 个，另有流派选项 432 组。TypeScript 与 Python 版本每次推送都全部通过。
+- **共享测试用例**：[`ca-kiem/`](./ca-kiem) 收录 **17,291 组核心测试用例**（输入 `vao`，期望输出 `ra`），由驱动 [nhatnguyet.org](https://nhatnguyet.org) 的参考引擎生成：历法 14,936 组、紫微命盘 777 个、八字命盘 777 个、数字命理档案 600 份、节庆年份 201 个，另有流派选项 432 组与黄道吉时 1,096 天（共 18,819 组）。TypeScript 与 Python 版本每次推送都全部通过。
 - **春节史**：[`history/`](./history/README.md) 列出 1900 至 2100 年每一年在 UTC+7 与 UTC+8 下的春节，注明越南当年实际使用的历法，有文献记载的年份均附出处。
 - **如实说明范围**：紫微斗数、八字与数字命理是传统流派的规则，未经科学验证；请勿用于健康、财务或法律决定。各派有分歧之处，本库写明所依规则，并允许切换（[流派选项](#流派选项)）。
 
@@ -391,14 +391,14 @@ CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 个单元（核心数字、周期数字、人生主题），195 段原文 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 篇公有领域古籍全文（约 350 部作品），7,265 万字符 | 纯文本 147 MB，Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1,328 段对齐的《易经》文本：文言原文配公有领域的英文（952 段）与法文（376 段）译文 | |
-| [术语表](./du-lieu/terminology/README.md) | 416 个术语，含越南文、繁体与简体中文、拼音和英文，涵盖各库输出的全部名称 | |
-| [AI 评测集](./ai-eval/README.md) | 1,520 道计算题，有英文、越南文、中文（农历日期、春节、四柱、命盘），其中一半为难题 | |
+| [术语表](./du-lieu/terminology/README.md) | 428 个术语，含越南文、繁体与简体中文、拼音和英文，涵盖各库输出的全部名称 | |
+| [AI 评测集](./ai-eval/README.md) | 1,520 道计算题，有英文、越南文、中文（农历日期、春节、四柱、命盘），其中 626 道（41%）为难题 | |
 | [1900 至 2100 年春节](./history/README.md) | 201 年在 UTC+7 与 UTC+8 下的春节，附实际使用的历法与出处 | |
 | [33 个历法与文化数据集](https://nhatnguyet.org/zh/du-lieu) | 1900 至 2100 年阴阳历、节气、六十四卦、78 张塔罗牌、206 个节庆、456 篇祭文……CSV、JSON、Parquet 格式，附 [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
 三个论断数据集合计 **3,597,286 个命盘，压缩后 12.02 GB**，分为三部分：附论断编号的结构化命盘（`charts/`，1.55 GB）、按语言预先拼好的全文（`assembled/<system>/<en|vi|zh>/`，10.42 GB），以及每条论断、古籍引文、文章只存一次的文本库（`store/`，0.04 GB）。论断引用古籍时注明书名与章节。每个出生年份一个文件。**解压后体积非常大**（命盘之间文字重复：紫微一年的预拼全文每种语言约 2.7 GB），请用流式读取或按年下载。
 
-知识数据集是精简版：每个单元一行，文本编号与论断数据集相同，附论断引擎为该单元查找的公有领域古籍段落，以及规则编号。古籍：文言 306 篇、英文 36 篇、法文 20 篇、越南文 11 篇；按主题：易经与卜筮 192、信仰与礼俗 24、越南历史与文化 22、数字命理 21、三式 20、历法与择日 19、八字与命理 17、风水 16、佛教 14、相术 13、占星与塔罗 7、紫微 6、其他 2。其中 38 篇为光学字符识别文本，带 `ocr` 标记。每篇均有 `pd_basis` 字段，说明其属于公有领域的依据。
+知识数据集是精简版：每个单元一行，文本编号与论断数据集相同，附论断引擎为该单元查找的公有领域古籍段落，以及规则编号。古籍：文言 306 篇、英文 36 篇、法文 20 篇、越南文 11 篇；按主题：易经与卜筮 192、信仰与礼俗 24、越南历史与文化 22、数字命理 21、三式 20、历法与择日 19、八字与命理 17、风水 16、佛教 14、相术 13、占星与塔罗 7、紫微 6、其他 2。其中 38 篇为光学字符识别文本，带 `ocr` 标记。每篇均有 `pd_basis` 字段，说明其属于公有领域的依据。按项目方的选择，`sach-co` 用中性编号（`sc-0416`）而非书名与作者标识每篇文本；知识数据集与论断文本库则为引用的每段文字注明书名与作者。
 
 ```python
 from datasets import load_dataset
@@ -463,7 +463,7 @@ print(len(books), sum(books["characters"]))
 
 `country`（默认 `VN`，也可设 `CN`、`KR`、`JP` 等）切换到其他国家的农历。属性与各组件预览：[widgets/](./widgets/README.md)。
 
-nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、彩票结果等）；它们是网站提供的服务，不是本仓库的开源代码：[nhatnguyet.org/widget](https://nhatnguyet.org/widget?lang=zh)。
+nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、彩票结果等）；它们是网站提供的服务，不是本仓库的开源代码：[nhatnguyet.org/widget](https://nhatnguyet.org/zh/widget)。
 
 ## 示例与文档
 

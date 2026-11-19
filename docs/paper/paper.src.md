@@ -603,7 +603,8 @@ for this version with engine {{lunar_javascript/engine_version_used}}.
 ## Test vectors
 
 The reference engine writes input and output pairs to `ca-kiem/`
-({{test_vectors/total}} in total, {{test_vectors/am-lich}} calendar cases,
+({{test_vectors/core}} core test vectors, {{test_vectors/total}} including school
+options and auspicious hours; {{test_vectors/am-lich}} calendar cases,
 engine {{test_vectors/calendar_vector_engine_versions|list}}). The TypeScript
 port (`npm test`) and the Python port (`python -m unittest discover -s
 tests`) must reproduce all of them on every change (continuous integration

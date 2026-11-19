@@ -4,7 +4,8 @@
 Japanese lunar calendars in your terminal.** Charts print as grids, or as JSON
 and SVG. English by default, Vietnamese and Chinese with `--lang`. Runs
 locally with the [Nhat Nguyet](https://nhatnguyet.org/en/ma-nguon-mo)
-libraries, checked against 17,291 shared test vectors and NASA, IMCCE data.
+libraries, checked against 17,291 core test vectors (18,819 including school options and
+auspicious hours) and NASA, IMCCE data.
 
 ```bash
 npx @nhatnguyet/cli lunar 1985-01-21 --country CN
@@ -58,9 +59,9 @@ Each command also answers to the name of the matching MCP tool: `cast_ziwei`
 | `--json` | print JSON instead of text |
 | `--svg <file>` | also write the chart as SVG (`ziwei`, `bazi`, `numerology`) |
 | `--theme dark` | dark SVG |
-| `--no-color` | no ANSI colours (also when `NO_COLOR` is set or output is not a terminal) |
+| `--no-color` | no ANSI colors (also when `NO_COLOR` is set or output is not a terminal) |
 
-Times are clock times; the Tý double hour runs 23:00 to 00:59. Dates and times
+Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless `--country` says otherwise.
 
 ```bash

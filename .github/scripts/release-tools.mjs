@@ -5,7 +5,10 @@
 //   node .github/scripts/release-tools.mjs check [version]
 //       every place that carries the version agrees (with `version`, or with
 //       js/packages/am-lich/package.json); internal dependencies are "^version";
-//       CHANGELOG.md has a section for it. Exit 1 on any mismatch.
+//       CHANGELOG.md has a section for it; the test vector counts quoted in the
+//       docs and metadata match ca-kiem/; CITATION.cff cites the paper's
+//       current version; SECURITY.md supports the current minor version.
+//       Exit 1 on any mismatch.
 //   node .github/scripts/release-tools.mjs set <version>
 //       write <version> into all of those places (does not touch CHANGELOG.md).
 //   node .github/scripts/release-tools.mjs notes <version>
@@ -69,6 +72,64 @@ function changelogSection(version) {
   return m ? m[1].trim() : null;
 }
 
+// Test vector counts. "Core" is the five suites the README and the port
+// challenge count; "all" adds the school options and the auspicious hours.
+// Every file below must say "<core> core test vectors" (or shared, or test
+// cases) and, where it gives the total, "<all> including school options and
+// auspicious hours" or "<all> in all".
+const VECTOR_FILES = [
+  "README.md",
+  "CONTRIBUTING.md",
+  "CITATION.cff",
+  ".zenodo.json",
+  "CHANGELOG.md",
+  "docs/paper/paper.md",
+  "ca-kiem/README.md",
+  "js/packages/cli/README.md",
+  "js/packages/mcp/README.md",
+  "python/README.md",
+];
+const CORE_SUITES = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi"];
+
+function vectorCounts() {
+  let core = 0;
+  let all = 0;
+  for (const f of readdirSync(join(ROOT, "ca-kiem")).filter((f) => f.endsWith(".json"))) {
+    const n = JSON.parse(read(`ca-kiem/${f}`)).ca.length;
+    all += n;
+    if (CORE_SUITES.includes(f.slice(0, -5))) core += n;
+  }
+  return { core, all };
+}
+
+function checkDocs(version, errors) {
+  const { core, all } = vectorCounts();
+  const fmt = (n) => n.toLocaleString("en-US");
+  for (const file of VECTOR_FILES) {
+    let text = read(file).replace(/<\/?[a-z][^<>]*>/g, " ").replace(/\s+/g, " ");
+    // the CHANGELOG is history: only the section of this version counts
+    if (file === "CHANGELOG.md") text = (changelogSection(version) ?? "").replace(/\s+/g, " ");
+    const num = (s) => Number(s.replace(/,/g, ""));
+    let coreSeen = 0;
+    for (const m of text.matchAll(/(\d{1,3}(?:,\d{3})+) (?:core |shared )?test (?:vectors?|cases?)\b/g)) {
+      coreSeen++;
+      if (num(m[1]) !== core) errors.push(`${file}: "${m[0]}", ca-kiem/ has ${fmt(core)} core test vectors`);
+    }
+    for (const m of text.matchAll(/(\d{1,3}(?:,\d{3})+) (?:including school options and auspicious hours|in all\b)/g))
+      if (num(m[1]) !== all) errors.push(`${file}: "${m[0]}", ca-kiem/ has ${fmt(all)} test vectors in all`);
+    if (!coreSeen) errors.push(`${file}: no "${fmt(core)} core test vectors"`);
+    if (text.includes(fmt(all)) && !new RegExp(`${fmt(all)} (?:including school options and auspicious hours|in all)`).test(text))
+      errors.push(`${file}: ${fmt(all)} must read "${fmt(all)} including school options and auspicious hours" (the core count is ${fmt(core)})`);
+  }
+  const paperVersion = read("docs/paper/paper.md").match(/^date: "Version (\d+)/m)?.[1];
+  const citedVersion = read("CITATION.cff").match(/Technical report of the project, version (\d+)/)?.[1];
+  if (!paperVersion || paperVersion !== citedVersion)
+    errors.push(`CITATION.cff: cites the paper as version ${citedVersion ?? "?"}, docs/paper/paper.md is version ${paperVersion ?? "?"}`);
+  const minor = version.split(".").slice(0, 2).join(".");
+  if (!new RegExp(`^\\| ${minor.replace(".", "\\.")}\\.x \\| Yes \\|`, "m").test(read("SECURITY.md")))
+    errors.push(`SECURITY.md: the supported versions table has no "| ${minor}.x | Yes |" row`);
+}
+
 function check(version) {
   const errors = [];
   const pk = packages();
@@ -87,6 +148,7 @@ function check(version) {
     if (!m) errors.push(`${file}: version not found`);
     else if (m[1] !== v) errors.push(`${file}: version ${m[1]}, expected ${v}`);
   }
+  checkDocs(v, errors);
   const notes = changelogSection(v);
   if (!notes) errors.push(`CHANGELOG.md: no section "## [${v}] - YYYY-MM-DD" with content`);
   else if (!new RegExp(`^## \\[${v.replace(/\./g, "\\.")}\\] - \\d{4}-\\d{2}-\\d{2}`, "m").test(read("CHANGELOG.md"))) errors.push(`CHANGELOG.md: the [${v}] heading needs a release date`);
@@ -95,7 +157,7 @@ function check(version) {
     console.error(`\n${errors.length} problem(s) for version ${v}`);
     process.exit(1);
   }
-  console.log(`version ${v}: ${pk.length} npm packages, Python package and metadata agree`);
+  console.log(`version ${v}: ${pk.length} npm packages, Python package, metadata and test vector counts agree`);
 }
 
 function set(v) {
@@ -125,23 +187,23 @@ function notes(v) {
     console.error(`CHANGELOG.md has no section for ${v}`);
     process.exit(1);
   }
-  const prev = [...read("CHANGELOG.md").matchAll(/^## \[(\d+\.\d+\.\d+[^\]]*)\]/gm)].map((m) => m[1]);
-  const i = prev.indexOf(v);
-  const before = i >= 0 ? prev[i + 1] : undefined;
+  // the link reference at the end of CHANGELOG.md says what to compare with
+  // (not every version has a tag in the public history)
+  const link = read("CHANGELOG.md").match(new RegExp(`^\\[${v.replace(/\./g, "\\.")}\\]: (\\S+)`, "m"))?.[1];
   const lines = [
     body,
     "",
     "### Install",
     "",
     "```bash",
-    `npm i @nhatnguyet/tu-vi@${v} @nhatnguyet/am-lich@${v}   # or any @nhatnguyet/* package`,
+    `npm i @nhatnguyet/ziwei@${v} @nhatnguyet/lunar@${v}   # or any @nhatnguyet/* package`,
     `pip install nhatnguyet==${v}`,
     `npx @nhatnguyet/cli@${v} --help`,
     "```",
     "",
     `npm packages are published with [provenance](https://docs.npmjs.com/generating-provenance-statements) from this release's workflow run. Full list: ${publishOrder().map((p) => `[\`${p.json.name}\`](https://www.npmjs.com/package/${p.json.name}/v/${v})`).join(", ")}; Python: [\`nhatnguyet\`](https://pypi.org/project/nhatnguyet/${v}/).`,
   ];
-  if (before) lines.push("", `**Full diff**: ${REPO}/compare/v${before}...v${v}`);
+  if (link?.includes("/compare/")) lines.push("", `**Full diff**: ${link}`);
   console.log(lines.join("\n"));
 }
 

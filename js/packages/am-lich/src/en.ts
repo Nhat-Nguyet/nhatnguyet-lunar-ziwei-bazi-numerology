@@ -125,6 +125,29 @@ export function parseDate(input: DateInput): YMD {
   return { year: y, month: m, day: d };
 }
 
+/**
+ * Years the English API accepts, inclusive: the span the engine is checked
+ * over (new moons against NASA, solar terms against IMCCE, every test vector).
+ */
+export const YEAR_RANGE: Readonly<{ min: number; max: number }> = Object.freeze({ min: 1900, max: 2100 });
+
+/**
+ * Throw a RangeError when `year` is outside `YEAR_RANGE` (1900 to 2100).
+ * `what` names the input in the message, e.g. "date 2200-01-01".
+ */
+export function checkYear(year: number, what = `year ${year}`): void {
+  if (!(year >= YEAR_RANGE.min && year <= YEAR_RANGE.max)) {
+    throw new RangeError(`${what} is outside the supported range: years ${YEAR_RANGE.min} to ${YEAR_RANGE.max}`);
+  }
+}
+
+/** `parseDate` plus `checkYear`: a valid date in 1900 to 2100. */
+export function parseDateInRange(input: DateInput, what = "date"): YMD {
+  const d = parseDate(input);
+  checkYear(d.year, `${what} ${formatDate(d)}`);
+  return d;
+}
+
 /** Format `{ year, month, day }` as "YYYY-MM-DD". */
 export function formatDate(d: YMD): string {
   const p = (n: number, w: number) => String(n).padStart(w, "0");
@@ -419,7 +442,7 @@ export interface LunarResult {
 export function toLunar(date: DateInput, opts: CalendarOptions = {}): LunarResult {
   const lang = checkLang(opts.lang);
   const terms = checkTerms(opts.terms, lang);
-  const d = parseDate(date);
+  const d = parseDateInRange(date);
   const { country, timeZone } = resolveCountry(opts);
   const l = solarToLunar(d.day, d.month, d.year, timeZone);
   return {
@@ -434,7 +457,7 @@ export function toLunar(date: DateInput, opts: CalendarOptions = {}): LunarResul
     monthName: stemBranchName(lunarMonthCanChi(l.month, l.year).label, lang, terms),
     dayName: stemBranchName(dayCanChi(d.day, d.month, d.year).label, lang, terms),
     zodiac: zodiacName(mod(l.year - 4, 12), lang, country),
-    solarTerm: solarTermOn(d, { country, timeZone, lang }).current.name,
+    solarTerm: termOn(d, { country, timeZone, lang }).current.name,
     lang,
   };
 }
@@ -455,9 +478,23 @@ export interface SolarResult extends YMD {
 }
 
 /**
+ * The leap (intercalary) month of a lunar year in a time zone, or 0 when the
+ * year has none. Tried month by month with the package's own conversions.
+ */
+function thangNhuanCua(lunarYear: number, timeZone: number): number {
+  for (let m = 1; m <= 12; m++) {
+    const r = lunarToSolar(1, m, lunarYear, true, timeZone);
+    if (!r.hopLe) continue;
+    const l = solarToLunar(r.duong.day, r.duong.month, r.duong.year, timeZone);
+    if (l.leap && l.month === m && l.year === lunarYear && l.day === 1) return m;
+  }
+  return 0;
+}
+
+/**
  * Convert a lunar date back to Gregorian. Throws RangeError when the lunar
- * date does not exist (no such leap month that year, or day 30 of a 29-day
- * month). Wraps `lunarToSolar`.
+ * year is outside 1900 to 2100 or the lunar date does not exist (no such leap
+ * month that year, or day 30 of a 29-day month). Wraps `lunarToSolar`.
  */
 export function toSolar(lunar: LunarInput, opts: { country?: string; timeZone?: number } = {}): SolarResult {
   if (!lunar || !soNguyen(lunar.year) || !soNguyen(lunar.month) || !soNguyen(lunar.day)) {
@@ -466,7 +503,17 @@ export function toSolar(lunar: LunarInput, opts: { country?: string; timeZone?: 
   const leap = lunar.leap === true;
   const { timeZone } = resolveCountry(opts);
   const ten = `${lunar.year}-${lunar.month}${leap ? " (leap)" : ""}-${lunar.day}`;
+  checkYear(lunar.year, `lunar year ${lunar.year}`);
   if (lunar.month < 1 || lunar.month > 12 || lunar.day < 1 || lunar.day > 30) throw new RangeError(`no such lunar date: ${ten}`);
+  if (leap) {
+    const nhuan = thangNhuanCua(lunar.year, timeZone);
+    if (nhuan !== lunar.month) {
+      throw new RangeError(
+        `no such lunar date: ${ten} (${lunar.year} has no leap month ${lunar.month}; ` +
+          (nhuan ? `the leap month of ${lunar.year} is month ${nhuan})` : `the lunar year ${lunar.year} has no leap month)`),
+      );
+    }
+  }
   const r = lunarToSolar(lunar.day, lunar.month, lunar.year, leap, timeZone);
   if (!r.hopLe) throw new RangeError(`no such lunar date: ${ten} (that year has no such leap month)`);
   // Ngày 30 của tháng thiếu: hàm gốc trả mùng 1 tháng sau; ở đây báo lỗi.
@@ -514,12 +561,19 @@ function mocNam(year: number): ReturnType<typeof mocTietKhiTrongNam> {
 }
 
 /**
- * The 24 solar-term moments that fall in a Gregorian year, in time order,
- * local time of the chosen country. Wraps `mocTietKhiTrongNam` (computed at
- * UTC+7, then shifted by whole hours).
+ * The 24 solar-term moments that fall in a Gregorian year (1900 to 2100), in
+ * time order, local time of the chosen country. Wraps `mocTietKhiTrongNam`
+ * (computed at UTC+7, then shifted by whole hours).
  */
 export function solarTerms(year: number, opts: CalendarOptions = {}): SolarTerm[] {
   if (!soNguyen(year)) throw new TypeError("year must be an integer");
+  checkYear(year);
+  return tietCuaNam(year, opts);
+}
+
+// solarTerms không kiểm năm: solarTermOn, toLunar cần cả năm liền trước và
+// liền sau (1899, 2101) cho ngày đầu, cuối của khoảng.
+function tietCuaNam(year: number, opts: CalendarOptions): SolarTerm[] {
   const lang = checkLang(opts.lang);
   const { timeZone } = resolveCountry(opts);
   const lech = Math.round((timeZone - TIME_ZONE_VN) * 60);
@@ -546,9 +600,13 @@ export function solarTerms(year: number, opts: CalendarOptions = {}): SolarTerm[
  * not after it) and the next one.
  */
 export function solarTermOn(date: DateInput, opts: CalendarOptions = {}): { current: SolarTerm; next: SolarTerm } {
-  const d = formatDate(parseDate(date));
-  const y = Number(d.slice(0, 4));
-  const ds = [...solarTerms(y - 1, opts), ...solarTerms(y, opts), ...solarTerms(y + 1, opts)];
+  return termOn(parseDateInRange(date), opts);
+}
+
+function termOn(date: YMD, opts: CalendarOptions): { current: SolarTerm; next: SolarTerm } {
+  const d = formatDate(date);
+  const y = date.year;
+  const ds = [...tietCuaNam(y - 1, opts), ...tietCuaNam(y, opts), ...tietCuaNam(y + 1, opts)];
   let i = -1;
   ds.forEach((t, k) => {
     if (t.date <= d) i = k;

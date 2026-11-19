@@ -6,7 +6,7 @@ import { festivals, leHoiTrongNam } from "../src/index.ts";
 
 const tep = docCaKiem("le-hoi");
 
-test("en: festivals ra đúng tập lễ của ca kiểm, xếp theo ngày", () => {
+test("en: festivals returns the festivals of the vectors, sorted by date", () => {
   for (const c of tep.ca.filter((_, i) => i % 5 === 0)) {
     const nam = (c.vao as { nam: number }).nam;
     const ra = (c.ra ?? []) as { id: string; ngay: string }[];
@@ -18,7 +18,7 @@ test("en: festivals ra đúng tập lễ của ca kiểm, xếp theo ngày", () 
   }
 });
 
-test("en: tên theo lang, lễ âm lịch ghi ngày âm", () => {
+test("en: names follow lang, lunar festivals give the lunar date", () => {
   const en = festivals(2027);
   const tet = en.find((x) => x.id === "tet-nguyen-dan");
   assert.ok(tet);
@@ -28,4 +28,13 @@ test("en: tên theo lang, lễ âm lịch ghi ngày âm", () => {
   assert.equal(tet.name, tet.raw.ten_en);
   assert.equal(festivals(2027, { lang: "zh" }).find((x) => x.id === "tet-nguyen-dan")?.name, tet.raw.ten_zh);
   assert.throws(() => festivals(2027.5), /integer/);
+});
+
+test("festivals: years outside 1900 to 2100 throw; scope is null when unclassified", () => {
+  assert.throws(() => festivals(2300), /year 2300 is outside the supported range: years 1900 to 2100/);
+  assert.throws(() => festivals(1899), RangeError);
+  const ds = festivals(2027);
+  assert.ok(ds.some((f) => f.scope === null));
+  assert.ok(ds.every((f) => f.scope === null || ["national", "regional", "local", "representative"].includes(f.scope)));
+  assert.ok(ds.filter((f) => f.scope === null).every((f) => f.raw.pham_vi === ""));
 });

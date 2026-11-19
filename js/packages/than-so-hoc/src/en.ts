@@ -41,6 +41,10 @@ function docNgay(input: NumerologyDate, ten: string): { year: number; month: num
   if (![y, m, d].every(Number.isInteger) || t.getUTCFullYear() !== y || t.getUTCMonth() !== m - 1 || t.getUTCDate() !== d) {
     throw new RangeError(`${ten}: no such date ${y}-${m}-${d}`);
   }
+  // Cùng khoảng năm với lớp tiếng Anh của các gói khác (YEAR_RANGE của am-lich).
+  if (y < 1900 || y > 2100) {
+    throw new RangeError(`${ten} ${iso({ year: y, month: m, day: d })} is outside the supported range: years 1900 to 2100`);
+  }
   return { year: y, month: m, day: d };
 }
 

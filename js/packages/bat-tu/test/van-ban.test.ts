@@ -46,12 +46,12 @@ function chayTs(ca: CaVanBan): string {
   return chartToText(c, { lang: ca.lang, detail: ca.detail, terms: ca.terms });
 }
 
-test("chartToText: khuôn văn bản Bát Tự", () => {
+test("chartToText: BaZi text layout", () => {
   for (const ca of cacCa()) {
     const s = chayTs(ca);
     const dong = s.trimEnd().split("\n");
     assert.match(dong.at(-1)!, /Nhat Nguyet \(nhatnguyet\.org\)$|Nhật Nguyệt \(nhatnguyet\.org\)$/);
-    assert.equal(dong.filter((x) => x.startsWith("### ")).length, 4, "đủ bốn trụ");
+    assert.equal(dong.filter((x) => x.startsWith("### ")).length, 4, "all four pillars");
     assert.ok(s.endsWith("\n") && !s.includes("\n\n\n"));
     assert.ok(!s.includes("—") && !s.includes("undefined") && !s.includes("null"), s);
   }
@@ -66,7 +66,7 @@ test("chartToText: khuôn văn bản Bát Tự", () => {
   assert.match(vi, /^### Trụ giờ: chưa biết giờ$/m);
 });
 
-test("chartToText: Python ra đúng từng byte như TypeScript", (t) => {
+test("chartToText: Python prints the same bytes as TypeScript", (t) => {
   const ca = cacCa();
   const py = vanBanPython(ca);
   if (!py) return t.skip("không có python3");

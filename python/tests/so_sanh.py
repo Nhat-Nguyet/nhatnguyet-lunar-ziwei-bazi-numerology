@@ -35,27 +35,27 @@ def cho_lech(mong: Any, that: Any, duong: str = "$") -> Optional[str]:
     if isinstance(mong, bool) or isinstance(that, bool):
         if mong is that:
             return None
-        return "%s: chờ %r, ra %r" % (duong, mong, that)
+        return "%s: expected %r, got %r" % (duong, mong, that)
     if isinstance(mong, (int, float)) and isinstance(that, (int, float)):
         if isinstance(mong, float) or isinstance(that, float):
             if math.isfinite(mong) and math.isfinite(that) and abs(mong - that) <= SAI_SO:
                 return None
         elif mong == that:
             return None
-        return "%s: chờ %r, ra %r" % (duong, mong, that)
+        return "%s: expected %r, got %r" % (duong, mong, that)
     if isinstance(mong, dict) and isinstance(that, dict):
         for k in sorted(set(mong) | set(that)):
             if k not in that:
-                return "%s.%s: thiếu khoá (chờ %r)" % (duong, k, mong[k])
+                return "%s.%s: missing key (expected %r)" % (duong, k, mong[k])
             if k not in mong:
-                return "%s.%s: thừa khoá (ra %r)" % (duong, k, that[k])
+                return "%s.%s: extra key (got %r)" % (duong, k, that[k])
             r = cho_lech(mong[k], that[k], "%s.%s" % (duong, k))
             if r:
                 return r
         return None
     if isinstance(mong, list) and isinstance(that, list):
         if len(mong) != len(that):
-            return "%s: độ dài chờ %d, ra %d" % (duong, len(mong), len(that))
+            return "%s: expected length %d, got %d" % (duong, len(mong), len(that))
         for i, (a, b) in enumerate(zip(mong, that)):
             r = cho_lech(a, b, "%s[%d]" % (duong, i))
             if r:
@@ -63,7 +63,7 @@ def cho_lech(mong: Any, that: Any, duong: str = "$") -> Optional[str]:
         return None
     if mong == that and type(mong) is type(that):
         return None
-    return "%s: chờ %r, ra %r" % (duong, mong, that)
+    return "%s: expected %r, got %r" % (duong, mong, that)
 
 
 def so_mon(mon: str, tinh: Callable[[Dict[str, Any]], Any], loc: Optional[Callable[[Dict[str, Any]], bool]] = None,
@@ -82,9 +82,9 @@ def so_mon(mon: str, tinh: Callable[[Dict[str, Any]], Any], loc: Optional[Callab
             that = bo_khoa(json.loads(json.dumps(tinh(ca["vao"]), ensure_ascii=False)), khoa_bo)
             r = cho_lech(mong, that)
         except Exception as e:  # lỗi lúc tính cũng là một ca lệch
-            r = "lỗi %s: %s" % (type(e).__name__, e)
+            r = "error %s: %s" % (type(e).__name__, e)
         if r is None:
             dat += 1
         elif len(lech) < in_toi_da:
-            lech.append("ca %d %s\n    %s" % (i, json.dumps(ca["vao"], ensure_ascii=False), r))
+            lech.append("vector %d %s\n    %s" % (i, json.dumps(ca["vao"], ensure_ascii=False), r))
     return dat, tong, lech

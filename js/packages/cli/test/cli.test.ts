@@ -11,7 +11,7 @@ import { castZiWei } from "@nhatnguyet/tu-vi";
 const KHONG_MAU = { color: false, width: 88 };
 const boMau = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, "");
 
-test("cli: lưới Tử Vi 4x4 thẳng hàng ở cả ba thứ tiếng và nhiều bề ngang", () => {
+test("cli: the 4x4 Zi Wei grid lines up in three languages and several widths", () => {
   for (const lang of ["en", "vi", "zh"]) {
     for (const width of [72, 88, 120]) {
       const out = run(["ziwei", "1990-09-19", "20:00", "male", "--lang", lang, "--name", "Nguyen Van An"], { color: false, width });
@@ -19,10 +19,10 @@ test("cli: lưới Tử Vi 4x4 thẳng hàng ở cả ba thứ tiếng và nhi�
       const luoi = dong.slice(0, dong.findIndex((x) => x.startsWith("└")) + 1);
       const rong = displayWidth(luoi[0]);
       for (const x of luoi) assert.equal(displayWidth(x), rong, `${lang} ${width}: ${x}`);
-      assert.ok(rong <= width, `${lang} ${width}: rộng ${rong}`);
+      assert.ok(rong <= width, `${lang} ${width}: width ${rong}`);
       assert.equal((luoi[0].match(/┬/g) ?? []).length, 3);
       assert.equal(luoi.filter((x) => x.startsWith("├")).length, 3);
-      for (const x of dong) assert.ok(displayWidth(x) <= Math.max(width, rong), `${lang} ${width}: dòng quá rộng: ${x}`);
+      for (const x of dong) assert.ok(displayWidth(x) <= Math.max(width, rong), `${lang} ${width}: line too wide: ${x}`);
     }
   }
   const en = run(["ziwei", "1990-09-19", "20:00", "male"], KHONG_MAU);
@@ -39,14 +39,14 @@ test("cli: lưới Tử Vi 4x4 thẳng hàng ở cả ba thứ tiếng và nhi�
   assert.match(run(["ziwei", "1990-09-19", "20:00", "male", "--lang", "zh"], KHONG_MAU), /命宫/);
 });
 
-test("cli: lưới có đủ chính tinh của lá số", () => {
+test("cli: the grid has every main star of the chart", () => {
   const ls = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
   const out = run(["ziwei", "1990-09-19", "20:00", "male", "--year", "2026"], { color: false, width: 140 });
   for (const p of ls.palaces) for (const s of p.stars) if (s.kind === "major") assert.ok(out.includes(s.name), s.name);
   assert.match(out, /Year 2026 \(Bing Wu\)/);
 });
 
-test("cli: màu bật thì có mã ANSI, tắt thì không; --json bỏ raw", () => {
+test("cli: ANSI codes only with colour on; --json drops raw", () => {
   const mau = run(["ziwei", "1990-09-19", "20:00", "male"], { color: true, width: 88 });
   assert.match(mau, /\x1b\[/);
   assert.equal(boMau(mau), run(["ziwei", "1990-09-19", "20:00", "male"], KHONG_MAU));
@@ -87,7 +87,7 @@ test("cli: bazi, lunar, solar, terms, numerology, festivals", () => {
   assert.deepEqual(JSON.parse(run(["lunar", "2027-02-06", "--json"], KHONG_MAU)).year, 2027);
 });
 
-test("cli: trợ giúp, lỗi, đọc tham số", () => {
+test("cli: help, errors, argument parsing", () => {
   assert.equal(run([], KHONG_MAU), HELP);
   assert.equal(run(["--help"], KHONG_MAU), HELP);
   assert.match(run(["-v"], KHONG_MAU), /^\d+\.\d+\.\d+$/);
@@ -97,7 +97,7 @@ test("cli: trợ giúp, lỗi, đọc tham số", () => {
   assert.deepEqual(parseArgs(["lunar", "2027-02-06", "--country=KR", "--json"]), { command: "lunar", positional: ["2027-02-06"], flags: { country: "KR", json: true } });
 });
 
-test("cli: chạy như chương trình, mã thoát 1 khi lỗi, NO_COLOR", () => {
+test("cli: runs as a program, exit code 1 on error, NO_COLOR", () => {
   const tep = fileURLToPath(new URL("../src/cli.ts", import.meta.url));
   const out = execFileSync(process.execPath, ["--conditions=source", tep, "lunar", "2027-02-06"], { env: { ...process.env, FORCE_COLOR: "1", NO_COLOR: "1" } }).toString();
   assert.match(out, /Start of Spring/);
@@ -107,7 +107,7 @@ test("cli: chạy như chương trình, mã thoát 1 khi lỗi, NO_COLOR", () =>
   assert.throws(() => execFileSync(process.execPath, ["--conditions=source", tep, "bogus"], { stdio: "pipe" }), (e: { status: number }) => e.status === 1);
 });
 
-test("cli: đo bề rộng chữ Hán, cắt, gói dòng", () => {
+test("cli: CJK display width, truncation, wrapping", () => {
   assert.equal(displayWidth("命宫"), 4);
   assert.equal(displayWidth("Mệnh"), 4);
   assert.equal(displayWidth(truncate("Celestial Mechanism", 10)), 10);
@@ -115,7 +115,7 @@ test("cli: đo bề rộng chữ Hán, cắt, gói dòng", () => {
   assert.deepEqual(wrapItems(["Tả Phù", "Hữu Bật", "Văn Xương"], ", ", 16), ["Tả Phù, Hữu Bật,", "Văn Xương"]);
 });
 
-test("cli: --svg ghi hình SVG, --theme dark", () => {
+test("cli: --svg writes an SVG, --theme dark", () => {
   const ghi: Record<string, string> = {};
   const env = { color: false, width: 88, writeFile: (p: string, d: string) => void (ghi[p] = d) };
   const txt = run(["ziwei", "1990-09-19", "20:00", "male", "--svg", "a.svg", "--theme", "dark"], env);
@@ -126,7 +126,7 @@ test("cli: --svg ghi hình SVG, --theme dark", () => {
   for (const k of ["b.svg", "c.svg"]) assert.match(ghi[k], /^<svg /);
 });
 
-test("cli: cờ lựa chọn phái (--fire-bell, --leap-month, --zi-hour...)", () => {
+test("cli: school flags (--fire-bell, --leap-month, --zi-hour...)", () => {
   const j = JSON.parse(run(["ziwei", "1990-09-19", "20:00", "female", "--fire-bell", "quanshu", "--heavenly-kitchen", "chinese", "--json"], KHONG_MAU));
   assert.deepEqual(j.chart.schools, { fireBell: "quanshu", heavenlyKitchen: "chinese" });
   assert.deepEqual(j.chart.palaces, JSON.parse(JSON.stringify(castZiWei({ date: "1990-09-19", time: "20:00", gender: "female", schools: { fireBell: "quanshu", heavenlyKitchen: "chinese" } }).palaces)));
@@ -137,13 +137,13 @@ test("cli: cờ lựa chọn phái (--fire-bell, --leap-month, --zi-hour...)", (
   assert.throws(() => run(["ziwei", "1990-09-19", "20:00", "female", "--fire-bell", "toan-thu"], KHONG_MAU), /invalid fireBell/);
 });
 
-test("cli: --version là phiên bản trong package.json (release-tools set ghi cả hai)", () => {
+test("cli: --version is the package.json version (release-tools set writes both)", () => {
   const goi = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string };
   assert.equal(VERSION, goi.version);
   assert.equal(run(["--version"], KHONG_MAU), goi.version);
 });
 
-test("cli: hours in mười hai canh giờ, sáu giờ hoàng đạo, thẳng hàng", () => {
+test("cli: hours prints twelve double hours, six auspicious, aligned", () => {
   for (const lang of ["en", "vi", "zh"]) {
     const out = run(["hours", "2027-02-06", "--lang", lang], KHONG_MAU);
     const dong = out.split("\n");

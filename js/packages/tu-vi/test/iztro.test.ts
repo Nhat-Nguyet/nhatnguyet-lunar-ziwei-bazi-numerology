@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { astro, bySolar, byLunar, IZTRO_LANGUAGES } from "../src/iztro.ts";
 import { lapLaSoTuVi } from "../src/index.ts";
 
-test("khuôn dữ liệu như iztro FunctionalAstrolabe", () => {
+test("data shape as iztro FunctionalAstrolabe", () => {
   const a = astro.bySolar("1990-9-19", 10, "男", true, "zh-CN");
   assert.deepEqual(Object.keys(a).sort(), [
     "body", "chineseDate", "copyright", "earthlyBranchOfBodyPalace", "earthlyBranchOfSoulPalace", "fiveElementsClass", "gender",
@@ -29,7 +29,7 @@ test("khuôn dữ liệu như iztro FunctionalAstrolabe", () => {
   assert.deepEqual(menh.minorStars[0], { name: "左辅", type: "soft", scope: "origin", brightness: "", mutagen: "" });
   assert.deepEqual(menh.decadal, { range: [5, 14], heavenlyStem: "丁", earthlyBranch: "亥" });
   assert.deepEqual(menh.ages, [8, 20, 32, 44, 56, 68, 80, 92, 104, 116]);
-  assert.equal("raw" in JSON.parse(JSON.stringify(a)), false, "raw không vào JSON");
+  assert.equal("raw" in JSON.parse(JSON.stringify(a)), false, "raw stays out of JSON");
   assert.equal(a.raw.cuc, 5);
   const vi = bySolar("1990-9-19", 10, "男", true, "vi-VN");
   assert.equal(vi.lunarDate, "Âm lịch ngày 1 tháng 8 năm 1990");
@@ -38,7 +38,7 @@ test("khuôn dữ liệu như iztro FunctionalAstrolabe", () => {
   for (const l of IZTRO_LANGUAGES) assert.equal(bySolar("2000-8-16", 2, "女", true, l).palaces.length, 12);
 });
 
-test("sao trùng lapLaSoTuVi (giờ Việt Nam, tháng không nhuận)", () => {
+test("stars equal lapLaSoTuVi (Vietnam time, non-leap month)", () => {
   for (const [ngay, gio, gioi] of [["1990-9-19", 10, "Nam"], ["1985-1-21", 5, "Nữ"], ["2007-2-17", 6, "Nam"], ["1968-1-29", 0, "Nữ"]] as const) {
     const [y, m, d] = ngay.split("-").map(Number);
     const goc = lapLaSoTuVi("", gioi, d, m, y, gio);
@@ -51,21 +51,21 @@ test("sao trùng lapLaSoTuVi (giờ Việt Nam, tháng không nhuận)", () => {
   }
 });
 
-test("fixLeap như iztro: nửa sau tháng nhuận tính tháng sau", () => {
+test("fixLeap as iztro: the second half of a leap month counts as the next month", () => {
   // 2023-04-12 giờ Việt Nam là 22 tháng 2 nhuận.
   const sau = bySolar("2023-4-12", 3, "男", true, "zh-CN");
   const caThang = bySolar("2023-4-12", 3, "男", false, "zh-CN");
   assert.deepEqual(sau.rawDates.lunarDate, { lunarYear: 2023, lunarMonth: 2, lunarDay: 22, isLeap: true });
   assert.equal(sau.lunarDate, "二〇二三年闰二月廿二");
   const goc2 = lapLaSoTuVi("", "Nam", 12, 4, 2023, 3);
-  assert.equal(caThang.raw.cungMenh, goc2.cungMenh, "fixLeap false là quy tắc của lõi");
-  assert.notEqual(sau.raw.cungMenh, goc2.cungMenh, "fixLeap true dời sang tháng 3");
+  assert.equal(caThang.raw.cungMenh, goc2.cungMenh, "fixLeap false is the engine rule");
+  assert.notEqual(sau.raw.cungMenh, goc2.cungMenh, "fixLeap true moves to month 3");
   assert.equal(sau.raw.ngaySinhAm.leap, true);
   // Nửa đầu tháng nhuận: hai cách như nhau.
   assert.equal(bySolar("2023-3-25", 3, "男", true).raw.cungMenh, bySolar("2023-3-25", 3, "男", false).raw.cungMenh);
 });
 
-test("giờ Tý muộn (12) là giờ Tý ngày hôm sau; nước khác đổi lịch", () => {
+test("late Zi hour (12) is the Zi hour of the next day; another country changes the calendar", () => {
   const muon = bySolar("1999-12-31", 12, "女");
   const som = bySolar("2000-1-1", 0, "女");
   assert.equal(muon.time, "晚子时");

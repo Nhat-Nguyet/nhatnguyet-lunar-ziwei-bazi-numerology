@@ -20,7 +20,7 @@ import {
   formatDate,
   formatTime,
   hourBranch as hourBranchOf,
-  parseDate,
+  parseDateInRange,
   parseTime,
   pickLang,
   stemBranchName,
@@ -350,7 +350,7 @@ export function castZiWei(input: ZiWeiInput): ZiWeiChart {
   if (!input || typeof input !== "object") throw new TypeError("castZiWei needs an options object");
   const lang = checkLang(input.lang);
   const terms = checkTerms(input.terms, lang);
-  const d = parseDate(input.date);
+  const d = parseDateInRange(input.date);
   const gender = parseGender(input.gender);
   const t = parseTime(input.time);
   let chi: number;

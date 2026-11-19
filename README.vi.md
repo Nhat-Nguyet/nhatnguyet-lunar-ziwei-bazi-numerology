@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Âm lịch Việt Nam không phải âm lịch Trung Quốc: các thư viện phổ biến cho sai ngày âm Việt Nam ở 2.724 ngày từ 1900 tới 2100.</b><br>
-  Tử Vi, Bát Tự, thần số học, lễ hội và giờ hoàng đạo trên đúng lịch, bằng JavaScript, Python và MCP · kết quả bằng Tiếng Việt, English, 中文 · 17.291 ca kiểm dùng chung
+  Tử Vi, Bát Tự, thần số học, lễ hội và giờ hoàng đạo trên đúng lịch, bằng JavaScript, Python và MCP · 3,6 triệu lá số mở có lời luận trích sách cổ, ghi rõ sách và chương · kết quả bằng Tiếng Việt, English, 中文 · 17.291 ca kiểm dùng chung
 </p>
 
 <p align="center">
@@ -212,11 +212,11 @@ văn, đối chiếu với NASA và IMCCE trên khoảng 1900 tới 2100:
   IMCCE và JPL DE440, và lời giải thích cho từng ngày âm lịch Việt Nam và
   Trung Quốc khác nhau. Mọi con số trong bài được `docs/paper/reproduce.sh`
   tính lại.
-- **Ca kiểm dùng chung**: [`ca-kiem/`](./ca-kiem) chứa **17.291 ca**
+- **Ca kiểm dùng chung**: [`ca-kiem/`](./ca-kiem) chứa **17.291 ca lõi**
   (đầu vào `vao`, đáp án `ra`) sinh từ lõi tính gốc chạy
   [nhatnguyet.org](https://nhatnguyet.org): 14.936 ca lịch, 777 lá Tử Vi,
   777 lá Bát Tự, 600 hồ sơ thần số học và 201 năm lễ hội, cộng 432 ca cho các
-  tuỳ chọn trường phái. Bản TypeScript và Python qua trọn bộ ở mỗi lần đẩy mã.
+  tuỳ chọn trường phái và 1.096 ngày giờ hoàng đạo (tổng 18.819 ca). Bản TypeScript và Python qua trọn bộ ở mỗi lần đẩy mã.
 - **Lịch sử ngày Tết**: [`history/`](./history/README.md) kê ngày Tết của mọi
   năm 1900 tới 2100 theo UTC+7 và UTC+8, kèm lịch Việt Nam thực sự dùng và
   nguồn cho từng năm có tư liệu.
@@ -456,8 +456,8 @@ CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI,
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 đơn vị (các số chính, số theo chu kỳ, chủ đề đời sống), 195 đoạn sách | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 văn bản cổ thuộc phạm vi công cộng (khoảng 350 tác phẩm), 72,7 triệu ký tự, toàn văn | 147 MB chữ, 70 MB Parquet |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1.328 đoạn Kinh Dịch đặt song song: Hán văn cổ cùng bản dịch tiếng Anh (952) và tiếng Pháp (376) thuộc phạm vi công cộng | |
-| [Thuật ngữ](./du-lieu/terminology/README.md) | 416 thuật ngữ bằng tiếng Việt, chữ Hán phồn thể và giản thể, bính âm và tiếng Anh, đủ mọi tên các thư viện in ra | |
-| [Bộ đánh giá AI](./ai-eval/README.md) | 1.520 câu hỏi có đáp án tính sẵn bằng tiếng Anh, Việt, Trung (ngày âm, Tết, trụ, lá số), một nửa là ca khó | |
+| [Thuật ngữ](./du-lieu/terminology/README.md) | 428 thuật ngữ bằng tiếng Việt, chữ Hán phồn thể và giản thể, bính âm và tiếng Anh, đủ mọi tên các thư viện in ra | |
+| [Bộ đánh giá AI](./ai-eval/README.md) | 1.520 câu hỏi có đáp án tính sẵn bằng tiếng Anh, Việt, Trung (ngày âm, Tết, trụ, lá số), 626 câu (41%) là ca khó | |
 | [Tết 1900 tới 2100](./history/README.md) | Tết theo UTC+7 và UTC+8 của 201 năm, kèm lịch thực sự dùng và nguồn | |
 | [33 bộ lịch pháp và văn hoá](https://nhatnguyet.org/du-lieu) | âm dương lịch 1900 tới 2100, tiết khí, 64 quẻ, 78 lá Tarot, 206 lễ hội, 456 bài văn cúng... dạng CSV, JSON, Parquet, có [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
@@ -476,7 +476,10 @@ theo đề tài, 192 Kinh Dịch và bốc phệ, 24 tín ngưỡng và lễ t�
 hoá Việt, 21 thần số học, 20 Tam thức, 19 lịch pháp và chọn ngày, 17 Bát Tự và
 mệnh lý, 16 phong thủy, 14 Phật giáo, 13 nhân tướng, 7 chiêm tinh và Tarot, 6
 Tử Vi, 2 khác. 38 văn bản là chữ nhận dạng quang học, có cờ `ocr`. Mỗi văn bản
-có trường `pd_basis` nói vì sao thuộc phạm vi công cộng.
+có trường `pd_basis` nói vì sao thuộc phạm vi công cộng. Theo lựa chọn của chủ
+dự án, `sach-co` gọi mỗi văn bản bằng một mã trung tính (`sc-0416`) thay cho
+tên sách và tác giả; các bộ tri thức và kho lời luận thì ghi tên sách và tác
+giả cho mọi đoạn chúng trích.
 
 ```python
 from datasets import load_dataset

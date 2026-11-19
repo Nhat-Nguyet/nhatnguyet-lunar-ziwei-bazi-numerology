@@ -29,31 +29,31 @@ function tinh(vao: Record<string, unknown>): unknown {
   return tieuVan ? { laSo, tieuVan } : { laSo };
 }
 
-test("bat-tu: ca có giờ sinh", () => {
+test("bat-tu: vectors with a birth time", () => {
   const kq = kiemCa(tep, tinh, { loc: (vao) => "gio" in vao });
-  assert.ok(kq.tong > 0, "không có ca nào");
+  assert.ok(kq.tong > 0, "no vectors");
   assert.equal(kq.soLech, 0, baoCao("bat-tu có giờ", kq));
 });
 
-test("bat-tu: ca không biết giờ sinh", () => {
+test("bat-tu: vectors without a birth time", () => {
   const kq = kiemCa(tep, tinh, { loc: (vao) => !("gio" in vao) });
-  assert.ok(kq.tong > 0, "không có ca nào");
+  assert.ok(kq.tong > 0, "no vectors");
   assert.equal(kq.soLech, 0, baoCao("bat-tu không giờ", kq));
 });
 
-test("bat-tu: hai nhóm phủ đủ mọi ca của tệp", () => {
+test("bat-tu: the two groups cover every vector of the file", () => {
   assert.equal(tep.ca.length, tep.soCa);
   const coGio = tep.ca.filter((c) => "gio" in c.vao).length;
   const khongGio = tep.ca.filter((c) => !("gio" in c.vao)).length;
   assert.equal(coGio + khongGio, tep.soCa);
 });
 
-test("bat-tu: giới tính lạ thì báo lỗi, không đoán", () => {
+test("bat-tu: an unknown gender throws, no guessing", () => {
   assert.throws(() => lapLaSoBatTu(1, 1, 2000, 8, 0, "khác"), LoiThieuGioiTinh);
   assert.equal(lapLaSoBatTu(1, 1, 2000, 8, 0, "female").gioiTinh, "Nữ");
 });
 
-test("bat-tu: không giờ sinh thì không trụ giờ, không mệnh cung, không tiểu vận", () => {
+test("bat-tu: no birth time means no hour pillar, life palace or minor luck", () => {
   const ls = lapLaSoBatTu(15, 6, 1990, null, 30, "Nam");
   assert.equal(ls.coGioSinh, false);
   assert.equal(ls.truGio, undefined);
@@ -63,7 +63,7 @@ test("bat-tu: không giờ sinh thì không trụ giờ, không mệnh cung, kh�
   assert.equal(tinhTieuVanBatTu(ls, 2026), null);
 });
 
-test("bat-tu: thập thần, quan hệ can, nguyệt lệnh", () => {
+test("bat-tu: ten gods, stem relations, month command", () => {
   assert.equal(allThapThan().length, 10);
   assert.equal(thapThanCuaCan("Giáp", "Canh")?.ten, "Thất Sát");
   assert.equal(thapThanCuaCan("Giáp", "Tân")?.tenZh, "正官");
@@ -76,7 +76,7 @@ test("bat-tu: thập thần, quan hệ can, nguyệt lệnh", () => {
   assert.deepEqual([nl[0].chi, nl[0].tiet], ["Dần", "Lập Xuân"]);
 });
 
-test("bat-tu: phép so bắt được đáp án sai", () => {
+test("bat-tu: the comparison catches a wrong answer", () => {
   const kq = kiemCa(
     tep,
     (vao) => {
@@ -88,18 +88,18 @@ test("bat-tu: phép so bắt được đáp án sai", () => {
   );
   assert.ok(kq.tong > 0);
   assert.equal(kq.dat, 0);
-  assert.match(kq.loi[0], /ra\.laSo\.daiVan\.soNgay: mong/);
+  assert.match(kq.loi[0], /ra\.laSo\.daiVan\.soNgay: expected/);
 });
 
-test("bat-tu: mọi tên trên mọi lá của ca kiểm có đủ ba thứ tiếng", () => {
+test("bat-tu: every name on every chart of the vectors has all three languages", () => {
   const dem: DemBaNgonNgu = { tong: 0, thieu: [] };
   for (const c of tep.ca) doBaNgonNgu(tinh(c.vao), dem);
-  assert.ok(dem.tong > 0, "không đo được tên nào");
+  assert.ok(dem.tong > 0, "no names measured");
   assert.equal(dem.thieu.length, 0, tomTatThieu(dem));
 });
 
 // Lựa chọn phái (schools: ziHour): ca kiểm bat-tu-phai do bản Go sinh.
-test("bat-tu-phai: mọi ca kiểm lựa chọn giờ Tý khớp bản Go", () => {
+test("bat-tu-phai: every Zi-hour school vector matches Go", () => {
   const tepPhai = docCaKiem("bat-tu-phai");
   const kq = kiemCa(tepPhai, (vao) => {
     const gio = typeof vao.gio === "number" ? vao.gio : null;
@@ -111,7 +111,7 @@ test("bat-tu-phai: mọi ca kiểm lựa chọn giờ Tý khớp bản Go", () =
   assert.equal(kq.soLech, 0, baoCao("bat-tu-phai", kq));
 });
 
-test("bat-tu-phai: 23h30 ngày 1/1/2024 như lunar-javascript (sect 1 và 2); mặc định giữ nguyên; giá trị lạ ném lỗi", () => {
+test("bat-tu-phai: 23:30 on 2024-01-01 as lunar-javascript (sect 1 and 2); default unchanged; unknown value throws", () => {
   const goc = lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam");
   const moi = lapLaSoBatTu(1, 1, 2024, 23, 30, "Nam", { ziHour: "split-at-midnight" });
   assert.deepEqual([goc.truNgay.label, goc.truGio?.label], ["Ất Sửu", "Bính Tý"]);

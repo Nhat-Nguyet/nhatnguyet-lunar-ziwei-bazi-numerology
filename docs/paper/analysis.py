@@ -994,6 +994,9 @@ def test_vectors():
             ops = Counter((c["vao"].get("phep"), c["vao"].get("muiGio", 7)) for c in d["ca"])
             out["am-lich_by_operation"] = OrderedDict(
                 ("%s@UTC+%s" % (op, tz), n) for (op, tz), n in sorted(ops.items()))
+    # core suites: what the README and CONTRIBUTING call the test vectors; the
+    # total adds the school options (*-phai) and the auspicious hours
+    out["core"] = sum(out[k] for k in ("am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi"))
     out["total"] = total
     out["calendar_vector_engine_versions"] = sorted(versions)
     return out

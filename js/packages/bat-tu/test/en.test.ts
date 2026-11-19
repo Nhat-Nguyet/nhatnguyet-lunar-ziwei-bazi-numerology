@@ -22,7 +22,7 @@ function vao(c: (typeof tep.ca)[number], lang: "vi" | "en" | "zh") {
   };
 }
 
-test("en: castBaZi ra đúng lapLaSoBatTu (giờ đồng hồ, cả khi chưa biết giờ)", () => {
+test("en: castBaZi gives lapLaSoBatTu (clock time, and without a time)", () => {
   for (const c of mau) {
     const v = c.vao as R;
     const ls = castBaZi(vao(c, "vi"));
@@ -33,7 +33,7 @@ test("en: castBaZi ra đúng lapLaSoBatTu (giờ đồng hồ, cả khi chưa bi
   assert.ok(mau.some((c) => (c.vao as R).gio === undefined));
 });
 
-test("en: tên ba thứ tiếng khớp ca kiểm", () => {
+test("en: names in three languages match the vectors", () => {
   for (const c of mau) {
     const ra = (c.ra as R).laSo as R;
     const [vi, en, zh] = (["vi", "en", "zh"] as const).map((l) => castBaZi(vao(c, l)));
@@ -85,7 +85,7 @@ test("en: tên ba thứ tiếng khớp ca kiểm", () => {
   }
 });
 
-test("en: minorLuck khớp tinhTieuVanBatTu và ca kiểm", () => {
+test("en: minorLuck matches tinhTieuVanBatTu and the vectors", () => {
   for (const c of mau) {
     const v = c.vao as R;
     const ra = c.ra as R;
@@ -103,7 +103,7 @@ test("en: minorLuck khớp tinhTieuVanBatTu và ca kiểm", () => {
   }
 });
 
-test("en: lỗi đầu vào và ghi chú quy ước", () => {
+test("en: input errors and convention notes", () => {
   assert.throws(() => castBaZi({ date: "1990-09-19", time: "20:00", gender: "" }), /gender must be/);
   assert.throws(() => castBaZi({ date: "1990-9-31", gender: "male" }), /no such date/);
   const a = castBaZi({ date: "1990-09-19", time: "23:10", gender: "male" });
@@ -114,10 +114,14 @@ test("en: lỗi đầu vào và ghi chú quy ước", () => {
   assert.equal(localizeBaZi(a.raw, "zh").pillars.day.label.length, 2);
 });
 
-test("en: baZiSvg và chart.toSvg vẽ đúng renderBaziSvg", async () => {
+test("en: baZiSvg and chart.toSvg draw renderBaziSvg", async () => {
   const { baZiSvg, renderBaziSvg } = await import("../src/index.ts");
   const c = castBaZi({ date: "1990-09-19", time: "20:00", gender: "male", lang: "vi" });
   assert.equal(c.toSvg({ name: "An" }), renderBaziSvg(c.raw, { lang: "vi", hoTen: "An" }));
   assert.equal(baZiSvg(c, { theme: "dark" }), renderBaziSvg(c.raw, { lang: "vi", theme: "dark", hoTen: "" }));
   assert.ok(!Object.keys(c).includes("toSvg"));
+});
+
+test("castBaZi: a birth date outside 1900 to 2100 throws a RangeError", () => {
+  assert.throws(() => castBaZi({ date: "2101-01-01", gender: "female" }), /date 2101-01-01 is outside the supported range: years 1900 to 2100/);
 });

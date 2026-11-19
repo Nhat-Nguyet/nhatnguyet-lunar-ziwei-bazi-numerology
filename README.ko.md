@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>베트남 음력은 중국 음력이 아닙니다. 널리 쓰이는 라이브러리는 1900~2100년 중 2,724일에 베트남 음력 날짜를 틀리게 냅니다.</b><br>
-  올바른 역법 위에서 계산하는 자미두수, 사주팔자, 수비학, 축제, 길한 시진을 JavaScript, Python, MCP로 · 결과는 English, Tiếng Việt, 中文 · 공용 테스트 벡터 17,291개
+  올바른 역법 위에서 계산하는 자미두수, 사주팔자, 수비학, 축제, 길한 시진을 JavaScript, Python, MCP로 · 고전을 책 이름과 장까지 밝혀 인용하는 풀이가 달린 공개 명반 360만 개 · 결과는 English, Tiếng Việt, 中文 · 공용 테스트 벡터 17,291개
 </p>
 
 <p align="center">
@@ -212,10 +212,10 @@ NASA와 IMCCE로 검증했습니다.
   하나하나에 대한 설명을 담고 있습니다. 논문의 모든 수치는
   `docs/paper/reproduce.sh`로 다시 계산됩니다.
 - **공용 테스트 벡터**: [`ca-kiem/`](./ca-kiem)에는
-  [nhatnguyet.org](https://nhatnguyet.org)를 구동하는 기준 엔진이 생성한 **케이스
+  [nhatnguyet.org](https://nhatnguyet.org)를 구동하는 기준 엔진이 생성한 **핵심 케이스
   17,291개**(입력 `vao`, 기대 출력 `ra`)가 들어 있습니다. 역법 케이스 14,936개,
   자미두수 명반 777개, 사주팔자 명반 777개, 수비학 프로필 600개, 축제 연도 201개,
-  그리고 학파 옵션 케이스 432개입니다. TypeScript와 Python은 푸시할 때마다 이 모두를
+  그리고 학파 옵션 케이스 432개와 길한 시진 1,096일(모두 18,819개)입니다. TypeScript와 Python은 푸시할 때마다 이 모두를
   통과합니다.
 - **설날의 역사**: [`history/`](./history/README.md)에는 1900~2100년 모든 해의
   UTC+7과 UTC+8 기준 설날이, 베트남이 실제로 쓴 역법, 그리고 문서로 확인되는 해마다의
@@ -456,8 +456,8 @@ CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 단위 143개(핵심 수, 주기 수, 삶의 주제), 구절 195개 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 퍼블릭 도메인 고전 373종(약 350개 작품), 7,265만 자, 전문 | 텍스트 147 MB, Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 역경의 정렬된 구간 1,328개: 한문 원문과 퍼블릭 도메인 영어 번역(952개), 프랑스어 번역(376개) | |
-| [용어집](./du-lieu/terminology/README.md) | 베트남어, 번체와 간체 중국어, 병음, 영어로 된 용어 416개, 라이브러리가 출력하는 모든 이름 | |
-| [AI 평가 세트](./ai-eval/README.md) | 영어, 베트남어, 중국어로 된 계산 문제 1,520개(음력 날짜, 설날, 사주, 명반), 그중 절반은 어려운 사례 | |
+| [용어집](./du-lieu/terminology/README.md) | 베트남어, 번체와 간체 중국어, 병음, 영어로 된 용어 428개, 라이브러리가 출력하는 모든 이름 | |
+| [AI 평가 세트](./ai-eval/README.md) | 영어, 베트남어, 중국어로 된 계산 문제 1,520개(음력 날짜, 설날, 사주, 명반), 그중 626개(41%)는 어려운 사례 | |
 | [설날 1900~2100](./history/README.md) | 201년 동안의 UTC+7과 UTC+8 기준 설날, 실제로 쓰인 역법과 출처 포함 | |
 | [역법과 문화 데이터셋 33종](https://nhatnguyet.org/en/du-lieu) | 1900~2100년 음양력, 절기, 64괘, 타로 78장, 축제 206개, 제례 기도문 456편... CSV, JSON, Parquet, [DOI](https://doi.org/10.5281/zenodo.23009396) 부여 | |
 
@@ -475,7 +475,10 @@ CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수
 신앙과 의례 24종, 베트남 역사와 문화 22종, 수비학 21종, 삼식 20종, 역법과 택일 19종,
 사주와 명리 17종, 풍수 16종, 불교 14종, 관상 13종, 점성술과 타로 7종, 자미두수 6종,
 기타 2종입니다. 이 가운데 38종은 OCR 텍스트이며 `ocr` 플래그가 붙어 있습니다. 각
-문헌에는 퍼블릭 도메인인 근거를 밝힌 `pd_basis` 필드가 있습니다.
+문헌에는 퍼블릭 도메인인 근거를 밝힌 `pd_basis` 필드가 있습니다. 소유자의 방침에
+따라 `sach-co`는 각 문헌을 책 이름과 저자 대신 중립적인 코드(`sc-0416`)로
+표시합니다. 지식 데이터셋과 풀이 텍스트 저장소는 인용하는 모든 구절에 책 이름과
+저자를 밝힙니다.
 
 ```python
 from datasets import load_dataset
@@ -556,7 +559,7 @@ print(len(books), sum(books["characters"]))
 
 nhatnguyet.org는 iframe으로 삽입하는 위젯 14종(용어, 길일, 복권 결과 등)도
 제공하지만, 이는 웹사이트의 서비스이며 이 저장소의 공개 코드가 아닙니다:
-[nhatnguyet.org/widget](https://nhatnguyet.org/widget?lang=en).
+[nhatnguyet.org/widget](https://nhatnguyet.org/en/widget).
 
 ## 예제와 문서
 

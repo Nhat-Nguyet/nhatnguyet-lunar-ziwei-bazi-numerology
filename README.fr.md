@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Le calendrier lunaire vietnamien n'est pas le calendrier chinois : les bibliothèques courantes donnent une date lunaire vietnamienne fausse pour 2 724 jours entre 1900 et 2100.</b><br>
-  Zi Wei Dou Shu, BaZi, numérologie, fêtes et heures fastes sur le bon calendrier, en JavaScript, en Python et via MCP · résultats en English, Tiếng Việt, 中文 · 17 291 vecteurs de test partagés
+  Zi Wei Dou Shu, BaZi, numérologie, fêtes et heures fastes sur le bon calendrier, en JavaScript, en Python et via MCP · 3,6 millions de thèmes ouverts dont les lectures citent les classiques, livre et chapitre · résultats en English, Tiếng Việt, 中文 · 17 291 vecteurs de test partagés
 </p>
 
 <p align="center">
@@ -213,12 +213,13 @@ relève de l'astronomie, et il est vérifié par rapport à la NASA et à l'IMCC
   la NASA, à l'IMCCE et à JPL DE440, et une explication pour chaque jour où les
   calendriers vietnamien et chinois diffèrent. Chacun de ses chiffres est
   recalculé par `docs/paper/reproduce.sh`.
-- **Vecteurs de test partagés** : [`ca-kiem/`](./ca-kiem) contient **17 291 cas**
+- **Vecteurs de test partagés** : [`ca-kiem/`](./ca-kiem) contient **17 291 cas de base**
   (entrée `vao`, sortie attendue `ra`) générés par le moteur de référence qui
   fait tourner [nhatnguyet.org](https://nhatnguyet.org) : 14 936 cas de
   calendrier, 777 thèmes Zi Wei, 777 thèmes BaZi, 600 profils numérologiques et
-  201 années de fêtes, plus 432 cas pour les options d'école. TypeScript et
-  Python les passent tous à chaque push.
+  201 années de fêtes, plus 432 cas pour les options d'école et 1 096 jours
+  d'heures fastes (18 819 au total). TypeScript et Python les passent tous à
+  chaque push.
 - **Histoire du Tết** : [`history/`](./history/README.md) donne le Tết de chaque
   année de 1900 à 2100 en UTC+7 et en UTC+8, avec le calendrier réellement
   utilisé au Vietnam et une source pour chaque année documentée.
@@ -476,8 +477,8 @@ l'entraînement d'IA, avec attribution.
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 unités (nombres principaux, nombres de cycle, thèmes de vie), 195 passages | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 textes classiques du domaine public (environ 350 œuvres), 72,7 millions de caractères, texte intégral | 147 Mo de texte, 70 Mo en Parquet |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1 328 segments alignés du Yi King : chinois classique avec des traductions anglaises (952) et françaises (376) du domaine public | |
-| [Terminologie](./du-lieu/terminology/README.md) | 416 termes en vietnamien, en chinois traditionnel et simplifié, en pinyin et en anglais, tous les noms que produisent les bibliothèques | |
-| [Jeu d'évaluation IA](./ai-eval/README.md) | 1 520 questions calculées en anglais, vietnamien et chinois (dates lunaires, Tết, piliers, thèmes), dont la moitié sont des cas difficiles | |
+| [Terminologie](./du-lieu/terminology/README.md) | 428 termes en vietnamien, en chinois traditionnel et simplifié, en pinyin et en anglais, tous les noms que produisent les bibliothèques | |
+| [Jeu d'évaluation IA](./ai-eval/README.md) | 1 520 questions calculées en anglais, vietnamien et chinois (dates lunaires, Tết, piliers, thèmes), dont 626 (41 %) sont des cas difficiles | |
 | [Le Tết de 1900 à 2100](./history/README.md) | Le Tết en UTC+7 et en UTC+8 sur 201 années, avec le calendrier réellement utilisé et les sources | |
 | [33 jeux de données sur le calendrier et la culture](https://nhatnguyet.org/en/du-lieu) | calendrier luni-solaire de 1900 à 2100, termes solaires, 64 hexagrammes, 78 cartes de tarot, 206 fêtes, 456 prières rituelles... en CSV, JSON et Parquet, avec un [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
@@ -502,7 +503,10 @@ vietnamiennes, 21 numérologie, 20 les Trois Arts, 19 calendrier et choix des
 jours, 17 BaZi et destinée, 16 feng shui, 14 bouddhisme, 13 physiognomonie, 7
 astrologie et tarot, 6 Zi Wei, 2 divers. 38 sont des textes issus d'OCR et
 portent l'indicateur `ocr`. Chaque texte a un champ `pd_basis` qui indique
-pourquoi il est dans le domaine public.
+pourquoi il est dans le domaine public. Par choix du propriétaire, `sach-co`
+désigne chaque texte par un code neutre (`sc-0416`) plutôt que par son titre
+et son auteur ; les jeux de connaissances et le stock de lectures donnent le
+titre et l'auteur de chaque passage qu'ils citent.
 
 ```python
 from datasets import load_dataset
@@ -586,7 +590,7 @@ d'un autre pays. Attributs et aperçus : [widgets/](./widgets/README.md).
 
 nhatnguyet.org propose aussi 14 widgets intégrés par iframe (glossaire, jours
 favorables, résultats de loterie...) ; c'est un service du site, pas du code
-ouvert de ce dépôt : [nhatnguyet.org/widget](https://nhatnguyet.org/widget?lang=en).
+ouvert de ce dépôt : [nhatnguyet.org/widget](https://nhatnguyet.org/en/widget).
 
 ## Exemples et documentation
 

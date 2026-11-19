@@ -9,7 +9,8 @@ Language models should not compute lunar dates, stem-branch pillars or star
 positions in their heads: these depend on new-moon and solar-term instants to
 the minute and on conventions (time zone, leap months, the Tý hour). This server
 runs the [Nhat Nguyet](https://nhatnguyet.org) libraries locally, checked
-against 17,291 shared test vectors and NASA / IMCCE data. No network access, no
+against 17,291 core test vectors (18,819 including school options and
+auspicious hours) and NASA / IMCCE data. No network access, no
 API key.
 
 - **Vietnam time (UTC+7) by default.** Pass `country` for the Chinese (`CN`,
@@ -132,7 +133,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 await createServer().connect(new StdioServerTransport());
 ```
 
-## Licence
+## License
 
 MIT. Festival data from the open dataset `le-hoi-viet-nam` (CC BY 4.0).
 Source: <https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology>.

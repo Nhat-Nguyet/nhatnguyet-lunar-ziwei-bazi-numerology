@@ -18,9 +18,10 @@
 </head>
 <body>
 <h1>@nhatnguyet/widgets</h1>
-<p>Five web components that compute the Vietnamese lunar calendar in the browser. No server, no tracking. Query string: <code>?lang=vi|en|zh&amp;theme=light|dark|auto&amp;rong=300&amp;date=2026-11-19&amp;country=VN</code>.</p>
+<p>Five web components that compute the Vietnamese lunar calendar in the browser. No server, no tracking. Query string: <code>?lang=vi|en|zh&amp;terms=pinyin|han|vi&amp;theme=light|dark|auto&amp;rong=300&amp;date=2026-11-19&amp;country=VN</code>.</p>
 <form id="chinh">
   <label>lang <select name="lang"><option>vi</option><option>en</option><option>zh</option></select></label>
+  <label>terms <select name="terms"><option>pinyin</option><option>han</option><option>vi</option></select></label>
   <label>theme <select name="theme"><option>light</option><option>dark</option><option>auto</option></select></label>
   <label>width <select name="rong"><option>280</option><option>300</option><option selected>360</option><option>600</option><option>1280</option></select></label>
   <label>country <select name="country"><option>VN</option><option>CN</option><option>KR</option></select></label>
@@ -33,7 +34,7 @@
   const q = new URLSearchParams(location.search);
   const THE = ["nn-lich-hom-nay", "nn-gio-hoang-dao", "nn-dem-nguoc-tet", "nn-lich-thang", "nn-doi-lich"];
   const form = document.getElementById("chinh");
-  for (const k of ["lang", "theme", "rong", "country"]) if (q.get(k)) form.elements[k].value = q.get(k);
+  for (const k of ["lang", "terms", "theme", "rong", "country"]) if (q.get(k)) form.elements[k].value = q.get(k);
   if (q.get("accent")) form.elements.accent.value = q.get("accent");
   const luoi = document.getElementById("luoi");
   function ve() {
@@ -44,6 +45,7 @@
     for (const t of q.get("chi") ? [q.get("chi")] : THE) {
       const el = document.createElement(t);
       el.setAttribute("lang", f.lang.value);
+      if (f.terms.value !== "pinyin") el.setAttribute("terms", f.terms.value);
       el.setAttribute("theme", f.theme.value);
       el.setAttribute("country", f.country.value);
       if (f.accent.value !== "#b5402f") el.setAttribute("accent", f.accent.value);

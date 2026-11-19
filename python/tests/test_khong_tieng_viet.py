@@ -53,7 +53,7 @@ def ngay(v):
 class TestKhongTiengViet(unittest.TestCase):
     def _bao(self, loi):
         if loi:
-            self.fail("%d chuỗi tiếng Việt ở bản tiếng Anh, ví dụ:\n%s" % (len(loi), "\n".join(sorted(set(loi))[:30])))
+            self.fail("%d Vietnamese strings in the English output, for example:\n%s" % (len(loi), "\n".join(sorted(set(loi))[:30])))
 
     def test_tu_vi(self):
         loi = []
@@ -114,7 +114,7 @@ class TestKhongTiengViet(unittest.TestCase):
             for f in en.festivals(y):
                 quet({k: f[k] for k in ("id", "date", "calendar", "fixedDate", "level", "group", "scope")}, "$", loi)
                 self.assertIn(f["group"], ("holiday", "folk-religion", "other"))
-                self.assertIn(f["scope"], ("national", "local", ""))
+                self.assertIn(f["scope"], ("national", "local", None))
         self._bao(loi)
 
 

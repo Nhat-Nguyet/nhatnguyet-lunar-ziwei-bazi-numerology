@@ -9,16 +9,39 @@ jobs:
     name: TypeScript (17,291 test vectors)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: js
       - run: npm test
         working-directory: js
       - run: npm run build
         working-directory: js
+  node-versions:
+    name: Built packages on Node ${{ matrix.node }} (every test vector)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22, 24]
+    steps:
+      - uses: actions/checkout@v5
+      # The build and the TypeScript tests need Node 22.18+; the built
+      # packages (what npm ships) must run on every Node the READMEs promise.
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Every test vector, the English API, the CLI and the MCP server on the built packages
+        run: node .github/scripts/check-dist.mjs
   python:
     name: Python ${{ matrix.python }} (17,291 test vectors)
     runs-on: ubuntu-24.04
@@ -27,8 +50,8 @@ jobs:
       matrix:
         python: ["3.9", "3.13"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests
@@ -37,16 +60,16 @@ jobs:
     name: README code (local packages)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
       - name: The seven READMEs agree
         run: node cong-cu/kiem-readme.mjs
-      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: js
       - run: npm run build
         working-directory: js
@@ -56,14 +79,14 @@ jobs:
     name: Terminology and AI evaluation set follow the libraries
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: js
       - name: Every name the libraries output is in the terminology; files are regenerated
         run: node --conditions=source --test du-lieu/terminology/check.test.mjs
@@ -73,11 +96,11 @@ jobs:
     name: API reference is up to date
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: js
       - run: npm run docs
         working-directory: js
@@ -93,8 +116,8 @@ jobs:
     name: Versions agree
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
       - run: node .github/scripts/release-tools.mjs check

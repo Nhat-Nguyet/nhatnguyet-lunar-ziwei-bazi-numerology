@@ -8,11 +8,12 @@ Thanks for helping out. There are three easy ways in:
 
 1. **Report a wrong result** (a date, a star, a pillar, a number), with your
    source.
-2. **Pick a good first issue**: issues labelled
+2. **Pick a good first issue**: issues labeled
    [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
    are small, self-contained and come with the files to touch.
 3. **Take the [port challenge](#port-challenge)**: write the engine in another
-   language and pass all 17,291 shared test cases.
+   language and pass all 17,291 core test vectors (18,819 including school
+   options and auspicious hours).
 
 ### Reporting a bug
 
@@ -59,7 +60,8 @@ cd python && python3 -m unittest discover -s tests # Python 3.9+
 ### Port challenge
 
 **Implement the engine in Go, Rust, Dart, Swift, Java, C#, Kotlin, PHP, Ruby,
-Elixir, Zig... and pass all 17,291 test cases in [`ca-kiem/`](./ca-kiem).**
+Elixir, Zig... and pass all 17,291 core test vectors in [`ca-kiem/`](./ca-kiem)
+(18,819 including school options and auspicious hours).**
 The test cases are plain JSON, so no part of this needs TypeScript or Python.
 The two existing ports are readable references:
 [`js/packages/*/src`](./js/packages) and [`python/nhatnguyet`](./python/nhatnguyet).
@@ -175,8 +177,9 @@ astronomy.
 
 ### Credit
 
-When you use the data, credit `Data: Nhat Nguyet (nhatnguyet.org)`; see Terms
-of use in the [README](./README.md).
+When you use the data, credit `Data: Nhat Nguyet (nhatnguyet.org)`; see
+[Citation and license](./README.md#citation-and-license) in the README and
+[DATA-LICENSE](./DATA-LICENSE).
 
 ## Tiếng Việt
 
@@ -187,7 +190,8 @@ Cảm ơn anh chị đã muốn góp tay. Có ba lối vào dễ:
    [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
    là việc nhỏ, làm trọn được, có ghi sẵn tệp cần sửa.
 3. **Nhận thử thách viết lại bằng ngôn ngữ khác**: viết lõi tính bằng một ngôn
-   ngữ lập trình khác và qua đủ 17.291 ca kiểm (xem dưới).
+   ngữ lập trình khác và qua đủ 17.291 ca kiểm lõi (18.819 ca nếu tính cả tuỳ
+   chọn trường phái và giờ hoàng đạo; xem dưới).
 
 ### Báo lỗi
 
@@ -230,7 +234,8 @@ cd python && python3 -m unittest discover -s tests # Python 3.9 trở lên
 ### Thử thách viết lại bằng ngôn ngữ khác
 
 **Viết lõi tính bằng Go, Rust, Dart, Swift, Java, C#, Kotlin, PHP... và qua đủ
-17.291 ca kiểm trong [`ca-kiem/`](./ca-kiem).** Ca kiểm là JSON thuần, không
+17.291 ca kiểm lõi trong [`ca-kiem/`](./ca-kiem) (18.819 ca nếu tính cả tuỳ chọn
+trường phái và giờ hoàng đạo).** Ca kiểm là JSON thuần, không
 cần biết TypeScript hay Python; hai bản sẵn có là tài liệu tham khảo dễ đọc:
 [`js/packages/*/src`](./js/packages) và [`python/nhatnguyet`](./python/nhatnguyet).
 
@@ -255,8 +260,9 @@ cần biết TypeScript hay Python; hai bản sẵn có là tài liệu tham kh�
 
 ### Ghi nguồn
 
-Dùng dữ liệu thì ghi `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`; xem mục Quy định
-sử dụng trong [README](./README.vi.md).
+Dùng dữ liệu thì ghi `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`; xem mục
+[Trích dẫn và giấy phép](./README.vi.md#trích-dẫn-và-giấy-phép) trong README và
+[DATA-LICENSE](./DATA-LICENSE).
 
 ## 中文
 
@@ -264,7 +270,7 @@ sử dụng trong [README](./README.vi.md).
 
 1. **报告错误结果**（日期、星曜、柱、数字），并附上依据。
 2. **认领新手任务**：带有 [`good first issue`](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 标签的 issue 规模小、可独立完成，并注明需要修改的文件。
-3. **参加移植挑战**：用另一种编程语言实现计算核心，并通过全部 17,291 个测试用例（见下文）。
+3. **参加移植挑战**：用另一种编程语言实现计算核心，并通过全部 17,291 个核心测试用例（含流派选项与黄道吉时共 18,819 个；见下文）。
 
 ### 报告问题
 
@@ -298,7 +304,7 @@ cd python && python3 -m unittest discover -s tests # Python 3.9 及以上
 
 ### 移植挑战
 
-**用 Go、Rust、Dart、Swift、Java、C#、Kotlin、PHP 等语言实现计算核心，并通过 [`ca-kiem/`](./ca-kiem) 中全部 17,291 个测试用例。** 用例是纯 JSON，无需懂 TypeScript 或 Python；现有两个版本可作为易读的参考：[`js/packages/*/src`](./js/packages) 和 [`python/nhatnguyet`](./python/nhatnguyet)。
+**用 Go、Rust、Dart、Swift、Java、C#、Kotlin、PHP 等语言实现计算核心，并通过 [`ca-kiem/`](./ca-kiem) 中全部 17,291 个核心测试用例（含流派选项与黄道吉时共 18,819 个）。** 用例是纯 JSON，无需懂 TypeScript 或 Python；现有两个版本可作为易读的参考：[`js/packages/*/src`](./js/packages) 和 [`python/nhatnguyet`](./python/nhatnguyet)。
 
 - 建议顺序：`than-so-hoc`（600 个，最简单）、`am-lich`（14,936 个，其他各部分的基础）、`le-hoi`（201 个）、`bat-tu`（777 个）、`tu-vi`（777 个）。
 - 所有键名的英文对照表：[`ca-kiem/README.md`](./ca-kiem/README.md)。
@@ -309,4 +315,4 @@ cd python && python3 -m unittest discover -s tests # Python 3.9 及以上
 
 ### 注明出处
 
-使用数据时请注明 `数据：Nhat Nguyet (nhatnguyet.org)`；详见 [README](./README.zh.md) 中的使用规定。
+使用数据时请注明 `数据：Nhat Nguyet (nhatnguyet.org)`；详见 README 的[引用与许可](./README.zh.md#引用与许可)与 [DATA-LICENSE](./DATA-LICENSE)。

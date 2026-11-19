@@ -107,7 +107,7 @@ tinhTieuVanBatTu(chart, 2026)?.label;   // "Đinh Hợi"  (minor period of 2026)
 lapLaSoBatTu(19, 9, 1990, null, 0, "Nữ").coGioSinh;   // false
 ```
 
-If the gender is not recognised, `lapLaSoBatTu` throws `LoiThieuGioiTinh`: the
+If the gender is not recognized, `lapLaSoBatTu` throws `LoiThieuGioiTinh`: the
 luck pillars run forward or backward depending on gender, so the package does
 not guess.
 

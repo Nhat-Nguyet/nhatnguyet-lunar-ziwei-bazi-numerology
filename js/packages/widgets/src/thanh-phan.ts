@@ -10,7 +10,6 @@ import {
   docNgay,
   gioHoangDao,
   homNay,
-  khungGio,
   muaTheoThangAm,
   ngayDuong,
   ngayLich,
@@ -50,7 +49,7 @@ export class NnLichHomNay extends NnWidget {
   <div class="phai">
     <div class="nhat" style="font-size:13px">${thangNam(lang, n.duong.month, n.duong.year, true)}</div>
     <div style="font-size:16px;font-weight:700;margin-top:4px">${nhanAm(lang, n.am)}</div>
-    <div class="nhat" style="font-size:12.5px;margin-top:2px">${chuCanChiNgay(lang, n.duong)}</div>
+    <div class="nhat" style="font-size:12.5px;margin-top:2px">${chuCanChiNgay(lang, n.duong, false, this.terms)}</div>
     <div class="vien" style="border-color:${mu.mau};color:${mu.mau}">${tk}${lang === "vi" ? ` · ${mu.ten}` : ""}</div>
   </div>
 </div>`;
@@ -61,19 +60,28 @@ export class NnLichHomNay extends NnWidget {
 // Dải 12 ô tô theo màu trời của một ngày, giờ hoàng đạo đủ màu và có vạch màu
 // nhấn dưới đáy. Khung hẹp hơn 600px thì gập làm hai hàng sáu ô.
 const TROI = ["#1e2a44", "#243352", "#33456b", "#5a6f92", "#8fa6c0", "#c3d2df", "#e2e6e0", "#dfd9c8", "#cbb894", "#94849a", "#4e4468", "#2a2f4d"];
-function chuTren(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-  return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#16120c" : "#ffffff";
+// Độ chói tương đối theo WCAG 2.
+function doChoi(hex: string): number {
+  const k = (i: number) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * k(1) + 0.7152 * k(3) + 0.0722 * k(5);
+}
+/** Chữ trên ô màu trời: trắng hay mực, chọn bên có tỉ lệ tương phản WCAG cao hơn (mọi ô từ 5:1). */
+export function chuTren(hex: string): string {
+  const l = doChoi(hex);
+  return (1.05 / (l + 0.05) >= (l + 0.05) / (doChoi("#16120c") + 0.05)) ? "#ffffff" : "#16120c";
 }
 export class NnGioHoangDao extends NnWidget {
   protected readonly ma = "gio-hoang-dao";
   protected css(): string {
     return `.gio{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));margin-top:11px;border-radius:3px;overflow:hidden;border:1px solid var(--nn-vien)}
 .o{position:relative;min-width:0;height:40px;display:flex;align-items:center;justify-content:center}
-.o .phu{position:absolute;inset:0;background:var(--nn-giay);opacity:.78}
+.o .phu{position:absolute;inset:0;background:var(--nn-giay);opacity:.85}
 .o .gach{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--nn-nhan)}
 .o b,.o span{position:relative;font-size:11px;line-height:1.2;max-width:100%;overflow-wrap:anywhere;text-align:center}
-.o span{color:var(--nn-mucNhat);opacity:.5;font-weight:400}
+.o span{color:var(--nn-mucNhat);font-weight:400}
 .truc{display:flex;justify-content:space-between;font-size:10px;color:var(--nn-mucNhat);margin-top:4px}
 .ds{margin:10px 0 0;font-size:13px;line-height:1.7}
 .ds span{white-space:nowrap;margin-right:12px;display:inline-block}
@@ -89,12 +97,12 @@ export class NnGioHoangDao extends NnWidget {
       .map((g) => {
         const nen = TROI[g.chi];
         const ten = tenCanhGio(lang, g.chi);
-        return `<div class="o" style="background:${nen}" title="${ten} ${khungGio(lang, g.chi)}">${
+        return `<div class="o" style="background:${nen}" title="${ten} ${g.range}">${
           g.hoangDao ? `<i class="gach"></i><b style="color:${chuTren(nen)}">${ten}</b>` : `<i class="phu"></i><span>${ten}</span>`
         }</div>`;
       })
       .join("");
-    const tot = gio.filter((g) => g.hoangDao).map((g) => `<span><b>${tenCanhGio(lang, g.chi)}</b> ${khungGio(lang, g.chi)}</span>`).join("");
+    const tot = gio.filter((g) => g.hoangDao).map((g) => `<span><b>${tenCanhGio(lang, g.chi)}</b> ${g.range}</span>`).join("");
     return `<div class="dau"><b>${chon(lang, "Giờ hoàng đạo hôm nay", "Auspicious hours today", "今日黄道吉时")}</b><span>${sd.day}/${sd.month}</span></div>
 <div class="gio">${o}</div>
 <div class="truc"><span>${chon(lang, "nửa đêm", "midnight", "子夜")}</span><span>${chon(lang, "giữa trưa", "noon", "正午")}</span><span>${chon(lang, "nửa đêm", "midnight", "子夜")}</span></div>
@@ -109,7 +117,7 @@ export class NnDemNguocTet extends NnWidget {
     const lang = this.lang;
     const k = tetSapToi(ngayXem(this), this.tz);
     const cg = tenConGiap(lang, k.chiNam);
-    const cc = canChiTheo(lang, k.canChiNam.can, k.canChiNam.chi);
+    const cc = canChiTheo(lang, k.canChiNam.can, k.canChiNam.chi, this.terms);
     const nam = chon(lang, `${cc} (${cg})`, `Year of the ${cg} (${cc})`, `${cc}年（${cg}）`);
     if (k.laMungMot) {
       return `<p style="margin:0;font-size:21px;font-weight:800;color:var(--nn-son)">${chon(lang, "Hôm nay là mùng Một Tết", "Today is Lunar New Year's Day", "今天是春节正月初一")}</p>
@@ -185,7 +193,7 @@ export class NnLichThang extends NnWidget {
       const n = ngayLich(sd, this.tz);
       const lk = `https://nhatnguyet.org/lich-am/${chuoiNgay(sd)}?${lang === "vi" ? "" : `lang=${lang}&amp;`}utm_source=nn-widgets&amp;utm_medium=web-component&amp;utm_campaign=lich-thang`;
       hop = `<div class="hop mo"><b>${chon(lang, `Dương lịch ${ngayDuong(lang, sd)}`, ngayDuong(lang, sd), `公历${ngayDuong(lang, sd)}`)}</b>
-<div>${nhanAm(lang, n.am)} · ${chuCanChiNgay(lang, sd)}</div>
+<div>${nhanAm(lang, n.am)} · ${chuCanChiNgay(lang, sd, false, this.terms)}</div>
 <a href="${lk}" target="_blank" rel="noopener">${chon(lang, "Xem chi tiết ngày này", "See the full day", "查看当日详情")}</a></div>`;
     }
     return `<div class="dau">
@@ -251,15 +259,15 @@ input[type=date]{flex:1;min-width:0;padding:7px 9px;border:1px solid var(--nn-vi
       ? `<div class="gio mo"><div class="nhat" style="font-size:12px">${chon(lang, "Giờ hoàng đạo ngày này", "Auspicious hours", "当日黄道吉时")}</div>
 <div style="font-size:13px;margin-top:4px;line-height:1.7">${gioHoangDao(sd)
           .filter((g) => g.hoangDao)
-          .map((g) => `<span><b>${tenCanhGio(lang, g.chi)}</b> ${khungGio(lang, g.chi)}</span>`)
+          .map((g) => `<span><b>${tenCanhGio(lang, g.chi)}</b> ${g.range}</span>`)
           .join("")}</div></div>`
       : `<p style="margin:9px 0 0"><button type="button" class="lk">${chon(lang, "Xem giờ hoàng đạo ngày này", "See auspicious hours", "查看当日黄道吉时")}</button></p>`;
     return `<form>
-  <input type="date" value="${esc(chuoiNgay(sd))}" min="1900-01-01" max="2199-12-31" aria-label="${chon(lang, "Chọn ngày dương lịch", "Pick a date", "选择公历日期")}">
+  <input type="date" value="${esc(chuoiNgay(sd))}" min="1900-01-01" max="2100-12-31" aria-label="${chon(lang, "Chọn ngày dương lịch", "Pick a date", "选择公历日期")}">
   <button type="submit" class="nut">${chon(lang, "Đổi", "Go", "换算")}</button>
 </form>
 <p style="margin:11px 0 0;font-size:16px;font-weight:700">${nhanAm(lang, n.am, true)}</p>
-<p class="nhat" style="margin:3px 0 0;font-size:12.5px">${chuCanChiNgay(lang, sd, true)}</p>
+<p class="nhat" style="margin:3px 0 0;font-size:12.5px">${chuCanChiNgay(lang, sd, true, this.terms)}</p>
 ${gio}`;
   }
 
@@ -269,7 +277,7 @@ ${gio}`;
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
       const sd = docNgay(o?.value);
-      if (!sd || sd.year < 1900 || sd.year > 2199) {
+      if (!sd) {
         o?.focus();
         return;
       }

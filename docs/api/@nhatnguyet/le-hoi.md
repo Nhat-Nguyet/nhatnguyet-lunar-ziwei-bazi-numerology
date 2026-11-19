@@ -42,7 +42,8 @@ Province, nationwide flag, ethnic groups and venues of one dataset row, in `lang
 function festivals(year, opts?): Festival[];
 ```
 
-Festivals with a fixed date (lunar or Gregorian) in a year, sorted by date.
+Festivals with a fixed date (lunar or Gregorian) in a year (1900 to 2100,
+RangeError outside), sorted by date.
 The dataset holds 206 festivals: 164 have a fixed lunar or Gregorian date
 and are returned for every year (1900 to 2100: always 164); the other 42
 are dated by their organisers each year and are not included (see
@@ -105,7 +106,7 @@ A festival on its Gregorian date in one year.
 | <a id="property-fixeddate"></a> `fixedDate` | `string` | The fixed date as "day/month" in its own calendar. |
 | <a id="property-level"></a> `level` | `string` | "major" or "minor". |
 | <a id="property-group"></a> `group` | `string` | Group, an English code in every `lang`: "holiday" (public holidays, Tết and the seasonal feasts), "folk-religion", "other". The dataset's own code ("le-tet", "tin-nguong", "khac") stays in `raw.nhom`. |
-| <a id="property-scope"></a> `scope` | `string` | Scope, an English code in every `lang`: "national", "regional", "local", "representative" (one row for a festival held in many places) or "" (not classified yet). The dataset's code stays in `raw.pham_vi`. |
+| <a id="property-scope"></a> `scope` | `"national"` \| `"regional"` \| `"local"` \| `"representative"` \| `null` | Scope, an English code in every `lang`: "national", "regional", "local", "representative" (one row for a festival held in many places), or null when the dataset has not classified the festival yet (about a third of them). The dataset's code stays in `raw.pham_vi`. |
 | <a id="property-publicholiday"></a> `publicHoliday` | `boolean` | True for the official days off in Vietnam. |
 | <a id="property-daysbefore"></a> `daysBefore` | `number` | Days the festival customarily opens before `date` (its main day) and continues after it. |
 | <a id="property-daysafter"></a> `daysAfter` | `number` | - |

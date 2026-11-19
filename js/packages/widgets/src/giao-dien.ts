@@ -4,7 +4,7 @@
 // trắng, mực xám than, đỏ gạch cho ngày và màu nhấn, xanh ngọc cho dấu; nẹp
 // màu nhấn 2px ở mép trên; font hệ thống.
 
-import { docLang, muiGio, type Lang } from "./tinh.ts";
+import { docLang, docTerms, muiGio, type Lang, type Terms } from "./tinh.ts";
 
 const SANG = {
   giay: "#ffffff",
@@ -85,7 +85,7 @@ const GocPhanTu = (typeof HTMLElement !== "undefined" ? HTMLElement : class {}) 
 /** Lớp gốc của mọi thành phần. Lớp con trả phần thân ở `noiDung()` và gắn sự kiện ở `gan()`. */
 export abstract class NnWidget extends GocPhanTu {
   static get observedAttributes(): string[] {
-    return ["lang", "theme", "accent", "country", "date"];
+    return ["lang", "theme", "accent", "country", "date", "terms"];
   }
 
   /** Mã dùng trong utm_campaign của liên kết về site. */
@@ -104,6 +104,15 @@ export abstract class NnWidget extends GocPhanTu {
   }
   set lang(v: string) {
     this.setAttribute("lang", v);
+  }
+
+  /**
+   * Cách viết can chi khi lang="en", như tùy chọn `terms` của thư viện:
+   * "pinyin" (mặc định, "Ding You"), "han" ("丁酉"), "vi" ("Đinh Dậu"). Với
+   * lang "vi" luôn là "vi", "zh" luôn là "han".
+   */
+  get terms(): Terms {
+    return docTerms(this.getAttribute("terms"), this.lang);
   }
 
   /** Múi giờ lịch âm theo thuộc tính country (VN mặc định). */

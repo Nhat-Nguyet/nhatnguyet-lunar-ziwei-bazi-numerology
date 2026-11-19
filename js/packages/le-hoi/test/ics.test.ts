@@ -32,7 +32,7 @@ function parseIcs(ics: string): { cal: Prop[]; events: Prop[][] } {
 const unescape = (s: string) => s.replace(/\\(.)/g, (_, c: string) => (c === "n" || c === "N" ? "\n" : c));
 const get = (ps: Prop[], n: string) => ps.find((p) => p.name === n);
 
-test("ics: hợp lệ RFC 5545, mỗi lễ một sự kiện cả ngày, UID ổn định", () => {
+test("ics: valid RFC 5545, one all-day event per festival, stable UID", () => {
   for (const lang of ["en", "vi", "zh"] as const) {
     const ics = festivalsIcs(2027, { lang });
     assert.equal(ics, festivalsIcs(2027, { lang }), "deterministic");
@@ -66,14 +66,14 @@ test("ics: hợp lệ RFC 5545, mỗi lễ một sự kiện cả ngày, UID ổ
   assert.equal(festivalsIcs(2027), festivalsIcs(2027, { lang: "en" }));
 });
 
-test("ics: Tết 2027 ngày 6/2, năm khác UID khác", () => {
+test("ics: Tết 2027 on 6 February, another year another UID", () => {
   const ev = parseIcs(festivalsIcs(2027)).events.find((e) => get(e, "UID")?.value === "tet-nguyen-dan-2027@nhatnguyet.org");
   assert.ok(ev);
   assert.equal(get(ev, "DTSTART")!.value <= "20270206", true);
   assert.ok(festivalsIcs(2028).includes("UID:tet-nguyen-dan-2028@nhatnguyet.org"));
 });
 
-test("festivals: tỉnh, dân tộc, nơi tổ chức bằng khoá tiếng Anh", () => {
+test("festivals: provinces, ethnic groups and venues with English keys", () => {
   assert.equal(PROVINCES.length, 34);
   const all = festivals(2027);
   const codes = new Set(PROVINCES.map((p) => p.code));
@@ -93,14 +93,14 @@ test("festivals: tỉnh, dân tộc, nơi tổ chức bằng khoá tiếng Anh",
   if (all.some((f) => f.ethnicGroups.length)) assert.ok(kate && kate.ethnicGroups.every((x) => x.endsWith("族")));
 });
 
-test("festivals: mọi mã trong kết quả là mã tiếng Anh, ở cả ba lang", () => {
+test("festivals: every code in the result is English, in all three langs", () => {
   const maViet = new Set(["le-tet", "tin-nguong", "khac", "quoc-gia", "vung", "dia-phuong", "dai-dien", "co", "khong", "chuan", "pho-bien-nhat", "cong-bo-theo-nam", "theo-nam", "bien-tap"]);
   for (const lang of ["en", "vi", "zh"] as const) {
     for (const f of festivals(2027, { lang })) {
       const { raw, ...rest } = f;
       assert.ok(raw);
       assert.ok(["holiday", "folk-religion", "other"].includes(f.group), f.group);
-      assert.ok(["national", "regional", "local", "representative", ""].includes(f.scope), f.scope);
+      assert.ok(["national", "regional", "local", "representative", null].includes(f.scope), String(f.scope));
       assert.ok(["major", "minor"].includes(f.level), f.level);
       const walk = (v: unknown): void => {
         if (typeof v === "string") assert.ok(!maViet.has(v), `${f.id}: Vietnamese code ${v}`);

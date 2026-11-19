@@ -16,7 +16,7 @@ import {
   formatDate,
   formatTime,
   hourBranch,
-  parseDate,
+  parseDateInRange,
   parseTime,
   pickLang,
   pillarFromIndex,
@@ -328,7 +328,7 @@ export function castBaZi(input: BaZiInput): BaZiChart {
   if (!input || typeof input !== "object") throw new TypeError("castBaZi needs an options object");
   const lang = checkLang(input.lang);
   const terms = checkTerms(input.terms, lang);
-  const d = parseDate(input.date);
+  const d = parseDateInRange(input.date);
   const t = parseTime(input.time);
   let gt: string;
   switch (input.gender) {

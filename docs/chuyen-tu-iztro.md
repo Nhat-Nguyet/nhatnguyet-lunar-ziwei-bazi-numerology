@@ -216,10 +216,10 @@ ways, six languages, `{ country: "CN" }` so both use Beijing time.
   misspelled translation key and the stem 丙 ("bing") prints as "sick" (the 病
   star); the layer prints the decade palace's stem (25 dates).
 
-## Licence
+## License
 
 The layer is Nhat Nguyet code (MIT). The display strings (star, palace,
 brightness... names in six languages) are copied from iztro 2.6.5's locale
-files under iztro's MIT licence, whose notice is kept at the top of
+files under iztro's MIT license, whose notice is kept at the top of
 `js/packages/tu-vi/src/iztro-nhan.ts`; `doi-chieu/sinh-nhan-iztro.mjs`
 regenerates that file.

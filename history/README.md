@@ -26,7 +26,7 @@ Files:
 ## The ten years Tết differs
 
 Computed with the Nhat Nguyet engine (new moons after Jean Meeus, the same
-code at both offsets). New moon times are from NASA's catalogue [^nasa].
+code at both offsets). New moon times are from NASA's catalog [^nasa].
 
 | Lunar year | Tết at UTC+7 | Tết at UTC+8 | New moon (UT) | What Vietnam actually used |
 |---|---|---|---|---|
@@ -60,7 +60,7 @@ Vietnamese calendars differed in "four Tets", so people in the two regions did
 not always celebrate the New Year on the same day.
 
 Under the Nguyễn dynasty the Hiệp Kỷ calendar of the Khâm Thiên Giám
-(Observatory) "was modelled on the Thoi Hien method, so the Vietnamese and
+(Observatory) "was modeled on the Thoi Hien method, so the Vietnamese and
 Chinese calendars were quite similar", and was "in continuous use for 133
 years, from 1813 to 1945" [^lan]. From 1813 to 1903 Lê Thành Lân counts
 "only four differences, all in 'soc' days", that is no Tết difference with the

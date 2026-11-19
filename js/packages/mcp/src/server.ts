@@ -195,7 +195,7 @@ export function createServer(): McpServer {
       description:
         "The 24 solar terms (tiết khí, 节气) of a Gregorian year with local date and time to the minute, in the time zone of country (Vietnam UTC+7 by default). " +
         "Against IMCCE ephemerides the mean error is about 4 minutes, at most about 15 minutes.",
-      inputSchema: { year: z.number().int().min(1).max(9999), country: COUNTRY, lang: LANG },
+      inputSchema: { year: z.number().int().min(1900).max(2100), country: COUNTRY, lang: LANG },
       annotations: chiDoc,
     },
     (a) => an(() => chu(json(solarTerms(a.year, { country: a.country, lang: a.lang })), SOURCE)),
@@ -308,7 +308,7 @@ export function createServer(): McpServer {
         "Lunar dates are converted with the Vietnamese calendar (UTC+7). Festivals whose dates organisers announce each year are not included. " +
         "From the open dataset le-hoi-viet-nam (CC BY 4.0).",
       inputSchema: {
-        year: z.number().int().min(1).max(9999),
+        year: z.number().int().min(1900).max(2100),
         month: z.number().int().min(1).max(12).optional().describe("Only festivals falling in this Gregorian month."),
         lang: LANG,
       },

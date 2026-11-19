@@ -17,7 +17,7 @@ def tinh(vao):
 class TestThanSoHoc(unittest.TestCase):
     def test_ca_kiem(self):
         dat, tong, lech = so_mon("than-so-hoc", tinh)
-        print("\nthan-so-hoc: %d/%d ca đạt" % (dat, tong))
+        print("\nthan-so-hoc: %d/%d vectors pass" % (dat, tong))
         self.assertGreater(tong, 0)
         self.assertEqual(dat, tong, "\n".join(lech))
 

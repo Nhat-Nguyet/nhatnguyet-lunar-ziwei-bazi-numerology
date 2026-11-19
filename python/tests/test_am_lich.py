@@ -35,7 +35,7 @@ def tinh(vao):
 class TestAmLich(unittest.TestCase):
     def _chay(self, phep):
         dat, tong, lech = so_mon("am-lich", tinh, lambda v: v["phep"] == phep)
-        print("\nam-lich %s: %d/%d ca đạt" % (phep, dat, tong))
+        print("\nam-lich %s: %d/%d vectors pass" % (phep, dat, tong))
         self.assertGreater(tong, 0)
         self.assertEqual(dat, tong, "\n".join(lech))
 

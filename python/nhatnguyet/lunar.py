@@ -16,12 +16,13 @@ from .am_lich import __all__ as _am_lich_all
 from .en import (  # noqa: F401
     AUSPICIOUS_SPIRITS, BRANCH_PINYIN, HOUR_SPIRIT_PINYIN, STEM_PINYIN, auspicious_hours, check_terms,
     convert_terms, day_pillar, hour_branch, parse_date, parse_time, solar_term_on, solar_terms, stem_branch_name,
-    term, term_name, to_lunar, to_solar, transformation_short, year_pillar,
+    term, term_name, to_lunar, to_solar, transformation_short, year_pillar, YEAR_RANGE, check_year,
+    parse_date_in_range,
 )
 
 __all__ = [
     "to_lunar", "to_solar", "solar_terms", "solar_term_on", "day_pillar", "year_pillar", "hour_branch",
     "auspicious_hours", "AUSPICIOUS_SPIRITS", "HOUR_SPIRIT_PINYIN", "parse_date", "parse_time", "term",
     "term_name", "stem_branch_name", "transformation_short", "convert_terms", "check_terms", "STEM_PINYIN",
-    "BRANCH_PINYIN",
+    "BRANCH_PINYIN", "YEAR_RANGE", "check_year", "parse_date_in_range",
 ] + list(_am_lich_all)

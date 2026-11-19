@@ -74,10 +74,10 @@ def tom_tat_thieu(dem: Dict, toi_da: int = 20) -> str:
     """Tóm tắt các chỗ thiếu theo đường, để in khi test đỏ."""
     theo: "OrderedDict[str, List]" = OrderedDict()
     for d, s, t in dem["thieu"]:
-        khoa = "%s (thiếu %s)" % (d, t)
+        khoa = "%s (missing %s)" % (d, t)
         if khoa in theo:
             theo[khoa][0] += 1
         else:
             theo[khoa] = [1, s]
-    dong = ['%s: %d chỗ, ví dụ "%s"' % (k, n, vd) for k, (n, vd) in list(theo.items())[:toi_da]]
-    return "%d chỗ thiếu trên %d tên\n" % (len(dem["thieu"]), dem["tong"]) + "\n".join(dong)
+    dong = ['%s: %d places, e.g. "%s"' % (k, n, vd) for k, (n, vd) in list(theo.items())[:toi_da]]
+    return "%d missing translations in %d names\n" % (len(dem["thieu"]), dem["tong"]) + "\n".join(dong)

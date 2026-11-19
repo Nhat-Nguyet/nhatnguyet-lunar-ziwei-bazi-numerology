@@ -84,7 +84,7 @@ The same file from the command line: `nhatnguyet festivals 2027 --ics > vn.ics`.
 
 The dataset holds 206 festivals. 164 have a fixed lunar or Gregorian date and
 `festivals(year)` returns them for any year (always the same 164 from 1900 to
-2100). The other 42 are dated by their organisers each year: they are in
+2100). The other 42 are dated by their organizers each year: they are in
 `DANH_SACH_LE_HOI` with the announced dates in `lich_cong_bo`, not in
 `festivals(year)`.
 
@@ -130,7 +130,7 @@ more. Column descriptions: <https://nhatnguyet.org/en/du-lieu>.
 - Lunar festivals fall in the regular month, never the leap month. In a year
   where the lunar month has only 29 days, a festival on day 30 of that month
   has no Gregorian date.
-- Festivals whose dates are announced each year by their organisers (42 of
+- Festivals whose dates are announced each year by their organizers (42 of
   206) cannot be computed: see the `lich_cong_bo` column.
 - Dates are computed on Vietnam time (UTC+7) with
   [`@nhatnguyet/am-lich`](https://www.npmjs.com/package/@nhatnguyet/am-lich).

@@ -62,7 +62,7 @@ class TestAmLich(unittest.TestCase):
                 self.assertEqual({k: r[k] for k in ("day", "month", "year")}, sd)
                 kiem += 1
             else:
-                with self.assertRaisesRegex(ValueError, "29 days"):
+                with self.assertRaisesRegex(ValueError, "29 days|has no leap month" if v["nhuan"] else "29 days"):
                     en.to_solar(v["nam"], v["thang"], v["ngay"], v["nhuan"], time_zone=tz)
         self.assertGreater(kiem, 300)
 
@@ -284,6 +284,38 @@ class TestSchools(unittest.TestCase):
         self.assertIn("day pillar at midnight", c["notes"][0])
         with self.assertRaisesRegex(ValueError, "invalid ziHour"):
             en.cast_bazi("2024-01-01", "male", time="23:30", schools={"ziHour": "midnight"})
+
+
+class TestYearRange(unittest.TestCase):
+    """The English API refuses years outside 1900 to 2100, as the TypeScript one."""
+
+    def test_ngoai_khoang(self):
+        msg = "outside the supported range: years 1900 to 2100"
+        for f in (lambda: en.to_lunar("2200-01-01"), lambda: en.to_lunar("1899-12-31"),
+                  lambda: en.to_solar(2101, 1, 1), lambda: en.solar_terms(1899), lambda: en.solar_term_on("2101-01-01"),
+                  lambda: en.auspicious_hours("2200-01-01"), lambda: en.festivals(2300),
+                  lambda: en.cast_zi_wei("1899-12-31", "male", time="08:00"),
+                  lambda: en.cast_bazi("2101-01-01", "female"),
+                  lambda: en.numerology("An", "1899-01-01"),
+                  lambda: en.numerology("An", "1990-01-01", today="2200-01-01")):
+            with self.assertRaisesRegex(ValueError, msg):
+                f()
+        self.assertEqual(en.to_lunar("1900-01-01")["solarTerm"], "Winter Solstice")
+        self.assertEqual(en.to_lunar("2100-12-31")["solarTerm"], "Winter Solstice")
+        self.assertEqual(len(en.solar_terms(1900)), 24)
+        self.assertEqual(len(en.solar_terms(2100)), 24)
+
+    def test_thang_nhuan_khong_co(self):
+        with self.assertRaisesRegex(ValueError, "2024 has no leap month 2; the lunar year 2024 has no leap month"):
+            en.to_solar(2024, 2, 1, leap=True)
+        with self.assertRaisesRegex(ValueError, "2025 has no leap month 2; the leap month of 2025 is month 6"):
+            en.to_solar(2025, 2, 1, leap=True)
+        self.assertEqual(en.to_solar(2025, 6, 1, leap=True)["date"], "2025-07-25")
+
+    def test_scope_null(self):
+        ds = en.festivals(2027)
+        self.assertTrue(any(f["scope"] is None for f in ds))
+        self.assertTrue(all(f["raw"]["pham_vi"] == "" for f in ds if f["scope"] is None))
 
 
 if __name__ == "__main__":

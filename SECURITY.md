@@ -8,8 +8,8 @@ number.
 
 | Version | Supported |
 |---|---|
-| 0.2.x | Yes |
-| 0.1.x | No, please upgrade |
+| 0.3.x | Yes |
+| 0.2.x and older | No, please upgrade |
 
 ## Reporting a vulnerability
 
@@ -48,9 +48,10 @@ and the website nhatnguyet.org (report those to the same email address).
 
 ## How releases are protected
 
-npm packages are published from GitHub Actions with
+From 0.3.0 on, npm packages are published from GitHub Actions with
 [npm provenance](https://docs.npmjs.com/generating-provenance-statements), and
 the Python package with PyPI trusted publishing, so every published version can
-be traced to the commit and workflow run that built it. The packages have no
+be traced to the commit and workflow run that built it. Versions 0.1.0 and
+0.2.0 were published by hand and carry no attestations. The packages have no
 third-party runtime dependencies, except `@nhatnguyet/mcp`, which depends on
 the MCP SDK and zod at exact versions.

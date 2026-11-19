@@ -19,7 +19,9 @@ the embeddable widgets on the site.
 <nn-doi-lich lang="en"></nn-doi-lich>
 ```
 
-`dist/nn-widgets.js` is one self-contained ES module (about 30 KB, 12 KB gzipped).
+`dist/nn-widgets.js` is one self-contained ES module that carries its own copy
+of the lunar calendar engine: about 63 KB, 25 KB gzipped in 0.3.0. To measure
+the version you use: `npm run build`, then `gzip -c dist/nn-widgets.js | wc -c`.
 
 ## Use from npm
 
@@ -57,8 +59,9 @@ tetSapToi({ day: 19, month: 11, year: 2026 }).tet;  // { day: 6, month: 2, year:
 | Attribute | Values | Default |
 |---|---|---|
 | `lang` | `vi`, `en`, `zh` | `vi` |
+| `terms` | With `lang="en"`: how stem-branch names are written, as the libraries' `terms` option: `pinyin` ("Day Ding You", "Year of the Goat (Ding Wei)"), `han` ("丁酉"), `vi` ("Đinh Dậu"). Ignored for `vi` and `zh` | `pinyin` |
 | `theme` | `light`, `dark`, `auto` (follows the reader's device) | `light` |
-| `accent` | 6-digit hex colour, e.g. `#1f6f6b` | brick red `#b5402f` |
+| `accent` | 6-digit hex color, e.g. `#1f6f6b` | brick red `#b5402f` |
 | `country` | `VN`, `CN`, `TW`, `HK`, `MO`, `SG`, `MY`, `ID`, `PH`, `KR`, `JP` (time zone used for the lunar calendar) | `VN` |
 | `date` | `YYYY-MM-DD`, pins the day shown | the reader's local today |
 | `month` | `YYYY-MM`, first month shown by `<nn-lich-thang>` | current month |
@@ -71,7 +74,7 @@ do not leak into your page; the outer frame is exposed as `::part(frame)`.
 
 - Lunar dates use Vietnam time (UTC+7) for every year unless `country` says otherwise; the Tết of 2030 is 2 February in Vietnam and 3 February in China.
 - The day's solar term is taken at noon Vietnam time, as in the engine.
-- Stem-branch names stay in Sino-Vietnamese in English (as on nhatnguyet.org) and appear in Chinese characters in `zh`.
+- Stem-branch names follow `terms` in English (pinyin by default) and appear in Chinese characters in `zh`. Hour ranges read as in the libraries' `auspiciousHours` (`23:00-00:59`).
 - Auspicious hours follow the folk table used by Vietnamese almanacs; they are a convention, not a measurement.
 
 ## Try it locally
@@ -91,4 +94,4 @@ next Tết).
 Every widget shows a one-line "Source: Nhat Nguyet" credit linking to
 nhatnguyet.org. Please keep it.
 
-MIT licence.
+MIT License.

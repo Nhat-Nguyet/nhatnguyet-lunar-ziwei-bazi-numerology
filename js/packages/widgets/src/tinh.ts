@@ -11,12 +11,15 @@ import {
   lunarToSolar,
   MUI_GIO_THEO_NUOC,
   solarToLunar,
+  stemBranchName,
   tietKhiCuaNgay,
+  YEAR_RANGE,
   yearCanChi,
 } from "@nhatnguyet/am-lich";
-import type { LunarDate, SolarDate } from "@nhatnguyet/am-lich";
+import type { LunarDate, SolarDate, Terms } from "@nhatnguyet/am-lich";
 
 export type Lang = "vi" | "en" | "zh";
+export type { Terms } from "@nhatnguyet/am-lich";
 
 /** Múi giờ lịch âm của một mã nước (VN mặc định; mã lạ cũng về VN). */
 export function muiGio(country: string | null | undefined): number {
@@ -29,11 +32,26 @@ export function docLang(v: string | null | undefined): Lang {
   return v === "en" || v === "zh" ? v : "vi";
 }
 
-/** Đọc "YYYY-MM-DD"; sai dạng hay ngày không có thật thì null. */
+/**
+ * Đọc thuộc tính terms theo đúng luật của tùy chọn `terms` ở thư viện: lang
+ * "vi" luôn là "vi", "zh" luôn là "han"; với "en" nhận "pinyin", "han", "vi",
+ * giá trị lạ hay vắng là "pinyin".
+ */
+export function docTerms(v: string | null | undefined, lang: Lang): Terms {
+  if (lang === "vi") return "vi";
+  if (lang === "zh") return "han";
+  return v === "han" || v === "vi" ? v : "pinyin";
+}
+
+/**
+ * Đọc "YYYY-MM-DD"; sai dạng, ngày không có thật hay năm ngoài 1900 tới 2100
+ * (khoảng YEAR_RANGE của thư viện) thì null.
+ */
 export function docNgay(v: string | null | undefined): SolarDate | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || "");
   if (!m) return null;
   const sd = { year: +m[1], month: +m[2], day: +m[3] };
+  if (sd.year < YEAR_RANGE.min || sd.year > YEAR_RANGE.max) return null;
   const lai = jdToDate(jdFromDate(sd.day, sd.month, sd.year));
   return lai.day === sd.day && lai.month === sd.month && lai.year === sd.year ? sd : null;
 }
@@ -69,7 +87,6 @@ const SO_HAN = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九
 export const CAN_ZH = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
 export const CHI_ZH = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 const CHI_VI = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
-const CAN_VI = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
 // Con giáp Việt: Mão là Mèo, Mùi là Dê.
 const CON_GIAP_EN = ["Rat", "Ox", "Tiger", "Cat", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
 const CON_GIAP_VI = ["Chuột", "Trâu", "Hổ", "Mèo", "Rồng", "Rắn", "Ngựa", "Dê", "Khỉ", "Gà", "Chó", "Lợn"];
@@ -126,16 +143,19 @@ export function nhanAm(lang: Lang, am: LunarDate, coNam = false): string {
   return `${am.day}/${am.month}${am.leap ? " nhuận" : ""}${nam ? `/${nam}` : ""} âm lịch`;
 }
 
-/** Can chi theo ngôn ngữ: vi, en giữ âm Hán Việt ("Đinh Dậu"), zh chữ Hán ("丁酉"). */
-export function canChiTheo(lang: Lang, can: string, chi: string): string {
-  if (lang === "zh") return `${CAN_ZH[CAN_VI.indexOf(can)] ?? can}${CHI_ZH[CHI_VI.indexOf(chi)] ?? chi}`;
-  return `${can} ${chi}`;
+/**
+ * Can chi theo ngôn ngữ và `terms`, qua đúng `stemBranchName` của thư viện:
+ * vi "Đinh Dậu", zh "丁酉", en "Ding You" (pinyin, mặc định), "丁酉" (han) hay
+ * "Đinh Dậu" (vi).
+ */
+export function canChiTheo(lang: Lang, can: string, chi: string, terms?: Terms): string {
+  return stemBranchName(`${can} ${chi}`, lang, docTerms(terms, lang));
 }
 
-/** "ngày Đinh Dậu" | "Day Đinh Dậu" | "丁酉日". */
-export function chuCanChiNgay(lang: Lang, sd: SolarDate, hoa = false): string {
+/** "ngày Đinh Dậu" | "Day Ding You" | "丁酉日". */
+export function chuCanChiNgay(lang: Lang, sd: SolarDate, hoa = false, terms?: Terms): string {
   const cc = dayCanChi(sd.day, sd.month, sd.year);
-  const t = canChiTheo(lang, cc.can, cc.chi);
+  const t = canChiTheo(lang, cc.can, cc.chi, terms);
   if (lang === "zh") return `${t}日`;
   if (lang === "en") return `Day ${t}`;
   return `${hoa ? "Ngày" : "ngày"} ${t}`;
@@ -146,13 +166,15 @@ export function tenCanhGio(lang: Lang, chi: number): string {
   return lang === "en" ? CON_GIAP_EN[chi] : lang === "zh" ? CHI_ZH[chi] : CHI_VI[chi];
 }
 
-/** Khung giờ của canh giờ thứ `chi`: vi "23h-1h", en, zh "23:00-01:00". */
-export function khungGio(lang: Lang, chi: number): string {
+/**
+ * Khung giờ của canh giờ thứ `chi`, cùng lối với trường `range` của
+ * `auspiciousHours` ở thư viện: "23:00-00:59", "11:00-12:59". Ba thứ tiếng
+ * như nhau; tham số `lang` giữ cho chỗ gọi cũ.
+ */
+export function khungGio(_lang: Lang, chi: number): string {
   const dau = (chi * 2 + 23) % 24;
-  const cuoi = (dau + 2) % 24;
-  if (lang === "vi") return `${dau}h-${cuoi}h`;
-  const h = (n: number) => String(n).padStart(2, "0") + ":00";
-  return `${h(dau)}-${h(cuoi)}`;
+  const h = (n: number) => String(n).padStart(2, "0");
+  return `${h(dau)}:00-${h((dau + 1) % 24)}:59`;
 }
 
 export function tenConGiap(lang: Lang, chi: number): string {
@@ -206,14 +228,16 @@ export function muaTheoThangAm(thangAm: number): { ten: string; mau: string } {
 // chuyển ngữ của coreengine.GioHoangDaoKemThan, kiểm bằng ca kiểm của lõi).
 
 export interface CanhGio {
-  /** Chỉ số chi, 0 là Tý (23h tới 1h). */
+  /** Chỉ số chi, 0 là Tý (23:00 tới 00:59). */
   chi: number;
   hoangDao: boolean;
+  /** Khung giờ, đúng trường `range` của thư viện: "23:00-00:59". */
+  range: string;
 }
 
 /** 12 canh giờ của một ngày dương, theo chi của ngày (không phụ thuộc múi giờ). */
 export function gioHoangDao(sd: SolarDate): CanhGio[] {
-  return auspiciousHours(sd, { lang: "vi" }).hours.map((h) => ({ chi: h.index, hoangDao: h.auspicious }));
+  return auspiciousHours(sd, { lang: "vi" }).hours.map((h) => ({ chi: h.index, hoangDao: h.auspicious, range: h.range }));
 }
 
 // --- lịch tháng ---

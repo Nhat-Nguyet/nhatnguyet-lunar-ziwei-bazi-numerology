@@ -25,7 +25,7 @@ function chayTs(ca: CaVanBan): string {
   return chartToText(r, { lang: ca.lang, detail: ca.detail });
 }
 
-test("chartToText: khuôn văn bản thần số học", () => {
+test("chartToText: numerology text layout", () => {
   for (const ca of cacCa()) {
     const s = chayTs(ca);
     assert.match(s.trimEnd().split("\n").at(-1)!, /\(nhatnguyet\.org\)$/);
@@ -37,7 +37,7 @@ test("chartToText: khuôn văn bản thần số học", () => {
   assert.match(en, /^- 4: 1 \(for life\)$/m);
 });
 
-test("chartToText: Python ra đúng từng byte như TypeScript", (t) => {
+test("chartToText: Python prints the same bytes as TypeScript", (t) => {
   const ca = cacCa();
   const py = vanBanPython(ca);
   if (!py) return t.skip("không có python3");
