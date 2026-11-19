@@ -229,7 +229,8 @@ or endorsed by Nhat Nguyet.
   author = {{Nhat Nguyet}},
   title  = {Nhat Nguyet: open source code and data for Zi Wei Dou Shu, BaZi and numerology},
   year   = {2026},
-  url    = {https://nhatnguyet.org/en/ma-nguon-mo}
+  url    = {https://nhatnguyet.org/en/ma-nguon-mo},
+  doi    = {10.5281/zenodo.24358014}
 }
 ```
 

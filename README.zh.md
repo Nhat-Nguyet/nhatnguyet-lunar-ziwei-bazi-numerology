@@ -207,7 +207,8 @@ ds = load_dataset("nhatnguyet/loi-luan-tu-vi", data_files="ghep-san/tu-vi/zh/199
   author = {{Nhat Nguyet}},
   title  = {Nhat Nguyet：紫微斗数、八字、数字命理开源代码与数据集},
   year   = {2026},
-  url    = {https://nhatnguyet.org/zh/ma-nguon-mo}
+  url    = {https://nhatnguyet.org/zh/ma-nguon-mo},
+  doi    = {10.5281/zenodo.24358014}
 }
 ```
 
