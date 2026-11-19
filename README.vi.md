@@ -18,7 +18,7 @@
   <a href="./LICENSE"><img alt="Mã: MIT" src="https://img.shields.io/badge/m%C3%A3-MIT-1f6f6b.svg"></a>
   <a href="./DATA-LICENSE"><img alt="Dữ liệu: CC BY 4.0" src="https://img.shields.io/badge/d%E1%BB%AF%20li%E1%BB%87u-CC%20BY%204.0-1f6f6b.svg"></a>
   <a href="./ca-kiem"><img alt="Ca kiểm: 17.291 đạt" src="https://img.shields.io/badge/ca%20ki%E1%BB%83m-17.291%20%C4%91%E1%BA%A1t-2e7d32.svg"></a>
-  <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="Kiểm tự động" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg"></a>
+  <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="Kiểm tự động" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
 </p>
 
 <p align="center">
