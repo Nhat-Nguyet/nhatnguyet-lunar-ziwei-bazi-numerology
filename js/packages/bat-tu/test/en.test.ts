@@ -66,8 +66,19 @@ test("en: names in three languages match the vectors", () => {
     if (ra.nhatChuHanhZh) assert.equal(zh.dayMaster.element, ra.nhatChuHanhZh);
     if (ra.daiVan.tietMocEn) assert.equal(en.luck.term.name, ra.daiVan.tietMocEn);
     if (ra.daiVan.tietMocZh) assert.equal(zh.luck.term.name, ra.daiVan.tietMocZh);
-    // Bản Anh: tên can chi, tiết khí còn trong câu của lõi được viết lại theo `terms`.
-    assert.equal(en.luck.explanation, convertTerms(ra.daiVan.lyDoEn, "pinyin"));
+    // Bản Anh: tên can chi, tiết khí còn trong câu của lõi được viết lại theo
+    // `terms`, và mốc tiết "04:37 on 8/9/1990" thành ISO "1990-09-08 04:37".
+    const dvr = ra.daiVan as R;
+    const nm = dvr.tietMocNgay as R;
+    const p2 = (n: number) => String(n).padStart(2, "0");
+    const gm = `${p2(dvr.tietMocGio)}:${p2(dvr.tietMocPhut)}`;
+    const cu = `(${gm} on ${nm.day}/${nm.month}/${nm.year})`;
+    assert.ok(nm.year === 0 || dvr.lyDoEn.includes(cu), dvr.lyDoEn);
+    assert.equal(
+      en.luck.explanation,
+      convertTerms(dvr.lyDoEn, "pinyin").replace(cu, `(${nm.year}-${p2(nm.month)}-${p2(nm.day)} ${gm})`),
+    );
+    assert.doesNotMatch(en.luck.explanation, / on \d+\/\d+\/\d{4}/);
     assert.doesNotMatch(en.luck.explanation, /[À-ỹ]/);
     assert.equal(en.luck.direction, ra.daiVan.thuan ? "forward" : "backward");
     const ev = castBaZi({ ...vao(c, "en"), terms: "vi" });

@@ -206,3 +206,27 @@ test("en: English output has no Vietnamese keys or codes (every tu-vi, bat-tu ve
 test("castZiWei: a birth date outside 1900 to 2100 throws a RangeError", () => {
   assert.throws(() => castZiWei({ date: "1899-12-31", time: "08:00", gender: "male" }), /date 1899-12-31 is outside the supported range: years 1900 to 2100/);
 });
+
+test("castZiWei: country and timeZone pick whose lunar calendar the chart is built on", async () => {
+  const { astro } = await import("../src/iztro.ts");
+  const vao = { date: "1985-01-21", time: "10:00", gender: "male" } as const;
+  const vn = castZiWei(vao);
+  // Mặc định là lịch Việt Nam, như trước; "VN" hay timeZone 7 ra đúng từng byte.
+  assert.deepEqual(castZiWei({ ...vao, country: "VN" }), vn);
+  assert.deepEqual(castZiWei({ ...vao, timeZone: 7 }), vn);
+  assert.equal(vn.timeZone, undefined);
+  assert.deepEqual(vn.lunar, { year: 1985, month: 1, day: 1, leap: false });
+  // Lịch Trung Quốc (UTC+8): mùng 1 tháng Chạp năm Giáp Tý, Kim Tứ Cục, Mệnh ở Thân.
+  const cn = castZiWei({ ...vao, country: "CN" });
+  assert.deepEqual(cn.lunar, { year: 1984, month: 12, day: 1, leap: false });
+  assert.equal(cn.timeZone, 8);
+  assert.equal(cn.bureau.name, "Metal Four");
+  assert.equal(cn.palaces[cn.lifePalace].branch, "Shen");
+  assert.equal(cn.solarDate, "1985-01-21");
+  assert.match(cn.notes[0], /lunar calendar of CN \(UTC\+8\)\.$/);
+  assert.match(castZiWei({ ...vao, timeZone: 8 }).notes[0], /lunar calendar at UTC\+8\.$/);
+  // Cùng lá số với lớp iztro ở country "CN" (giờ Tỵ là timeIndex 5 của iztro).
+  const iz = astro.bySolar("1985-1-21", 5, "男", false, "en-US", { country: "CN" });
+  assert.deepEqual(cn.raw.cung.map((c) => c.sao.map((s) => s.ten)), iz.raw.cung.map((c) => c.sao.map((s) => s.ten)));
+  assert.throws(() => castZiWei({ ...vao, country: "XX" }), RangeError);
+});

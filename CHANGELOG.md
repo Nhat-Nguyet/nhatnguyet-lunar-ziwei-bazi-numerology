@@ -6,8 +6,9 @@ which are released together under one version number.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-While the version is below 1.0.0, a minor release (0.x.0) may change the public
-API; patch releases (0.x.y) only add features or fix bugs.
+Patch releases (0.x.y) only fix bugs; new features come in a minor release
+(0.x.0). While the version is below 1.0.0, breaking changes also come in a
+minor release and are listed first in its notes.
 
 The engine version (for example `2.0.1`) is the version of the reference
 calculation engine that produced the shared test vectors in `ca-kiem/`. Every
@@ -58,6 +59,20 @@ TypeScript and in Python.
   (`23:00-00:59`, was `23:00-01:00`).
 - CLI: `nhatnguyet terms` in English prints the English name only; `--terms
   han` or `--terms vi` adds the Chinese or Vietnamese name in brackets.
+- **Breaking for pages that relied on the Vietnamese default**:
+  `@nhatnguyet/widgets` no longer defaults to Vietnamese when an element has
+  no `lang` attribute. It now takes the `lang` of the nearest ancestor
+  (including `<html lang>`), else the browser language (`navigator.language`),
+  when that is `vi`, `en` or `zh` (prefix match, so `en-US` is `en`), and
+  falls back to `en`. Add `lang="vi"` to keep the 0.2.0 output on a page
+  whose language is not Vietnamese.
+- BaZi `luck.explanation` with `lang: "en"` writes the solar term moment as an
+  ISO date and time, "White Dew (1990-09-08 04:37)", instead of the
+  day/month/year order "04:37 on 8/9/1990". Vietnamese and Chinese are
+  unchanged; the raw `lyDoEn` keeps the engine's text.
+- Python CLI: `--help` and the unknown-command error name the command
+  `nhatnguyet`, as the npm CLI does, so both print the same bytes
+  (`python -m nhatnguyet` runs the same command).
 
 ### Added
 
@@ -156,6 +171,13 @@ TypeScript and in Python.
 - CI runs every test vector on the built packages under Node 18, 20, 22 and
   24 (`.github/scripts/check-dist.mjs`), locally and against npm after each
   release; `js/package-lock.json` pins the workspace, installed with `npm ci`.
+- `castZiWei` takes `country` (as `toLunar`: `"VN"` by default, `"CN"`,
+  `"KR"`, `"JP"`...) or `timeZone`, the calendar that turns the birth date
+  into the lunar date (born 1985-01-21: 1st day of the 1st month in Vietnam,
+  of the 12th month in China, two different charts). Python `cast_zi_wei(...,
+  country=, time_zone=)`, CLI `nhatnguyet ziwei ... --country CN`. The default
+  chart is unchanged; a chart off UTC+7 carries `timeZone` and says so in
+  `notes`. Same placement as the iztro layer's `country` option.
 
 ### Fixed
 
@@ -171,6 +193,9 @@ TypeScript and in Python.
   instead of "the month has only 29 days".
 - `@nhatnguyet/widgets`: the inauspicious hour cells and the Rooster cell of
   `<nn-gio-hoang-dao>` reach a 4.5:1 contrast in light and dark themes.
+- Both command lines end quietly with exit code 0 when the reader closes the
+  pipe early (`nhatnguyet festivals 2027 --ics | head`) instead of printing an
+  uncaught EPIPE (Node) or BrokenPipeError (Python) and exiting with 1.
 
 ## [0.2.0] - 2026-11-19
 
@@ -245,6 +270,6 @@ First release.
   needs only the standard library (3.9 or newer).
 
 [Unreleased]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.1.0...v0.3.0
-[0.2.0]: https://pypi.org/project/nhatnguyet/0.2.0/
+[0.3.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/releases/tag/v0.1.0

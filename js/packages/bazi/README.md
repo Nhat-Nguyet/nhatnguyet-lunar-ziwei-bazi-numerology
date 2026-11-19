@@ -1,7 +1,7 @@
 # @nhatnguyet/bazi
 
 BaZi (Four Pillars of Destiny, 八字) by solar term, to the minute: pillars,
-hidden stems, Ten Gods, symbolic stars, luck pillars, minor luck, SVG. No
+hidden stems, Ten Gods, symbolic stars, luck pillars, minor luck, SVG. No external
 dependencies, TypeScript types, Node 18+ and browsers.
 
 ## Install

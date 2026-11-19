@@ -17,9 +17,15 @@ import { renderBaZi, renderFestivals, renderHours, renderLunar, renderNumerology
 declare const process: {
   argv: string[];
   env: Record<string, string | undefined>;
-  stdout: { isTTY?: boolean; columns?: number; write(s: string): boolean };
+  stdout: {
+    isTTY?: boolean;
+    columns?: number;
+    write(s: string): boolean;
+    on(ev: "error", f: (e: { code?: string }) => void): unknown;
+  };
   stderr: { write(s: string): boolean };
   exitCode?: number;
+  exit(code?: number): never;
 };
 
 /** Version printed by --version. */
@@ -60,7 +66,7 @@ School options (where the books disagree; default first, sources in docs/schools
 
 Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms). Docs: https://nhatnguyet.org/en/ma-nguon-mo`;
+terms, ziwei). Docs: https://nhatnguyet.org/en/ma-nguon-mo`;
 
 // Mọi tên công cụ MCP cũng là bí danh của lệnh tương ứng (cast_ziwei, solar_terms...).
 const ALIAS: Readonly<Record<string, string>> = {
@@ -153,7 +159,7 @@ export function run(argv: string[], env: RunEnv): string {
       can(3, "ziwei <YYYY-MM-DD> <HH:MM> <male|female>");
       const year = typeof flags.year === "string" ? Number(flags.year) : undefined;
       const schools = schoolsFrom(flags, SCHOOL_FLAGS.slice(0, 5));
-      const chart = castZiWei({ date: p[0], time: p[1], gender: p[2], name: typeof flags.name === "string" ? flags.name : undefined, lang, terms, viewYear: year, schools });
+      const chart = castZiWei({ date: p[0], time: p[1], gender: p[2], name: typeof flags.name === "string" ? flags.name : undefined, lang, terms, viewYear: year, schools, country });
       const extra = { decades: decadeLuck(chart), year: yearlyLuck(chart), patterns: findPatterns(chart) };
       ghiSvg(() => ziWeiSvg(chart, { theme }));
       if (json) return dumpJson({ chart, ...extra });
@@ -215,6 +221,12 @@ function main(): void {
   const ep = env.FORCE_COLOR !== undefined && env.FORCE_COLOR !== "0";
   const color = env.NO_COLOR === undefined && (ep || (!!out.isTTY && env.TERM !== "dumb"));
   const width = out.isTTY && out.columns ? Math.min(out.columns, 140) : 88;
+  // Người đọc đóng ống sớm (`nhatnguyet festivals 2027 --ics | head`): thoát
+  // êm với mã 0 như lệnh Unix thường, không in lỗi EPIPE.
+  out.on("error", (e) => {
+    if (e.code === "EPIPE") process.exit(0);
+    throw e;
+  });
   try {
     out.write(run(process.argv.slice(2), { color, width }) + "\n");
   } catch (e) {

@@ -171,6 +171,26 @@ class TestTuVi(unittest.TestCase):
         self.assertEqual(a["raw"], b["raw"])
         self.assertEqual(len(a["notes"]), 2)
 
+    def test_country_va_time_zone(self):
+        # Mặc định là lịch Việt Nam như trước; "VN" hay time_zone=7 ra đúng như vậy.
+        vn = en.cast_zi_wei("1985-01-21", "male", time="10:00", view_year=2026)
+        self.assertEqual(en.cast_zi_wei("1985-01-21", "male", time="10:00", view_year=2026, country="VN"), vn)
+        self.assertEqual(en.cast_zi_wei("1985-01-21", "male", time="10:00", view_year=2026, time_zone=7), vn)
+        self.assertNotIn("timeZone", vn)
+        self.assertEqual(vn["lunar"], {"year": 1985, "month": 1, "day": 1, "leap": False})
+        # Lịch Trung Quốc (UTC+8): mùng 1 tháng Chạp năm Giáp Tý, Kim Tứ Cục, Mệnh ở Thân.
+        cn = en.cast_zi_wei("1985-01-21", "male", time="10:00", country="CN")
+        self.assertEqual(cn["lunar"], {"year": 1984, "month": 12, "day": 1, "leap": False})
+        self.assertEqual(cn["timeZone"], 8)
+        self.assertEqual(cn["bureau"]["name"], "Metal Four")
+        self.assertEqual(cn["palaces"][cn["lifePalace"]]["branch"], "Shen")
+        self.assertEqual(cn["solarDate"], "1985-01-21")
+        self.assertTrue(cn["notes"][0].endswith("lunar calendar of CN (UTC+8)."), cn["notes"][0])
+        tz8 = en.cast_zi_wei("1985-01-21", "male", time="10:00", time_zone=8)
+        self.assertTrue(tz8["notes"][0].endswith("lunar calendar at UTC+8."), tz8["notes"][0])
+        with self.assertRaisesRegex(ValueError, "unsupported country"):
+            en.cast_zi_wei("1985-01-21", "male", time="10:00", country="XX")
+
 
 class TestBatTu(unittest.TestCase):
     def test_khop_ham_goc_va_ca_kiem(self):
@@ -193,8 +213,16 @@ class TestBatTu(unittest.TestCase):
                     self.assertEqual(e["pillars"][k]["naYin"], tr["napAmTenEn"])
                 if tr.get("thanSatZh") is not None:
                     self.assertEqual(z["pillars"][k]["stars"], tr["thanSatZh"])
-            # Câu tiếng Anh của lõi, chữ Việt còn sót đổi theo cách viết (mặc định pinyin).
-            self.assertEqual(e["luck"]["explanation"], en._bt_en_text(ra["daiVan"]["lyDoEn"], "pinyin"))
+            # Câu tiếng Anh của lõi, chữ Việt còn sót đổi theo cách viết (mặc định
+            # pinyin), mốc tiết "04:37 on 8/9/1990" thành ISO "1990-09-08 04:37".
+            dvr = ra["daiVan"]
+            nm = dvr["tietMocNgay"]
+            gm = "%02d:%02d" % (dvr["tietMocGio"], dvr["tietMocPhut"])
+            cu = "(%s on %d/%d/%d)" % (gm, nm["day"], nm["month"], nm["year"])
+            self.assertTrue(nm["year"] == 0 or cu in dvr["lyDoEn"], dvr["lyDoEn"])
+            moi = "(%04d-%02d-%02d %s)" % (nm["year"], nm["month"], nm["day"], gm)
+            self.assertEqual(e["luck"]["explanation"], en._bt_en_text(dvr["lyDoEn"], "pinyin").replace(cu, moi))
+            self.assertNotRegex(e["luck"]["explanation"], r" on \d+/\d+/\d{4}")
             self.assertEqual([p["fromYear"] for p in e["luck"]["pillars"]], [p["namTu"] for p in ra["daiVan"]["cacVan"]])
             tv = en.minor_luck(e, v["namXem"])
             goc = bat_tu.tinh_tieu_van_bat_tu(e["raw"], v["namXem"])

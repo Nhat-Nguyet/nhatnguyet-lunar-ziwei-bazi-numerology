@@ -60,6 +60,12 @@ function cacViec(): { viec: ViecPython; ts: () => unknown }[] {
     { date: "1990-09-19", gender: "female", hourBranch: 10, viewYear: 2026, schools: { fireBell: "quanshu", leapMonth: "split-at-15", transformations: "zhongzhou" } },
     { date: "2023-04-10", gender: "male", hourBranch: 5, viewYear: 2024, schools: { leapMonth: "split-at-15" } },
     { date: "1993-08-15", gender: "male", hourBranch: 3, viewYear: 2026, schools: { heavenlyKitchen: "chinese", injuryMessenger: "zhongzhou" } },
+    // Lịch âm của nước, múi giờ khác (country, timeZone): Tết 1985 lệch một ngày,
+    // tháng nhuận 2023 của lịch Trung Quốc, giờ Tý.
+    { date: "1985-01-21", gender: "male", hourBranch: 5, viewYear: 2026, country: "CN" },
+    { date: "1985-01-21", gender: "female", hourBranch: 0, viewYear: 2026, timeZone: 8 },
+    { date: "2023-04-10", gender: "male", hourBranch: 5, viewYear: 2024, country: "KR", schools: { leapMonth: "split-at-15" } },
+    { date: "1990-09-19", gender: "female", hourBranch: 10, viewYear: 2026, country: "VN" },
   ];
   for (const b of PHAI_TV) {
     for (const [lang, terms] of [...CACH, ["vi", undefined], ["zh", undefined]] as [Lang, Terms][]) {
@@ -123,6 +129,8 @@ function cacViec(): { viec: ViecPython; ts: () => unknown }[] {
     ["ziwei", "2023-04-10", "10:00", "male", "--leap-month=next-month", "--json", "--lang", "zh"],
     ["bazi", "2024-01-01", "23:30", "male", "--zi-hour", "split-at-midnight"],
     ["bazi", "2024-01-01", "23:30", "male", "--zi-hour", "split-at-midnight", "--json", "--lang", "zh"],
+    ["ziwei", "1985-01-21", "10:00", "male", "--country", "CN"],
+    ["ziwei", "1985-01-21", "10:00", "female", "--country", "JP", "--json", "--lang", "vi"],
   ];
   for (const argv of lenh) {
     for (const width of [72, 120]) ds.push({ viec: { ham: "cli", thamSo: { argv, width } }, ts: () => run(argv, { color: false, width }) });

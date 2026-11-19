@@ -58,7 +58,7 @@ tetSapToi({ day: 19, month: 11, year: 2026 }).tet;  // { day: 6, month: 2, year:
 
 | Attribute | Values | Default |
 |---|---|---|
-| `lang` | `vi`, `en`, `zh` | `vi` |
+| `lang` | `vi`, `en`, `zh` (prefix match, so `en-US` is `en`) | the nearest ancestor's `lang` (including `<html lang>`) if it is `vi`, `en` or `zh`, else the browser language (`navigator.language`) if it is one of those, else `en` |
 | `terms` | With `lang="en"`: how stem-branch names are written, as the libraries' `terms` option: `pinyin` ("Day Ding You", "Year of the Goat (Ding Wei)"), `han` ("丁酉"), `vi` ("Đinh Dậu"). Ignored for `vi` and `zh` | `pinyin` |
 | `theme` | `light`, `dark`, `auto` (follows the reader's device) | `light` |
 | `accent` | 6-digit hex color, e.g. `#1f6f6b` | brick red `#b5402f` |

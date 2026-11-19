@@ -136,8 +136,26 @@ test("hour cells reach 4.5:1 contrast in light and dark themes", () => {
 });
 
 test("unknown attributes fall back to safe defaults", () => {
-  assert.equal(docLang("fr"), "vi");
   assert.equal(docLang("zh"), "zh");
+  assert.equal(docLang("en-US"), "en");
+  assert.equal(docLang("VI"), "vi");
+  assert.equal(docLang("zh-Hant-TW"), "zh");
+  assert.equal(docLang("vie"), "en");
+});
+
+test("lang: attribute, then nearest ancestor or <html>, then browser, then en", () => {
+  assert.equal(docLang(null), "en");
+  assert.equal(docLang("fr"), "en");
+  assert.equal(docLang(null, "vi"), "vi");
+  assert.equal(docLang("zh", "vi", "en-US"), "zh");
+  assert.equal(docLang(null, "en-GB", "vi-VN"), "en");
+  assert.equal(docLang(null, "fr", "vi-VN"), "vi");
+  assert.equal(docLang(null, null, "zh-CN"), "zh");
+  assert.equal(docLang(null, "", "de-DE"), "en");
+  assert.equal(docLang("", null, undefined), "en");
+});
+
+test("other attributes fall back to safe defaults", () => {
   assert.equal(docNgay("2026-02-30"), null);
   assert.equal(docNgay("19/11/2026"), null);
   assert.equal(docNgay("2101-01-01"), null);

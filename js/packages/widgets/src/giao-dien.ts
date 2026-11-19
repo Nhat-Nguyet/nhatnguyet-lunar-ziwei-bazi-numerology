@@ -99,8 +99,17 @@ export abstract class NnWidget extends GocPhanTu {
     this.attachShadow({ mode: "open" });
   }
 
+  /**
+   * Ngôn ngữ hiển thị: thuộc tính `lang`, rồi `lang` của tổ tiên gần nhất hay
+   * `<html lang>`, rồi `navigator.language`, rồi "en" (luật ở `docLang`).
+   * Đổi `lang` của tổ tiên sau khi gắn thì không tự dựng lại.
+   */
   get lang(): Lang {
-    return docLang(this.getAttribute("lang"));
+    const toTien =
+      this.parentElement?.closest("[lang]")?.getAttribute("lang") ??
+      (typeof document !== "undefined" ? document.documentElement?.getAttribute("lang") : null);
+    const trinhDuyet = typeof navigator !== "undefined" ? navigator.language : null;
+    return docLang(this.getAttribute("lang"), toTien, trinhDuyet);
   }
   set lang(v: string) {
     this.setAttribute("lang", v);

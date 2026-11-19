@@ -71,6 +71,9 @@ export function viTriSaoLuu(canIdx: number, chiIdx: number): Record<string, numb
   };
 }
 
+// Cột `en` chép nguyên lõi Go (tuvi_luusao.go) và nằm trong ca kiểm, nên giữ
+// tên sao Hán Việt; lớp tiếng Anh (`yearlyStars`) đổi tên sao qua `enText`
+// thành "Yearly Grand Duke", "Yearly Prosperity"..., không in cột này.
 const TEN_SAO_LUU: readonly { ma: string; ten: BaNgonNgu; theoCan: boolean }[] = [
   { ma: LUU_THAI_TUE, ten: { vi: "Lưu Thái Tuế", en: "Yearly Thái Tuế", zh: "流年太岁" }, theoCan: false },
   { ma: LUU_LOC_TON, ten: { vi: "Lưu Lộc Tồn", en: "Yearly Lộc Tồn", zh: "流禄" }, theoCan: true },

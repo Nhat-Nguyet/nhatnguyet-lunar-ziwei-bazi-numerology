@@ -80,6 +80,20 @@ class TestCli(unittest.TestCase):
         r = subprocess.run([sys.executable, "-m", "nhatnguyet", "bogus"], cwd=THU_MUC, capture_output=True, text=True)
         self.assertEqual(r.returncode, 1)
 
+    def test_ong_dong_som(self):
+        # `nhatnguyet festivals 2027 --ics | head`: người đọc đóng ống trước khi
+        # lệnh ghi xong. Đầu đọc của ống đóng ngay từ đầu nên lần ghi chắc chắn
+        # gặp EPIPE; lệnh phải thoát mã 0, không in gì ra stderr.
+        doc, ghi = os.pipe()
+        os.close(doc)
+        try:
+            r = subprocess.run([sys.executable, "-m", "nhatnguyet", "festivals", "2027", "--ics"], cwd=THU_MUC,
+                               stdout=ghi, stderr=subprocess.PIPE, text=True)
+        finally:
+            os.close(ghi)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stderr, "")
+
 
 if __name__ == "__main__":
     unittest.main()

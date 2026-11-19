@@ -3,9 +3,10 @@
 All npm packages (`@nhatnguyet/*`) and the Python package (`nhatnguyet`)
 share one version number and are released together from a `vX.Y.Z` tag by
 [`.github/workflows/release.yml`](.github/workflows/release.yml). Versions
-follow [Semantic Versioning](https://semver.org/); while below 1.0.0, a change
-to the public API or to a default output needs a new minor version (0.x.0),
-and patch versions only add features or fix bugs.
+follow [Semantic Versioning](https://semver.org/): patch releases (0.x.y) only
+fix bugs; new features come in a minor release (0.x.0). While below 1.0.0, a
+breaking change (to the public API or to a default output) also comes in a
+minor release and is listed first in the CHANGELOG.
 
 ## What the release workflow does
 

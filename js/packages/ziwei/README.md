@@ -3,7 +3,7 @@
 Zi Wei Dou Shu (Purple Star Astrology, 紫微斗数) charts on the Vietnamese or
 Chinese calendar: twelve palaces, star brightness, Four Transformations,
 ten-year and yearly periods, patterns with the original classical line, SVG,
-and an iztro-compatible layer. No dependencies, TypeScript types, Node 18+ and
+and an iztro-compatible layer. No external dependencies, TypeScript types, Node 18+ and
 browsers.
 
 ## Install

@@ -163,6 +163,21 @@ function enText(text: string, terms: Terms): string {
   return convertTerms(text, terms, THAY_BAT_TU, "bat-tu");
 }
 
+/**
+ * Lời giải thích đại vận bản Anh: lõi (và ca kiểm) viết mốc tiết "04:37 on
+ * 8/9/1990" theo lối ngày/tháng của bản Việt, người đọc tiếng Anh dễ đọc
+ * thành tháng/ngày. Lớp tiếng Anh đổi đúng cụm ấy sang ISO "1990-09-08 04:37".
+ */
+function lyDoVanEn(dv: LaSoBatTu["daiVan"], terms: Terms): string {
+  let s = enText(dv.lyDoEn, terms);
+  const d = dv.tietMocNgay;
+  if (d.year) {
+    const cu = `(${formatTime({ hour: dv.tietMocGio, minute: dv.tietMocPhut })} on ${d.day}/${d.month}/${d.year})`;
+    s = s.replace(cu, `(${formatDate(d)} ${formatTime({ hour: dv.tietMocGio, minute: dv.tietMocPhut })})`);
+  }
+  return s;
+}
+
 /** Tên tiết khí theo ngôn ngữ: tiếng Anh lấy bảng tiết khí của am-lich, tiếng Trung lấy TU_VUNG. */
 function tenTiet(ten: string, lang: Lang): string {
   if (lang === "vi" || !ten) return ten;
@@ -293,7 +308,7 @@ export function localizeBaZi(raw: LaSoBatTu, lang: Lang = "en", terms?: Terms): 
       days: dv.soNgay,
       startAge: { years: dv.tuoiKhoiNam, months: dv.tuoiKhoiThang },
       startDate: dv.ngayKhoiVan.year ? formatDate(dv.ngayKhoiVan) : "",
-      explanation: l === "vi" ? dv.lyDo : l === "en" ? enText(dv.lyDoEn, tm) : dv.lyDoZh,
+      explanation: l === "vi" ? dv.lyDo : l === "en" ? lyDoVanEn(dv, tm) : dv.lyDoZh,
       pillars: dv.cacVan.map((v) => ({
         ...truCoBan(v, l, tm),
         order: v.thuTu,

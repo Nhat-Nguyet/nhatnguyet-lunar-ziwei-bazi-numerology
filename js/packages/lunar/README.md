@@ -2,7 +2,7 @@
 
 The Vietnamese lunar calendar (Hanoi time, UTC+7) and the Chinese, Korean and
 Japanese ones: lunar and Gregorian dates, stems and branches, the 24 solar
-terms to the minute, auspicious hours. No dependencies, TypeScript types,
+terms to the minute, auspicious hours. No external dependencies, TypeScript types,
 Node 18+ and browsers.
 
 ## Install

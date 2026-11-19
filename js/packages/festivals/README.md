@@ -2,7 +2,7 @@
 
 206 Vietnamese festivals with their Gregorian dates for any year from 1900 to
 2100, provinces, ethnic groups and venues, and iCalendar export. Data under
-CC BY 4.0; no dependencies, TypeScript types, Node 18+ and browsers.
+CC BY 4.0; no external dependencies, TypeScript types, Node 18+ and browsers.
 
 ## Install
 

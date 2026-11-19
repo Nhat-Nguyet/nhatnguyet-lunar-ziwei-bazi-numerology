@@ -251,7 +251,9 @@ CUNG_DONG_CUNG = "dong-cung"
 CUNG_XUNG_CHIEU = "xung-chieu"
 CUNG_TAM_HOP = "tam-hop"
 
-# (mã, tên Việt, Anh, Trung, an theo can)
+# (mã, tên Việt, Anh, Trung, an theo can). Cột Anh chép nguyên lõi Go và nằm
+# trong ca kiểm, nên giữ tên sao Hán Việt; lớp tiếng Anh (yearly_stars) đổi tên
+# sao thành "Yearly Grand Duke", "Yearly Prosperity"..., không in cột này.
 _TEN_SAO_LUU = (
     (LUU_THAI_TUE, "Lưu Thái Tuế", "Yearly Thái Tuế", "流年太岁", False),
     (LUU_LOC_TON, "Lưu Lộc Tồn", "Yearly Lộc Tồn", "流禄", True),

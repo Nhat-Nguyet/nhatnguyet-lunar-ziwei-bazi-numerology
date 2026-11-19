@@ -29,7 +29,7 @@
     "vietnam",
     "vietnamese",
     "typescript",
-    "zero dependencies"
+    "no external dependencies"
   ],
   "type": "module",
   "main": "./dist/index.js",

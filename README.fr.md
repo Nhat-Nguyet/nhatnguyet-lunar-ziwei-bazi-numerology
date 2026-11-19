@@ -245,7 +245,7 @@ avec `node chay.mjs`) :
 | Années dont le Tết diffère de lunar-javascript | 9 sur 201 |
 | Années dont le mois intercalaire diffère de lunar-javascript | 6 sur 201 |
 | Jours qui diffèrent encore de lunar-javascript avec `country: "CN"` | 150 (5 mois) |
-| Thèmes Zi Wei (chaque jour × 12 heures) dont le Cục, le palais de la Vie ou une étoile majeure diffère d'iztro | 38 752 sur 880 968 (4,40 %) |
+| Thèmes Zi Wei (chaque jour × 12 heures) dont le bureau (Cục), le palais de la Vie ou une étoile majeure diffère d'iztro | 38 752 sur 880 968 (4,40 %) |
 | dont dus au fuseau horaire (iztro utilise l'heure de Pékin même avec `vi-VN`) | 26 602 (3,02 %) |
 | dont dus à la règle du mois intercalaire (`fixLeap` d'iztro, une option) | 11 818 (1,34 %) |
 | dont ni l'un ni l'autre | 332 (0,04 %) |
@@ -269,16 +269,18 @@ fuseaux ; lunar-javascript (et donc iztro) la place juste après, le 29. C'est l
 même cas limite de minuit que ci-dessus, et ni le fuseau ni la règle du mois
 intercalaire n'y changent rien.
 
-Exemple : une naissance le 21 janvier 1985, à l'heure Tỵ. iztro donne le 1er
-jour du 12e mois de l'année Giáp Tý, Kim Tứ Cục, palais de la Vie en Thân. Nhat
-Nguyet donne le Tết, 1er jour de l'année Ất Sửu, Thủy Nhị Cục, palais de la Vie
-en Dậu. Passez `country: "CN"` et Nhat Nguyet donne aussi le calendrier
+Exemple : une naissance le 21 janvier 1985, à l'heure Si (Tỵ). iztro donne le
+1er jour du 12e mois de l'année Jia Zi (Giáp Tý), bureau Métal quatre (Kim Tứ
+Cục), palais de la Vie en Shen (Thân). Nhat Nguyet donne le Tết, 1er jour de
+l'année Yi Chou (Ất Sửu), bureau Eau deux (Thủy Nhị Cục), palais de la Vie en
+You (Dậu). Passez `country: "CN"` et Nhat Nguyet donne aussi le calendrier
 chinois.
 
 ## Installation
 
 Version 0.3.0. Les paquets JavaScript sont en ESM, avec types TypeScript et sans
-dépendances ; le paquet Python n'utilise que la bibliothèque standard.
+dépendance externe (seul le serveur MCP a besoin de son SDK et de zod) ; le
+paquet Python n'utilise que la bibliothèque standard.
 
 ```bash
 npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
@@ -288,7 +290,7 @@ pip install nhatnguyet
 | Paquet | Aussi publié sous | Rôle |
 |---|---|---|
 | [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Conversion entre calendrier lunaire et calendrier grégorien pour le Vietnam, la Chine, la Corée, le Japon et 7 autres régions ; troncs et branches ; 24 termes solaires à la minute près ; 28 demeures lunaires ; na yin ; heures fastes |
-| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Zi Wei Dou Shu : 12 palais, éclat des étoiles, Quatre Transformations, Tuần et Triệt, périodes décennales et annuelles, étoiles de transit, configurations accompagnées de la ligne classique d'origine, options d'école ; SVG ; texte pour les LLM ; couche compatible avec iztro |
+| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Zi Wei Dou Shu : 12 palais, éclat des étoiles, Quatre Transformations, Xun Kong et Jie Kong (Tuần, Triệt), périodes décennales et annuelles, étoiles de transit, configurations accompagnées de la ligne classique d'origine, options d'école ; SVG ; texte pour les LLM ; couche compatible avec iztro |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | BaZi : quatre piliers selon les termes solaires, troncs cachés, Dix Dieux, étoiles symboliques, piliers de chance, petites périodes ; SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | Numérologie pythagoricienne (chemin de vie, expression, élan de l'âme, sommets, défis, année personnelle), noms vietnamiens avec diacritiques ; SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 206 fêtes vietnamiennes avec leur date pour n'importe quelle année, provinces, groupes ethniques, lieux ; export iCalendar |
@@ -355,7 +357,7 @@ print(day["day"], "|", ", ".join(f"{h['branch']} {h['range']} {h['spirit']}" for
 
 `castZiWei` construit le thème complet : palais de la Vie et du Corps, bureau,
 les 14 étoiles majeures et 55 étoiles mineures avec leur éclat, les Quatre
-Transformations, Tuần et Triệt, les périodes décennales, une année
+Transformations, Xun Kong et Jie Kong (Tuần, Triệt), les périodes décennales, une année
 d'observation avec ses étoiles de transit, et les configurations du Zi Wei Dou
 Shu Quan Shu avec la ligne classique d'origine. `chart.toSvg()` le dessine ;
 `chartToText` le transforme en Markdown compact pour un modèle de langage. La
@@ -416,7 +418,7 @@ transformations des années Geng (126) et la Celestial Kitchen des années Gui
 
 ### BaZi et numérologie
 
-`castBaZi` prend l'année à Lập Xuân (début du printemps) et le mois à chaque
+`castBaZi` prend l'année au Début du printemps (Lập Xuân) et le mois à chaque
 terme sectionnel, à la minute près ; il donne les troncs cachés, les Dix Dieux,
 les douze stades, les étoiles symboliques, les piliers de chance et les petites
 périodes. `numerology` suit la méthode pythagoricienne et supprime les
@@ -572,7 +574,7 @@ la position des étoiles. Quatre façons de leur fournir les chiffres :
 
 ## Widgets
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="Les cinq composants web de Nhat Nguyet" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="Les cinq composants web de Nhat Nguyet" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets) regroupe 5 composants web
 (date du jour, calendrier mensuel, heures fastes, compte à rebours du Tết,
@@ -654,9 +656,9 @@ Chine), parce que le mois intercalaire tombe une année différente.
 </details>
 
 <details>
-<summary><b>Quelle est l'heure Tý, et quelle date retient-on pour une naissance à 23 h 30 ?</b></summary>
+<summary><b>Quelle est l'heure Zi (Tý), et quelle date retient-on pour une naissance à 23 h 30 ?</b></summary>
 
-L'heure Tý va de 23 h 00 à 0 h 59. Le Zi Wei garde la date saisie (certains
+L'heure Zi va de 23 h 00 à 0 h 59. Le Zi Wei garde la date saisie (certains
 livres la reportent au lendemain ; saisissez la date du lendemain pour les
 suivre). Le BaZi change de pilier du jour à 23 h 00, ou à minuit avec
 `schools: { ziHour: "split-at-midnight" }`. Les deux règles sont indiquées dans
@@ -666,7 +668,7 @@ les `notes` du thème.
 <details>
 <summary><b>Le pilier du mois du BaZi suit-il le mois lunaire ou les termes solaires ?</b></summary>
 
-Les termes solaires : l'année change à Lập Xuân (début du printemps), le mois à
+Les termes solaires : l'année change au Début du printemps (Lập Xuân), le mois à
 chaque terme sectionnel. Prendre le mois lunaire à la place donne un pilier du
 mois différent pour environ un quart des jours (24,3 % de 1900 à 2100).
 </details>

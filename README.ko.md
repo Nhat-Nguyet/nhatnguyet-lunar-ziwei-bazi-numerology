@@ -240,7 +240,7 @@ NASA와 IMCCE로 검증했습니다.
 | lunar-javascript와 설날이 다른 해 | 201년 중 9년 |
 | lunar-javascript와 윤달이 다른 해 | 201년 중 6년 |
 | `country: "CN"`으로 해도 lunar-javascript와 다른 날 | 150일(5개월) |
-| iztro와 Cục, 명궁, 주성 중 하나라도 다른 자미두수 명반(모든 날 × 12시진) | 880,968건 중 38,752건(4.40%) |
+| iztro와 오행국(Cục), 명궁, 주성 중 하나라도 다른 자미두수 명반(모든 날 × 12시진) | 880,968건 중 38,752건(4.40%) |
 | 그중 시간대 때문인 것(iztro는 `vi-VN`에서도 베이징 시간 사용) | 26,602건(3.02%) |
 | 그중 윤달 규칙 때문인 것(iztro `fixLeap`, 옵션) | 11,818건(1.34%) |
 | 그중 둘 다 아닌 것 | 332건(0.04%) |
@@ -261,14 +261,15 @@ lunar-javascript가 중국의 옛 역서에 맞추려고 1960년 이전 날짜�
 iztro)는 직후로 계산해 29일에 시작됩니다. 위에서 말한 자정 경계 사례와 같은 것으로,
 시간대나 윤달 규칙을 바꿔도 달라지지 않습니다.
 
-예: 1985년 1월 21일 Tỵ시(사시) 출생. iztro는 Giáp Tý년 음력 12월 1일, Kim Tứ Cục,
-명궁 Thân으로 계산합니다. Nhat Nguyet은 설날(Tết), 곧 Ất Sửu년 첫날, Thủy Nhị Cục,
-명궁 Dậu로 계산합니다. `country: "CN"`을 넘기면 Nhat Nguyet도 중국 역법으로
+예: 1985년 1월 21일 사시(Tỵ) 출생. iztro는 갑자(Giáp Tý)년 음력 12월 1일,
+금사국(Kim Tứ Cục), 명궁 신(申, Thân)으로 계산합니다. Nhat Nguyet은 설날(Tết),
+곧 을축(Ất Sửu)년 첫날, 수이국(Thủy Nhị Cục), 명궁 유(酉, Dậu)로 계산합니다. `country: "CN"`을 넘기면 Nhat Nguyet도 중국 역법으로
 계산합니다.
 
 ## 설치
 
-버전 0.3.0. JavaScript 패키지는 TypeScript 타입을 갖춘 ESM이며 의존성이 없고,
+버전 0.3.0. JavaScript 패키지는 TypeScript 타입을 갖춘 ESM이며 외부 의존성이 없고(MCP 서버만
+SDK와 zod를 씁니다),
 Python 패키지는 표준 라이브러리만 사용합니다.
 
 ```bash
@@ -279,7 +280,7 @@ pip install nhatnguyet
 | 패키지 | 다른 이름 | 기능 |
 |---|---|---|
 | [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 베트남, 중국, 한국, 일본 외 7개 지역의 음력과 양력 변환, 간지, 분 단위 24절기, 28수, 납음, 길한 시진 |
-| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 자미두수: 12궁, 별의 밝기, 사화, Tuần과 Triệt(순공과 절공), 대한과 유년, 유성, 고전 원문을 곁들인 격국, 학파 옵션, SVG, LLM용 텍스트, iztro 호환 계층 |
+| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 자미두수: 12궁, 별의 밝기, 사화, 순공과 절공(Tuần, Triệt), 대한과 유년, 유성, 고전 원문을 곁들인 격국, 학파 옵션, SVG, LLM용 텍스트, iztro 호환 계층 |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | 사주팔자: 절기 기준 사주, 지장간, 십신, 신살, 대운, 소운, SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | 피타고라스 수비학(생명수, 표현수, 영혼수, 정점수, 도전수, 개인년수), 성조 부호가 있는 베트남어 이름 지원, SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 베트남 축제 206개와 어느 해든 그 해의 날짜, 성(省), 민족, 개최 장소, iCalendar 내보내기 |
@@ -342,7 +343,7 @@ print(day["day"], "|", ", ".join(f"{h['branch']} {h['range']} {h['spirit']}" for
 ### 자미두수
 
 `castZiWei`는 명반 전체를 만듭니다. 명궁과 신궁, 국(局), 주성 14개와 보조성 55개 및
-그 밝기, 사화, Tuần과 Triệt, 대한, 보려는 해와 그 해의 유성, 그리고 자미두수전서
+그 밝기, 사화, 순공과 절공(Tuần, Triệt), 대한, 보려는 해와 그 해의 유성, 그리고 자미두수전서
 (紫微斗數全書)의 격국과 그 고전 원문입니다. `chart.toSvg()`가 명반을 그리고,
 `chartToText`는 언어 모델용 간결한 Markdown으로 바꿉니다. iztro 호환 계층에는 조회
 메서드와 운세 계산이 있습니다: `palace()`, `star()`, `surroundedPalaces()`,
@@ -400,7 +401,7 @@ print(quanshu["notes"][-1])
 
 ### 사주팔자와 수비학
 
-`castBaZi`는 해를 Lập Xuân(입춘)에, 달을 각 절(節)에 분 단위로 바꿉니다. 지장간,
+`castBaZi`는 해를 입춘(Lập Xuân)에, 달을 각 절(節)에 분 단위로 바꿉니다. 지장간,
 십신, 12운성, 신살, 대운, 소운을 냅니다. `numerology`는 피타고라스 방식을 따르며,
 베트남어 성조 부호를 없애고("Đ"는 "D"로 셉니다) 마스터 넘버 11, 22, 33을
 유지합니다.
@@ -542,7 +543,7 @@ print(len(books), sum(books["characters"]))
 
 ## 위젯
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="Nhat Nguyet 웹 컴포넌트 5종" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="Nhat Nguyet 웹 컴포넌트 5종" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets)는 독자의 브라우저 안에서 실행되는 웹
 컴포넌트 5종(오늘의 달력, 월간 달력, 길한 시진, 설날 카운트다운, 날짜 변환)입니다.
@@ -616,9 +617,9 @@ iztro와 운세 2,006건을 비교하면 대한, 나이, 유년의 궁과 유년
 </details>
 
 <details>
-<summary><b>Tý시는 몇 시이며, 23시 30분에 태어나면 어느 날짜를 쓰나요?</b></summary>
+<summary><b>자시(Tý)는 몇 시이며, 23시 30분에 태어나면 어느 날짜를 쓰나요?</b></summary>
 
-Tý시는 23:00부터 00:59까지입니다. 자미두수는 입력한 날짜를 그대로 씁니다(다음 날로
+자시는 23:00부터 00:59까지입니다. 자미두수는 입력한 날짜를 그대로 씁니다(다음 날로
 넘기는 책도 있으니, 그 방식을 따르려면 다음 날 날짜를 입력하세요). 사주팔자는 23:00에
 일주가 바뀌며, `schools: { ziHour: "split-at-midnight" }`를 주면 자정에 바뀝니다. 두
 경우 모두 명반의 `notes`에 적혀 있습니다.
@@ -627,7 +628,7 @@ Tý시는 23:00부터 00:59까지입니다. 자미두수는 입력한 날짜를 
 <details>
 <summary><b>사주팔자의 월주는 음력 월을 따르나요, 절기를 따르나요?</b></summary>
 
-절기를 따릅니다. 해는 Lập Xuân(입춘)에, 달은 각 절(節)이 드는 때에 바뀝니다. 음력
+절기를 따릅니다. 해는 입춘(Lập Xuân)에, 달은 각 절(節)이 드는 때에 바뀝니다. 음력
 월을 대신 쓰면 전체 날짜의 약 4분의 1(1900~2100년 기준 24.3%)에서 월주가
 달라집니다.
 </details>

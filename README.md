@@ -241,7 +241,7 @@ time (UTC+7). Comparing every day from 1900 to 2100
 | Years whose Tết differs from lunar-javascript | 9 of 201 |
 | Years whose leap month differs from lunar-javascript | 6 of 201 |
 | Days that still differ from lunar-javascript with `country: "CN"` | 150 (5 months) |
-| Zi Wei charts (every day × 12 hours) whose Cục, Life palace or a major star differs from iztro | 38,752 of 880,968 (4.40%) |
+| Zi Wei charts (every day × 12 hours) whose bureau (Cục), Life palace or a major star differs from iztro | 38,752 of 880,968 (4.40%) |
 | of which from the time zone (iztro uses Beijing time even with `vi-VN`) | 26,602 (3.02%) |
 | of which from the leap-month rule (iztro `fixLeap`, an option) | 11,818 (1.34%) |
 | of which neither | 332 (0.04%) |
@@ -262,15 +262,17 @@ Beijing midnight and starts the month on the 28th in both time zones;
 lunar-javascript (and so iztro) puts it just after and starts on the 29th. It
 is the same midnight tie as above, and no time zone or leap rule changes it.
 
-Example: born 21 January 1985, Tỵ hour. iztro gives the 1st day of the 12th
-month of Giáp Tý, Kim Tứ Cục, Life palace in Thân. Nhat Nguyet gives Tết, the
-1st day of Ất Sửu, Thủy Nhị Cục, Life palace in Dậu. Pass `country: "CN"` and
-Nhat Nguyet gives the Chinese calendar too.
+Example: born 21 January 1985, in the Si (Tỵ) hour. iztro gives the 1st day
+of the 12th month of the Jia Zi (Giáp Tý) year, Metal Four bureau (Kim Tứ Cục),
+Life palace in Shen (Thân). Nhat Nguyet gives Tết, the 1st day of the Yi Chou
+(Ất Sửu) year, Water Two bureau (Thủy Nhị Cục), Life palace in You (Dậu). Pass
+`country: "CN"` and Nhat Nguyet gives the Chinese calendar too.
 
 ## Install
 
 Version 0.3.0. The JavaScript packages are ESM with TypeScript types and no
-dependencies; the Python package uses the standard library only.
+external dependencies (only the MCP server needs its SDK and zod); the Python
+package uses the standard library only.
 
 ```bash
 npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
@@ -280,7 +282,7 @@ pip install nhatnguyet
 | Package | Also published as | What it does |
 |---|---|---|
 | [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Lunar and Gregorian conversion for Vietnam, China, Korea, Japan and 7 more regions; stems and branches; 24 solar terms to the minute; 28 lunar mansions; na yin; auspicious hours |
-| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Zi Wei Dou Shu: 12 palaces, star brightness, Four Transformations, Tuần and Triệt, ten-year and yearly periods, transiting stars, patterns with the original classical line, school options; SVG; text for LLMs; iztro-compatible layer |
+| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Zi Wei Dou Shu: 12 palaces, star brightness, Four Transformations, Xun Kong and Jie Kong (Tuần, Triệt), ten-year and yearly periods, transiting stars, patterns with the original classical line, school options; SVG; text for LLMs; iztro-compatible layer |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | BaZi: four pillars by solar term, hidden stems, Ten Gods, symbolic stars, luck pillars, minor luck; SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | Pythagorean numerology (life path, expression, soul urge, pinnacles, challenges, personal year), Vietnamese names with diacritics; SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 206 Vietnamese festivals with their dates in any year, provinces, ethnic groups, venues; iCalendar export |
@@ -345,8 +347,8 @@ print(day["day"], "|", ", ".join(f"{h['branch']} {h['range']} {h['spirit']}" for
 ### Zi Wei Dou Shu
 
 `castZiWei` builds the full chart: Life and Body palaces, bureau, the 14 major
-stars and 55 minor stars with brightness, the Four Transformations, Tuần and
-Triệt, ten-year periods, a viewing year with its transiting stars, and the
+stars and 55 minor stars with brightness, the Four Transformations, Xun Kong and
+Jie Kong (Tuần, Triệt), ten-year periods, a viewing year with its transiting stars, and the
 patterns of the Zi Wei Dou Shu Quan Shu with the original classical line.
 `chart.toSvg()` draws it; `chartToText` turns it into compact Markdown for a
 language model. The iztro-compatible layer has the lookups and the horoscope:
@@ -405,7 +407,7 @@ transformations (126) and the Gui-year Celestial Kitchen (59) to 0.
 
 ### BaZi and numerology
 
-`castBaZi` takes the year at Lập Xuân (Start of Spring) and the month at each
+`castBaZi` takes the year at Start of Spring (Lập Xuân) and the month at each
 sectional term, to the minute; it gives hidden stems, Ten Gods, the twelve
 stages, symbolic stars, luck pillars and minor luck. `numerology` follows the
 Pythagorean method and folds Vietnamese diacritics ("Đ" counts as "D"),
@@ -553,7 +555,7 @@ heads. Four ways to give them the numbers:
 
 ## Widgets
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="The five Nhat Nguyet web components" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="The five Nhat Nguyet web components" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets) is 5 web components (today's
 date, month grid, auspicious hours, Tết countdown, date converter) that run in
@@ -633,9 +635,9 @@ different year.
 </details>
 
 <details>
-<summary><b>Which hour is the Tý hour, and what date does a birth at 23:30 use?</b></summary>
+<summary><b>Which hours make the Zi (Tý) hour, and what date does a birth at 23:30 use?</b></summary>
 
-Tý runs 23:00 to 00:59. Zi Wei keeps the date you entered (some books move it
+The Zi (Tý) hour runs 23:00 to 00:59. Zi Wei keeps the date you entered (some books move it
 to the next day; enter the next date to follow them). BaZi turns the day pillar
 at 23:00, or at midnight with `schools: { ziHour: "split-at-midnight" }`. Both
 are stated in the chart's `notes`.
@@ -644,7 +646,7 @@ are stated in the chart's `notes`.
 <details>
 <summary><b>Does the BaZi month pillar follow the lunar month or the solar terms?</b></summary>
 
-The solar terms: the year turns at Lập Xuân (Start of Spring), the month at
+The solar terms: the year turns at Start of Spring (Lập Xuân), the month at
 each sectional term. Using the lunar month instead gives a different month
 pillar on about a quarter of all days (24.3% from 1900 to 2100).
 </details>

@@ -23,7 +23,7 @@
 
 import { canGioDau, canThangDan, dayCanChi, lunarToSolar, mod, resolveCountry, solarToLunar } from "@nhatnguyet/am-lich";
 import type { LunarDate } from "@nhatnguyet/am-lich";
-import { lapLaSoTuVi } from "./la-so.ts";
+import { lapLaSoTuViTheoMuiGio } from "./theo-mui-gio.ts";
 import { normalizeZiWeiSchools, thangAnTheoPhai } from "./schools.ts";
 import type { ZiWeiSchools } from "./schools.ts";
 import { daiVan } from "./chieu-sau.ts";
@@ -163,25 +163,6 @@ function docGioiTinh(g: unknown): "male" | "female" {
 }
 
 
-/**
- * Lá số lõi cho một ngày âm bất kỳ: lapLaSoTuVi nhận ngày dương và đổi âm theo
- * UTC+7, nên tìm một ngày dương cho ra đúng (năm cùng can chi, tháng, ngày),
- * thử năm cách nhau 60 năm khi tháng ấy ở UTC+7 thiếu ngày 30. Mọi sao chỉ phụ
- * thuộc can chi năm, tháng âm, ngày âm, giờ và giới, nên lá số không đổi.
- */
-function laSoTheoNgayAm(gioiTinh: string, nam: number, thang: number, ngay: number, chi: number, schools?: ZiWeiSchools): LaSoTuVi {
-  for (const k of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5]) {
-    const y = nam + 60 * k;
-    const r = lunarToSolar(ngay, thang, y, false, 7);
-    if (!r.hopLe) continue;
-    const back = solarToLunar(r.duong.day, r.duong.month, r.duong.year, 7);
-    if (back.year === y && back.month === thang && back.day === ngay && !back.leap) {
-      return lapLaSoTuVi("", gioiTinh, r.duong.day, r.duong.month, r.duong.year, chi, schools);
-    }
-  }
-  throw new Error(`no chart for lunar ${nam}-${thang}-${ngay}`);
-}
-
 function an<T extends object>(o: T, k: string, v: unknown): void {
   Object.defineProperty(o, k, { value: v, enumerable: false, writable: false, configurable: true });
 }
@@ -228,19 +209,9 @@ export function bySolar(
   const tc = normalizeZiWeiSchools({ ...options.schools, leapMonth: options.schools?.leapMonth ?? (fixLeap ? "split-at-15" : "whole") }) ?? {};
   const thangAn = thangAnTheoPhai(am, tc.leapMonth);
   const gioiTinh = gt === "female" ? "Nữ" : "Nam";
-  let raw: LaSoTuVi;
-  if (timeZone === 7) {
-    raw = lapLaSoTuVi("", gioiTinh, ngay.d, ngay.m, ngay.y, chi, tc);
-  } else {
-    // Ngày âm ở múi giờ khác: dựng lá theo (năm, tháng an sao, ngày) bằng một ngày
-    // thường ở UTC+7, rồi ghi lại lựa chọn và tháng an sao.
-    const conLai: ZiWeiSchools = { ...tc };
-    delete conLai.leapMonth;
-    raw = laSoTheoNgayAm(gioiTinh, am.year, thangAn, am.day, chi, conLai);
-    if (Object.keys(tc).length) raw.schools = tc;
-    else delete raw.schools;
-    if (thangAn !== am.month) raw.placementMonth = thangAn;
-  }
+  // Ngày âm ở múi giờ khác UTC+7: lá dựng theo (năm, tháng an sao, ngày) âm
+  // của múi ấy (theo-mui-gio.ts, dùng chung với castZiWei).
+  const raw: LaSoTuVi = lapLaSoTuViTheoMuiGio("", gioiTinh, ngay.d, ngay.m, ngay.y, chi, tc, timeZone);
   raw.ngaySinhDuong = { ngay: ngay.d, thang: ngay.m, nam: ngay.y };
   raw.ngaySinhAm = am;
 

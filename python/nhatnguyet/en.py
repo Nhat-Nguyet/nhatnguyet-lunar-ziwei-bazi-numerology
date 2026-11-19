@@ -28,7 +28,7 @@ import unicodedata
 from functools import lru_cache
 from typing import Any, Callable, Dict, List, Optional, Union
 
-from . import am_lich, bat_tu, le_hoi, than_so_hoc, tu_vi, tu_vi_schools
+from . import am_lich, bat_tu, le_hoi, than_so_hoc, tu_vi, tu_vi_mui_gio, tu_vi_schools
 from ._gio_hoang_dao import AUSPICIOUS_SPIRITS, HOUR_SPIRIT_PINYIN, gio_hoang_dao_kem_than as _gio_hoang_dao_kem_than
 from .bat_tu_ve_svg import ve_bat_tu_svg
 from .than_so_hoc_ve_svg import ve_than_so_hoc_svg
@@ -518,6 +518,20 @@ _GIO_TY = {
 _LICH_VN = {"vi": "Ngày âm theo lịch Việt Nam (UTC+7).",
             "en": "The lunar date follows the Vietnamese calendar (UTC+7).",
             "zh": "农历日期按越南历（UTC+7）。"}
+
+
+def _cau_lich(lang: str, time_zone: float = 7, country: Optional[str] = None) -> str:
+    """Câu nêu lịch âm đã dùng: lịch Việt Nam (UTC+7), hay lịch của nước, múi giờ khác."""
+    if time_zone == 7:
+        return _LICH_VN[lang]
+    utc = "UTC%s%s" % ("-" if time_zone < 0 else "+", _num(abs(time_zone)))
+    if country:
+        return {"vi": "Ngày âm theo lịch âm của %s (%s)." % (country, utc),
+                "en": "The lunar date follows the lunar calendar of %s (%s)." % (country, utc),
+                "zh": "农历日期按 %s 的农历（%s）。" % (country, utc)}[lang]
+    return {"vi": "Ngày âm theo lịch âm ở %s." % utc,
+            "en": "The lunar date follows the lunar calendar at %s." % utc,
+            "zh": "农历日期按 %s 的农历。" % utc}[lang]
 _PHAI_DAU = {"vi": "Lựa chọn phái khác mặc định: ",
              "en": "School options (not the default): ",
              "zh": "非默认的流派选项："}
@@ -561,7 +575,8 @@ def _ten_cung(c: Dict, lang: str) -> str:
 
 
 def _localize_zi_wei(raw: Dict, lang: str, time: Optional[str], view_year: Optional[int],
-                     terms: Optional[str] = None) -> Dict[str, Any]:
+                     terms: Optional[str] = None, time_zone: float = 7,
+                     country: Optional[str] = None) -> Dict[str, Any]:
     tm = check_terms(terms, lang)
     en = lang == "en"
     chi = am_lich.DIA_CHI.index(raw["gioSinh"])
@@ -588,14 +603,15 @@ def _localize_zi_wei(raw: Dict, lang: str, time: Optional[str], view_year: Optio
             "isLife": c["viTri"] == raw["cungMenh"], "isBody": c["laThan"],
             "tuan": c["tuanTrung"], "triet": c["trietLo"], "stars": stars,
         })
+    lich = _cau_lich(lang, time_zone, country)
     if time is None:
-        note = _LICH_VN[lang]
+        note = lich
     elif lang == "vi":
-        note = "Giờ sinh %s thuộc giờ %s (%s). %s" % (time, h["name"], h["range"], _LICH_VN[lang])
+        note = "Giờ sinh %s thuộc giờ %s (%s). %s" % (time, h["name"], h["range"], lich)
     elif lang == "en":
-        note = "Birth time %s falls in the %s double hour (%s). %s" % (time, h["name"], h["range"], _LICH_VN[lang])
+        note = "Birth time %s falls in the %s double hour (%s). %s" % (time, h["name"], h["range"], lich)
     else:
-        note = "出生时间 %s 属%s时（%s）。%s" % (time, h["name"], h["range"], _LICH_VN[lang])
+        note = "出生时间 %s 属%s时（%s）。%s" % (time, h["name"], h["range"], lich)
     notes = [note] + ([_tv_en_text(_GIO_TY["en"], tm) if en else _GIO_TY[lang]] if chi == 0 else [])
     phai = school_note(raw.get("schools"), lang)
     if phai:
@@ -614,6 +630,8 @@ def _localize_zi_wei(raw: Dict, lang: str, time: Optional[str], view_year: Optio
         "viewYear": view_year if view_year is not None else _dt.date.today().year,
         "notes": notes, "raw": raw,
     }
+    if time_zone != 7:
+        chart["timeZone"] = _num(time_zone)
     if raw.get("schools"):
         chart["schools"] = dict(raw["schools"])
     return chart
@@ -622,7 +640,8 @@ def _localize_zi_wei(raw: Dict, lang: str, time: Optional[str], view_year: Optio
 def cast_zi_wei(date: DateInput, gender: str, time: Union[str, int, None] = None,
                 hour_branch_index: Optional[int] = None, name: str = "", lang: str = "en",
                 view_year: Optional[int] = None, terms: Optional[str] = None,
-                schools: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+                schools: Optional[Dict[str, str]] = None, country: Optional[str] = None,
+                time_zone: Optional[float] = None) -> Dict[str, Any]:
     """Cast a Zi Wei Dou Shu (Tử Vi) chart.
 
     ``time`` is the clock time ``"HH:MM"``, mapped to its double hour (Tý is
@@ -638,6 +657,11 @@ def cast_zi_wei(date: DateInput, gender: str, time: Union[str, int, None] = None
     zhongzhou), ``heavenlyKitchen`` (vietnamese, chinese), ``injuryMessenger``
     (standard, zhongzhou). Omitted: the default chart. An unknown key or value
     raises ValueError. See docs/schools.md.
+
+    ``country``: whose lunar calendar turns the birth date into the lunar date
+    the chart is built on, as ``to_lunar``: "VN" (default, UTC+7), "CN", "TW",
+    "HK", "MO", "SG", "MY", "ID", "PH" (UTC+8), "KR", "JP" (UTC+9); or
+    ``time_zone`` in hours. The chart then carries ``timeZone``.
 
     Example: ``cast_zi_wei("1990-09-19", "male", time="20:00", schools={"fire_bell": "quanshu"})``
     """
@@ -657,9 +681,11 @@ def cast_zi_wei(date: DateInput, gender: str, time: Union[str, int, None] = None
             raise ValueError("hour_branch_index must be an integer 0 (Tý) to 11 (Hợi)")
     else:
         raise ValueError('Zi Wei needs the birth hour: pass time ("HH:MM") or hour_branch_index (0-11)')
-    raw = tu_vi.lap_la_so_tu_vi(name or "", "Nữ" if g == "female" else "Nam", d["day"], d["month"], d["year"], chi,
-                                _schools_camel(schools, _SCHOOLS_ZI_WEI))
-    return _localize_zi_wei(raw, lang, _hhmm(t["hour"], t["minute"]) if t else None, view_year, terms)
+    c, tz = _country(country, time_zone)
+    raw = tu_vi_mui_gio.lap_la_so_tu_vi_theo_mui_gio(name or "", "Nữ" if g == "female" else "Nam", d["day"], d["month"],
+                                                    d["year"], chi, _schools_camel(schools, _SCHOOLS_ZI_WEI), tz)
+    return _localize_zi_wei(raw, lang, _hhmm(t["hour"], t["minute"]) if t else None, view_year, terms, tz,
+                            c if time_zone is None and country is not None else None)
 
 
 def _box(chart: Dict, lang: Optional[str], terms: Optional[str] = None) -> tuple:
@@ -824,6 +850,17 @@ def _bt_en_text(text: str, terms: str) -> str:
     return convert_terms(text, terms, _THAY_BAT_TU, "bat-tu")
 
 
+def _ly_do_van_en(dv: Dict[str, Any], terms: str) -> str:
+    # Lõi (và ca kiểm) viết mốc tiết "04:37 on 8/9/1990" theo lối ngày/tháng
+    # của bản Việt; lớp tiếng Anh đổi đúng cụm ấy sang ISO "1990-09-08 04:37".
+    s = _bt_en_text(dv["lyDoEn"], terms)
+    d = dv["tietMocNgay"]
+    if d["year"]:
+        gio = _hhmm(dv["tietMocGio"], dv["tietMocPhut"])
+        s = s.replace("(%s on %d/%d/%d)" % (gio, d["day"], d["month"], d["year"]), "(%s %s)" % (_iso(d), gio), 1)
+    return s
+
+
 def _tieng_tiet(ten: str, lang: str) -> str:
     if lang == "vi" or not ten:
         return ten
@@ -916,7 +953,7 @@ def _localize_bazi(raw: Dict, lang: str, terms: Optional[str] = None) -> Dict[st
             "days": dv["soNgay"],
             "startAge": {"years": dv["tuoiKhoiNam"], "months": dv["tuoiKhoiThang"]},
             "startDate": _iso(dv["ngayKhoiVan"]) if dv["ngayKhoiVan"]["year"] else "",
-            "explanation": dv["lyDo"] if lang == "vi" else _bt_en_text(dv["lyDoEn"], tm) if en else dv["lyDoZh"],
+            "explanation": dv["lyDo"] if lang == "vi" else _ly_do_van_en(dv, tm) if en else dv["lyDoZh"],
             "pillars": [dict(_tru_co_ban(v, lang, tm), order=v["thuTu"], tenGod=_tt(v, lang),
                              stage=_pick(v, "truongSinh", lang, lambda v=v: term(v["truongSinh"], lang)),
                              fromAge=v["tuoiTu"], fromYear=v["namTu"], toYear=v["namDen"])

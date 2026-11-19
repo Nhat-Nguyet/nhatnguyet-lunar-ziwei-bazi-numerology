@@ -453,10 +453,12 @@ Turn a raw `LaSoTuVi` into the English-API shape in `lang`.
 | ------ | ------ | ------ |
 | `raw` | `LaSoTuVi` | `undefined` |
 | `lang?` | [`Lang`](am-lich.md#lang) | `"en"` |
-| `extra?` | \{ `time?`: `string` \| `null`; `viewYear?`: `number`; `terms?`: [`Terms`](am-lich.md#terms); \} | `{}` |
+| `extra?` | \{ `time?`: `string` \| `null`; `viewYear?`: `number`; `terms?`: [`Terms`](am-lich.md#terms); `timeZone?`: `number`; `country?`: `string` \| `null`; \} | `{}` |
 | `extra.time?` | `string` \| `null` | `undefined` |
 | `extra.viewYear?` | `number` | `undefined` |
 | `extra.terms?` | [`Terms`](am-lich.md#terms) | `undefined` |
+| `extra.timeZone?` | `number` | `undefined` |
+| `extra.country?` | `string` \| `null` | `undefined` |
 
 #### Returns
 
@@ -959,11 +961,12 @@ Draw this chart as a self-contained SVG in the chart's `lang` (non-enumerable, n
 | <a id="property-solardate"></a> `solarDate` | `string` | Birth date as entered, "YYYY-MM-DD". | [`ZiWeiChart`](#ziweichart).[`solarDate`](#property-solardate-1) |
 | <a id="property-time"></a> `time` | `string` \| `null` | Birth time as entered, "HH:MM", or null when only `hourBranch` was given. | [`ZiWeiChart`](#ziweichart).[`time`](#property-time-2) |
 | <a id="property-hour-1"></a> `hour` | [`HourBranch`](am-lich.md#hourbranch) | - | [`ZiWeiChart`](#ziweichart).[`hour`](#property-hour-2) |
-| <a id="property-lunar-1"></a> `lunar` | `object` | Lunar birth date (Vietnamese calendar, UTC+7). | [`ZiWeiChart`](#ziweichart).[`lunar`](#property-lunar-2) |
+| <a id="property-lunar-1"></a> `lunar` | `object` | Lunar birth date (Vietnamese calendar, UTC+7, unless `country` or `timeZone` says otherwise). | [`ZiWeiChart`](#ziweichart).[`lunar`](#property-lunar-2) |
 | `lunar.year` | `number` | - | - |
 | `lunar.month` | `number` | - | - |
 | `lunar.day` | `number` | - | - |
 | `lunar.leap` | `boolean` | - | - |
+| <a id="property-timezone"></a> `timeZone?` | `number` | Time zone of the lunar calendar used, only when it is not UTC+7 (`country` or `timeZone` of the input). | [`ZiWeiChart`](#ziweichart).[`timeZone`](#property-timezone-2) |
 | <a id="property-yearpillar"></a> `yearPillar` | `string` | Stem-branch of the lunar birth year. | [`ZiWeiChart`](#ziweichart).[`yearPillar`](#property-yearpillar-1) |
 | <a id="property-yinyang"></a> `yinYang` | `string` | Yin/Yang and gender, e.g. "Yang Male". | [`ZiWeiChart`](#ziweichart).[`yinYang`](#property-yinyang-1) |
 | <a id="property-bureau"></a> `bureau` | `object` | Element bureau (cục): number and name, e.g. 4, "Metal Four". | [`ZiWeiChart`](#ziweichart).[`bureau`](#property-bureau-1) |
@@ -997,6 +1000,8 @@ Input of `castZiWei`.
 | <a id="property-terms-2"></a> `terms?` | [`Terms`](am-lich.md#terms) | With lang "en": how stems, branches, the Four Transformations and the Tuần/Triệt voids are written: "pinyin" (default: "Geng Wu", "Hua Ji", "Xun Kong"), "han" ("庚午", "化忌", "旬空") or "vi" ("Canh Ngọ", "Hóa Kỵ", "Tuần"). With "vi" the pattern names also stay Sino-Vietnamese. |
 | <a id="property-viewyear-1"></a> `viewYear?` | `number` | Year used by `yearlyLuck` / `yearlyStars` when no year is passed. Default: current year. |
 | <a id="property-schools-1"></a> `schools?` | `ZiWeiSchools` | School options where the books disagree (Fire and Bell stars, leap month, Geng transformations, Celestial Kitchen, Celestial Injury and Messenger). Omitted: the default chart. See `ZiWeiSchools` and docs/schools.md. **Example** `castZiWei({ date: "1990-09-19", time: "20:00", gender: "male", schools: { fireBell: "quanshu" } })` |
+| <a id="property-country"></a> `country?` | `string` | Whose lunar calendar turns the birth date into the lunar date the chart is built on: "VN" (default, UTC+7), "CN", "TW", "HK", "MO", "SG", "MY", "ID", "PH" (UTC+8), "KR", "JP" (UTC+9), as `toLunar`. The calendars differ on some days (Tết 1985, 2007, 2030...), and so does the chart. **Example** `castZiWei({ date: "1985-01-21", time: "10:00", gender: "male", country: "CN" })` |
+| <a id="property-timezone-1"></a> `timeZone?` | `number` | Time zone in hours, instead of `country`. |
 
 ***
 
@@ -1077,11 +1082,12 @@ Draw this chart as a self-contained SVG in the chart's `lang` (non-enumerable, n
 | <a id="property-solardate-1"></a> `solarDate` | `string` | Birth date as entered, "YYYY-MM-DD". |
 | <a id="property-time-2"></a> `time` | `string` \| `null` | Birth time as entered, "HH:MM", or null when only `hourBranch` was given. |
 | <a id="property-hour-2"></a> `hour` | [`HourBranch`](am-lich.md#hourbranch) | - |
-| <a id="property-lunar-2"></a> `lunar` | `object` | Lunar birth date (Vietnamese calendar, UTC+7). |
+| <a id="property-lunar-2"></a> `lunar` | `object` | Lunar birth date (Vietnamese calendar, UTC+7, unless `country` or `timeZone` says otherwise). |
 | `lunar.year` | `number` | - |
 | `lunar.month` | `number` | - |
 | `lunar.day` | `number` | - |
 | `lunar.leap` | `boolean` | - |
+| <a id="property-timezone-2"></a> `timeZone?` | `number` | Time zone of the lunar calendar used, only when it is not UTC+7 (`country` or `timeZone` of the input). |
 | <a id="property-yearpillar-1"></a> `yearPillar` | `string` | Stem-branch of the lunar birth year. |
 | <a id="property-yinyang-1"></a> `yinYang` | `string` | Yin/Yang and gender, e.g. "Yang Male". |
 | <a id="property-bureau-1"></a> `bureau` | `object` | Element bureau (cục): number and name, e.g. 4, "Metal Four". |

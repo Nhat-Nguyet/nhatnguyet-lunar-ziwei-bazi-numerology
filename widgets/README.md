@@ -35,7 +35,8 @@ the Shadow DOM.
 | `<nn-dem-nguoc-tet>` | Days until the Lunar New Year (Tết) | <img src="../assets/widgets/nn-dem-nguoc-tet.png" width="240" alt="nn-dem-nguoc-tet"> |
 | `<nn-doi-lich>` | Solar to lunar date converter with that day's auspicious hours | <img src="../assets/widgets/nn-doi-lich.png" width="240" alt="nn-doi-lich"> |
 
-Attributes: `lang` (`vi`, `en`, `zh`; default `vi`), `terms` (with `lang="en"`:
+Attributes: `lang` (`vi`, `en`, `zh`; default: the page's `lang`, else the
+browser language, else `en`), `terms` (with `lang="en"`:
 `pinyin` default, `han` or `vi`, how stem-branch names are written, as the
 libraries' `terms` option), `theme` (`light`, `dark`,
 `auto`; default `light`), `accent` (6-digit hex), `country` (`VN` default; `CN`,

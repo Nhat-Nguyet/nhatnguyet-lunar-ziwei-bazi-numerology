@@ -32,7 +32,8 @@ for viec in json.load(sys.stdin):
     h = viec["ham"]
     if h == "zi_wei":
         c = en.cast_zi_wei(a["date"], a["gender"], hour_branch_index=a["hourBranch"], lang=a.get("lang", "en"),
-                           view_year=a["viewYear"], terms=a.get("terms"), name=a.get("name", ""), schools=a.get("schools"))
+                           view_year=a["viewYear"], terms=a.get("terms"), name=a.get("name", ""), schools=a.get("schools"),
+                           country=a.get("country"), time_zone=a.get("timeZone"))
         r = {"chart": c, "decades": en.decade_luck(c), "year": en.yearly_luck(c), "stars": en.yearly_stars(c),
              "patterns": en.find_patterns(c)}
     elif h == "bazi":

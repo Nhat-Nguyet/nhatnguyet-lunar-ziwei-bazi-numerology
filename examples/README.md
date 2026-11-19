@@ -30,7 +30,7 @@ own README and tests.
 | Folder | What it is |
 |---|---|
 | [`nextjs-lunar-calendar/`](nextjs-lunar-calendar) | Next.js (App Router, static export) page: month grid with lunar dates and solar terms, today's sexagenary day, month and year, Tết countdown, Zi Wei chart from a form |
-| [`telegram-bot/`](telegram-bot) | grammY bot: `/today`, `/tet`, `/ziwei YYYY-MM-DD HH:MM male\|female`; replies in English, Vietnamese or Chinese |
+| [`telegram-bot/`](telegram-bot) | grammY bot: `/today`, `/hours`, `/tet`, `/ziwei YYYY-MM-DD HH:MM male\|female`; replies in English, Vietnamese or Chinese |
 | [`google-sheets/`](google-sheets) | `=LUNARDATE()`, `=SEXAGENARY()`, `=SOLARTERM()`, `=SOLARDATE()` for Google Sheets: one `Code.gs` file to paste into Apps Script |
 | [`jupyter/`](jupyter) | notebook (saved with outputs): Tết, lunar months and leap months in Vietnam vs China, 1900 to 2100, with charts |
 

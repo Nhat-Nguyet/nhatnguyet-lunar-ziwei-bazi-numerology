@@ -1,5 +1,5 @@
-"""Command line: ``python -m nhatnguyet <command> ...`` (same commands as the
-npm package ``@nhatnguyet/cli``).
+"""Command line: ``nhatnguyet <command> ...``, also ``python -m nhatnguyet
+<command> ...`` (same commands and output as the npm package ``@nhatnguyet/cli``).
 
 Lệnh dòng lệnh, bản Python của ``js/packages/cli``: cùng lệnh con, cùng cách
 in (lưới Tử Vi 4x4 bằng ký tự khung, màu ANSI khi là TTY và không có NO_COLOR).
@@ -21,14 +21,14 @@ from . import en
 HELP = """nhatnguyet: Zi Wei Dou Shu, BaZi, lunar calendar, numerology, Vietnamese festivals
 
 Usage:
-  python -m nhatnguyet ziwei <YYYY-MM-DD> <HH:MM> <male|female> [--name "..."] [--year 2026] [school options]
-  python -m nhatnguyet bazi <YYYY-MM-DD> [HH:MM] <male|female> [--zi-hour ...]
-  python -m nhatnguyet lunar <YYYY-MM-DD> [--country VN|CN|KR|JP|...]
-  python -m nhatnguyet solar <lunar YYYY-MM-DD> [--leap] [--country ...]
-  python -m nhatnguyet terms <year> [--country ...]
-  python -m nhatnguyet hours <YYYY-MM-DD>     auspicious and inauspicious double hours of a day
-  python -m nhatnguyet numerology "<full name>" <YYYY-MM-DD> [--today YYYY-MM-DD]
-  python -m nhatnguyet festivals <year> [--ics]
+  nhatnguyet ziwei <YYYY-MM-DD> <HH:MM> <male|female> [--name "..."] [--year 2026] [school options]
+  nhatnguyet bazi <YYYY-MM-DD> [HH:MM] <male|female> [--zi-hour ...]
+  nhatnguyet lunar <YYYY-MM-DD> [--country VN|CN|KR|JP|...]
+  nhatnguyet solar <lunar YYYY-MM-DD> [--leap] [--country ...]
+  nhatnguyet terms <year> [--country ...]
+  nhatnguyet hours <YYYY-MM-DD>     auspicious and inauspicious double hours of a day
+  nhatnguyet numerology "<full name>" <YYYY-MM-DD> [--today YYYY-MM-DD]
+  nhatnguyet festivals <year> [--ics]
 
 Options:
   --lang en|vi|zh   language of the result (default en)
@@ -53,7 +53,7 @@ School options (where the books disagree; default first, sources in docs/schools
 
 Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms). Docs: https://nhatnguyet.org/en/ma-nguon-mo"""
+terms, ziwei). Docs: https://nhatnguyet.org/en/ma-nguon-mo"""
 
 # ── Bề rộng hiển thị ─────────────────────────────────────────────────────
 
@@ -592,7 +592,7 @@ def run(argv: Sequence[str], color: bool = False, width: int = 88, write_file=No
         year = int(flags["year"]) if isinstance(flags.get("year"), str) else None
         name = flags["name"] if isinstance(flags.get("name"), str) else ""
         chart = en.cast_zi_wei(p[0], p[2], time=p[1], name=name, lang=lang, view_year=year, terms=terms,
-                               schools=_schools_from(flags, _SCHOOL_FLAGS[:5]))
+                               schools=_schools_from(flags, _SCHOOL_FLAGS[:5]), country=country)
         extra = {"decades": en.decade_luck(chart), "year": en.yearly_luck(chart), "patterns": en.find_patterns(chart)}
         ghi_svg(lambda: en.zi_wei_svg(chart, theme=theme))
         if js:
@@ -640,7 +640,7 @@ def run(argv: Sequence[str], color: bool = False, width: int = 88, write_file=No
             return en.festivals_ics(int(p[0]), lang=lang)[:-1]
         items = en.festivals(int(p[0]), lang=lang)
         return _dump(items) if js else render_festivals(int(p[0]), items, lang, color, width)
-    raise ValueError('unknown command "%s". Try: python -m nhatnguyet --help' % cmd)
+    raise ValueError('unknown command "%s". Try: nhatnguyet --help' % cmd)
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -655,9 +655,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         sys.stderr.write("nhatnguyet: %s\n" % e)
         return 1
     try:
-        out.write(text + "\n")
-    except UnicodeEncodeError:
-        out.buffer.write((text + "\n").encode("utf-8"))
+        try:
+            out.write(text + "\n")
+        except UnicodeEncodeError:
+            out.buffer.write((text + "\n").encode("utf-8"))
+        out.flush()
+    except BrokenPipeError:
+        # Người đọc đóng ống sớm (``nhatnguyet festivals 2027 --ics | head``):
+        # thoát êm với mã 0 như lệnh Unix thường. Trỏ stdout vào devnull để lần
+        # flush lúc tắt trình thông dịch không ném lỗi lần nữa.
+        try:
+            devnull = os.open(os.devnull, os.O_WRONLY)
+            os.dup2(devnull, out.fileno())
+        except (OSError, ValueError, AttributeError):
+            pass
+        return 0
     return 0
 
 

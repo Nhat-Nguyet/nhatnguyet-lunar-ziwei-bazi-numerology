@@ -23,13 +23,14 @@ import {
   parseDateInRange,
   parseTime,
   pickLang,
+  resolveCountry,
   stemBranchName,
   term,
   termName,
 } from "@nhatnguyet/am-lich";
 import type { DateInput, HourBranch, Lang, Terms } from "@nhatnguyet/am-lich";
 import { PATTERN_EN, PATTERN_HAN_FIX, enText, starEn } from "./ten-en.ts";
-import { lapLaSoTuVi } from "./la-so.ts";
+import { lapLaSoTuViTheoMuiGio } from "./theo-mui-gio.ts";
 import { daiVan } from "./chieu-sau.ts";
 import { tinhHanNam } from "./luu-nien.ts";
 import { tinhSaoLuu } from "./luu-sao.ts";
@@ -100,6 +101,17 @@ export interface ZiWeiInput {
    * @example castZiWei({ date: "1990-09-19", time: "20:00", gender: "male", schools: { fireBell: "quanshu" } })
    */
   schools?: ZiWeiSchools;
+  /**
+   * Whose lunar calendar turns the birth date into the lunar date the chart
+   * is built on: "VN" (default, UTC+7), "CN", "TW", "HK", "MO", "SG", "MY",
+   * "ID", "PH" (UTC+8), "KR", "JP" (UTC+9), as `toLunar`. The calendars differ
+   * on some days (Tết 1985, 2007, 2030...), and so does the chart.
+   *
+   * @example castZiWei({ date: "1985-01-21", time: "10:00", gender: "male", country: "CN" })
+   */
+  country?: string;
+  /** Time zone in hours, instead of `country`. */
+  timeZone?: number;
 }
 
 /** Kind of star on the chart. */
@@ -184,8 +196,10 @@ export interface ZiWeiChart {
   /** Birth time as entered, "HH:MM", or null when only `hourBranch` was given. */
   time: string | null;
   hour: HourBranch;
-  /** Lunar birth date (Vietnamese calendar, UTC+7). */
+  /** Lunar birth date (Vietnamese calendar, UTC+7, unless `country` or `timeZone` says otherwise). */
   lunar: { year: number; month: number; day: number; leap: boolean };
+  /** Time zone of the lunar calendar used, only when it is not UTC+7 (`country` or `timeZone` of the input). */
+  timeZone?: number;
   /** Stem-branch of the lunar birth year. */
   yearPillar: string;
   /** Yin/Yang and gender, e.g. "Yang Male". */
@@ -267,8 +281,16 @@ export function schoolNote(schools: ZiWeiSchools | undefined, lang: Lang): strin
   return lang === "zh" ? PHAI_DAU.zh + ds.join("；") + "。" : PHAI_DAU[lang] + ds.join("; ") + ".";
 }
 
-function ghiChuGio(h: HourBranch, time: string | null, lang: Lang): string {
-  const lich = { vi: "Ngày âm theo lịch Việt Nam (UTC+7).", en: "The lunar date follows the Vietnamese calendar (UTC+7).", zh: "农历日期按越南历（UTC+7）。" }[lang];
+/** Câu nêu lịch âm đã dùng: lịch Việt Nam (UTC+7), hay lịch của nước, múi giờ khác. */
+function cauLich(lang: Lang, timeZone = 7, country: string | null = null): string {
+  if (timeZone === 7) return { vi: "Ngày âm theo lịch Việt Nam (UTC+7).", en: "The lunar date follows the Vietnamese calendar (UTC+7).", zh: "农历日期按越南历（UTC+7）。" }[lang];
+  const utc = `UTC${timeZone < 0 ? "-" : "+"}${Math.abs(timeZone)}`;
+  if (country) return { vi: `Ngày âm theo lịch âm của ${country} (${utc}).`, en: `The lunar date follows the lunar calendar of ${country} (${utc}).`, zh: `农历日期按 ${country} 的农历（${utc}）。` }[lang];
+  return { vi: `Ngày âm theo lịch âm ở ${utc}.`, en: `The lunar date follows the lunar calendar at ${utc}.`, zh: `农历日期按 ${utc} 的农历。` }[lang];
+}
+
+function ghiChuGio(h: HourBranch, time: string | null, lang: Lang, timeZone = 7, country: string | null = null): string {
+  const lich = cauLich(lang, timeZone, country);
   if (time === null) return lich;
   if (lang === "vi") return `Giờ sinh ${time} thuộc giờ ${h.name} (${h.range}). ${lich}`;
   if (lang === "en") return `Birth time ${time} falls in the ${h.name} double hour (${h.range}). ${lich}`;
@@ -276,7 +298,11 @@ function ghiChuGio(h: HourBranch, time: string | null, lang: Lang): string {
 }
 
 /** Turn a raw `LaSoTuVi` into the English-API shape in `lang`. */
-export function localizeZiWei(raw: LaSoTuVi, lang: Lang = "en", extra: { time?: string | null; viewYear?: number; terms?: Terms } = {}): ZiWeiChart {
+export function localizeZiWei(
+  raw: LaSoTuVi,
+  lang: Lang = "en",
+  extra: { time?: string | null; viewYear?: number; terms?: Terms; timeZone?: number; country?: string | null } = {},
+): ZiWeiChart {
   const l = checkLang(lang);
   const tm = checkTerms(extra.terms, l);
   const chiIdx = DIA_CHI.indexOf(raw.gioSinh);
@@ -302,7 +328,8 @@ export function localizeZiWei(raw: LaSoTuVi, lang: Lang = "en", extra: { time?: 
       return r;
     }),
   }));
-  const notes = [ghiChuGio(h, time, l)];
+  const tz = extra.timeZone ?? 7;
+  const notes = [ghiChuGio(h, time, l, tz, extra.country ?? null)];
   if (chiIdx === 0) notes.push(l === "en" ? enText(GIO_TY.en, tm) : GIO_TY[l]);
   const phai = schoolNote(raw.schools, l);
   if (phai) notes.push(phai);
@@ -326,6 +353,7 @@ export function localizeZiWei(raw: LaSoTuVi, lang: Lang = "en", extra: { time?: 
     notes,
     raw,
   } as Omit<ZiWeiChart, "toSvg">;
+  if (tz !== 7) chart.timeZone = tz;
   if (raw.schools) chart.schools = { ...raw.schools };
   return ganToSvg(chart, (opts?: SvgOptions) => ziWeiSvg(raw, { ...opts, lang: opts?.lang ?? l, terms: opts?.terms ?? (opts?.lang === undefined || opts.lang === l ? tm : undefined) })) as ZiWeiChart;
 }
@@ -366,8 +394,15 @@ export function castZiWei(input: ZiWeiInput): ZiWeiChart {
     throw new TypeError('Zi Wei needs the birth hour: pass time ("HH:MM") or hourBranch (0-11)');
   }
   if (input.viewYear !== undefined && !Number.isInteger(input.viewYear)) throw new TypeError("viewYear must be an integer");
-  const raw = lapLaSoTuVi(input.name ?? "", gender === "female" ? "Nữ" : "Nam", d.day, d.month, d.year, chi, input.schools);
-  return localizeZiWei(raw, lang, { time: t ? formatTime(t) : null, viewYear: input.viewYear, terms });
+  const { country, timeZone } = resolveCountry({ country: input.country, timeZone: input.timeZone });
+  const raw = lapLaSoTuViTheoMuiGio(input.name ?? "", gender === "female" ? "Nữ" : "Nam", d.day, d.month, d.year, chi, input.schools, timeZone);
+  return localizeZiWei(raw, lang, {
+    time: t ? formatTime(t) : null,
+    viewYear: input.viewYear,
+    terms,
+    timeZone,
+    country: input.timeZone === undefined && input.country !== undefined ? country : null,
+  });
 }
 
 type ChartLike = ZiWeiChart | Omit<ZiWeiChart, "toSvg"> | LaSoTuVi;

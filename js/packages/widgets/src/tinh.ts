@@ -27,9 +27,27 @@ export function muiGio(country: string | null | undefined): number {
   return MUI_GIO_THEO_NUOC[ma] ?? 7;
 }
 
-/** Đọc ngôn ngữ từ thuộc tính: chỉ nhận vi, en, zh; còn lại là vi. */
-export function docLang(v: string | null | undefined): Lang {
-  return v === "en" || v === "zh" ? v : "vi";
+/**
+ * Nhận một mã ngôn ngữ BCP 47 theo tiền tố ("en-US" là en, "zh-Hant" là zh,
+ * "VI" là vi); không phải vi, en, zh thì null.
+ */
+export function maLang(v: string | null | undefined): Lang | null {
+  const m = /^(vi|en|zh)(?:[-_]|$)/i.exec((v || "").trim());
+  return m ? (m[1].toLowerCase() as Lang) : null;
+}
+
+/**
+ * Chọn ngôn ngữ của thành phần theo thứ tự: thuộc tính `lang` của chính nó,
+ * `lang` của phần tử tổ tiên gần nhất (gồm `<html lang>`), ngôn ngữ của trình
+ * duyệt (`navigator.language`), rồi "en". Mỗi bậc chỉ được nhận khi là vi, en
+ * hay zh (so tiền tố); giá trị khác thì xét bậc kế.
+ */
+export function docLang(
+  v: string | null | undefined,
+  toTien?: string | null,
+  trinhDuyet?: string | null,
+): Lang {
+  return maLang(v) ?? maLang(toTien) ?? maLang(trinhDuyet) ?? "en";
 }
 
 /**

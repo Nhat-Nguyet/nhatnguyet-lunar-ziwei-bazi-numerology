@@ -268,7 +268,7 @@ Dậu. Truyền `country: "CN"` thì Nhật Nguyệt cũng cho lịch Trung Qu�
 ## Cài đặt
 
 Phiên bản 0.3.0. Các gói JavaScript là ESM, có kiểu TypeScript và không phụ
-thuộc gói ngoài nào; gói Python chỉ dùng thư viện chuẩn.
+thuộc gói ngoài nào (riêng máy chủ MCP cần SDK của nó và zod); gói Python chỉ dùng thư viện chuẩn.
 
 ```bash
 npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
@@ -544,7 +544,7 @@ thật cho chúng:
 
 ## Widget
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="Năm thành phần web của Nhật Nguyệt" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="Năm thành phần web của Nhật Nguyệt" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets) là 5 thành phần web (lịch hôm
 nay, lịch tháng, giờ hoàng đạo, đếm ngược Tết, đổi lịch) chạy ngay trong trình

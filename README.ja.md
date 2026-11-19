@@ -221,7 +221,7 @@ Vietnamese calendar (UTC+7).
 | lunar-javascript とテトの日付が異なる年 | 201年中 9年 |
 | lunar-javascript と閏月が異なる年 | 201年中 6年 |
 | `country: "CN"` にしても lunar-javascript と異なる日 | 150日（5か月） |
-| iztro と Cục、命宮、主星のいずれかが異なる紫微斗数の命盤（毎日 × 12時辰） | 880,968件中 38,752件（4.40%） |
+| iztro と五行局（Cục）、命宮、主星のいずれかが異なる紫微斗数の命盤（毎日 × 12時辰） | 880,968件中 38,752件（4.40%） |
 | うちタイムゾーンによるもの（iztro は `vi-VN` でも北京時間を使う） | 26,602件（3.02%） |
 | うち閏月の規則によるもの（iztro の `fixLeap`、オプション） | 11,818件（1.34%） |
 | うちどちらでもないもの | 332件（0.04%） |
@@ -231,11 +231,11 @@ Vietnamese calendar (UTC+7).
 
 **タイムゾーンでも閏月の規則でもない 332件の命盤**は、すべて 2057年9月28日からの 30日間、つまり1か月に収まります。この月の朔は 16:00 UT です。Nhat Nguyet は北京の真夜中の直前と計算するため、どちらのタイムゾーンでも28日に月が始まり、lunar-javascript（したがって iztro）は直後と計算して29日に始まります。上で述べた真夜中の際どいケースと同じもので、タイムゾーンや閏月の規則を変えても変わりません。
 
-例：1985年1月21日、Tỵ の刻（巳の刻）生まれ。iztro では Giáp Tý 年の12月1日、Kim Tứ Cục、命宮は Thân になります。Nhat Nguyet ではテト（Tết）、つまり Ất Sửu 年の元日で、Thủy Nhị Cục、命宮は Dậu です。`country: "CN"` を渡せば、Nhat Nguyet でも中国の暦で計算できます。
+例：1985年1月21日、巳の刻（Tỵ）生まれ。iztro では甲子（Giáp Tý）年の12月1日、金四局（Kim Tứ Cục）、命宮は申（Thân）になります。Nhat Nguyet ではテト（Tết）、つまり乙丑（Ất Sửu）年の元日で、水二局（Thủy Nhị Cục）、命宮は酉（Dậu）です。`country: "CN"` を渡せば、Nhat Nguyet でも中国の暦で計算できます。
 
 ## インストール
 
-バージョン 0.3.0。JavaScript パッケージは TypeScript の型定義付きの ESM で、依存関係はありません。Python パッケージは標準ライブラリのみを使います。
+バージョン 0.3.0。JavaScript パッケージは TypeScript の型定義付きの ESM で、外部の依存関係はありません（MCP サーバーだけは SDK と zod を使います）。Python パッケージは標準ライブラリのみを使います。
 
 ```bash
 npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
@@ -245,7 +245,7 @@ pip install nhatnguyet
 | パッケージ | 別名での公開 | 機能 |
 |---|---|---|
 | [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | ベトナム、中国、韓国、日本ほか7地域の旧暦と新暦の変換、干支、分単位の二十四節気、二十八宿、納音、吉時 |
-| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 紫微斗数：十二宮、星の廟旺利陥、四化、Tuần と Triệt（旬空と截空）、大限と流年、流曜、古典の原文を添えた格局、流派オプション、SVG、LLM 向けテキスト、iztro 互換のレイヤー |
+| [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 紫微斗数：十二宮、星の廟旺利陥、四化、旬空と截空（Tuần、Triệt）、大限と流年、流曜、古典の原文を添えた格局、流派オプション、SVG、LLM 向けテキスト、iztro 互換のレイヤー |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | 四柱推命：節気による四柱、蔵干、通変星（十神）、神殺、大運、小運、SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | ピタゴラス式数秘術（ライフパス数、ディスティニー数、ソウル数、ピナクル、チャレンジ、パーソナルイヤー）、声調記号付きのベトナム語氏名に対応、SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | ベトナムの祭礼 206件と任意の年の日付、省、民族、開催地、iCalendar 出力 |
@@ -297,7 +297,7 @@ print(day["day"], "|", ", ".join(f"{h['branch']} {h['range']} {h['spirit']}" for
 
 ### 紫微斗数
 
-`castZiWei` は命盤をすべて組み立てます。命宮と身宮、五行局、廟旺利陥付きの主星 14個と補助星 55個、四化、Tuần と Triệt、大限、流年とその流曜、そして古典の原文を添えた『紫微斗数全書』の格局です。`chart.toSvg()` で描画し、`chartToText` で言語モデル向けの簡潔な Markdown に変換します。iztro 互換のレイヤーには、検索とホロスコープの機能があります：`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`（[iztro からの移行](#iztro-からの移行)）。
+`castZiWei` は命盤をすべて組み立てます。命宮と身宮、五行局、廟旺利陥付きの主星 14個と補助星 55個、四化、旬空と截空（Tuần、Triệt）、大限、流年とその流曜、そして古典の原文を添えた『紫微斗数全書』の格局です。`chart.toSvg()` で描画し、`chartToText` で言語モデル向けの簡潔な Markdown に変換します。iztro 互換のレイヤーには、検索とホロスコープの機能があります：`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`（[iztro からの移行](#iztro-からの移行)）。
 
 ### 流派オプション
 
@@ -344,7 +344,7 @@ print(quanshu["notes"][-1])
 
 ### 四柱推命と数秘術
 
-`castBaZi` は年を Lập Xuân（立春）で、月を各節入りで、分単位で切り替えます。蔵干、通変星、十二運、神殺、大運、小運を出します。`numerology` はピタゴラス式に従い、ベトナム語の声調記号などを取り除いて数え（「Đ」は「D」として数えます）、マスターナンバー 11、22、33 を残します。
+`castBaZi` は年を立春（Lập Xuân）で、月を各節入りで、分単位で切り替えます。蔵干、通変星、十二運、神殺、大運、小運を出します。`numerology` はピタゴラス式に従い、ベトナム語の声調記号などを取り除いて数え（「Đ」は「D」として数えます）、マスターナンバー 11、22、33 を残します。
 
 ### 祭礼
 
@@ -452,7 +452,7 @@ print(len(books), sum(books["characters"]))
 
 ## ウィジェット
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="Nhat Nguyet の5つのウェブコンポーネント" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="Nhat Nguyet の5つのウェブコンポーネント" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets) は、読者のブラウザの中で動く 5つのウェブコンポーネント（今日の暦、月間カレンダー、吉時、テトまでのカウントダウン、日付変換）です。コードはこのリポジトリで公開しており、サーバー不要、ネットワーク通信なしで、ライトとダークのテーマ、英語、ベトナム語、中国語に対応します。
 
@@ -506,15 +506,15 @@ iztro と 2,006件のホロスコープで比較すると、大限、年齢、�
 </details>
 
 <details>
-<summary><b>Tý の刻とは何時で、23時30分生まれはどの日付を使いますか？</b></summary>
+<summary><b>子の刻（Tý）とは何時で、23時30分生まれはどの日付を使いますか？</b></summary>
 
-Tý の刻は 23:00 から 00:59 までです。紫微斗数では入力した日付をそのまま使います（翌日に移す書物もあり、それに従う場合は翌日の日付を入力してください）。四柱推命では日柱が 23:00 で切り替わります。`schools: { ziHour: "split-at-midnight" }` を指定すると真夜中で切り替わります。どちらも命盤の `notes` に記載されます。
+子の刻は 23:00 から 00:59 までです。紫微斗数では入力した日付をそのまま使います（翌日に移す書物もあり、それに従う場合は翌日の日付を入力してください）。四柱推命では日柱が 23:00 で切り替わります。`schools: { ziHour: "split-at-midnight" }` を指定すると真夜中で切り替わります。どちらも命盤の `notes` に記載されます。
 </details>
 
 <details>
 <summary><b>四柱推命の月柱は旧暦の月と節気のどちらに従いますか？</b></summary>
 
-節気に従います。年は Lập Xuân（立春）で、月は各節気の節入りで切り替わります。代わりに旧暦の月を使うと、全日数のおよそ4分の1（1900年から2100年で 24.3%）で月柱が変わります。
+節気に従います。年は立春（Lập Xuân）で、月は各節気の節入りで切り替わります。代わりに旧暦の月を使うと、全日数のおよそ4分の1（1900年から2100年で 24.3%）で月柱が変わります。
 </details>
 
 <details>

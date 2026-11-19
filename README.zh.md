@@ -235,7 +235,7 @@ Vietnamese calendar (UTC+7).
 
 ## 安装
 
-版本 0.3.0。JavaScript 包为 ESM，附 TypeScript 类型，无任何依赖；Python 包仅用标准库。
+版本 0.3.0。JavaScript 包为 ESM，附 TypeScript 类型，无外部依赖（仅 MCP 服务器需要其 SDK 与 zod）；Python 包仅用标准库。
 
 ```bash
 npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
@@ -452,7 +452,7 @@ print(len(books), sum(books["characters"]))
 
 ## 网页小组件
 
-<p align="center"><img src="./assets/widgets/web-components.png" alt="Nhat Nguyet 的五个网页组件" width="720"></p>
+<p align="center"><img src="./assets/widgets/tong-hop.png" alt="Nhat Nguyet 的五个网页组件" width="720"></p>
 
 [`@nhatnguyet/widgets`](./js/packages/widgets) 是 5 个网页组件（今日日期、月历、黄道吉时、春节倒计时、日期换算），直接在读者的浏览器中运行：代码开源并收录在本仓库，无需服务器，不发网络请求，支持浅色与深色主题，文字有英文、越南文、中文。
 

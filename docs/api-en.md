@@ -32,7 +32,12 @@ English whatever `terms` says, and English text never carries a Vietnamese
 word (a test scans every test case for Vietnamese letters). `lang: "vi"` is
 always Vietnamese and `lang: "zh"` always Chinese characters. Codes stay
 stable whatever the language: `nameVi`, `code` (yearly stars), `id`
-(festivals).
+(festivals). Enumerated values are English codes in every `lang` as well:
+`gender` (`male`, `female`), a Zi Wei star's `kind` and `group`, a yearly
+star's `toYearPalace`, `toMinorLimit` and `toDecade` (`same-palace`,
+`opposite`, `trine`, or `""`), BaZi `luck.direction` (`forward`, `backward`)
+and `symbolicStars[].pillars` (`year`, `month`, `day`, `hour`), a solar term's
+`kind` (`jie`, `qi`), and a festival's `calendar`, `group` and `scope`.
 
 TypeScript and Python return the same keys (camelCase) and the command lines
 print the same bytes. Every output below was produced by running the code.
@@ -153,6 +158,14 @@ han.palaces[han.lifePalace].stars[0].transformation;   // "化忌"
   Messenger); the default is unchanged. See [schools.md](schools.md):
   `castZiWei({ ..., schools: { fireBell: "quanshu", leapMonth: "split-at-15" } })`.
   The chart then carries `schools` (non-default options only) and one line in `notes`.
+- `country` (as in `toLunar`: `"VN"` by default, `"CN"`, `"KR"`, `"JP"`...) or
+  `timeZone` (hours) says whose lunar calendar turns the birth date into the
+  lunar date the chart is built on. The calendars differ on some days: born
+  1985-01-21, the Vietnamese calendar gives the 1st day of the 1st month of
+  the Yi Chou year, `country: "CN"` the 1st day of the 12th month of the Jia
+  Zi year, and so a different chart. A chart off UTC+7 carries `timeZone` and says so
+  in `notes`; Python `cast_zi_wei(..., country="CN")` or `time_zone=8`, CLI
+  `nhatnguyet ziwei 1985-01-21 10:00 male --country CN`.
 - Pattern names are English names translated from the Chinese one, with the
   book's name in `nameHan` (`terms: "vi"` keeps the Sino-Vietnamese name);
   `lang: "zh"` gives 命宫, 太阴, 化忌, 土五局.
@@ -355,6 +368,9 @@ function or the module.
 
 ## Command line
 
+An excerpt: the block below shows only the first part of the output, the
+12-palace grid and its legend.
+
 ```bash
 npx @nhatnguyet/cli ziwei 1990-09-19 20:00 male --name "Nguyen Van An" --year 2026
 python -m nhatnguyet ziwei 1990-09-19 20:00 male --name "Nguyen Van An" --year 2026
@@ -416,8 +432,8 @@ Brightness: Ex exalted, Pr prosperous, Fa favorable, Ne neutral, We weak. Ages a
 Asian ages (1 at birth).
 ```
 
-Below the grid it prints the viewing year, the twelve ten-year periods, the
-patterns and the notes. Other commands:
+After the grid (cut from the excerpt above) it prints the viewing year, the
+twelve ten-year periods, the patterns and the notes. Other commands:
 
 ```bash
 nhatnguyet bazi 1990-09-19 20:00 male --lang zh

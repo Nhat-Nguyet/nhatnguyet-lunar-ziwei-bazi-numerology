@@ -2,7 +2,7 @@
 
 Pythagorean numerology from a full name and a birth date, with Vietnamese
 diacritics folded correctly ("Đ" counts as "D"): life path, expression, soul
-urge, personal year, pinnacles, challenges, SVG. No dependencies, TypeScript
+urge, personal year, pinnacles, challenges, SVG. No external dependencies, TypeScript
 types, Node 18+ and browsers.
 
 ## Install

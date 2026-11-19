@@ -38,6 +38,13 @@ Data: Nhat Nguyet (nhatnguyet.org). Project page: [https://nhatnguyet.org/en/ma-
 One row per aligned pair. The same `unit_id` (for example `h05.small_image.3`) appears once per language pair, so
 the English and French rows of a unit can be joined into a three-way parallel text.
 
+The first row, `h01.judgment` in `zh-en`, shows what the translations look like as printed:
+
+> 乾：元亨。利貞。 → Kh ien (represents) what is great and originating, penetrating, advantageous, correct and firm.
+
+`Kh ien` is the translator's romanization `Khien` (乾) split in two by OCR. Translations are published as OCR gave them,
+without correction (see Known limitations).
+
 | `section` | `zh-en` (published / possible) | `zh-fr` (published / possible) |
 |---|---:|---:|
 | `judgment` | 64 / 64 | 23 / 30 |
