@@ -1,6 +1,6 @@
 # nhatnguyet (Python)
 
-> **English:** Zi Wei Dou Shu (Tử Vi), BaZi (Four Pillars), Pythagorean numerology for Vietnamese names, the Vietnamese, Chinese, Korean and Japanese lunar calendars, and Vietnamese festivals, in pure Python with no dependencies. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** Zi Wei Dou Shu (Tử Vi), BaZi (Four Pillars), Pythagorean numerology for Vietnamese names, the Vietnamese, Chinese, Korean and Japanese lunar calendars, and Vietnamese festivals, in pure Python with no dependencies. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Bản Python của lõi tính Nhật Nguyệt (nhatnguyet.org): âm lịch Việt Nam, can chi,
 24 tiết khí, Nhị Thập Bát Tú, ngũ hành, nạp âm, và thần số học. Thư viện chuẩn,

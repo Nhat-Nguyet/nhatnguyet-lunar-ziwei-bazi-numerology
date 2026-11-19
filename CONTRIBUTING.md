@@ -45,7 +45,7 @@ thực lệch tối đa 1e-9. Đạt trọn mọi ca thì gửi pull request.
 ### Ghi nguồn
 
 Dùng dữ liệu thì ghi `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`; xem mục Quy định
-sử dụng trong [README](./README.md).
+sử dụng trong [README](./README.vi.md).
 
 ## English
 
@@ -94,7 +94,7 @@ Once every case passes, send a pull request.
 ### Credit
 
 When you use the data, credit `Data: Nhat Nguyet (nhatnguyet.org)`; see Terms
-of use in the [README](./README.en.md).
+of use in the [README](./README.md).
 
 ## 中文
 

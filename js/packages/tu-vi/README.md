@@ -1,6 +1,6 @@
 # @nhatnguyet/tu-vi
 
-> **English:** Zi Wei Dou Shu (Tử Vi, Purple Star Astrology) chart: 12 palaces, main and minor stars, brightness, Four Transformations, decade luck, yearly luck, patterns. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** Zi Wei Dou Shu (Tử Vi, Purple Star Astrology) chart: 12 palaces, main and minor stars, brightness, Four Transformations, decade luck, yearly luck, patterns. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Lá số Tử Vi Đẩu Số: cục, cung Mệnh, cung Thân, an 14 chính tinh và phụ tinh,
 sáng tối, Tứ Hóa, Tuần Triệt, ba vòng Tràng Sinh, Thái Tuế, Bác Sỹ; đại vận,

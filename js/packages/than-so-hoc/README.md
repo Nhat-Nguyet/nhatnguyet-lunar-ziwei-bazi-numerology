@@ -1,6 +1,6 @@
 # @nhatnguyet/than-so-hoc
 
-> **English:** Pythagorean numerology for Vietnamese names: life path, expression, soul urge, personality, pinnacles, challenges, personal year. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** Pythagorean numerology for Vietnamese names: life path, expression, soul urge, personality, pinnacles, challenges, personal year. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Các chỉ số thần số học theo bảng Pythagoras cho tên tiếng Việt (bỏ dấu, đ
 thành d). Đây là bản TypeScript của phần tính số trong lõi tính của

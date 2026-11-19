@@ -1,6 +1,6 @@
 # @nhatnguyet/am-lich
 
-> **English:** Vietnamese lunar calendar (also Chinese, Korean, Japanese), sexagenary cycle, 24 solar terms to the minute, 28 lunar mansions; checked against NASA and IMCCE. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** Vietnamese lunar calendar (also Chinese, Korean, Japanese), sexagenary cycle, 24 solar terms to the minute, 28 lunar mansions; checked against NASA and IMCCE. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Lịch âm Việt Nam, can chi, 24 tiết khí, Nhị Thập Bát Tú, ngũ hành và nạp âm.
 Đây là bản TypeScript của lõi tính mà [Nhật Nguyệt](https://nhatnguyet.org)

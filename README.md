@@ -1,103 +1,107 @@
 <p align="center">
-  <a href="https://nhatnguyet.org/ma-nguon-mo">
+  <a href="https://nhatnguyet.org/en/ma-nguon-mo">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-toi.svg">
-      <img src="./assets/banner-sang.svg" alt="Nhật Nguyệt" width="720">
+      <img src="./assets/banner-sang.svg" alt="Nhat Nguyet" width="720">
     </picture>
   </a>
 </p>
 
-<h1 align="center">Nhật Nguyệt: mã và dữ liệu mở về Tử Vi, Bát Tự, Thần số học</h1>
+<h1 align="center">Nhat Nguyet: open source Zi Wei Dou Shu, BaZi and numerology library and datasets</h1>
 
 <p align="center">
-  <b>Lập lá số Tử Vi, Bát Tự (Tứ Trụ), Thần số học, đổi âm lịch và tra văn khấn miễn phí, bằng JavaScript và Python.</b><br>
-  3,6 triệu lá số luận sẵn · hơn 60 đầu sách cổ · lịch âm Việt Nam đối chiếu NASA
+  <b>Free open source library to cast Zi Wei Dou Shu (Purple Star Astrology) and BaZi (Four Pillars of Destiny) charts, calculate numerology, convert the Vietnamese lunar calendar and the Chinese calendar, and look up Vietnamese ritual prayers, in JavaScript and Python.</b><br>
+  3.6 million pre-interpreted charts · 60+ classical texts · Vietnamese lunar calendar checked against NASA
 </p>
 
 <p align="center">
-  <a href="./LICENSE"><img alt="Mã: MIT" src="https://img.shields.io/badge/m%C3%A3-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="Dữ liệu: CC BY 4.0" src="https://img.shields.io/badge/d%E1%BB%AF%20li%E1%BB%87u-CC%20BY%204.0-1f6f6b.svg"></a>
-  <a href="./ca-kiem"><img alt="Ca kiểm: 17.291 đạt" src="https://img.shields.io/badge/ca%20ki%E1%BB%83m-17.291%20%C4%91%E1%BA%A1t-2e7d32.svg"></a>
-  <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="Kiểm tự động" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg"></a>
+  <a href="./LICENSE"><img alt="Code: MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="Data: CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./ca-kiem"><img alt="Test cases: 17,291 passing" src="https://img.shields.io/badge/test%20cases-17%2C291%20passing-2e7d32.svg"></a>
+  <a href="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml"><img alt="Automated checks" src="https://github.com/Nhat-Nguyet/nhatnguyet/actions/workflows/kiem.yml/badge.svg"></a>
 </p>
 
 <p align="center">
-  <b>Tiếng Việt</b> · <a href="./README.en.md">English</a> · <a href="./README.zh.md">中文</a>
+  <b>English</b> · <a href="./README.vi.md">Tiếng Việt</a> · <a href="./README.zh.md">中文</a>
   <br>
-  <a href="https://nhatnguyet.org/ma-nguon-mo">Trang giới thiệu</a> ·
-  <a href="https://nhatnguyet.org/du-lieu">Dữ liệu mở</a> ·
+  <a href="https://nhatnguyet.org/en/ma-nguon-mo">Project page</a> ·
+  <a href="https://nhatnguyet.org/en/du-lieu">Open data</a> ·
   <a href="https://huggingface.co/nhatnguyet">Hugging Face</a> ·
-  <a href="https://nhatnguyet.org/blog">Bài hướng dẫn</a>
+  <a href="https://nhatnguyet.org/en/blog">Tutorials</a>
 </p>
 
 ---
 
-## Mục lục
+## Contents
 
-1. [Tổng quan](#tổng-quan)
-2. [Vì sao chọn Nhật Nguyệt](#vì-sao-chọn-nhật-nguyệt)
-3. [Có gì trong repo](#có-gì-trong-repo)
-4. [Bắt đầu nhanh](#bắt-đầu-nhanh)
-5. [Dùng để làm gì](#dùng-để-làm-gì)
-6. [Cơ sở khoa học](#cơ-sở-khoa-học)
-7. [Lộ trình](#lộ-trình)
-8. [Giấy phép và ghi nguồn](#giấy-phép-và-ghi-nguồn)
-9. [Hỏi đáp](#hỏi-đáp)
-10. [Đóng góp và liên hệ](#đóng-góp-và-liên-hệ)
+1. [Overview](#overview)
+2. [Why Nhat Nguyet](#why-nhat-nguyet)
+3. [What is in the repo](#what-is-in-the-repo)
+4. [Quick start](#quick-start)
+5. [What you can build](#what-you-can-build)
+6. [Scientific basis](#scientific-basis)
+7. [Roadmap](#roadmap)
+8. [License and attribution](#license-and-attribution)
+9. [FAQ](#faq)
+10. [Contributing and contact](#contributing-and-contact)
 
-## Tổng quan
+## Overview
 
-Bộ mã và dữ liệu mở về tri thức huyền học và tín ngưỡng, **gốc Việt Nam, phủ cả
-phương Đông lẫn phương Tây**: Tử Vi Đẩu Số, Bát Tự, Thần số học, Kinh Dịch,
-Tarot, chiêm tinh, phong thủy, xem ngày, âm lịch bốn nước, lễ hội và văn khấn.
-Kết quả khớp từng trường với lõi tính đang chạy trên
-[nhatnguyet.org](https://nhatnguyet.org) và app Nhật Nguyệt trên iOS, Android.
+Open source code and datasets on metaphysical traditions and folk belief,
+**rooted in Vietnam, covering both Eastern and Western traditions**: Tử Vi (Zi
+Wei Dou Shu), Bát Tự (BaZi), numerology, the I Ching, Tarot, astrology, feng
+shui, date selection, the lunar calendars of four countries, festivals and
+ritual prayers. Every result matches, field by field, the calculation engine
+that runs [nhatnguyet.org](https://nhatnguyet.org) and the Nhat Nguyet app on
+iOS and Android.
 
-| Lá số luận sẵn | Sách cổ | Bài kiến thức | Dữ liệu mở | Ca kiểm |
+| Pre-interpreted charts | Classical texts | Knowledge articles | Open datasets | Test cases |
 |:---:|:---:|:---:|:---:|:---:|
-| **3,6 triệu** | **60+ đầu sách**<br>7,3 triệu ký tự | **510 bài**<br>tóm tắt, hỏi đáp | **33 bộ**<br>có DOI | **17.291**<br>đạt trọn |
-| **456** bài văn khấn | **200** lễ hội | **4** nước âm lịch | **3** thứ tiếng | **0** phụ thuộc |
+| **3.6 million** | **60+ titles**<br>7.3 million characters | **510 articles**<br>summaries, FAQs | **33 datasets**<br>with DOIs | **17,291**<br>all passing |
+| **456** ritual prayers | **200** festivals | **4** national lunar calendars | **3** languages | **0** dependencies |
 
-## Vì sao chọn Nhật Nguyệt
+## Why Nhat Nguyet
 
 | | |
 |---|---|
-| **Lịch theo giờ Việt Nam** | 2.814 ngày trong 1900 tới 2100 có ngày âm khác lịch tính theo giờ Bắc Kinh; Tết lệch ở 10 năm. Chọn được lịch của từng nước, mặc định Việt Nam. |
-| **Kiểm chứng được** | Điểm sóc lệch NASA trung bình 1,1 phút; giờ giao tiết lệch IMCCE trung bình 4,2 phút. Bản TypeScript và Python ra đúng từng trường của lõi tính gốc ở 17.291 ca. |
-| **Nói có sách** | Mỗi câu sách cổ ghi tên sách và chương, nguyên văn đã đối chiếu bản in. Chỗ các phái khác nhau được nêu, không lặng lẽ chọn. |
-| **Ba thứ tiếng** | Tên sao, thuật ngữ, lời luận đủ tiếng Việt, Anh, Trung. |
-| **Chạy trên máy** | Không phụ thuộc, không gọi mạng, không gửi dữ liệu đi. Chạy trong trình duyệt, Node, Python. |
+| **Calendar on Vietnam time** | 2,814 days between 1900 and 2100 fall on a different lunar date than in the calendar computed on Beijing time; Lunar New Year (Tết) differs in 10 years. You can pick each country's calendar; Vietnam is the default. |
+| **Verifiable** | New moons differ from NASA by 1.1 minutes on average; solar term times differ from IMCCE by 4.2 minutes on average. The TypeScript and Python versions reproduce every field of the reference engine in 17,291 cases. |
+| **Backed by sources** | Every classical quote names its book and chapter, with the original text checked against printed editions. Where schools disagree, it says so instead of quietly picking one. |
+| **Three languages** | Star names, terminology and interpretations in full Vietnamese, English and Chinese. |
+| **Runs on your device** | No dependencies, no network calls, no data sent anywhere. Runs in the browser, Node and Python. |
 
-## Có gì trong repo
+## What is in the repo
 
-### Thư viện
+### Libraries
 
-| Môn | TypeScript (npm) | Python (`pip install nhatnguyet`) | Làm gì |
+| Topic | TypeScript (npm) | Python (`pip install nhatnguyet`) | What it does |
 |---|---|---|---|
-| Âm lịch | [`@nhatnguyet/am-lich`](./js/packages/am-lich) | `nhatnguyet.am_lich` | Đổi âm dương bốn nước, can chi, 24 tiết khí tới phút, Nhị Thập Bát Tú, nạp âm |
-| Tử Vi | [`@nhatnguyet/tu-vi`](./js/packages/tu-vi) | `nhatnguyet.tu_vi` | Lá số 12 cung, sáng tối, Tứ Hóa, Tuần Triệt, đại vận, hạn năm, sao lưu, cách cục |
-| Bát Tự | [`@nhatnguyet/bat-tu`](./js/packages/bat-tu) | `nhatnguyet.bat_tu` | Bốn trụ theo tiết khí, tàng can, thập thần, thần sát, đại vận, tiểu vận |
-| Thần số học | [`@nhatnguyet/than-so-hoc`](./js/packages/than-so-hoc) | `nhatnguyet.than_so_hoc` | Số chủ đạo, sứ mệnh, linh hồn, đỉnh cao, thử thách, năm cá nhân; tên tiếng Việt có dấu |
-| Lễ hội | [`@nhatnguyet/le-hoi`](./js/packages/le-hoi) | `nhatnguyet.le_hoi` | 200 lễ hội, quy đổi ngày âm sang dương từng năm |
+| Lunar calendar | [`@nhatnguyet/am-lich`](./js/packages/am-lich) | `nhatnguyet.am_lich` | Lunar and solar conversion for four countries, stems and branches, 24 solar terms to the minute, the 28 lunar mansions (Nhị Thập Bát Tú), nạp âm |
+| Zi Wei Dou Shu | [`@nhatnguyet/tu-vi`](./js/packages/tu-vi) | `nhatnguyet.tu_vi` | 12-palace chart, star brightness, Four Transformations (Tứ Hóa), Tuần and Triệt, 10-year periods, yearly periods, transiting stars, chart patterns |
+| BaZi | [`@nhatnguyet/bat-tu`](./js/packages/bat-tu) | `nhatnguyet.bat_tu` | Four pillars by solar term, hidden stems, Ten Gods, symbolic stars (thần sát), 10-year luck periods, minor periods (tiểu vận) |
+| Numerology | [`@nhatnguyet/than-so-hoc`](./js/packages/than-so-hoc) | `nhatnguyet.than_so_hoc` | Life path, expression, soul urge, pinnacles, challenges, personal year; Vietnamese names with diacritics |
+| Festivals | [`@nhatnguyet/le-hoi`](./js/packages/le-hoi) | `nhatnguyet.le_hoi` | 200 festivals, lunar to solar date conversion for every year |
 
-### Dữ liệu
+### Datasets
 
-| Bộ | Nội dung | Định dạng | Cỡ |
+| Dataset | Contents | Format | Size |
 |---|---|---|---|
-| Lời luận theo lá số | Tử Vi, Bát Tự mọi ngày sinh 1900 tới 2100 (12 giờ, 2 giới); Thần số học theo ngày sinh | JSON Lines nén zstd, mỗi năm sinh một tệp | ~11 GB nén |
-| ↳ lá số có cấu trúc | vị trí sao, Tứ Hóa, trụ, các con số, kèm mã câu luận | `la-so/<môn>/<năm>` | ~1,6 GB |
-| ↳ ghép sẵn theo ngôn ngữ | chữ đầy đủ một ngôn ngữ mỗi tệp, cho huấn luyện AI | `ghep-san/<môn>/<vi\|en\|zh>/<năm>` | ~9 GB |
-| ↳ kho chữ | lời luận, câu sách, đọc thêm; mỗi đoạn một lần, có mã | `kho/` | < 0,3 GB |
-| Sách cổ | 60+ đầu sách phạm vi công cộng, toàn văn | văn bản | ~20 MB |
-| Lịch, lễ hội, văn cúng | 33 bộ: lịch âm dương 1900 tới 2100, 64 quẻ, 78 lá Tarot, tiết khí, văn khấn, nghi thức... | CSV, JSON, Parquet | 118 MB |
+| Interpretations by chart | Zi Wei Dou Shu and BaZi for every birth date from 1900 to 2100 (12 hours, 2 genders); numerology by birth date | zstd-compressed JSON Lines, one file per birth year | ~11 GB compressed |
+| ↳ structured charts | star positions, Four Transformations, pillars, numbers, with interpretation IDs | `la-so/<topic>/<year>` | ~1.6 GB |
+| ↳ prebuilt by language | full text in one language per file, for AI training | `ghep-san/<topic>/<vi\|en\|zh>/<year>` | ~9 GB |
+| ↳ text store | interpretations, classical passages, further reading; each passage stored once, with an ID | `kho/` | < 0.3 GB |
+| Classical texts | 60+ public domain titles, full text | plain text | ~20 MB |
+| Calendar, festivals, ritual prayers | 33 datasets: lunisolar calendar 1900 to 2100, 64 hexagrams, 78 Tarot cards, solar terms, ritual prayers, rites... | CSV, JSON, Parquet | 118 MB |
 
-### Bộ ca kiểm
+### Test cases
 
-[`ca-kiem/`](./ca-kiem): 17.291 cặp đầu vào và đáp án sinh từ lõi tính gốc, cho
-lịch âm bốn nước, lễ hội, thần số học, Bát Tự, Tử Vi. Viết thư viện bằng ngôn
-ngữ nào cũng tự kiểm được: đọc `vao`, so với `ra`.
+[`ca-kiem/`](./ca-kiem): 17,291 input and answer pairs generated from the
+reference engine, for the lunar calendars of four countries, festivals,
+numerology, BaZi and Zi Wei Dou Shu. Whatever language you write a library in,
+you can check it yourself: read `vao` (input), compare with `ra` (expected
+output).
 
-## Bắt đầu nhanh
+## Quick start
 
 **TypeScript, JavaScript**
 
@@ -109,11 +113,11 @@ npm i @nhatnguyet/tu-vi @nhatnguyet/am-lich
 import { lapLaSoTuVi, nhanDienCachCuc } from "@nhatnguyet/tu-vi";
 import { solarToLunar, MUI_GIO_THEO_NUOC } from "@nhatnguyet/am-lich";
 
-const laSo = lapLaSoTuVi("", "Nam", 19, 9, 1990, 10); // sinh 19/9/1990, giờ Tuất
+const laSo = lapLaSoTuVi("", "Nam", 19, 9, 1990, 10); // born September 19, 1990, Tuất hour (7 to 9 pm)
 console.log(laSo.tenCuc, nhanDienCachCuc(laSo).map((c) => c.ten));
 
-solarToLunar(21, 1, 1985);                       // lịch Việt Nam: mùng 1 Tết
-solarToLunar(21, 1, 1985, MUI_GIO_THEO_NUOC.CN); // lịch Trung Quốc: mùng 1 tháng Chạp
+solarToLunar(21, 1, 1985);                       // Vietnamese calendar: first day of Tết
+solarToLunar(21, 1, 1985, MUI_GIO_THEO_NUOC.CN); // Chinese calendar: first day of the 12th lunar month
 ```
 
 **Python**
@@ -130,154 +134,163 @@ bat = bat_tu.lap_la_so_bat_tu(19, 9, 1990, 20, 0, "Nam")
 le_hoi.le_hoi_trong_nam(2027)
 ```
 
-**Dữ liệu**
+**Datasets**
 
 ```python
 from datasets import load_dataset
-ds = load_dataset("nhatnguyet/loi-luan-tu-vi", data_files="ghep-san/tu-vi/vi/1990.jsonl.zst")
+ds = load_dataset("nhatnguyet/loi-luan-tu-vi", data_files="ghep-san/tu-vi/en/1990.jsonl.zst")
 ```
 
-## Dùng để làm gì
+## What you can build
 
-| Mục đích | Dùng gì | Hướng dẫn |
+| Goal | What to use | Guide |
 |---|---|---|
-| **Xây website, app lá số** | thư viện Tử Vi, Bát Tự, Thần số học | [Lập lá số Tử Vi bằng JavaScript](https://nhatnguyet.org/blog/lap-la-so-tu-vi-bang-javascript) |
-| **App lịch, nhắc việc** | âm lịch, lễ hội, văn khấn | [Lịch âm, lễ hội, nhắc giỗ cho ứng dụng](https://nhatnguyet.org/blog/lich-am-le-hoi-cho-ung-dung) |
-| **Huấn luyện AI** | lời luận ghép sẵn theo ngôn ngữ | [Huấn luyện AI với dữ liệu Tử Vi](https://nhatnguyet.org/blog/huan-luyen-ai-voi-du-lieu-tu-vi) |
-| **Trợ lý AI có trích dẫn** | kho câu sách, đọc thêm | [Trợ lý AI trích dẫn sách cổ](https://nhatnguyet.org/blog/tro-ly-ai-trich-dan-sach-co) |
-| **Phân tích dữ liệu** | lá số có cấu trúc | [Cách cục hiếm đến mức nào](https://nhatnguyet.org/blog/phan-tich-du-lieu-la-so-bang-python) |
-| **Nghiên cứu lịch pháp, văn hóa** | lịch bốn nước, lễ hội, sách cổ | [Âm lịch Việt Nam khác Trung Quốc](https://nhatnguyet.org/blog/am-lich-viet-nam-khac-trung-quoc) |
-| **Kiểm thư viện của mình** | bộ ca kiểm | [Kiểm bằng bộ ca kiểm chung](https://nhatnguyet.org/blog/kiem-thu-vien-bang-bo-ca-kiem) |
+| **Chart websites and apps** | Zi Wei Dou Shu, BaZi, numerology libraries | [Build a Tử Vi chart with JavaScript](https://nhatnguyet.org/en/blog/lap-la-so-tu-vi-bang-javascript) |
+| **Calendar and reminder apps** | lunar calendar, festivals, ritual prayers | [Lunar calendar, festivals and death anniversaries for your app](https://nhatnguyet.org/en/blog/lich-am-le-hoi-cho-ung-dung) |
+| **AI training** | interpretations prebuilt by language | [Train AI on Tử Vi chart data](https://nhatnguyet.org/en/blog/huan-luyen-ai-voi-du-lieu-tu-vi) |
+| **AI assistants with citations** | classical passage store, further reading | [An AI assistant that cites classical books](https://nhatnguyet.org/en/blog/tro-ly-ai-trich-dan-sach-co) |
+| **Data analysis** | structured charts | [How rare are chart patterns?](https://nhatnguyet.org/en/blog/phan-tich-du-lieu-la-so-bang-python) |
+| **Calendar and cultural research** | lunar calendars of four countries, festivals, classical texts | [The Vietnamese lunar calendar is not the Chinese one](https://nhatnguyet.org/en/blog/am-lich-viet-nam-khac-trung-quoc) |
+| **Testing your own library** | test cases | [Test against the shared test cases](https://nhatnguyet.org/en/blog/kiem-thu-vien-bang-bo-ca-kiem) |
 
-Ngoài ra: giáo dục (lập lá số từng bước), dịch thuật (thuật ngữ ba thứ tiếng),
-nội dung và báo chí (số liệu kiểm được).
+Also: education (chart casting step by step), translation (terminology in
+three languages), content and journalism (verifiable figures).
 
-## Cơ sở khoa học
+## Scientific basis
 
-**Khoa học nằm ở cách làm, không ở lời đoán.** Lịch pháp là phép tính thiên văn,
-đối chiếu được với NASA và IMCCE. Mọi kết quả tất định, kiểm lại được qua bộ ca
-kiểm. Tử Vi, Bát Tự, Thần số học và các môn thuật số là quy tắc của từng phái,
-chưa được khoa học kiểm chứng; không dùng làm căn cứ cho quyết định về sức khỏe,
-tài chính hay pháp lý.
+**The science is in the method, not in the predictions.** The calendar is
+astronomical calculation, checked against NASA and IMCCE. Every result is
+deterministic and can be rechecked with the test cases. Zi Wei Dou Shu, BaZi,
+numerology and the other metaphysical arts are the rules of particular schools
+and have not been scientifically validated; do not use them as grounds for
+health, financial or legal decisions.
 
-**Lịch theo từng nước**
+**Calendar by country**
 
-| Lịch | Giờ tính | Nước, vùng |
+| Calendar | Time zone used | Countries and regions |
 |---|---|---|
-| Việt Nam (mặc định) | UTC+7 | Việt Nam |
-| Trung Quốc | UTC+8 | Trung Quốc, Đài Loan, Hồng Kông, Ma Cao; Tết của người Hoa ở Singapore, Malaysia, Indonesia, Philippines |
-| Hàn Quốc | UTC+9 | Hàn Quốc |
-| Nhật Bản | UTC+9 | Âm lịch cũ (kyūreki), dùng cho lễ truyền thống |
+| Vietnam (default) | UTC+7 | Vietnam |
+| China | UTC+8 | Mainland China, Taiwan, Hong Kong, Macau; Chinese New Year in Singapore, Malaysia, Indonesia, the Philippines |
+| Korea | UTC+9 | South Korea |
+| Japan | UTC+9 | Old lunar calendar (kyūreki), used for traditional observances |
 
-Mông Cổ, Tây Tạng, Thái Lan, Lào, Campuchia, Myanmar, Ấn Độ dùng hệ lịch khác
-quy tắc, chưa có trong thư viện.
+Mongolia, Tibet, Thailand, Laos, Cambodia, Myanmar and India follow calendars
+with different rules and are not in the library yet.
 
-**Đọc chuyên sâu**
+**Further reading**
 
-| Loại dữ liệu | Bài |
+| Data | Article |
 |---|---|
-| Âm lịch, tiết khí | [Tính thế nào, sai số bao nhiêu?](https://nhatnguyet.org/blog/co-so-khoa-hoc-am-lich-tiet-khi) |
-| Can chi, hoa giáp, 28 sao | [Tính từ số ngày Julian thế nào?](https://nhatnguyet.org/blog/co-so-khoa-hoc-can-chi-chu-ky) |
-| Lá số Tử Vi | [Từ ngày giờ sinh tới 12 cung](https://nhatnguyet.org/blog/co-so-khoa-hoc-la-so-tu-vi) |
-| Cách cục Toàn Thư | [Điều kiện và tần suất từng cách](https://nhatnguyet.org/blog/co-so-khoa-hoc-cach-cuc-toan-thu) |
-| Bát Tự | [Vì sao trụ tháng theo tiết khí](https://nhatnguyet.org/blog/co-so-khoa-hoc-bat-tu) |
-| Thần số học | [Hệ hiện đại và tên tiếng Việt](https://nhatnguyet.org/blog/co-so-khoa-hoc-than-so-hoc) |
-| Sách cổ, lời luận | [Số hóa, đối chiếu, ghép theo lá số](https://nhatnguyet.org/blog/co-so-khoa-hoc-sach-co-loi-luan) |
-| Lễ hội, văn cúng | [Nguồn và cách xác minh ngày](https://nhatnguyet.org/blog/co-so-khoa-hoc-le-hoi-van-cung) |
-| Phương pháp chung | [Nhật Nguyệt kiểm bằng những cách nào](https://nhatnguyet.org/blog/co-so-khoa-hoc-kiem-chung) |
+| Lunar calendar, solar terms | [How is it computed, and how far off is it?](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-am-lich-tiet-khi) |
+| Stems and branches, the 60-year cycle, the 28 mansions | [How do they follow from the Julian day?](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-can-chi-chu-ky) |
+| Zi Wei Dou Shu chart | [From birth date and hour to the 12 palaces](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-la-so-tu-vi) |
+| Patterns of the Tử Vi Đẩu Số Toàn Thư | [Conditions and frequency of each pattern](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-cach-cuc-toan-thu) |
+| BaZi | [Why the month pillar follows the solar terms](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-bat-tu) |
+| Numerology | [A modern system, and Vietnamese names](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-than-so-hoc) |
+| Classical texts, interpretations | [Digitized, collated, linked to charts](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-sach-co-loi-luan) |
+| Festivals, ritual prayers | [Sources and how dates are verified](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-le-hoi-van-cung) |
+| General method | [How Nhat Nguyet checks its work](https://nhatnguyet.org/en/blog/co-so-khoa-hoc-kiem-chung) |
 
-## Lộ trình
+## Roadmap
 
-- [x] Âm lịch bốn nước, can chi, 24 tiết khí, Nhị Thập Bát Tú
-- [x] Tử Vi, Bát Tự, Thần số học, lễ hội (TypeScript, Python)
-- [x] Lời luận theo lá số 1900 tới 2100, ba thứ tiếng
-- [ ] Văn khấn: tra lễ, lấy bài, điền tên vào lời khấn
-- [ ] Kinh Dịch, Lục Hào, Mai Hoa
-- [ ] Phong thủy: Bát Trạch, cung phi, thước Lỗ Ban
-- [ ] Xem ngày: giờ hoàng đạo, 12 trực, ngày kỵ
-- [ ] Chiêm tinh cung hoàng đạo, Tarot
-- [ ] Tùy chọn theo phái (tháng nhuận, giờ Tý), giờ mặt trời thật
+- [x] Lunar calendars of four countries, stems and branches, 24 solar terms, 28 lunar mansions
+- [x] Zi Wei Dou Shu, BaZi, numerology, festivals (TypeScript, Python)
+- [x] Chart interpretations for 1900 to 2100, in three languages
+- [ ] Ritual prayers: look up ceremonies, get texts, fill names into the prayer
+- [ ] I Ching, Six Lines (Lục Hào), Plum Blossom numerology (Mai Hoa)
+- [ ] Feng shui: Eight Mansions (Bát Trạch), personal trigram (cung phi), Lỗ Ban ruler
+- [ ] Date selection: auspicious hours, the 12 day officers (12 trực), inauspicious days
+- [ ] Western zodiac astrology, Tarot
+- [ ] Options by school (leap months, the Rat hour), true solar time
 
-## Giấy phép và ghi nguồn
+## License and attribution
 
-| Phần | Giấy phép | Được làm gì |
+| Part | License | What you may do |
 |---|---|---|
-| Mã nguồn | [MIT](./LICENSE) | Dùng, sửa, bán; giữ dòng `Copyright (c) 2026 Nhat Nguyet (nhatnguyet.org)` |
-| Dữ liệu, lời luận | [CC BY 4.0](./DATA-LICENSE) | Dùng cả thương mại và huấn luyện AI, **bắt buộc ghi nguồn** |
-| Sách cổ | Phạm vi công cộng | Nguyên văn tự do; phần số hóa, đối chiếu theo CC BY 4.0 |
-| Văn khấn | CC BY 4.0 | Văn sưu tầm, Nhật Nguyệt biên tập, không nhận là tác giả lời văn |
+| Source code | [MIT](./LICENSE) | Use, modify, sell; keep the line `Copyright (c) 2026 Nhat Nguyet (nhatnguyet.org)` |
+| Data, interpretations | [CC BY 4.0](./DATA-LICENSE) | Use commercially and for AI training, **credit is required** |
+| Classical texts | Public domain | Original text is free to use; the digitization and collation are under CC BY 4.0 |
+| Ritual prayers | CC BY 4.0 | Collected from folk tradition and edited by Nhat Nguyet, which does not claim authorship of the wording |
 
-**Câu ghi nguồn chuẩn:** `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`, kèm liên kết
-https://nhatnguyet.org khi có thể. Ứng dụng hiển thị kết quả ghi "Theo Nhật
-Nguyệt" ở chỗ người dùng thấy được. Phát hành lại dữ liệu thì giữ cột `nguon`.
+**Standard credit line:** `Data: Nhat Nguyet (nhatnguyet.org)`, with a link to
+https://nhatnguyet.org where possible. Apps that show results write "According
+to Nhat Nguyet" somewhere users can see it. When redistributing the data, keep
+the `nguon` (source) column.
 
-Tên và dấu **Nhật Nguyệt** là thương hiệu, không nằm trong giấy phép. Không đặt
-tên sản phẩm hay trình bày khiến người dùng hiểu là sản phẩm của Nhật Nguyệt
-hoặc được Nhật Nguyệt bảo trợ.
+The **Nhat Nguyet** name and logo are trademarks and are not covered by the
+licenses. Do not name or present a product in a way that suggests it is made
+or endorsed by Nhat Nguyet.
 
-**Trích dẫn**
+**Citation**
 
 ```bibtex
 @software{nhatnguyet_2026,
-  author = {{Nhật Nguyệt}},
-  title  = {Nhật Nguyệt: mã và dữ liệu mở về Tử Vi, Bát Tự, Thần số học},
+  author = {{Nhat Nguyet}},
+  title  = {Nhat Nguyet: open source code and data for Zi Wei Dou Shu, BaZi and numerology},
   year   = {2026},
-  url    = {https://nhatnguyet.org/ma-nguon-mo}
+  url    = {https://nhatnguyet.org/en/ma-nguon-mo}
 }
 ```
 
-## Hỏi đáp
+## FAQ
 
 <details>
-<summary><b>Có thư viện miễn phí để lập lá số Tử Vi bằng JavaScript hay Python không?</b></summary>
+<summary><b>Is there a free library to cast Zi Wei Dou Shu charts in JavaScript or Python?</b></summary>
 
-Có: `npm i @nhatnguyet/tu-vi` hoặc `pip install nhatnguyet`. Lá số gồm cục,
-cung Mệnh, Thân, 14 chính tinh và phụ tinh, sáng tối, Tứ Hóa, Tuần Triệt, đại
-vận, hạn năm, sao lưu và cách cục, gồm các cách của Tử Vi Đẩu Số Toàn Thư.
+Yes: `npm i @nhatnguyet/tu-vi` or `pip install nhatnguyet`. A chart includes
+the element phase (cục), the Life and Body palaces, the 14 major stars and the
+minor stars, star brightness, the Four Transformations (Tứ Hóa), Tuần and
+Triệt, 10-year periods, yearly periods, transiting stars and chart patterns,
+including those of the Tử Vi Đẩu Số Toàn Thư.
 </details>
 
 <details>
-<summary><b>Dùng dữ liệu này huấn luyện AI có được không?</b></summary>
+<summary><b>Can I use this data to train an AI model?</b></summary>
 
-Được, kể cả cho sản phẩm thương mại, theo giấy phép CC BY 4.0. Điều kiện duy
-nhất là ghi nguồn "Dữ liệu: Nhật Nguyệt (nhatnguyet.org)".
+Yes, including for commercial products, under CC BY 4.0. The only condition is
+to credit "Data: Nhat Nguyet (nhatnguyet.org)".
 </details>
 
 <details>
-<summary><b>Đổi âm lịch sang dương lịch có chính xác không?</b></summary>
+<summary><b>How accurate is the lunar to Gregorian date conversion?</b></summary>
 
-Lịch tính từ vị trí thật của Mặt Trăng và Mặt Trời. Điểm sóc lệch NASA trung
-bình 1,1 phút; giờ giao tiết lệch IMCCE trung bình 4,2 phút, trên 1900 tới
-2100. Dựng lại lịch âm chỉ từ số liệu NASA và IMCCE khớp 2.459 trên 2.461 tháng.
+The calendar is computed from the true positions of the Moon and the Sun. New
+moons differ from NASA by 1.1 minutes on average; solar term times differ from
+IMCCE by 4.2 minutes on average, over 1900 to 2100. Rebuilding the lunar
+calendar from NASA and IMCCE data alone matches 2,459 of 2,461 months.
 </details>
 
 <details>
-<summary><b>Bát Tự lấy trụ tháng theo tháng âm hay theo tiết khí?</b></summary>
+<summary><b>Does the BaZi month pillar follow the lunar month or the solar terms?</b></summary>
 
-Theo tiết khí, đúng phép Tứ Trụ: trụ năm đổi ở Lập Xuân, trụ tháng đổi ở giờ
-giao tiết, không theo mùng 1 âm lịch. Lấy tháng âm làm trụ tháng thì sai ở
-khoảng một phần tư số ngày.
+The solar terms, as the Four Pillars method requires: the year pillar changes
+at Lập Xuân (Start of Spring) and the month pillar at the moment each solar
+term begins, not on the first day of the lunar month. Taking the lunar month
+as the month pillar is wrong on about a quarter of all days.
 </details>
 
 <details>
-<summary><b>Thần số học tính tên tiếng Việt có dấu thế nào?</b></summary>
+<summary><b>How does the numerology handle Vietnamese names with diacritics?</b></summary>
 
-Bỏ dấu rồi tính theo bảng chữ sang số, "Đ" tính là "D". Có đủ số chủ đạo, sứ
-mệnh, linh hồn, nhân cách, thái độ, đỉnh cao, thử thách, năm, tháng, ngày cá
-nhân.
+Diacritics are stripped, then letters are scored with the letter to number
+table, with "Đ" counted as "D". You get the life path, expression, soul urge,
+personality, attitude, pinnacle, challenge, and personal year, month and day
+numbers.
 </details>
 
 <details>
-<summary><b>Văn khấn lấy ở đâu ra?</b></summary>
+<summary><b>Where do the ritual prayers come from?</b></summary>
 
-Văn sưu tầm trong dân gian, Nhật Nguyệt biên tập và phân theo 155 loại lễ: Tết,
-rằm, mùng một, giỗ, cưới hỏi, nhập trạch, khai trương...
+They are collected from folk tradition, edited by Nhat Nguyet and sorted into
+155 ceremony types: Lunar New Year (Tết), full moon, first day of the lunar
+month, death anniversaries, weddings, housewarmings, shop openings...
 </details>
 
-## Đóng góp và liên hệ
+## Contributing and contact
 
-- Báo lỗi, đề xuất: mở issue kèm ngày giờ sinh, giới tính, kết quả nhận được,
-  kết quả mong đợi và căn cứ. Xem [CONTRIBUTING.md](./CONTRIBUTING.md).
-- Website: [nhatnguyet.org](https://nhatnguyet.org) · Thư: lienhe@nhatnguyet.org
+- Bug reports and suggestions: open an issue with the birth date and time,
+  gender, the result you got, the result you expected and your source. See
+  [CONTRIBUTING.md](./CONTRIBUTING.md).
+- Website: [nhatnguyet.org](https://nhatnguyet.org) · Email: lienhe@nhatnguyet.org
 
-<p align="center"><sub>Dữ liệu: Nhật Nguyệt (nhatnguyet.org) · Mã MIT · Dữ liệu CC BY 4.0</sub></p>
+<p align="center"><sub>Data: Nhat Nguyet (nhatnguyet.org) · Code MIT · Data CC BY 4.0</sub></p>

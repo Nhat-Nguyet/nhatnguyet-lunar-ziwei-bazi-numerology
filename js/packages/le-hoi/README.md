@@ -1,6 +1,6 @@
 # @nhatnguyet/le-hoi
 
-> **English:** Vietnamese festival calendar in three languages (200 festivals) with lunar-to-solar dates for any year. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** Vietnamese festival calendar in three languages (200 festivals) with lunar-to-solar dates for any year. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Lịch lễ hội Việt Nam ba thứ tiếng (200 lễ: Tết, giỗ Tổ, lễ hội đình chùa, lễ của
 các dân tộc, lễ theo lịch công bố từng năm) và phép quy đổi ngày âm sang ngày

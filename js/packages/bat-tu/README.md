@@ -1,6 +1,6 @@
 # @nhatnguyet/bat-tu
 
-> **English:** BaZi (Four Pillars of Destiny) chart: pillars by solar terms, hidden stems, Ten Gods, life stages, symbolic stars, luck pillars. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.en.md).
+> **English:** BaZi (Four Pillars of Destiny) chart: pillars by solar terms, hidden stems, Ten Gods, life stages, symbolic stars, luck pillars. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)). Full docs in English and Chinese: [github.com/Nhat-Nguyet/nhatnguyet](https://github.com/Nhat-Nguyet/nhatnguyet/blob/main/README.md).
 
 Lá số Bát Tự (Tứ Trụ): bốn trụ theo tiết khí, tàng can, thập thần, vòng
 trường sinh, chín thần sát, thai nguyên, mệnh cung, đại vận và tiểu vận. Đây
