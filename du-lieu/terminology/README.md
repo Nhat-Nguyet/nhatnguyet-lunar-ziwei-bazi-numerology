@@ -3,7 +3,9 @@
 Every term the Nhat Nguyet libraries output (stems, branches, the sixty pairs, elements,
 na yin, the 24 solar terms, the 28 mansions, Zi Wei Dou Shu palaces, stars, rings,
 brightness levels and patterns, BaZi Ten Gods, hidden-stem roles and symbolic stars,
-numerology numbers, festival categories), with its Vietnamese name, traditional and
+numerology numbers, festival categories, the I Ching trigrams, 64 hexagrams, Eight
+Palaces generations, six relations and six spirits, and the feng shui Eight Mansions
+stars, 24 mountains, nine stars, flying star patterns and Luban ruler sectors), with its Vietnamese name, traditional and
 simplified Chinese, tone-marked pinyin, the English name the libraries use, other English
 renderings, and a short definition where the engine already has one.
 
@@ -43,13 +45,28 @@ Planned on Hugging Face as `nhatnguyet/terminology`.
 | `ziwei-scholar-ring` | 12 | The twelve stars of the Bác Sỹ (博士) ring. |
 | `ziwei-void` | 2 | The two void markers Tuần (旬空) and Triệt (截空). |
 | `ziwei-yearly-star` | 5 | Flowing (yearly) stars placed for a viewing year. |
-| `ziwei-pattern` | 34 | Named chart patterns (cách cục, 格局) the library recognizes. |
+| `ziwei-pattern` | 37 | Named chart patterns (cách cục, 格局) the library recognizes. |
 | `bazi-ten-god` | 11 | The Ten Gods (thập thần, 十神) of BaZi. |
 | `bazi-hidden-stem-role` | 3 | Roles of the stems hidden in a branch (tàng can, 藏干). |
 | `bazi-symbolic-star` | 9 | Symbolic stars (thần sát, 神煞) the BaZi library looks up. |
 | `numerology-number` | 14 | Names of the numerology numbers (Pythagorean method). |
 | `festival-category` | 12 | Category codes of the Vietnamese festival dataset (le-hoi-viet-nam). |
-| **Total** | **428** | |
+| `iching-trigram` | 8 | The eight trigrams (bát quái, 八卦), numbered in the Fu Xi order (Qian 1 ... Kun 8). |
+| `iching-hexagram` | 64 | The 64 hexagrams (quẻ, 卦) in the King Wen order. |
+| `iching-palace-generation` | 8 | Place of a hexagram in its Eight Palaces (bát cung, 八宫) palace, after Jing Fang; it sets the world line. |
+| `iching-six-relation` | 5 | The six relations (lục thân, 六亲) of a Six Lines chart, by the palace element; five names. |
+| `iching-six-spirit` | 6 | The six spirits (lục thú, 六兽) of a Six Lines chart, starting from the day stem. |
+| `iching-month-state` | 5 | Seasonal state of a line under the month branch (nguyệt lệnh, 月令). |
+| `iching-gua-qi-role` | 5 | Rank of a hexagram in its solar month in the Gua Qi (quái khí, 卦气) calendar of Meng Xi. |
+| `fengshui-eight-mansions-star` | 8 | The eight stars of the Eight Mansions school (Bát Trạch, 八宅), four favorable and four unfavorable. |
+| `fengshui-group` | 2 | East and west groups of the Eight Mansions school (đông tứ, tây tứ). |
+| `fengshui-mountain` | 24 | The 24 mountains (nhị thập tứ sơn, 二十四山) of the compass, 15 degrees each. |
+| `fengshui-nine-star` | 9 | The nine stars (cửu tinh, 九星) of the Lo Shu, used by the Xuan Kong flying star school. |
+| `fengshui-star-qi` | 5 | Role of a star in a 20-year period of the Xuan Kong school (vượng, sinh, thoái, sát, tử). |
+| `fengshui-flying-star-pattern` | 4 | Named patterns of a Xuan Kong flying star chart. |
+| `fengshui-luban-sector` | 22 | Sectors of the three Luban rulers (thước Lỗ Ban, 鲁班尺): 52.2 cm clear-opening, 42.9 cm Luban, 38.8 cm Dinglan. |
+| `fengshui-luban-sub-sector` | 66 | Sub-sectors (cung nhỏ) of the 52.2 cm clear-opening and 42.9 cm Luban rulers, five and four per sector; the 38.8 cm Dinglan ruler has none. |
+| **Total** | **672** | |
 <!-- counts:end -->
 
 ## Columns
@@ -75,12 +92,14 @@ Planned on Hugging Face as `nhatnguyet/terminology`.
 
 [`generate.mjs`](generate.mjs) imports the TypeScript libraries and reads their own tables
 (`TU_VUNG`, `TIET_KHI_TABLE`, `TEN_CUNG_THEO_OFFSET`, `SAO_PHU_THEM`, `allThapThan`,
-`tinhThanSat`, `NUMEROLOGY_LABELS`...). No name the libraries already have is typed by
-hand. Traditional characters and pinyin are composed character by character from
-[`han-readings.json`](han-readings.json), a reviewed table of the 354 characters these
-terms use (with the readings these terms take: 长 cháng in 长生, 相 xiàng in 天相, 曲 qǔ
-in 武曲, 宿 xiù in 寡宿, 参 shēn as a mansion); a traditional name the libraries carry
-themselves (Ten Gods, patterns) or that iztro's zh-TW strings give wins over it.
+`tinhThanSat`, `NUMEROLOGY_LABELS`, `allHexagrams`, `mountains24`, `lubanRulers`...). No
+name the libraries already have is typed by hand. Traditional characters and pinyin are
+composed character by character from [`han-readings.json`](han-readings.json), a
+reviewed table of 401 characters (with the readings these terms take: 长 cháng in 长生,
+相 xiàng in 天相 and 宰相, 曲 qǔ in 武曲, 宿 xiù in 寡宿, 参 shēn as a mansion, 辟 bì as a
+Gua Qi rank); a traditional name the libraries carry themselves (Ten Gods, patterns,
+the 64 hexagrams and the eight trigrams, which also carry their own tone-marked pinyin,
+the Luban sectors) or that iztro's zh-TW strings give wins over it.
 
 [`check.test.mjs`](check.test.mjs) runs two checks:
 
@@ -90,9 +109,12 @@ themselves (Ten Gods, patterns) or that iztro's zh-TW strings give wins over it.
    languages. The test casts every Zi Wei and BaZi chart of the shared test vectors
    ([`ca-kiem`](../../ca-kiem)) with `lang` "vi", "en" and "zh", converts dates and lists
    solar terms from 1900 to 2100, builds all 60 pillars and 24 double hours, and reads
-   the numerology labels and festival categories; any palace, star, brightness,
-   transformation, bureau, pillar, Ten God, hidden-stem role, stage, symbolic star or
-   term name it meets must be a `vi`, `en` or `zh` value here. A name added to a library
+   the numerology labels and festival categories, every hexagram and trigram, a Six
+   Lines chart and the daily hexagram of every I Ching test vector date, every life
+   gua, the 24 mountains, every flying star chart of periods 1 to 9 and the three
+   Luban rulers; any palace, star, brightness,
+   transformation, bureau, pillar, Ten God, hidden-stem role, stage, symbolic star,
+   hexagram, trigram, relation, spirit, mountain, star or sector name it meets must be a `vi`, `en` or `zh` value here. A name added to a library
    without a row here fails.
 
 ```bash
@@ -112,6 +134,9 @@ node --conditions=source --test du-lieu/terminology/check.test.mjs
 - The 28 mansions and their four quadrants have no Chinese in the libraries (they output
   Vietnamese and English); the standard Chinese names are added here and marked in
   `source`.
+- The English names of the Eight Mansions stars, the 24 mountains and the Luban sectors
+  are pinyin, as the libraries output them; `en_alt` of an Eight Mansions star is a
+  literal translation of its characters (the `gloss` field), not a reading.
 - Festival categories are codes in the festival dataset; with `lang` "vi" and "zh" the
   libraries return the code itself, so those rows have no Chinese.
 - `en_alt` from iztro reproduces display strings of [iztro](https://github.com/SylarLong/iztro)

@@ -1,8 +1,8 @@
 <h1 align="center">Nhat Nguyet</h1>
 
 <p align="center">
-  <b>ปฏิทินจันทรคติเวียดนามไม่ใช่ปฏิทินจีน ไลบรารียอดนิยมให้วันทางจันทรคติของเวียดนามผิดถึง 2,724 วันในช่วงปี 1900 ถึง 2100</b><br>
-  จื่อเหวยโต่วซู่ ปาจื้อ ศาสตร์ตัวเลข เทศกาล และยามมงคล บนปฏิทินที่ถูกต้อง ใช้ได้ทั้ง JavaScript, Python และ MCP · ดวงเปิด 3.6 ล้านดวงพร้อมคำอ่านที่อ้างคัมภีร์โบราณ ระบุชื่อคัมภีร์และบท · ผลลัพธ์เป็น English, Tiếng Việt, 中文 · กรณีทดสอบร่วม 17,291 กรณี
+  <b>ปฏิทินจันทรคติ-สุริยคติ จื่อเหวยโต่วซู่ ปาจื้อ ศาสตร์ตัวเลข อี้จิง และฮวงจุ้ย สำหรับ JavaScript และ Python: แม่นยำตามดาราศาสตร์ คำนวณตามประเทศ และได้คำตอบเดียวกันในทุกภาษา</b><br>
+  จันทร์ดับและฤดูกาลย่อยตรวจเทียบกับ NASA และ IMCCE ตั้งแต่ปี 1900 ถึง 2100 · ปฏิทินจันทรคติของจีน เกาหลี ญี่ปุ่น เวียดนาม และอีก 7 ประเทศและภูมิภาค · เซิร์ฟเวอร์ MCP สำหรับผู้ช่วย AI · ดวงเปิด 3.6 ล้านดวงพร้อมคำอ่านที่อ้างคัมภีร์โบราณ ระบุชื่อคัมภีร์และบท · ผลลัพธ์เป็น English, 中文 และ Tiếng Việt · กรณีทดสอบร่วม 17,291 กรณี (ทั้งหมด 28,586 กรณี)
 </p>
 
 <p align="center">
@@ -45,21 +45,29 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country` มีค่าเริ่มต้นเป็น `"VN"` (เวียดนาม, UTC+7) ซึ่งเป็นปฏิทินที่โครงการเริ่มต้น
+`castZiWei` ก็รับตัวเลือกนี้ อีกสิบประเทศและภูมิภาคอยู่ใน[ปฏิทินจันทรคติ](#ปฏิทินจันทรคติและยามมงคล)
 
 **Python** (3.9 ขึ้นไป ใช้เพียงไลบรารีมาตรฐาน): ได้ผลลัพธ์เหมือนกัน และได้ SVG ที่ตรงกันทุกไบต์
 
@@ -71,14 +79,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **บรรทัดคำสั่ง**: ใช้ได้โดยไม่ต้องติดตั้งผ่าน `npx` หรือใช้ `nhatnguyet ...` หลังจาก `pip install nhatnguyet`
@@ -179,7 +187,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-คำสั่งอื่น: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` สำหรับไฟล์ปฏิทิน), `hours` และตัวเลือก `--lang vi|zh`, `--json`, `--svg chart.svg` รวมถึงตัวเลือกตามสำนักด้านล่าง เอกสาร API ฉบับภาษาอังกฤษพร้อมตัวเลือกทั้งหมด: [docs/api-en.md](./docs/api-en.md)
+คำสั่งอื่น: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` สำหรับไฟล์ปฏิทิน), `hours`, `hexagram`, `cast` (ผังหกเส้น), `daily-hexagram`, `kua`, `flying-stars`, `luban` และตัวเลือก `--lang vi|zh`, `--json`, `--svg chart.svg` รวมถึงตัวเลือกตามสำนักด้านล่าง เอกสาร API ฉบับภาษาอังกฤษพร้อมตัวเลือกทั้งหมด: [docs/api-en.md](./docs/api-en.md)
 
 ## สารบัญ
 
@@ -197,15 +205,18 @@ Vietnamese calendar (UTC+7).
 
 ## ทำไมจึงเชื่อถือได้
 
-**วิทยาศาสตร์อยู่ที่วิธีการ ไม่ได้อยู่ที่คำทำนาย** ปฏิทินเป็นเรื่องของดาราศาสตร์
-และตรวจสอบเทียบกับ NASA และ IMCCE ตลอดช่วงปี 1900 ถึง 2100:
+**ปฏิทินเป็นเรื่องของดาราศาสตร์ และคำนวณตามประเทศที่ถาม** ปฏิทินจันทรคติ-สุริยคติของ
+เอเชียตะวันออกใช้กฎเดียวกันแต่ใช้นาฬิกาต่างกัน เดือนเริ่มในวันที่เกิดจันทร์ดับตามเวลาท้องถิ่น
+ปักกิ่ง โซล และฮานอยจึงอาจเริ่มเดือนหรือปีในวันต่างกัน ไลบรารีคำนวณแต่ละประเทศตามเขตเวลา
+ของประเทศนั้น และตรวจส่วนดาราศาสตร์เทียบกับ NASA และ IMCCE ตลอดช่วงปี 1900 ถึง 2100:
 
 | การตรวจสอบ | ผลลัพธ์ |
 |---|---|
 | จันทร์ดับเทียบกับ NASA (2,474) | ช้ากว่าเฉลี่ย 0.9 นาที มากที่สุด 3.9 นาที |
 | เดือนจันทรคติที่สร้างขึ้นใหม่จากจันทร์ดับของ NASA และฤดูกาลย่อยของ IMCCE | ตรงกัน 2,459 จาก 2,461 เดือน (อีกสองเดือนคือจันทร์ดับห่างจากเที่ยงคืนไม่ถึงหนึ่งนาที) |
 | ฤดูกาลย่อยเทียบกับ IMCCE (4,824) | ต่างกันเฉลี่ย 0.27 นาที มากที่สุด 0.9 นาที (ปัดเป็นนาที) และทุกฤดูกาลย่อยตรงวัน |
-| เวียดนาม (UTC+7) เทียบกับจีน (UTC+8) ด้วยกฎเดียวกัน | ต่างกัน 2,814 วัน และวัน Tết ต่างกัน 10 ครั้ง |
+| ฮานอย (UTC+7) เทียบกับปักกิ่ง (UTC+8) ด้วยกฎเดียวกัน | ต่างกัน 2,814 วัน และวันขึ้นปีใหม่ต่างกัน 10 ครั้ง |
+| โซล (UTC+9) เทียบกับปักกิ่ง (UTC+8) ด้วยกฎเดียวกัน | ต่างกัน 2,818 วัน และวันขึ้นปีใหม่ต่างกัน 11 ครั้ง |
 
 - **บทความวิชาการ**: [Computing the Vietnamese lunisolar calendar](./docs/paper/paper.pdf)
   (PDF) อธิบายวิธีการ งบความคลาดเคลื่อน การตรวจสอบเทียบกับ NASA, IMCCE
@@ -215,11 +226,12 @@ Vietnamese calendar (UTC+7).
   (อินพุต `vao` ผลลัพธ์ที่คาดหวัง `ra`) ที่สร้างจากเอนจินอ้างอิงซึ่งขับเคลื่อน
   [nhatnguyet.org](https://nhatnguyet.org) ได้แก่ กรณีปฏิทิน 14,936 กรณี ดวงจื่อเหวย
   777 ดวง ดวงปาจื้อ 777 ดวง โปรไฟล์ศาสตร์ตัวเลข 600 รายการ และเทศกาล 201 ปี
-  รวมกับอีก 432 กรณีสำหรับตัวเลือกตามสำนัก และยามมงคล 1,096 วัน (รวม 18,819 กรณี) ทั้ง TypeScript และ Python ผ่านครบทุกกรณี
+  รวมกับอีก 432 กรณีสำหรับตัวเลือกตามสำนัก ยามมงคล 1,096 วัน กรณีอี้จิง 6,684 กรณี
+  และกรณีฮวงจุ้ย 3,083 กรณี (รวม 28,586 กรณี) ทั้ง TypeScript และ Python ผ่านครบทุกกรณี
   ในทุกครั้งที่ push
 - **ประวัติวัน Tết**: [`history/`](./history/README.md) แสดงวัน Tết ของทุกปีตั้งแต่ 1900
   ถึง 2100 ที่ UTC+7 และ UTC+8 พร้อมปฏิทินที่เวียดนามใช้จริง และแหล่งอ้างอิงของแต่ละปีที่มีบันทึก
-- **ขอบเขตที่ตรงไปตรงมา**: จื่อเหวยโต่วซู่ ปาจื้อ และศาสตร์ตัวเลข เป็นกฎของสำนักดั้งเดิม
+- **ขอบเขตที่ตรงไปตรงมา**: วิทยาศาสตร์อยู่ที่วิธีการ ไม่ได้อยู่ที่คำทำนาย จื่อเหวยโต่วซู่ ปาจื้อ ศาสตร์ตัวเลข อี้จิง และฮวงจุ้ย เป็นกฎของสำนักดั้งเดิม
   ไม่ใช่วิทยาศาสตร์ที่ผ่านการพิสูจน์ อย่าใช้ประกอบการตัดสินใจเรื่องสุขภาพ การเงิน
   หรือกฎหมาย เมื่อสำนักต่าง ๆ เห็นไม่ตรงกัน ไลบรารีจะบอกว่าใช้กฎใดและให้คุณสลับได้
   ([ตัวเลือกตามสำนัก](#ตัวเลือกตามสำนัก))
@@ -229,7 +241,8 @@ Vietnamese calendar (UTC+7).
 [iztro](https://github.com/SylarLong/iztro) และ
 [lunar-javascript](https://github.com/6tail/lunar-javascript) เป็นไลบรารีที่พัฒนาอย่างพิถีพิถัน
 และมีผู้ใช้อย่างแพร่หลาย ทั้งสองถูกต้องสำหรับสิ่งที่ตั้งใจทำ คือปฏิทินจีนตามเวลาปักกิ่ง (UTC+8)
-ส่วนเวียดนามใช้กฎเดียวกันแต่ตามเวลาฮานอย (UTC+7) เมื่อเปรียบเทียบทุกวันตั้งแต่ปี 1900 ถึง 2100
+เมื่อใช้กับประเทศอื่นจะได้วันที่ของปักกิ่ง
+เวียดนามเป็นตัวอย่างที่ชัดที่สุด คือใช้กฎเดียวกันแต่ตามเวลาฮานอย (UTC+7) เมื่อเปรียบเทียบทุกวันตั้งแต่ปี 1900 ถึง 2100
 ([doi-chieu/](./doi-chieu/README.md) ทำซ้ำได้ด้วย `node chay.mjs`):
 
 | | ผลลัพธ์ |
@@ -267,21 +280,23 @@ Nhat Nguyet ก็ให้ผลตามปฏิทินจีนได้�
 
 ## การติดตั้ง
 
-เวอร์ชัน 0.3.0 แพ็กเกจ JavaScript เป็น ESM พร้อมไทป์ของ TypeScript และไม่มี
+เวอร์ชัน 0.4.0 แพ็กเกจ JavaScript เป็น ESM พร้อมไทป์ของ TypeScript และไม่มี
 dependency ภายนอก (มีเพียงเซิร์ฟเวอร์ MCP ที่ใช้ SDK และ zod) ส่วนแพ็กเกจ Python ใช้เพียงไลบรารีมาตรฐาน
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | แพ็กเกจ | เผยแพร่ในชื่ออื่นด้วย | ทำอะไรได้ |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | แปลงระหว่างปฏิทินจันทรคติกับปฏิทินเกรกอเรียนสำหรับเวียดนาม จีน เกาหลี ญี่ปุ่น และอีก 7 ภูมิภาค ก้านฟ้ากิ่งดิน 24 ฤดูกาลย่อยละเอียดถึงนาที 28 กลุ่มดาวฤกษ์ na yin และยามมงคล |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | แปลงระหว่างปฏิทินจันทรคติกับปฏิทินเกรกอเรียนสำหรับจีน เกาหลี ญี่ปุ่น เวียดนาม และอีก 7 ประเทศและภูมิภาค ก้านฟ้ากิ่งดิน 24 ฤดูกาลย่อยละเอียดถึงนาที 28 กลุ่มดาวฤกษ์ na yin และยามมงคล |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | จื่อเหวยโต่วซู่: 12 เรือน ความสว่างของดาว สี่การแปรเปลี่ยน Xun Kong และ Jie Kong (Tuần, Triệt) วัยจร 10 ปีและดวงรายปี ดาวจร รูปแบบดวงพร้อมข้อความต้นฉบับจากตำรา ตัวเลือกตามสำนัก SVG ข้อความสำหรับ LLM และชั้นที่เข้ากันได้กับ iztro |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | ปาจื้อ: สี่เสาตามฤดูกาลย่อย ก้านแฝง สิบเทพ ดาวสัญลักษณ์ เสาวัยจร วัยจรย่อย และ SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | ศาสตร์ตัวเลขแบบพีทาโกรัส (เลขเส้นทางชีวิต เลขการแสดงออก เลขแรงปรารถนาของจิตวิญญาณ จุดสูงสุด ความท้าทาย เลขปีส่วนตัว) รองรับชื่อเวียดนามที่มีวรรณยุกต์ และ SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | เทศกาลเวียดนาม 206 งาน พร้อมวันที่ของปีใดก็ได้ จังหวัด กลุ่มชาติพันธุ์ และสถานที่จัดงาน ส่งออกเป็น iCalendar ได้ |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | อี้จิง: เฮกซะแกรม 64 รูปพร้อมชื่อภาษาอังกฤษ พินอิน จีน และเวียดนาม แปดวัง เฮกซะแกรมแกนและเฮกซะแกรมที่เปลี่ยน การเสี่ยงด้วยเหรียญสามเหรียญและเหมยฮัว ผังหกเส้น (นาเจี่ย) เฮกซะแกรมประจำวันตามกว้าชี่ ต้นฉบับโจวอี้พร้อมคำแปลของเลกก์ปี 1882 และ SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | กฎฮวงจุ้ยของสำนักดั้งเดิม: กว้าประจำตัว (เลขกว้า) และกว้าของบ้านตามสำนักแปดคฤหาสน์ 24 ภูเขา ผังดาวเหินเสวียนคง ดาวประจำปี ไม้บรรทัดหลู่ปาน และ SVG ของเข็มทิศและผังดาวเหิน |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | แสดงดวงเป็นตารางในเทอร์มินัล หรือเป็น JSON, SVG หรือ iCalendar คำสั่งเดียวกับ `nhatnguyet` ใน Python |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | เซิร์ฟเวอร์ MCP สำหรับผู้ช่วย AI |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | เว็บคอมโพเนนต์ 5 ตัว |
@@ -312,12 +327,14 @@ pip install nhatnguyet
 
 `toLunar`, `toSolar`, `solarTerms` และ `auspiciousHours` ใน
 `@nhatnguyet/lunar` (`to_lunar`, `to_solar`, `solar_terms`,
-`auspicious_hours` ใน Python) ใช้ปฏิทินของเวียดนาม (UTC+7) เว้นแต่จะส่ง
-`country`: จีน ไต้หวัน ฮ่องกง มาเก๊า สิงคโปร์ มาเลเซีย อินโดนีเซีย
-และฟิลิปปินส์ (UTC+8) เกาหลีและญี่ปุ่น (UTC+9)
+`auspicious_hours` ใน Python) `country` ใช้เลือกปฏิทิน:
+จีน (`CN`) ไต้หวัน (`TW`) ฮ่องกง (`HK`) มาเก๊า (`MO`) สิงคโปร์ (`SG`) มาเลเซีย (`MY`)
+อินโดนีเซีย (`ID`) และฟิลิปปินส์ (`PH`) ใช้ UTC+8 เกาหลี (`KR`) และญี่ปุ่น (`JP`) ใช้ UTC+9
+เวียดนาม (`VN` ค่าเริ่มต้น) ใช้ UTC+7 หรือจะส่ง `timeZone` เป็นชั่วโมงก็ได้ บรรทัดคำสั่ง
+(`--country`) เซิร์ฟเวอร์ MCP และวิดเจ็ตรับรหัสชุดเดียวกัน
 
 `auspiciousHours` ให้สิบสองชั่วยามของวันหนึ่งพร้อมแฟล็กยามมงคล (hoàng đạo)
-หรือยามอัปมงคล (hắc đạo) และเทพประจำยาม ตามที่ปฏิทินโหราของเวียดนามพิมพ์ไว้
+หรือยามอัปมงคล (hắc đạo) และเทพประจำยาม ตามที่ปฏิทินโหราของจีนและเวียดนามพิมพ์ไว้
 (บรรทัดคำสั่ง `nhatnguyet hours` เครื่องมือ MCP `auspicious_hours`):
 
 ```js
@@ -407,7 +424,7 @@ print(quanshu["notes"][-1])
 
 ### เทศกาล
 
-`festivals(year)` ใน `@nhatnguyet/festivals` ให้เทศกาล 164 งานที่มีวันที่คงที่
+`@nhatnguyet/festivals` เป็นชุดข้อมูลเทศกาลของเวียดนาม `festivals(year)` ให้เทศกาล 164 งานที่มีวันที่คงที่
 ตามปฏิทินจันทรคติหรือเกรกอเรียน สำหรับปีใดก็ได้ตั้งแต่ 1900 ถึง 2100 จากทั้งหมด 206 งาน
 ในชุดข้อมูล (อีก 42 งานผู้จัดกำหนดวันเองทุกปี) แต่ละงานมีจังหวัดตามแผนที่ 34 จังหวัดปี 2025
 กลุ่มชาติพันธุ์เจ้าของเทศกาลเมื่อคำอธิบายระบุไว้ และสถานที่จัดงาน โดยมีพิกัดเฉพาะเมื่อ
@@ -441,6 +458,94 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 ไฟล์เดียวกันจากบรรทัดคำสั่ง: `nhatnguyet festivals 2027 --ics > vn.ics`
 
+### อี้จิง
+
+`hexagram`, `castCoins`, `castFromNumbers` (เหมยฮัว), `najia` และ `dailyHexagram`
+ใน `@nhatnguyet/iching` (ใน Python คือ `nhatnguyet.iching`) ระบุเฮกซะแกรมได้ด้วยเลขลำดับ
+ของพระเจ้าเหวิน หกเส้น หรือชื่อภาษาอังกฤษ พินอิน จีน หรือเวียดนาม ผังหกเส้นให้ก้านฟ้ากิ่งดิน
+ญาติทั้งหก เทพทั้งหก เส้นโลกและเส้นตอบรับ ความว่าง และสภาพตามเดือนของแต่ละเส้น
+ส่วนเฮกซะแกรมประจำวันเป็นไปตามปฏิทินกว้าชี่ของเมิ่งสีสมัยฮั่น และ `text(n)` คือต้นฉบับโจวอี้
+ซึ่งเป็นสาธารณสมบัติ พร้อมคำแปลภาษาอังกฤษของเจมส์ เลกก์ ปี 1882 วิธีการและแหล่งอ้างอิง:
+[docs/iching.md](./docs/iching.md)
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### ฮวงจุ้ย
+
+`lifeGua`, `houseGua`, `flyingStarChart`, `annualStars` และ `lubanRuler` ใน
+`@nhatnguyet/fengshui` (ใน Python คือ `nhatnguyet.fengshui`): กว้าประจำตัวตามสำนักแปดคฤหาสน์
+ซึ่งเปลี่ยนปีที่วัน Tết ตามเวลาเวียดนาม ผังดาวเหินเสวียนคงของสำนักเสิ่นสำหรับยุคที่ 1 ถึง 9
+ดาวประจำปี 24 ภูเขา และไม้บรรทัดหลู่ปานสามแบบ พร้อม SVG ของเข็มทิศและผังดาวเหิน
+ทั้งหมดนี้เป็นกฎที่สำนักกำหนด ไม่ใช่ผลที่พิสูจน์แล้ว ส่วนที่ตำราเห็นไม่ตรงกัน:
+[docs/fengshui.md](./docs/fengshui.md)
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## ชุดข้อมูล
 
 CC BY 4.0 ใช้ในผลิตภัณฑ์เชิงพาณิชย์และใช้ฝึก AI ได้ โดยต้องระบุแหล่งที่มา
@@ -455,7 +560,7 @@ CC BY 4.0 ใช้ในผลิตภัณฑ์เชิงพาณิช�
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 หน่วย (เลขหลัก เลขวัฏจักร หัวข้อชีวิต) 195 ตอน | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | ตำราโบราณที่เป็นสาธารณสมบัติ 373 ฉบับ (ราว 350 ผลงาน) 72.7 ล้านตัวอักษร ฉบับเต็ม | ข้อความ 147 MB, Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | ส่วนที่จัดเรียงคู่กัน 1,328 ส่วนของอี้จิง: ภาษาจีนคลาสสิกคู่กับคำแปลภาษาอังกฤษ (952) และภาษาฝรั่งเศส (376) ที่เป็นสาธารณสมบัติ | |
-| [ศัพทานุกรม](./du-lieu/terminology/README.md) | 428 ศัพท์ในภาษาเวียดนาม จีนตัวเต็มและตัวย่อ พินอิน และภาษาอังกฤษ ครบทุกชื่อที่ไลบรารีให้ออกมา | |
+| [ศัพทานุกรม](./du-lieu/terminology/README.md) | 672 ศัพท์ในภาษาเวียดนาม จีนตัวเต็มและตัวย่อ พินอิน และภาษาอังกฤษ ครบทุกชื่อที่ไลบรารีให้ออกมา | |
 | [ชุดประเมิน AI](./ai-eval/README.md) | 1,520 คำถามที่คำนวณคำตอบได้ ในภาษาอังกฤษ เวียดนาม และจีน (วันทางจันทรคติ, Tết, เสา, ดวง) 626 ข้อ (41%) เป็นกรณียาก | |
 | [Tết 1900 ถึง 2100](./history/README.md) | วัน Tết ที่ UTC+7 และ UTC+8 ตลอด 201 ปี พร้อมปฏิทินที่ใช้จริงและแหล่งอ้างอิง | |
 | [ชุดข้อมูลปฏิทินและวัฒนธรรม 33 ชุด](https://nhatnguyet.org/en/du-lieu) | ปฏิทินจันทรคติสุริยคติปี 1900 ถึง 2100, ฤดูกาลย่อย, 64 เฮกซะแกรม, ไพ่ทาโรต์ 78 ใบ, เทศกาล 206 งาน, บทสวดบูชา 456 บท... ในรูปแบบ CSV, JSON, Parquet พร้อม [DOI](https://doi.org/10.5281/zenodo.23009396) | |
@@ -505,7 +610,8 @@ print(len(books), sum(books["characters"]))
 
 - **เซิร์ฟเวอร์ MCP** ทำงานบนเครื่องของคุณ มีเครื่องมือ `lunar_convert`, `solar_terms`,
   `auspicious_hours`, `cast_ziwei`, `cast_bazi`, `numerology`, `festivals`,
-  `render_chart_svg` (รองรับตัวเลือกตามสำนัก):
+  `render_chart_svg` (รองรับตัวเลือกตามสำนัก), `hexagram`, `six_lines_chart`,
+  `daily_hexagram`, `life_gua`, `flying_star_chart`, `luban_ruler`:
   `claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp` วิธีตั้งค่าสำหรับ Claude
   Desktop, Cursor และ VS Code: [js/packages/mcp](./js/packages/mcp/README.md)
 - **Agent Skill** ที่บอกผู้ช่วยให้เรียกใช้เครื่องมือแทนการเดา: [skills/](./skills/README.md)
@@ -588,7 +694,8 @@ Python) และเทมเพลตสี่ชุดให้คัดลอ
 `astro.byLunar` รับพารามิเตอร์เดียวกันและคืน JSON โครงสร้างเดียวกับ
 `FunctionalAstrolabe` ของ iztro พร้อมภาษาแสดงผลทั้งหกภาษาและเมธอดของมัน
 (`palace()`, `star()`, `surroundedPalaces()`, `horoscope()`, `fliesTo()`,
-`use()`...) โดยคำนวณบนปฏิทินเวียดนาม (`{ country: "CN" }` สำหรับเวลาปักกิ่ง)
+`use()`...) โดยคำนวณบนปฏิทินของประเทศที่ส่งมา
+(`{ country: "CN" }` สำหรับเวลาปักกิ่งแบบ iztro ค่าเริ่มต้นคือเวียดนาม)
 
 ```diff
 - import { astro } from "iztro";
@@ -607,11 +714,12 @@ iztro ในเรื่อง Fire และ Bell สี่การแปร�
 ## คำถามที่พบบ่อย
 
 <details>
-<summary><b>ทำไมปฏิทินจันทรคติเวียดนามจึงต่างจากปฏิทินจีน</b></summary>
+<summary><b>ทำไมวันเดียวกันจึงมีวันทางจันทรคติต่างกันในจีน เกาหลี และเวียดนาม</b></summary>
 
 กฎเดียวกัน แต่นาฬิกาต่างกัน เดือนใหม่เริ่มในวันที่เกิดจันทร์ดับ และวันนั้นตัดสินตามเวลาท้องถิ่น
 เมื่อจันทร์ดับเกิดระหว่าง 16:00 ถึง 17:00 UT ที่ฮานอยยังไม่ถึงเที่ยงคืน แต่ที่ปักกิ่งเลยเที่ยงคืนไปแล้ว
-เดือนจึงเริ่มที่เวียดนามเร็วกว่าหนึ่งวัน Tết ปี 1985 ห่างกันถึงหนึ่งเดือนเต็ม (21 มกราคมที่เวียดนาม
+เดือนจึงเริ่มที่เวียดนามเร็วกว่าหนึ่งวัน
+ถ้าเกิดระหว่าง 15:00 ถึง 16:00 UT ที่โซลและโตเกียวจะเลยเที่ยงคืนไปแล้ว เดือนที่นั่นจึงเริ่มช้ากว่าหนึ่งวัน Tết ปี 1985 ห่างกันถึงหนึ่งเดือนเต็ม (21 มกราคมที่เวียดนาม
 และ 20 กุมภาพันธ์ที่จีน) เพราะเดือนอธิกมาสตกอยู่คนละปี
 </details>
 

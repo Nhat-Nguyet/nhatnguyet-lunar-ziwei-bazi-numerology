@@ -1,29 +1,33 @@
 {
   "upload_type": "software",
   "title": "Nhat Nguyet: open source code and data for Zi Wei Dou Shu, BaZi and numerology",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "creators": [
     {
       "name": "Nhat Nguyet",
       "affiliation": "nhatnguyet.org"
     }
   ],
-  "description": "<p>TypeScript (npm <code>@nhatnguyet/*</code>) and Python (<code>nhatnguyet</code>) libraries, a command line tool, an MCP server and 5 web components for the Vietnamese lunar calendar (Hanoi time, UTC+7) and the Chinese, Korean and Japanese ones, the 24 solar terms, auspicious hours, Zi Wei Dou Shu (Tử Vi), BaZi (Four Pillars), Pythagorean numerology and 206 Vietnamese festivals with provinces, ethnic groups, sourced venues and iCalendar export. English API with results in English, Vietnamese and Chinese; named school options where the classical books disagree, each with its source. No runtime dependencies.</p><p>Every result reproduces the reference engine behind nhatnguyet.org (engine 2.2.0) and is checked by 17,291 core test vectors (18,819 including school options and auspicious hours: 14,936 calendar cases, 777 Zi Wei charts, 777 BaZi charts, 600 numerology profiles and 201 festival years, plus 352 Zi Wei and 80 BaZi cases with school options and 1,096 auspicious-hour days) that any port in any language can pass. The calendar is checked against NASA new moons and IMCCE solar terms from 1900 to 2100; on 2,724 of those 73,414 days the Vietnamese lunar date differs from lunar-javascript, which computes the Chinese calendar on Beijing time.</p><p>Also in the repository: a terminology dataset (Vietnamese, Chinese, pinyin and English names of every term the libraries output), an AI evaluation set of engine-computed questions, a table of Tết dates 1900 to 2100 as used in Vietnam, a technical report on the calendar method and its verification, and project templates (Next.js, Telegram bot, Google Sheets, Jupyter).</p><p>Code: MIT. Data, readings and test vectors: CC BY 4.0. Credit: Data: Nhat Nguyet (nhatnguyet.org).</p><p><a href=\"https://nhatnguyet.org/en/ma-nguon-mo\">https://nhatnguyet.org/en/ma-nguon-mo</a></p>",
+  "description": "<p>TypeScript (npm <code>@nhatnguyet/*</code>) and Python (<code>nhatnguyet</code>) libraries, a command line tool, an MCP server and 5 web components for East Asian lunisolar calendars and the traditions computed on them: lunar dates for China, Taiwan, Hong Kong, Macau, Singapore, Malaysia, Indonesia, the Philippines, Korea, Japan and Vietnam, each on its own time zone, the 24 solar terms, auspicious hours, Zi Wei Dou Shu, BaZi (Four Pillars), Pythagorean numerology, the I Ching (64 hexagrams, Six Lines najia charts, the Gua Qi daily hexagram, the public domain Zhou Yi text), the feng shui rules of traditional schools (Eight Mansions life gua, Xuan Kong flying stars, Luban rulers) and a dataset of 206 Vietnamese festivals with provinces, ethnic groups, sourced venues and iCalendar export. English API with results in English, Chinese and Vietnamese; named school options where the classical books disagree, each with its source. No runtime dependencies.</p><p>Every result reproduces the reference engine behind nhatnguyet.org (engine 2.3.0) and is checked by 17,291 core test vectors (28,586 including school options, auspicious hours, I Ching and feng shui: 14,936 calendar cases, 777 Zi Wei charts, 777 BaZi charts, 600 numerology profiles and 201 festival years, plus 352 Zi Wei and 80 BaZi cases with school options, 1,096 auspicious-hour days, 6,684 I Ching cases and 3,083 feng shui cases) that any port in any language can pass. The calendar is checked against NASA new moons and IMCCE solar terms from 1900 to 2100. With the same rules, Hanoi and Beijing time give a different lunar date on 2,814 of those 73,414 days, Seoul and Beijing time on 2,818; lunar-javascript, which computes the Chinese calendar on Beijing time, gives a different Vietnamese date on 2,724.</p><p>Also in the repository: a terminology dataset (Vietnamese, Chinese, pinyin and English names of every term the libraries output), an AI evaluation set of engine-computed questions, a table of Tết dates 1900 to 2100 as used in Vietnam, a technical report on the calendar method and its verification, and project templates (Next.js, Telegram bot, Google Sheets, Jupyter).</p><p>Code: MIT. Data, readings and test vectors: CC BY 4.0. Credit: Data: Nhat Nguyet (nhatnguyet.org).</p><p><a href=\"https://nhatnguyet.org/en/ma-nguon-mo\">https://nhatnguyet.org/en/ma-nguon-mo</a></p>",
   "notes": "The code is released under the MIT License. The data files (festival dataset, terminology, test vectors in ca-kiem/, readings, knowledge and evaluation datasets) are released under Creative Commons Attribution 4.0 (CC BY 4.0, see DATA-LICENSE); credit line: Data: Nhat Nguyet (nhatnguyet.org).",
   "access_right": "open",
   "license": "mit",
   "language": "eng",
   "keywords": [
-    "Vietnamese lunar calendar",
+    "lunisolar calendar",
     "Zi Wei Dou Shu",
     "Tử Vi",
     "BaZi",
     "Four Pillars of Destiny",
     "numerology",
     "Chinese calendar",
+    "Korean calendar",
+    "Vietnamese lunar calendar",
     "solar terms",
     "auspicious hours",
     "Vietnamese festivals",
+    "I Ching",
+    "feng shui",
     "iCalendar",
     "test vectors",
     "TypeScript",

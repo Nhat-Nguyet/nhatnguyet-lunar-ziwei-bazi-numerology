@@ -73,10 +73,12 @@ function changelogSection(version) {
 }
 
 // Test vector counts. "Core" is the five suites the README and the port
-// challenge count; "all" adds the school options and the auspicious hours.
+// challenge count (calendar, Zi Wei, BaZi, numerology, festivals); "all" adds
+// the school options, the auspicious hours, the I Ching and feng shui.
 // Every file below must say "<core> core test vectors" (or shared, or test
-// cases) and, where it gives the total, "<all> including school options and
-// auspicious hours" or "<all> in all".
+// cases) and, where it gives the total, "<all> including school options,
+// auspicious hours, I Ching and feng shui" or "<all> in all". The paper is a
+// dated report: only its core count is checked, its total stays as printed.
 const VECTOR_FILES = [
   "README.md",
   "CONTRIBUTING.md",
@@ -90,6 +92,8 @@ const VECTOR_FILES = [
   "python/README.md",
 ];
 const CORE_SUITES = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi"];
+const FROZEN_TOTAL = new Set(["docs/paper/paper.md"]);
+const ALL_PHRASE = "including school options, auspicious hours, I Ching and feng shui";
 
 function vectorCounts() {
   let core = 0;
@@ -115,11 +119,13 @@ function checkDocs(version, errors) {
       coreSeen++;
       if (num(m[1]) !== core) errors.push(`${file}: "${m[0]}", ca-kiem/ has ${fmt(core)} core test vectors`);
     }
-    for (const m of text.matchAll(/(\d{1,3}(?:,\d{3})+) (?:including school options and auspicious hours|in all\b)/g))
-      if (num(m[1]) !== all) errors.push(`${file}: "${m[0]}", ca-kiem/ has ${fmt(all)} test vectors in all`);
     if (!coreSeen) errors.push(`${file}: no "${fmt(core)} core test vectors"`);
-    if (text.includes(fmt(all)) && !new RegExp(`${fmt(all)} (?:including school options and auspicious hours|in all)`).test(text))
-      errors.push(`${file}: ${fmt(all)} must read "${fmt(all)} including school options and auspicious hours" (the core count is ${fmt(core)})`);
+    if (FROZEN_TOTAL.has(file)) continue;
+    for (const m of text.matchAll(/(\d{1,3}(?:,\d{3})+) (?:including school options[\w ,]*|in all\b)/g))
+      if (num(m[1]) !== all || (m[0].startsWith(m[1] + " including") && !m[0].startsWith(`${m[1]} ${ALL_PHRASE}`)))
+        errors.push(`${file}: "${m[0]}", ca-kiem/ has ${fmt(all)} test vectors in all ("${fmt(all)} ${ALL_PHRASE}")`);
+    if (text.includes(fmt(all)) && !new RegExp(`${fmt(all)} (?:${ALL_PHRASE}|in all)`).test(text))
+      errors.push(`${file}: ${fmt(all)} must read "${fmt(all)} ${ALL_PHRASE}" (the core count is ${fmt(core)})`);
   }
   const paperVersion = read("docs/paper/paper.md").match(/^date: "Version (\d+)/m)?.[1];
   const citedVersion = read("CITATION.cff").match(/Technical report of the project, version (\d+)/)?.[1];

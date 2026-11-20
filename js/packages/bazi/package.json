@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/bazi",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "BaZi (Four Pillars of Destiny, 八字) by solar term: pillars, hidden stems, Ten Gods, symbolic stars, luck periods, SVG. English-named alias of @nhatnguyet/bat-tu.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -26,8 +26,9 @@
     "八字排盘",
     "十神",
     "神煞",
+    "chinese metaphysics",
+    "사주",
     "nhat nguyet",
-    "vietnam",
     "vietnamese",
     "typescript",
     "no external dependencies"
@@ -46,7 +47,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@nhatnguyet/bat-tu": "^0.3.0"
+    "@nhatnguyet/bat-tu": "^0.4.0"
   },
   "repository": {
     "type": "git",

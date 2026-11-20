@@ -11,7 +11,13 @@ import { baZiSvg, castBaZi } from "@nhatnguyet/bat-tu";
 import { numerology, numerologySvg } from "@nhatnguyet/than-so-hoc";
 import { writeFileSync } from "node:fs";
 import { festivals, festivalsIcs } from "@nhatnguyet/le-hoi";
-import { renderBaZi, renderFestivals, renderHours, renderLunar, renderNumerology, renderSolarTerms, renderZiWei } from "./render.ts";
+import { castCoins, dailyHexagram, hexagram, mutual, najia, opposite, renderHexagramSvg, reverse, text } from "@nhatnguyet/iching";
+import { flyingStarChart, lifeGua, lubanRuler, lubanRulers, renderCompassSvg, renderFlyingStarSvg } from "@nhatnguyet/fengshui";
+import type { RulerId } from "@nhatnguyet/fengshui";
+import {
+  renderBaZi, renderCast, renderDailyHexagram, renderFestivals, renderFlyingStars, renderHexagram, renderHours, renderLifeGua,
+  renderLuban, renderLunar, renderNumerology, renderSixLines, renderSolarTerms, renderZiWei,
+} from "./render.ts";
 
 // Gói không phụ thuộc @types/node: khai đúng phần process đang dùng.
 declare const process: {
@@ -29,9 +35,10 @@ declare const process: {
 };
 
 /** Version printed by --version. */
-export const VERSION = "0.3.0";
+export const VERSION = "0.4.0";
 
-export const HELP = `nhatnguyet: Zi Wei Dou Shu, BaZi, lunar calendar, numerology, Vietnamese festivals
+export const HELP = `nhatnguyet: Zi Wei Dou Shu, BaZi, lunar calendar, numerology, Vietnamese festivals,
+I Ching, feng shui
 
 Usage:
   nhatnguyet ziwei <YYYY-MM-DD> <HH:MM> <male|female> [--name "..."] [--year 2026] [school options]
@@ -42,13 +49,23 @@ Usage:
   nhatnguyet hours <YYYY-MM-DD>     auspicious and inauspicious double hours of a day
   nhatnguyet numerology "<full name>" <YYYY-MM-DD> [--today YYYY-MM-DD]
   nhatnguyet festivals <year> [--ics]
+  nhatnguyet hexagram <number|name>  one of the 64 hexagrams ("11", "Peace", "泰", "Thai")
+  nhatnguyet cast [--lines 987678] [--date YYYY-MM-DD]
+                                    three-coin cast (random without --lines, bottom line
+                                    first) and its Six Lines (najia) chart for the date
+  nhatnguyet daily-hexagram <YYYY-MM-DD>  hexagram ruling the day (Gua Qi calendar)
+  nhatnguyet kua <YYYY-MM-DD|lunar year> <male|female>  Eight Mansions life gua
+  nhatnguyet flying-stars --period 9 --facing <mountain|degrees>
+                                    Xuan Kong chart (or --year 2026, --sitting ...)
+  nhatnguyet luban <cm> [--ruler luban|clear-opening|dinglan]  Luban rulers
 
 Options:
   --lang en|vi|zh   language of the result (default en)
   --terms pinyin|han|vi  English only: stems, branches and transformations as
                     pinyin (default, "Geng Wu"), Chinese characters or Sino-Vietnamese
   --json            print JSON instead of text
-  --svg <file>      also write the chart as SVG (ziwei, bazi, numerology)
+  --svg <file>      also write the chart as SVG (ziwei, bazi, numerology, hexagram,
+                    cast, daily-hexagram, kua, flying-stars)
   --ics             festivals: print an iCalendar (.ics) file instead
   --theme dark      dark SVG
   --no-color        no ANSI colours (also when NO_COLOR is set or output is not a terminal)
@@ -66,7 +83,8 @@ School options (where the books disagree; default first, sources in docs/schools
 
 Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms, ziwei). Docs: https://nhatnguyet.org/en/ma-nguon-mo`;
+terms, ziwei). The I Ching and feng shui commands give the rules of traditional
+schools, not predictions. Docs: https://nhatnguyet.org/en/ma-nguon-mo`;
 
 // Mọi tên công cụ MCP cũng là bí danh của lệnh tương ứng (cast_ziwei, solar_terms...).
 const ALIAS: Readonly<Record<string, string>> = {
@@ -78,6 +96,12 @@ const ALIAS: Readonly<Record<string, string>> = {
   hours: "hours", auspicious_hours: "hours", "auspicious-hours": "hours", "gio-hoang-dao": "hours",
   numerology: "numerology", "than-so-hoc": "numerology",
   festivals: "festivals", "le-hoi": "festivals", lehoi: "festivals",
+  hexagram: "hexagram", "i-ching": "hexagram", iching: "hexagram", "kinh-dich": "hexagram",
+  cast: "cast", najia: "cast", "six-lines": "cast", six_lines_chart: "cast", "liu-yao": "cast", "luc-hao": "cast",
+  "daily-hexagram": "daily-hexagram", daily_hexagram: "daily-hexagram", "que-ngay": "daily-hexagram",
+  kua: "kua", "life-gua": "kua", life_gua: "kua", "cung-phi": "kua",
+  "flying-stars": "flying-stars", "flying-star": "flying-stars", flying_star_chart: "flying-stars", "phi-tinh": "flying-stars",
+  luban: "luban", luban_ruler: "luban", "lo-ban": "luban",
 };
 
 // Cờ lựa chọn phái: tên cờ (kebab-case) và khoá của `schools`.
@@ -106,7 +130,7 @@ export interface Args {
 export function parseArgs(argv: string[]): Args {
   const positional: string[] = [];
   const flags: Record<string, string | boolean> = {};
-  const coGiaTri = new Set(["lang", "country", "name", "year", "today", "tz", "svg", "theme", "terms", ...SCHOOL_FLAGS]);
+  const coGiaTri = new Set(["lang", "country", "name", "year", "today", "tz", "svg", "theme", "terms", "lines", "date", "period", "facing", "sitting", "ruler", ...SCHOOL_FLAGS]);
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "-h") flags.help = true;
@@ -126,6 +150,19 @@ export function parseArgs(argv: string[]): Args {
 }
 
 const GIOI = /^(male|female|m|f|nam|nữ|nu)$/i;
+
+/** Hôm nay theo đồng hồ máy, YYYY-MM-DD (lệnh cast khi không có --date). */
+function homNay(): string {
+  const d = new Date();
+  const p2 = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`;
+}
+
+/** Độ (số) hay tên sơn (chuỗi) của --facing, --sitting. */
+function sonHayDo(v: string | boolean | undefined): string | number | undefined {
+  if (typeof v !== "string") return undefined;
+  return /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v;
+}
 
 /** Where `run` writes files (the SVG of --svg); tests pass their own. */
 export interface RunEnv {
@@ -210,6 +247,52 @@ export function run(argv: string[], env: RunEnv): string {
       if (flags.ics === true) return festivalsIcs(y, { lang }).slice(0, -1);
       const list = festivals(y, { lang });
       return json ? dumpJson(list) : renderFestivals(y, list, lang, opts);
+    }
+    case "hexagram": {
+      can(1, "hexagram <number|name>");
+      const vao = p.join(" ");
+      const o = { lang, terms };
+      const h = hexagram(/^\d+$/.test(vao) ? Number(vao) : vao, o);
+      const rel = { mutual: mutual(h.number, o), opposite: opposite(h.number, o), reverse: reverse(h.number, o) };
+      const t = text(h.number);
+      ghiSvg(() => renderHexagramSvg(h, { theme, lang }));
+      if (json) return dumpJson({ hexagram: h, ...rel, text: t });
+      return renderHexagram(h, { ...rel, judgment: t.judgment.zh }, opts);
+    }
+    case "cast": {
+      const lines = typeof flags.lines === "string" ? flags.lines.replace(/[\s,]/g, "").split("").map(Number) : undefined;
+      const cast = castCoins({ lines, lang, terms });
+      const chart = najia(cast, { date: typeof flags.date === "string" ? flags.date : homNay(), lang, terms });
+      ghiSvg(() => renderHexagramSvg(cast, { theme, lang }));
+      if (json) return dumpJson({ cast, chart });
+      return renderCast(cast, opts) + "\n\n" + renderSixLines(chart, opts);
+    }
+    case "daily-hexagram": {
+      can(1, "daily-hexagram <YYYY-MM-DD>");
+      const r = dailyHexagram(p[0], { lang, terms });
+      ghiSvg(() => renderHexagramSvg(r.hexagram, { theme, lang }));
+      return json ? dumpJson(r) : renderDailyHexagram(r, opts);
+    }
+    case "kua": {
+      can(2, "kua <YYYY-MM-DD|lunar year> <male|female>");
+      const g = lifeGua(/^\d{1,4}$/.test(p[0]) ? Number(p[0]) : p[0], p[1], { lang, terms });
+      ghiSvg(() => renderCompassSvg({ gua: g, lang, terms, theme }));
+      return json ? dumpJson(g) : renderLifeGua(g, lang, opts);
+    }
+    case "flying-stars": {
+      const num = (v: string | boolean | undefined) => (typeof v === "string" ? Number(v) : undefined);
+      if (flags.period === undefined && flags.year === undefined) throw new Error("usage: nhatnguyet flying-stars --period <1-9> --facing <mountain|degrees>");
+      const c = flyingStarChart({ period: num(flags.period), year: num(flags.year), facing: sonHayDo(flags.facing), sitting: sonHayDo(flags.sitting) }, { lang, terms });
+      ghiSvg(() => renderFlyingStarSvg(c, { theme, lang, terms }));
+      return json ? dumpJson(c) : renderFlyingStars(c, lang, opts);
+    }
+    case "luban": {
+      can(1, "luban <cm> [--ruler luban|clear-opening|dinglan]");
+      const len = Number(p[0]);
+      const rulers = typeof flags.ruler === "string" ? [flags.ruler as RulerId] : lubanRulers().map((r) => r.ruler);
+      const rs = rulers.map((ruler) => lubanRuler(len, { ruler, lang, terms }));
+      if (json) return dumpJson(typeof flags.ruler === "string" ? rs[0] : rs);
+      return renderLuban(rs, lang, opts);
     }
   }
   throw new Error(`unknown command "${command}". Try: nhatnguyet --help`);

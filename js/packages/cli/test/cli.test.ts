@@ -159,3 +159,82 @@ test("cli: hours prints twelve double hours, six auspicious, aligned", () => {
   assert.equal(j.hours[4].spirit, "青龙");
   assert.match(HELP, /nhatnguyet hours <YYYY-MM-DD>/);
 });
+
+test("cli: I Ching commands (hexagram, cast, daily-hexagram)", () => {
+  const h = run(["hexagram", "11"], KHONG_MAU);
+  assert.match(h, /^HEXAGRAM 11 ䷊ Peace/);
+  assert.match(h, /Judgment \(Zhou Yi\) │ 泰：小往大來，吉亨。/);
+  assert.match(h, /━━━━━━━  3  world/);
+  for (const a of ["Peace", "泰", "Thai", "Tài", "Địa Thiên Thái"]) assert.equal(run(["hexagram", ...a.split(" ")], KHONG_MAU), h, a);
+  assert.match(run(["hexagram", "11", "--lang", "vi"], KHONG_MAU), /^QUẺ 11 ䷊ Địa Thiên Thái/);
+  assert.match(run(["hexagram", "11", "--lang", "zh"], KHONG_MAU), /^卦 11 ䷊ 泰/);
+  assert.equal(JSON.parse(run(["hexagram", "11", "--json"], KHONG_MAU)).mutual.number, 54);
+
+  const c = run(["cast", "--lines", "987678", "--date", "2026-11-19"], KHONG_MAU);
+  assert.match(c, /63 ䷾ After Completion → 31 ䷞ Influence/);
+  assert.match(c, /Moving lines: 1, 4/);
+  assert.match(c, /day Ding You · month Ji Hai · void Chen, Si/);
+  assert.match(c, /1 {5}━━━━━━━ ○ {2}Vermilion Bird {2}Offspring {6}Ji Mao Wood {4}supported/);
+  assert.match(c, /1 {2}Mao Wood Offspring → Chen Earth Officer\/Ghost/);
+  assert.equal(run(["six_lines_chart", "--lines", "9,8,7,6,7,8", "--date", "2026-11-19"], KHONG_MAU), c);
+  const j = JSON.parse(run(["cast", "--lines", "777777", "--date", "2026-11-19", "--json"], KHONG_MAU));
+  assert.equal(j.cast.primary.number, 1);
+  assert.equal(j.cast.changed, null);
+  assert.equal(j.chart.lines.length, 6);
+  // không --lines: gieo ngẫu nhiên, vẫn đủ sáu hào
+  assert.equal(JSON.parse(run(["cast", "--date", "2026-11-19", "--json"], KHONG_MAU)).cast.lines.length, 6);
+  assert.throws(() => run(["cast", "--lines", "98767", "--date", "2026-11-19"], KHONG_MAU));
+
+  const d = run(["daily-hexagram", "2026-11-19"], KHONG_MAU);
+  assert.match(d, /Hexagram {12}│ 21 ䷔ Biting Through/);
+  assert.match(d, /55 of 60 · minister/);
+  assert.match(run(["daily_hexagram", "2026-01-03"], KHONG_MAU), /Change during the day │ 02:15 24 ䷗ Return → 3 ䷂ Difficulty at the Beginning/);
+});
+
+test("cli: feng shui commands (kua, flying-stars, luban)", () => {
+  const k = run(["kua", "1990-09-19", "female"], KHONG_MAU);
+  assert.match(k, /Kua number 8 · ☶ Gen \(Mountain\) · West group · Earth/);
+  assert.match(k, /│ Southwest │ 202\.5°-247\.5° │ Sheng Qi 生气 │ Generating Qi {3}│ favorable {3}│/);
+  assert.match(run(["kua", "1990-01-20", "male"], KHONG_MAU), /Born before the lunar New Year, so the lunar year is 1989\./);
+  assert.equal(JSON.parse(run(["life_gua", "1990", "male", "--json"], KHONG_MAU)).number, 1);
+  assert.match(run(["kua", "1990-09-19", "female", "--lang", "vi"], KHONG_MAU), /Cung phi 8 · ☶ Cấn \(Núi\)/);
+
+  const f = run(["flying-stars", "--period", "9", "--facing", "wu"], KHONG_MAU);
+  assert.match(f, /period 9 · sitting Zi \(North\) · facing Wu \(South\)/);
+  assert.match(f, /Double Stars at Sitting/);
+  const grid = f.split("\n").filter((x) => /^[┌├└│]/.test(x));
+  for (const x of grid) assert.equal(displayWidth(x), displayWidth(grid[0]), x);
+  // sơn, hướng / vận của chín cung, Nam ở trên: 63/8 18/4 81/6 | 72/7 54/9 36/2 | 27/3 99/5 45/1
+  const so = grid.filter((x) => /│ \d/.test(x)).map((x) => x.split("│").slice(1, -1).map((o) => o.trim()));
+  assert.deepEqual(so.flat(), ["6  3", "1  8", "8  1", "8", "4", "6", "7  2", "5  4", "3  6", "7", "9", "2", "2  7", "9  9", "4  5", "3", "5", "1"]);
+  assert.equal(run(["flying-stars", "--period", "9", "--facing", "180"], KHONG_MAU), f);
+  assert.match(run(["flying-stars", "--year", "2026", "--sitting", "zi"], KHONG_MAU), /period 9 · year 2026/);
+  assert.throws(() => run(["flying-stars", "--facing", "wu"], KHONG_MAU), /usage/);
+
+  const l = run(["luban", "80"], KHONG_MAU);
+  // Cung nhỏ: bính âm và chữ Hán giản thể, dòng dưới là nghĩa tiếng Anh; cung lớn cũng in giản thể (福禄, không 福祿).
+  assert.match(l, /│ 42\.9cm Luban rule {9}│ Hai 害 {5}│ Kou She 口舌 {4}│ unfavorable │ 69\.7, 80\.5 cm {8}│/);
+  assert.match(l, /│ {27}│ {12}│ Quarrels {8}│/);
+  assert.match(l, /│ Fu Lu 福禄 │ Fu Gui 富贵 /);
+  assert.equal(l.split("\n").filter((x) => x.startsWith("│")).length, 6);
+  const lHan = run(["luban", "80", "--terms", "han"], KHONG_MAU);
+  assert.match(lHan, /│ 福禄 {3}│ 富贵 {12}│/);
+  assert.match(run(["luban", "80", "--lang", "zh"], KHONG_MAU), /│ 福禄 │ 富贵 │/);
+  assert.match(run(["luban", "80", "--lang", "vi"], KHONG_MAU), /│ Phúc Lộc 福禄 │ Phú quý 富贵 /);
+  assert.equal(JSON.parse(run(["luban", "81", "--ruler", "luban", "--json"], KHONG_MAU)).sector.name, "Ben");
+  assert.equal(JSON.parse(run(["luban", "81", "--json"], KHONG_MAU)).length, 3);
+});
+
+test("cli: --svg for the I Ching and feng shui commands", () => {
+  const ghi: Record<string, string> = {};
+  const env = { color: false, width: 88, writeFile: (p: string, d: string) => (ghi[p] = d) };
+  run(["hexagram", "11", "--svg", "h.svg"], env);
+  run(["cast", "--lines", "987678", "--date", "2026-11-19", "--svg", "c.svg", "--theme", "dark"], env);
+  run(["daily-hexagram", "2026-11-19", "--svg", "d.svg"], env);
+  run(["kua", "1990-09-19", "female", "--svg", "k.svg"], env);
+  run(["flying-stars", "--period", "9", "--facing", "wu", "--svg", "f.svg"], env);
+  for (const k of ["h.svg", "c.svg", "d.svg", "k.svg", "f.svg"]) {
+    assert.match(ghi[k], /^<svg /, k);
+    assert.ok(ghi[k].endsWith("</svg>\n"), k);
+  }
+});

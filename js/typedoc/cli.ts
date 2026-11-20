@@ -1,6 +1,7 @@
 /**
  * The text renderers behind the `nhatnguyet` command line: Zi Wei grid, BaZi,
- * lunar date, solar terms, numerology and festival tables, with terminal width
+ * lunar date, solar terms, numerology and festival tables, hexagrams, Six
+ * Lines charts, life gua, flying star charts and Luban rulers, with terminal width
  * handling for CJK text. Command reference: the
  * [package README](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/tree/main/js/packages/cli#readme).
  *

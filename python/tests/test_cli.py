@@ -52,6 +52,27 @@ class TestCli(unittest.TestCase):
         self.assertIn("2027-02-06 │ 1/1 lunar", run(["festivals", "2027"], **KHONG_MAU))
         self.assertIn("09:46", run(["terms", "2027", "--country", "CN"], **KHONG_MAU))
 
+    def test_kinh_dich(self):
+        h = run(["hexagram", "11"], **KHONG_MAU)
+        self.assertTrue(h.startswith("HEXAGRAM 11 ䷊ Peace"))
+        for a in (["Peace"], ["泰"], ["Thai"], ["Địa", "Thiên", "Thái"]):
+            self.assertEqual(run(["hexagram"] + a, **KHONG_MAU), h)
+        c = run(["cast", "--lines", "987678", "--date", "2026-11-19"], **KHONG_MAU)
+        self.assertIn("63 ䷾ After Completion → 31 ䷞ Influence", c)
+        self.assertIn("1  Mao Wood Offspring → Chen Earth Officer/Ghost", c)
+        self.assertEqual(len(json.loads(run(["cast", "--date", "2026-11-19", "--json"], **KHONG_MAU))["cast"]["lines"]), 6)
+        self.assertIn("21 ䷔ Biting Through", run(["daily-hexagram", "2026-11-19"], **KHONG_MAU))
+
+    def test_phong_thuy(self):
+        self.assertIn("Kua number 8 · ☶ Gen (Mountain) · West group · Earth", run(["kua", "1990-09-19", "female"], **KHONG_MAU))
+        f = run(["flying-stars", "--period", "9", "--facing", "wu"], **KHONG_MAU)
+        self.assertIn("Double Stars at Sitting", f)
+        self.assertEqual(f, run(["flying_star_chart", "--period", "9", "--facing", "180"], **KHONG_MAU))
+        with self.assertRaisesRegex(ValueError, "usage"):
+            run(["flying-stars", "--facing", "wu"], **KHONG_MAU)
+        self.assertIn("69.7, 80.5 cm", run(["luban", "80"], **KHONG_MAU))
+        self.assertEqual(json.loads(run(["luban", "81", "--ruler", "luban", "--json"], **KHONG_MAU))["sector"]["name"], "Ben")
+
     def test_tro_giup_loi(self):
         self.assertEqual(run([], **KHONG_MAU), HELP)
         with self.assertRaisesRegex(ValueError, "unknown command"):

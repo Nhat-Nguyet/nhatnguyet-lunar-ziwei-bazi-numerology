@@ -1,4 +1,4 @@
-// Kiểm máy chủ MCP bằng client chính thức của SDK qua stdio: đủ tám công cụ,
+// Kiểm máy chủ MCP bằng client chính thức của SDK qua stdio: đủ mười bốn công cụ,
 // mô tả nói rõ giờ Việt Nam, kết quả trùng thư viện, lỗi đầu vào thành isError.
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
@@ -8,6 +8,8 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 import { readFileSync } from "node:fs";
 import { auspiciousHours } from "@nhatnguyet/am-lich";
 import { castZiWei, chartToText } from "@nhatnguyet/tu-vi";
+import { dailyHexagram, najia } from "@nhatnguyet/iching";
+import { flyingStarChart, lifeGua } from "@nhatnguyet/fengshui";
 import { VERSION } from "../src/server.ts";
 
 const BIN = fileURLToPath(new URL("../src/bin.ts", import.meta.url));
@@ -25,10 +27,11 @@ async function goi(name: string, args: Record<string, unknown>): Promise<KQ> {
   return (await client.callTool({ name, arguments: args })) as KQ;
 }
 
-test("eight tools (plus the cast_zi_wei alias), English descriptions state Vietnam time", async () => {
+test("fourteen tools (plus the cast_zi_wei alias), English descriptions state Vietnam time", async () => {
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
-    "auspicious_hours", "cast_bazi", "cast_zi_wei", "cast_ziwei", "festivals", "lunar_convert", "numerology", "render_chart_svg", "solar_terms",
+    "auspicious_hours", "cast_bazi", "cast_zi_wei", "cast_ziwei", "daily_hexagram", "festivals", "flying_star_chart", "hexagram", "life_gua",
+    "luban_ruler", "lunar_convert", "numerology", "render_chart_svg", "six_lines_chart", "solar_terms",
   ]);
   for (const t of tools) {
     assert.ok(t.description && t.description.length > 80, t.name);
@@ -139,4 +142,44 @@ test("server VERSION matches package.json (release-tools set writes both)", () =
   const goi = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string };
   assert.equal(VERSION, goi.version);
   assert.equal(client.getServerVersion()?.version, goi.version);
+});
+
+test("I Ching tools: hexagram, six_lines_chart, daily_hexagram", async () => {
+  const h = JSON.parse((await goi("hexagram", { hexagram: "Peace" })).content[0].text);
+  assert.equal(h.hexagram.number, 11);
+  assert.equal(h.mutual.name, "The Marrying Maiden");
+  assert.equal(h.text.judgment.zh, "泰：小往大來，吉亨。");
+  assert.equal(JSON.parse((await goi("hexagram", { hexagram: 11, lang: "vi" })).content[0].text).hexagram.name, "Địa Thiên Thái");
+  assert.equal((await goi("hexagram", { hexagram: "Lu" })).isError, true);
+
+  const r = await goi("six_lines_chart", { lines: [9, 8, 7, 6, 7, 8], date: "2026-11-19" });
+  const kq = JSON.parse(r.content[0].text);
+  assert.deepEqual(kq.chart, JSON.parse(JSON.stringify(najia([9, 8, 7, 6, 7, 8], { date: "2026-11-19" }), (k, v) => (k === "raw" ? undefined : v))));
+  assert.equal(kq.cast.changed.name, "Influence");
+  assert.equal(r.content[1].text, "Data: Nhat Nguyet (nhatnguyet.org)");
+  assert.equal(JSON.parse((await goi("six_lines_chart", { date: "2026-11-19" })).content[0].text).cast.lines.length, 6);
+  assert.equal((await goi("six_lines_chart", { lines: [9, 8, 7], date: "2026-11-19" })).isError, true);
+
+  const d = JSON.parse((await goi("daily_hexagram", { date: "2026-11-19" })).content[0].text);
+  assert.equal(d.hexagram.number, dailyHexagram("2026-11-19").hexagram.number);
+  assert.equal(d.hexagram.name, "Biting Through");
+});
+
+test("feng shui tools: life_gua, flying_star_chart, luban_ruler", async () => {
+  const g = JSON.parse((await goi("life_gua", { birth_date: "1990-09-19", gender: "female" })).content[0].text);
+  assert.equal(g.number, 8);
+  assert.deepEqual(g, JSON.parse(JSON.stringify(lifeGua("1990-09-19", "female"))));
+  assert.equal(JSON.parse((await goi("life_gua", { lunar_year: 1989, gender: "male" })).content[0].text).number, 2);
+  assert.equal((await goi("life_gua", { gender: "male" })).isError, true);
+
+  const c = JSON.parse((await goi("flying_star_chart", { period: 9, facing: "wu" })).content[0].text);
+  assert.equal(c.pattern, "double-sitting");
+  assert.deepEqual(c, JSON.parse(JSON.stringify(flyingStarChart({ period: 9, facing: 180 }))));
+  assert.equal(JSON.parse((await goi("flying_star_chart", { year: 2026, sitting: 0 })).content[0].text).period, 9);
+  assert.equal((await goi("flying_star_chart", { facing: "wu" })).isError, true);
+
+  const l = JSON.parse((await goi("luban_ruler", { length: 80 })).content[0].text);
+  assert.equal(l.length, 3);
+  const one = JSON.parse((await goi("luban_ruler", { length: 800, unit: "mm", ruler: "luban" })).content[0].text);
+  assert.deepEqual(one.nearestAuspicious.map((x: { lengthCm: number }) => x.lengthCm), [69.7, 80.5]);
 });

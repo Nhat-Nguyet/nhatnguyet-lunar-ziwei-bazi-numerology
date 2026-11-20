@@ -1,5 +1,6 @@
 // Máy chủ MCP của Nhật Nguyệt: cho trợ lý AI gọi bộ máy tất định (lịch âm,
-// tiết khí, Tử Vi, Bát Tự, thần số học, lễ hội) thay vì tự tính. Không gọi
+// tiết khí, Tử Vi, Bát Tự, thần số học, lễ hội, Kinh Dịch, phong thuỷ) thay
+// vì tự tính. Không gọi
 // mạng; mọi phép tính chạy tại chỗ bằng các gói @nhatnguyet.
 //
 // MCP server for the Nhat Nguyet libraries. Tool descriptions are in English
@@ -15,19 +16,23 @@ import type { BaZiChart } from "@nhatnguyet/bat-tu";
 import { numerology, numerologySvg, chartToText as numerologyText } from "@nhatnguyet/than-so-hoc";
 import type { NumerologyResult } from "@nhatnguyet/than-so-hoc";
 import { festivals } from "@nhatnguyet/le-hoi";
+import { castCoins, dailyHexagram, hexagram, mutual, najia, opposite, reverse, text as hexagramText } from "@nhatnguyet/iching";
+import { flyingStarChart, lifeGua, lubanRuler, lubanRulers } from "@nhatnguyet/fengshui";
 
 /** Phiên bản máy chủ, khớp package.json. */
-export const VERSION = "0.3.0";
+export const VERSION = "0.4.0";
 
 const SOURCE = "Data: Nhat Nguyet (nhatnguyet.org)";
 
 const INSTRUCTIONS =
   "Deterministic calculators for the Vietnamese, Chinese, Korean and Japanese lunisolar calendars, the 24 solar terms, auspicious hours, " +
-  "Zi Wei Dou Shu (Tử Vi), BaZi (Four Pillars), Pythagorean numerology and Vietnamese festivals. " +
+  "Zi Wei Dou Shu (Tử Vi), BaZi (Four Pillars), Pythagorean numerology, Vietnamese festivals, the I Ching (hexagrams, Six Lines najia chart, " +
+  "Gua Qi daily hexagram) and feng shui (Eight Mansions life gua, Xuan Kong flying stars, Luban rulers). " +
   "Do not compute lunar dates, stem-branch pillars, solar terms or chart positions yourself: call these tools. " +
   "Times are Vietnam time (UTC+7) unless `country` says otherwise; on some days the Vietnamese calendar differs from the Chinese one " +
   "(for example Tết 1985 is 1985-01-21 in Vietnam, 1985-02-20 in China). " +
-  "Results are computed facts, not interpretations; when you quote them, say they come from Nhat Nguyet (nhatnguyet.org).";
+  "Results are computed facts, not interpretations; the I Ching and feng shui tools give the rules of traditional schools, not predictions or verified effects. " +
+  "When you quote results, say they come from Nhat Nguyet (nhatnguyet.org).";
 
 const COUNTRY = z
   .enum(["VN", "CN", "TW", "HK", "MO", "SG", "MY", "ID", "PH", "KR", "JP"])
@@ -153,8 +158,9 @@ const GIO_TY =
   "(some books move it to the next day: pass the next date to follow them); for BaZi the day pillar turns at 23:00.";
 
 /**
- * Tạo máy chủ MCP (chưa nối transport): tám công cụ, tên theo lệnh dòng lệnh
- * (cast_ziwei như `nhatnguyet ziwei`), cộng `cast_zi_wei` là tên cũ giữ làm bí danh.
+ * Tạo máy chủ MCP (chưa nối transport): mười bốn công cụ, tên theo lệnh dòng
+ * lệnh (cast_ziwei như `nhatnguyet ziwei`), cộng `cast_zi_wei` là tên cũ giữ
+ * làm bí danh.
  */
 export function createServer(): McpServer {
   const server = new McpServer({ name: "nhatnguyet", version: VERSION }, { instructions: INSTRUCTIONS });
@@ -355,6 +361,149 @@ export function createServer(): McpServer {
         if (!a.date || !a.gender) throw new TypeError(`${a.kind} needs date and gender`);
         if (a.kind === "ziwei" || a.kind === "zi_wei") return chu(ziWeiSvg(laTuVi({ ...a, date: a.date, gender: a.gender }), { theme }));
         return chu(baZiSvg(laBatTu({ ...a, date: a.date, gender: a.gender }), { theme, name: a.name }));
+      }),
+  );
+
+  const SCHOOLS_NOTE = " These are the rules of traditional schools as the Nhat Nguyet engine encodes them, not predictions or verified effects.";
+  const HEX = z
+    .union([z.number().int().min(1).max(64), z.string().min(1)])
+    .describe('King Wen number 1 to 64, or a name in English ("Peace"), pinyin ("Tai"), Chinese ("泰") or Vietnamese ("Địa Thiên Thái", "Thai").');
+
+  server.registerTool(
+    "hexagram",
+    {
+      title: "I Ching hexagram",
+      description:
+        "One of the 64 I Ching hexagrams: King Wen number, symbol, names in English, pinyin, Chinese and Vietnamese, upper and lower trigrams " +
+        "(image, element, direction), Eight Palaces palace with its element and generation, world and response lines, the nuclear, opposite and " +
+        "reversed hexagrams, and the public domain Zhou Yi text (judgment and line statements) with James Legge's 1882 English translation. " +
+        "Returns JSON. No reading or advice: write any interpretation yourself and say it is one.",
+      inputSchema: { hexagram: HEX, lang: LANG, terms: TERMS },
+      annotations: chiDoc,
+    },
+    (a) =>
+      an(() => {
+        const o = { lang: a.lang, terms: a.terms };
+        const h = hexagram(a.hexagram, o);
+        return chu(json({ hexagram: h, mutual: mutual(h.number, o), opposite: opposite(h.number, o), reverse: reverse(h.number, o), text: hexagramText(h.number) }), SOURCE);
+      }),
+  );
+
+  server.registerTool(
+    "six_lines_chart",
+    {
+      title: "I Ching Six Lines (najia) chart",
+      description:
+        "A Six Lines (Liu Yao, najia) chart of a cast for a date (1900 to 2100): primary and changed hexagram, moving lines, and for each line its " +
+        "stem and branch, element, six relation by the palace element, six spirit by the day stem, world and response, void (empty in the day's decade), " +
+        "seasonal state under the month branch and month break. The month is the BaZi month pillar at noon Vietnam time. Pass the six line values of a " +
+        "cast, bottom line first (6 old yin and 9 old yang are moving, 7 young yang, 8 young yin); without lines the server tosses three coins six " +
+        "times (random)." + SCHOOLS_NOTE + " Returns JSON with the cast and the chart.",
+      inputSchema: {
+        lines: z.array(z.number().int().min(6).max(9)).length(6).optional().describe("Six line values 6 to 9, bottom line first. Omit for a random three-coin cast."),
+        date: DATE.describe("Date of the cast, YYYY-MM-DD (Vietnam time)."),
+        lang: LANG,
+        terms: TERMS,
+      },
+      annotations: { ...chiDoc, idempotentHint: false },
+    },
+    (a) =>
+      an(() => {
+        const cast = castCoins({ lines: a.lines, lang: a.lang, terms: a.terms });
+        return chu(json({ cast, chart: najia(cast, { date: a.date, lang: a.lang, terms: a.terms }) }), SOURCE);
+      }),
+  );
+
+  server.registerTool(
+    "daily_hexagram",
+    {
+      title: "Hexagram of the day (Gua Qi)",
+      description:
+        "The hexagram ruling a date (1900 to 2100) by the Han-dynasty Gua Qi calendar of Meng Xi: sixty hexagrams of 6 7/80 days each from Inner Truth " +
+        "at the true winter solstice, read at 12:00 Vietnam time; its place in the cycle and rank, the ruling line, the cardinal hexagram of the solar " +
+        "term, and the time of a change of hexagram during the day. It is assigned by the calendar, not cast. Returns JSON.",
+      inputSchema: { date: DATE.describe("Gregorian date, YYYY-MM-DD."), lang: LANG, terms: TERMS },
+      annotations: chiDoc,
+    },
+    (a) => an(() => chu(json(dailyHexagram(a.date, { lang: a.lang, terms: a.terms })), SOURCE)),
+  );
+
+  server.registerTool(
+    "life_gua",
+    {
+      title: "Feng shui life gua (Kua number)",
+      description:
+        "Eight Mansions (Ba Zhai, Bát Trạch) life gua or Kua number of a person: trigram, east or west group, element, and the eight directions with " +
+        "their stars (Sheng Qi, Tian Yi, Yan Nian, Fu Wei favorable; Huo Hai, Liu Sha, Wu Gui, Jue Ming unfavorable) and degrees. The year is the lunar " +
+        "year, turning at the lunar New Year in Vietnam time; books that turn it at the Start of Spring differ for births between the two dates (pass " +
+        "lunar_year to follow them)." + SCHOOLS_NOTE + " Returns JSON.",
+      inputSchema: {
+        birth_date: DATE.optional().describe("Gregorian birth date, YYYY-MM-DD. Give birth_date or lunar_year."),
+        lunar_year: z.number().int().min(1900).max(2100).optional().describe("Instead of birth_date: the lunar year of birth."),
+        gender: GENDER,
+        lang: LANG,
+        terms: TERMS,
+      },
+      annotations: chiDoc,
+    },
+    (a) =>
+      an(() => {
+        const birth = a.birth_date ?? a.lunar_year;
+        if (birth === undefined) throw new TypeError("give birth_date or lunar_year");
+        return chu(json(lifeGua(birth, a.gender, { lang: a.lang, terms: a.terms })), SOURCE);
+      }),
+  );
+
+  const SON = z
+    .union([z.number().min(0).max(360), z.string().min(1)])
+    .optional()
+    .describe('A compass bearing in degrees (0 = north, 180 = south) or one of the 24 mountains ("wu", "zi", "gen"...).');
+  server.registerTool(
+    "flying_star_chart",
+    {
+      title: "Feng shui flying star chart (Xuan Kong)",
+      description:
+        "A Xuan Kong flying star chart (Shen school, plain facing): the period (base), mountain and facing stars of the nine palaces, the role of each " +
+        "star in the period (prosperous, growing, retreating, killing, dead), the named pattern (prosperous sitting and facing, reversed, double stars) " +
+        "and the castle gates. Give period (1 to 9) or year (then the 20-year period of that year), and facing or sitting. Replacement stars for a " +
+        "facing near a mountain edge, and monthly stars, are not computed." + SCHOOLS_NOTE + " Returns JSON; palaces are in Lo Shu order, grid is " +
+        "south on top.",
+      inputSchema: {
+        period: z.number().int().min(1).max(9).optional(),
+        year: z.number().int().min(1900).max(2100).optional().describe("Instead of period: the year the house was built or moved into (counted from the Start of Spring)."),
+        facing: SON,
+        sitting: SON,
+        lang: LANG,
+        terms: TERMS,
+      },
+      annotations: chiDoc,
+    },
+    (a) => an(() => chu(json(flyingStarChart({ period: a.period, year: a.year, facing: a.facing, sitting: a.sitting }, { lang: a.lang, terms: a.terms })), SOURCE)),
+  );
+
+  server.registerTool(
+    "luban_ruler",
+    {
+      title: "Luban ruler",
+      description:
+        "Read a length on the Luban rulers used by Vietnamese and Chinese carpenters: the 52.2 cm clear-opening rule (door and window openings), the " +
+        "42.9 cm Luban rule (solid furniture, plinths, steps) and the 38.8 cm Dinglan rule (altars, graves). Gives the sector and sub-sector, whether " +
+        "the book puts it in the good or bad group, and for a bad length the nearest good lengths below and above. Without ruler, all three." +
+        SCHOOLS_NOTE + " Returns JSON.",
+      inputSchema: {
+        length: z.number().positive().describe("The length to read."),
+        unit: z.enum(["cm", "mm"]).optional().describe("Default cm."),
+        ruler: z.enum(["clear-opening", "luban", "dinglan"]).optional().describe("One ruler; default all three."),
+        lang: LANG,
+        terms: TERMS,
+      },
+      annotations: chiDoc,
+    },
+    (a) =>
+      an(() => {
+        const o = { unit: a.unit, lang: a.lang, terms: a.terms };
+        const r = a.ruler ? lubanRuler(a.length, { ...o, ruler: a.ruler }) : lubanRulers().map((x) => lubanRuler(a.length, { ...o, ruler: x.ruler }));
+        return chu(json(r), SOURCE);
       }),
   );
 

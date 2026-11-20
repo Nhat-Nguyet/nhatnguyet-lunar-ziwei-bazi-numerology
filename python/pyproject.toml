@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nhatnguyet"
-version = "0.3.0"
-description = "Vietnamese lunar calendar, Zi Wei Dou Shu (Purple Star Astrology), BaZi (Four Pillars), Pythagorean numerology and Vietnamese festivals in pure Python, no dependencies. Âm lịch, Tử Vi, Bát Tự; 紫微斗数, 八字, 农历."
+version = "0.4.0"
+description = "Lunisolar calendar for China, Korea, Japan, Vietnam and 7 more countries and regions, Zi Wei Dou Shu (Purple Star Astrology), BaZi (Four Pillars), Pythagorean numerology, the I Ching, feng shui rules and Vietnamese festivals in pure Python, no dependencies. 农历, 紫微斗数, 八字, 易经, 风水; Âm lịch, Tử Vi, Bát Tự, Kinh Dịch."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -16,6 +16,8 @@ keywords = [
     "vietnamese calendar",
     "vietnamese lunar calendar",
     "chinese calendar",
+    "korean calendar",
+    "japanese lunar calendar",
     "lunisolar calendar",
     "solar terms",
     "sexagenary cycle",
@@ -32,6 +34,14 @@ keywords = [
     "pythagorean numerology",
     "life path number",
     "vietnamese festivals",
+    "i ching",
+    "yijing",
+    "hexagram",
+    "najia",
+    "feng shui",
+    "kua number",
+    "flying stars",
+    "luban ruler",
     "am lich",
     "lich am",
     "tu vi",
@@ -43,8 +53,10 @@ keywords = [
     "农历",
     "干支",
     "二十四节气",
+    "易经",
+    "风水",
     "nhat nguyet",
-    "vietnam",
+    "vietnamese",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

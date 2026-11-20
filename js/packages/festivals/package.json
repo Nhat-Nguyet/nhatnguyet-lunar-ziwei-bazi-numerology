@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/festivals",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Vietnamese festivals and holidays with lunar-to-solar dates for any year (206 festivals, CC BY 4.0 data). English-named alias of @nhatnguyet/le-hoi.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -44,7 +44,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@nhatnguyet/le-hoi": "^0.3.0"
+    "@nhatnguyet/le-hoi": "^0.4.0"
   },
   "repository": {
     "type": "git",

@@ -26,14 +26,18 @@ if (argv[0] === "--published" && !published) {
   process.exit(2);
 }
 
-const PKGS = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi", "cli", "mcp", "widgets"];
+const PKGS = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi", "iching", "fengshui", "cli", "mcp", "widgets"];
+// Packages added in 0.4.0: a --published check of an older version installs
+// without them and skips their vectors.
+const SINCE_0_4 = new Set(["iching", "fengshui"]);
 let base = join(ROOT, "js");
 let tmp = null;
 if (published) {
   tmp = mkdtempSync(join(tmpdir(), "nn-dist-"));
   base = tmp;
   writeFileSync(join(tmp, "package.json"), JSON.stringify({ name: "check-dist", private: true, type: "module" }));
-  const r = spawnSync("npm", ["install", "--no-audit", "--no-fund", "--ignore-scripts", ...PKGS.map((p) => `@nhatnguyet/${p}@${published}`)], {
+  const older = /^0\.[0-3]\./.test(published);
+  const r = spawnSync("npm", ["install", "--no-audit", "--no-fund", "--ignore-scripts", ...PKGS.filter((p) => !(older && SINCE_0_4.has(p))).map((p) => `@nhatnguyet/${p}@${published}`)], {
     cwd: tmp,
     stdio: "inherit",
     shell: process.platform === "win32",
@@ -172,6 +176,48 @@ try {
     const r = F.leHoiTrongNam(v.nam);
     return r.length ? r : null;
   });
+  // @nhatnguyet/iching has no exported core functions: every English result
+  // carries the core object in `raw`, compared with the vectors. Releases
+  // before the package existed skip it.
+  let I = null;
+  try {
+    I = await load("iching");
+  } catch (e) {
+    if (!published) throw e;
+    ok("iching: not in this release, skipped");
+  }
+  if (I) {
+    const p2 = (n) => String(n).padStart(2, "0");
+    vectors("iching", (v) => {
+      const date = `${v.yyyy}-${p2(v.mm)}-${p2(v.dd)}`;
+      if (v.op === "trigram") return I.trigram(v.n).raw;
+      if (v.op === "hexagram") return I.hexagram(v.n).raw;
+      if (v.op === "lines") return I.castCoins({ lines: v.lines }).raw;
+      if (v.op === "numbers") return I.castFromNumbers(v.a, v.b, v.c).raw;
+      if (v.op === "najia") return I.najia(v.lines, { date }).raw;
+      if (v.op === "daily") return I.dailyHexagram(date).raw;
+      throw new Error("unknown operation " + v.op);
+    });
+  }
+
+  // Feng shui (from 0.4.0): the core port is internal; dist/ca-kiem.js holds the
+  // dispatcher behind every vector (one engine call per `phep`). Skipped when
+  // the package is not installed (published versions before 0.4.0).
+  let fsPath = null;
+  try {
+    fsPath = require.resolve("@nhatnguyet/fengshui");
+  } catch {
+    console.log("skip fengshui: @nhatnguyet/fengshui is not installed");
+  }
+  if (fsPath) {
+    const FC = await import(pathToFileURL(join(dirname(fsPath), "ca-kiem.js")).href);
+    vectors("fengshui", (v) => FC.tinhCaKiem(v));
+    const FS = await import(pathToFileURL(fsPath).href);
+    const fsCheck = (name, got, want) => (JSON.stringify(got) === JSON.stringify(want) ? ok(name) : fail(`${name}: expected ${JSON.stringify(want)}, got ${JSON.stringify(got)}`));
+    fsCheck("lifeGua 1990-09-19 female", FS.lifeGua("1990-09-19", "female").number, 8);
+    fsCheck("flyingStarChart period 9 facing wu", FS.flyingStarChart({ period: 9, facing: "wu" }).pattern, "double-sitting");
+    fsCheck("lubanRuler 82 cm clear-opening", FS.lubanRuler(82, { ruler: "clear-opening" }).sector.name, "Fu Lu");
+  }
 
   // English API: a few answers that the READMEs print.
   const check = (name, got, want) => (JSON.stringify(got) === JSON.stringify(want) ? ok(name) : fail(`${name}: expected ${JSON.stringify(want)}, got ${JSON.stringify(got)}`));
@@ -198,6 +244,14 @@ try {
   const r = spawnSync(process.execPath, [cli, "lunar", "2027-02-06", "--json"], { encoding: "utf8" });
   if (r.status === 0 && JSON.parse(r.stdout).yearName === "Ding Wei") ok("nhatnguyet lunar 2027-02-06 --json");
   else fail(`nhatnguyet lunar: exit ${r.status} ${r.stderr}`);
+  if (I && fsPath) {
+    const h = spawnSync(process.execPath, [cli, "hexagram", "11", "--json"], { encoding: "utf8" });
+    if (h.status === 0 && JSON.parse(h.stdout).hexagram.name === "Peace") ok("nhatnguyet hexagram 11 --json");
+    else fail(`nhatnguyet hexagram: exit ${h.status} ${h.stderr}`);
+    const k = spawnSync(process.execPath, [cli, "kua", "1990-09-19", "female", "--json"], { encoding: "utf8" });
+    if (k.status === 0 && JSON.parse(k.stdout).number === 8) ok("nhatnguyet kua 1990-09-19 female --json");
+    else fail(`nhatnguyet kua: exit ${k.status} ${k.stderr}`);
+  }
 } catch (e) {
   fail(e && e.stack ? e.stack : String(e));
 } finally {

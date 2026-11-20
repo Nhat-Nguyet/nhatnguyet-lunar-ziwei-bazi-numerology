@@ -1,8 +1,8 @@
 <h1 align="center">Nhật Nguyệt</h1>
 
 <p align="center">
-  <b>Âm lịch Việt Nam không phải âm lịch Trung Quốc: các thư viện phổ biến cho sai ngày âm Việt Nam ở 2.724 ngày từ 1900 tới 2100.</b><br>
-  Tử Vi, Bát Tự, thần số học, lễ hội và giờ hoàng đạo trên đúng lịch, bằng JavaScript, Python và MCP · 3,6 triệu lá số mở có lời luận trích sách cổ, ghi rõ sách và chương · kết quả bằng Tiếng Việt, English, 中文 · 17.291 ca kiểm dùng chung
+  <b>Âm dương lịch, Tử Vi, Bát Tự, thần số học, Kinh Dịch và phong thuỷ cho JavaScript và Python: chính xác theo thiên văn, tính theo từng nước, và cùng một đáp án ở mọi ngôn ngữ.</b><br>
+  Điểm sóc và tiết khí đối chiếu với NASA và IMCCE từ 1900 tới 2100 · âm lịch của Trung Quốc, Hàn Quốc, Nhật Bản, Việt Nam và 7 nước, vùng khác · máy chủ MCP cho trợ lý AI · 3,6 triệu lá số mở có lời luận trích sách cổ, ghi rõ sách và chương · kết quả bằng Tiếng Việt, English và 中文 · 17.291 ca kiểm dùng chung (tổng cộng 28.586)
 </p>
 
 <p align="center">
@@ -45,21 +45,31 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country` mặc định là `"VN"` (Việt Nam, UTC+7), lịch mà dự án bắt đầu từ đó:
+âm lịch Việt Nam lệch lịch Trung Quốc ở hàng nghìn ngày, và thư viện làm theo
+lịch Trung Quốc không tính phần ấy. `castZiWei` cũng nhận tuỳ chọn này. Mười
+nước, vùng còn lại liệt kê ở [Âm lịch](#âm-lịch-và-giờ-hoàng-đạo).
 
 **Python** (3.9 trở lên, chỉ thư viện chuẩn): cùng kết quả, cùng tệp SVG tới từng byte.
 
@@ -71,14 +81,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **Dòng lệnh**: chạy luôn bằng `npx`, hoặc gõ `nhatnguyet ...` sau khi `pip install nhatnguyet`.
@@ -179,7 +189,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-Lệnh khác: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` để xuất tệp lịch), `hours`; `--lang vi|zh`, `--json`, `--svg chart.svg`, và các tuỳ chọn trường phái bên dưới. API tiếng Anh đầy đủ mọi tuỳ chọn: [docs/api-en.md](./docs/api-en.md).
+Lệnh khác: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` để xuất tệp lịch), `hours`, `hexagram`, `cast` (lục hào), `daily-hexagram`, `kua`, `flying-stars`, `luban`; `--lang vi|zh`, `--json`, `--svg chart.svg`, và các tuỳ chọn trường phái bên dưới. API tiếng Anh đầy đủ mọi tuỳ chọn: [docs/api-en.md](./docs/api-en.md).
 
 ## Mục lục
 
@@ -197,15 +207,20 @@ Lệnh khác: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--i
 
 ## Vì sao đáng tin
 
-**Phần khoa học nằm ở phương pháp, không ở lời đoán.** Lịch là phép tính thiên
-văn, đối chiếu với NASA và IMCCE trên khoảng 1900 tới 2100:
+**Lịch là phép tính thiên văn, tính cho đúng nước được hỏi.** Âm dương lịch Á
+Đông chung quy tắc nhưng không chung đồng hồ: tháng âm bắt đầu ở ngày có điểm
+sóc theo giờ địa phương, nên Bắc Kinh, Seoul và Hà Nội có thể bắt đầu một
+tháng, hay một năm, vào những ngày khác nhau. Thư viện tính mỗi nước theo múi
+giờ của nước ấy và đối chiếu phần thiên văn với NASA và IMCCE trên khoảng 1900
+tới 2100:
 
 | Phép kiểm | Kết quả |
 |---|---|
 | Điểm sóc so với NASA (2.474 lần) | muộn trung bình 0,9 phút, nhiều nhất 3,9 phút |
 | Tháng âm dựng lại từ điểm sóc NASA và tiết khí IMCCE | khớp 2.459 trên 2.461 tháng (hai tháng còn lại có điểm sóc trong vòng một phút quanh nửa đêm) |
 | Tiết khí so với IMCCE (4.824 mốc) | lệch trung bình 0,27 phút, nhiều nhất 0,9 phút (làm tròn tới phút), mọi mốc đúng ngày |
-| Việt Nam (UTC+7) so với Trung Quốc (UTC+8), cùng quy tắc | khác 2.814 ngày và 10 ngày Tết |
+| Hà Nội (UTC+7) so với Bắc Kinh (UTC+8), cùng quy tắc | khác 2.814 ngày và 10 ngày Tết |
+| Seoul (UTC+9) so với Bắc Kinh (UTC+8), cùng quy tắc | khác 2.818 ngày và 11 ngày Tết âm lịch |
 
 - **Bài báo kỹ thuật**: [Tính âm dương lịch Việt Nam](./docs/paper/paper.pdf)
   (PDF) trình bày phương pháp, ngân sách sai số, phần đối chiếu với NASA,
@@ -216,12 +231,13 @@ văn, đối chiếu với NASA và IMCCE trên khoảng 1900 tới 2100:
   (đầu vào `vao`, đáp án `ra`) sinh từ lõi tính gốc chạy
   [nhatnguyet.org](https://nhatnguyet.org): 14.936 ca lịch, 777 lá Tử Vi,
   777 lá Bát Tự, 600 hồ sơ thần số học và 201 năm lễ hội, cộng 432 ca cho các
-  tuỳ chọn trường phái và 1.096 ngày giờ hoàng đạo (tổng 18.819 ca). Bản TypeScript và Python qua trọn bộ ở mỗi lần đẩy mã.
+  tuỳ chọn trường phái, 1.096 ngày giờ hoàng đạo, 6.684 ca Kinh Dịch và 3.083 ca
+  phong thuỷ (tổng 28.586 ca). Bản TypeScript và Python qua trọn bộ ở mỗi lần đẩy mã.
 - **Lịch sử ngày Tết**: [`history/`](./history/README.md) kê ngày Tết của mọi
   năm 1900 tới 2100 theo UTC+7 và UTC+8, kèm lịch Việt Nam thực sự dùng và
   nguồn cho từng năm có tư liệu.
-- **Nói rõ phạm vi**: Tử Vi, Bát Tự, thần số học là quy tắc của các trường
-  phái truyền thống, chưa được khoa học kiểm chứng; đừng dùng để quyết chuyện
+- **Nói rõ phạm vi**: phần khoa học nằm ở phương pháp, không ở lời đoán. Tử Vi, Bát Tự, thần số học, Kinh Dịch và phong thuỷ là
+  quy tắc của các trường phái truyền thống, chưa được khoa học kiểm chứng; đừng dùng để quyết chuyện
   sức khoẻ, tiền bạc, pháp lý. Chỗ các phái không thống nhất, thư viện nói rõ
   đang theo quy tắc nào và cho đổi ([tuỳ chọn trường phái](#tuỳ-chọn-trường-phái)).
 
@@ -230,7 +246,7 @@ văn, đối chiếu với NASA và IMCCE trên khoảng 1900 tới 2100:
 [iztro](https://github.com/SylarLong/iztro) và
 [lunar-javascript](https://github.com/6tail/lunar-javascript) là hai thư viện
 cẩn thận, dùng rộng rãi, và đúng với thứ chúng tính: lịch Trung Quốc theo giờ
-Bắc Kinh (UTC+8). Việt Nam dùng cùng quy tắc nhưng theo giờ Hà Nội (UTC+7). Đối
+Bắc Kinh (UTC+8). Dùng cho nước khác, chúng cho ngày của Bắc Kinh. Việt Nam là ví dụ rõ nhất: cùng quy tắc, theo giờ Hà Nội (UTC+7). Đối
 chiếu từng ngày từ 1900 tới 2100 ([doi-chieu/](./doi-chieu/README.md), chạy lại
 được bằng `node chay.mjs`):
 
@@ -267,21 +283,23 @@ Dậu. Truyền `country: "CN"` thì Nhật Nguyệt cũng cho lịch Trung Qu�
 
 ## Cài đặt
 
-Phiên bản 0.3.0. Các gói JavaScript là ESM, có kiểu TypeScript và không phụ
+Phiên bản 0.4.0. Các gói JavaScript là ESM, có kiểu TypeScript và không phụ
 thuộc gói ngoài nào (riêng máy chủ MCP cần SDK của nó và zod); gói Python chỉ dùng thư viện chuẩn.
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | Gói | Cũng phát hành dưới tên | Làm gì |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Đổi âm dương lịch cho Việt Nam, Trung Quốc, Hàn Quốc, Nhật Bản và 7 vùng khác; can chi; 24 tiết khí tới phút; Nhị Thập Bát Tú; nạp âm; giờ hoàng đạo |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Đổi âm dương lịch cho Trung Quốc, Hàn Quốc, Nhật Bản, Việt Nam và 7 nước, vùng khác; can chi; 24 tiết khí tới phút; Nhị Thập Bát Tú; nạp âm; giờ hoàng đạo |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Tử Vi: 12 cung, miếu vượng hãm, Tứ Hóa, Tuần Triệt, đại vận, hạn năm, sao lưu, cách cục kèm câu gốc chữ Hán, tuỳ chọn trường phái; vẽ SVG; bản chữ cho mô hình ngôn ngữ; lớp tương thích iztro |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | Bát Tự: bốn trụ theo tiết khí, tàng can, thập thần, thần sát, đại vận, tiểu vận; vẽ SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | Thần số học Pythagoras (đường đời, sứ mệnh, linh hồn, đỉnh cao, thách thức, năm cá nhân), tên tiếng Việt có dấu; vẽ SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 206 lễ hội Việt Nam kèm ngày của năm bất kỳ, tỉnh, dân tộc, nơi tổ chức; xuất iCalendar |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | Kinh Dịch: 64 quẻ kèm tên tiếng Anh, bính âm, chữ Hán và tiếng Việt, bát cung, quẻ hỗ và quẻ biến, gieo ba đồng xu và Mai Hoa, lục hào nạp giáp, quẻ trị ngày theo quái khí, nguyên văn Chu Dịch với bản dịch của Legge năm 1882; SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | Quy tắc phong thuỷ của các trường phái truyền thống: cung phi Bát Trạch (số Kua) và quái nhà, 24 sơn, phi tinh Huyền Không, sao năm, thước Lỗ Ban; SVG la bàn và bàn phi tinh |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | In lá số thành lưới trên cửa sổ dòng lệnh, JSON, SVG hay iCalendar; cùng các lệnh như `nhatnguyet` ở Python |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | Máy chủ MCP cho trợ lý AI |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | 5 thành phần web |
@@ -311,12 +329,15 @@ hay `"vi"` để ra chữ Hán hay âm Hán Việt).
 
 `toLunar`, `toSolar`, `solarTerms` và `auspiciousHours` trong
 `@nhatnguyet/lunar` (`to_lunar`, `to_solar`, `solar_terms`,
-`auspicious_hours` ở Python). Lịch là lịch Việt Nam (UTC+7) trừ khi truyền
-`country`: Trung Quốc, Đài Loan, Hồng Kông, Ma Cao, Singapore, Malaysia,
-Indonesia, Philippines (UTC+8); Hàn Quốc, Nhật Bản (UTC+9).
+`auspicious_hours` ở Python). `country` chọn lịch: Trung Quốc
+(`CN`), Đài Loan (`TW`), Hồng Kông (`HK`), Ma Cao (`MO`), Singapore (`SG`),
+Malaysia (`MY`), Indonesia (`ID`), Philippines (`PH`) theo UTC+8; Hàn Quốc
+(`KR`), Nhật Bản (`JP`) theo UTC+9; Việt Nam (`VN`, mặc định) theo UTC+7; hoặc
+`timeZone` tính bằng giờ. Dòng lệnh (`--country`), máy chủ MCP và widget nhận
+cùng các mã ấy.
 
 `auspiciousHours` cho mười hai canh giờ của một ngày, kèm cờ hoàng đạo hay hắc
-đạo và vị thần cai quản giờ ấy, như lịch in Việt Nam vẫn ghi (dòng lệnh
+đạo và vị thần cai quản giờ ấy, như lịch in Trung Quốc và Việt Nam vẫn ghi (dòng lệnh
 `nhatnguyet hours`, công cụ MCP `auspicious_hours`):
 
 ```js
@@ -407,7 +428,7 @@ bậc thầy 11, 22 và 33.
 
 ### Lễ hội
 
-`festivals(year)` trong `@nhatnguyet/festivals` cho 164 lễ hội có ngày âm lịch
+`@nhatnguyet/festivals` là bộ dữ liệu lễ hội Việt Nam. `festivals(year)` cho 164 lễ hội có ngày âm lịch
 hay dương lịch cố định ở năm bất kỳ từ 1900 tới 2100, trong số 206 lễ của bộ dữ
 liệu (42 lễ còn lại do ban tổ chức đặt ngày mỗi năm). Mỗi lễ có tỉnh theo bản đồ
 34 tỉnh năm 2025, dân tộc có lễ ấy khi phần mô tả nói rõ, và nơi tổ chức, kèm
@@ -442,6 +463,95 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 Cùng tệp ấy từ dòng lệnh: `nhatnguyet festivals 2027 --ics > vn.ics`.
 
+### Kinh Dịch
+
+`hexagram`, `castCoins`, `castFromNumbers` (Mai Hoa), `najia` và
+`dailyHexagram` trong `@nhatnguyet/iching` (`nhatnguyet.iching` ở Python). Quẻ
+nhập bằng số thứ tự Văn Vương, sáu hào hay tên tiếng Anh, bính âm, chữ Hán,
+tiếng Việt. Lục hào cho mỗi hào can chi, lục thân, lục thú, hào Thế, Ứng, không
+vong và vượng suy theo tháng; quẻ trị ngày theo phép quái khí của Mạnh Hỉ đời
+Hán; `text(n)` là nguyên văn Chu Dịch (phạm vi công cộng) kèm bản dịch tiếng
+Anh năm 1882 của James Legge. Phương pháp và nguồn:
+[docs/iching.md](./docs/iching.md).
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### Phong thuỷ
+
+`lifeGua`, `houseGua`, `flyingStarChart`, `annualStars` và `lubanRuler`
+trong `@nhatnguyet/fengshui` (`nhatnguyet.fengshui` ở Python): cung phi Bát
+Trạch, đổi năm ở Tết theo giờ Việt Nam, bàn phi tinh Huyền Không phái Thẩm cho
+vận 1 tới 9, sao năm, 24 sơn và ba loại thước Lỗ Ban, kèm SVG la bàn và bàn phi
+tinh. Đây là quy tắc một trường phái nêu ra, không phải tác dụng đã được kiểm
+chứng; chỗ sách vở không thống nhất: [docs/fengshui.md](./docs/fengshui.md).
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## Bộ dữ liệu
 
 CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI, chỉ cần ghi nguồn.
@@ -456,7 +566,7 @@ CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI,
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 đơn vị (các số chính, số theo chu kỳ, chủ đề đời sống), 195 đoạn sách | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 văn bản cổ thuộc phạm vi công cộng (khoảng 350 tác phẩm), 72,7 triệu ký tự, toàn văn | 147 MB chữ, 70 MB Parquet |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1.328 đoạn Kinh Dịch đặt song song: Hán văn cổ cùng bản dịch tiếng Anh (952) và tiếng Pháp (376) thuộc phạm vi công cộng | |
-| [Thuật ngữ](./du-lieu/terminology/README.md) | 428 thuật ngữ bằng tiếng Việt, chữ Hán phồn thể và giản thể, bính âm và tiếng Anh, đủ mọi tên các thư viện in ra | |
+| [Thuật ngữ](./du-lieu/terminology/README.md) | 672 thuật ngữ bằng tiếng Việt, chữ Hán phồn thể và giản thể, bính âm và tiếng Anh, đủ mọi tên các thư viện in ra | |
 | [Bộ đánh giá AI](./ai-eval/README.md) | 1.520 câu hỏi có đáp án tính sẵn bằng tiếng Anh, Việt, Trung (ngày âm, Tết, trụ, lá số), 626 câu (41%) là ca khó | |
 | [Tết 1900 tới 2100](./history/README.md) | Tết theo UTC+7 và UTC+8 của 201 năm, kèm lịch thực sự dùng và nguồn | |
 | [33 bộ lịch pháp và văn hoá](https://nhatnguyet.org/du-lieu) | âm dương lịch 1900 tới 2100, tiết khí, 64 quẻ, 78 lá Tarot, 206 lễ hội, 456 bài văn cúng... dạng CSV, JSON, Parquet, có [DOI](https://doi.org/10.5281/zenodo.23009396) | |
@@ -506,7 +616,8 @@ thật cho chúng:
 
 - **Máy chủ MCP**, chạy trên máy, các công cụ `lunar_convert`, `solar_terms`,
   `auspicious_hours`, `cast_ziwei`, `cast_bazi`, `numerology`, `festivals`,
-  `render_chart_svg` (có cả tuỳ chọn trường phái):
+  `render_chart_svg` (có cả tuỳ chọn trường phái), `hexagram`, `six_lines_chart`,
+  `daily_hexagram`, `life_gua`, `flying_star_chart`, `luban_ruler`:
   `claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`. Cài cho Claude
   Desktop, Cursor, VS Code: [js/packages/mcp](./js/packages/mcp/README.md).
 - **Agent Skill** dặn trợ lý gọi công cụ thay vì đoán:
@@ -591,8 +702,8 @@ không cần dựng, Node, Python) và bốn mẫu để chép về dùng:
 `astro.byLunar` nhận cùng tham số và trả cùng khuôn JSON với
 `FunctionalAstrolabe` của iztro, kèm sáu ngôn ngữ hiển thị và các phương thức
 của nó (`palace()`, `star()`, `surroundedPalaces()`, `horoscope()`,
-`fliesTo()`, `use()`...), nhưng tính trên âm lịch Việt Nam
-(`{ country: "CN" }` thì theo giờ Bắc Kinh).
+`fliesTo()`, `use()`...), tính trên âm lịch của nước được truyền
+(`{ country: "CN" }` thì theo giờ Bắc Kinh như iztro; mặc định là Việt Nam).
 
 ```diff
 - import { astro } from "iztro";
@@ -611,11 +722,13 @@ sách đầy đủ: [docs/chuyen-tu-iztro.md](./docs/chuyen-tu-iztro.md).
 ## Hỏi đáp
 
 <details>
-<summary><b>Vì sao âm lịch Việt Nam khác âm lịch Trung Quốc?</b></summary>
+<summary><b>Vì sao cùng một ngày lại có ngày âm khác nhau ở Trung Quốc, Hàn Quốc và Việt Nam?</b></summary>
 
 Cùng quy tắc, khác đồng hồ. Tháng âm bắt đầu ở ngày có điểm sóc, và ngày được
 xét theo giờ địa phương. Điểm sóc rơi vào 16h tới 17h UT thì ở Hà Nội còn trước
-nửa đêm, ở Bắc Kinh đã qua nửa đêm, nên tháng ở Việt Nam bắt đầu sớm một ngày.
+nửa đêm, ở Bắc Kinh đã qua nửa đêm, nên tháng ở Việt Nam bắt đầu sớm một ngày;
+rơi vào 15h tới 16h UT thì ở Seoul và Tokyo đã qua nửa đêm, nên tháng ở đó bắt
+đầu muộn một ngày.
 Tết 1985 lệch hẳn một tháng (21/01 ở Việt Nam, 20/02 ở Trung Quốc) vì tháng
 nhuận rơi vào hai năm khác nhau.
 </details>

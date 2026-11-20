@@ -1,0 +1,77 @@
+{
+  "name": "@nhatnguyet/iching",
+  "version": "0.4.0",
+  "description": "I Ching (Yijing) for JS/TS: the 64 hexagrams with names in English, pinyin, Chinese and Vietnamese, the eight palaces with world and response lines, nuclear, opposite and reversed hexagrams, three-coin and Plum Blossom casting, the Six Lines (najia) chart, the daily hexagram of the Han Gua Qi calendar, the public domain Zhou Yi text with James Legge's 1882 translation, SVG. No external dependencies.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "i ching",
+    "yijing",
+    "book of changes",
+    "zhou yi",
+    "hexagram",
+    "64 hexagrams",
+    "trigram",
+    "bagua",
+    "king wen sequence",
+    "three coin method",
+    "plum blossom numerology",
+    "mei hua yi shu",
+    "six lines",
+    "liu yao",
+    "najia",
+    "eight palaces",
+    "gua qi",
+    "james legge",
+    "kinh dich",
+    "kinh dịch",
+    "luc hao",
+    "易经",
+    "周易",
+    "六爻",
+    "纳甲",
+    "卦气",
+    "chinese metaphysics",
+    "nhat nguyet",
+    "vietnamese",
+    "typescript",
+    "no external dependencies"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/iching"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

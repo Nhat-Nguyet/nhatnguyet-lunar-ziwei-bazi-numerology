@@ -16,9 +16,10 @@ import unicodedata
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import __version__
-from . import en
+from . import en, fengshui, iching
 
-HELP = """nhatnguyet: Zi Wei Dou Shu, BaZi, lunar calendar, numerology, Vietnamese festivals
+HELP = """nhatnguyet: Zi Wei Dou Shu, BaZi, lunar calendar, numerology, Vietnamese festivals,
+I Ching, feng shui
 
 Usage:
   nhatnguyet ziwei <YYYY-MM-DD> <HH:MM> <male|female> [--name "..."] [--year 2026] [school options]
@@ -29,13 +30,23 @@ Usage:
   nhatnguyet hours <YYYY-MM-DD>     auspicious and inauspicious double hours of a day
   nhatnguyet numerology "<full name>" <YYYY-MM-DD> [--today YYYY-MM-DD]
   nhatnguyet festivals <year> [--ics]
+  nhatnguyet hexagram <number|name>  one of the 64 hexagrams ("11", "Peace", "泰", "Thai")
+  nhatnguyet cast [--lines 987678] [--date YYYY-MM-DD]
+                                    three-coin cast (random without --lines, bottom line
+                                    first) and its Six Lines (najia) chart for the date
+  nhatnguyet daily-hexagram <YYYY-MM-DD>  hexagram ruling the day (Gua Qi calendar)
+  nhatnguyet kua <YYYY-MM-DD|lunar year> <male|female>  Eight Mansions life gua
+  nhatnguyet flying-stars --period 9 --facing <mountain|degrees>
+                                    Xuan Kong chart (or --year 2026, --sitting ...)
+  nhatnguyet luban <cm> [--ruler luban|clear-opening|dinglan]  Luban rulers
 
 Options:
   --lang en|vi|zh   language of the result (default en)
   --terms pinyin|han|vi  English only: stems, branches and transformations as
                     pinyin (default, "Geng Wu"), Chinese characters or Sino-Vietnamese
   --json            print JSON instead of text
-  --svg <file>      also write the chart as SVG (ziwei, bazi, numerology)
+  --svg <file>      also write the chart as SVG (ziwei, bazi, numerology, hexagram,
+                    cast, daily-hexagram, kua, flying-stars)
   --ics             festivals: print an iCalendar (.ics) file instead
   --theme dark      dark SVG
   --no-color        no ANSI colours (also when NO_COLOR is set or output is not a terminal)
@@ -53,7 +64,8 @@ School options (where the books disagree; default first, sources in docs/schools
 
 Times are clock times; the Zi (Rat) double hour runs 23:00 to 00:59. Dates and times
 are read as Vietnam time (UTC+7) unless --country says otherwise (lunar, solar,
-terms, ziwei). Docs: https://nhatnguyet.org/en/ma-nguon-mo"""
+terms, ziwei). The I Ching and feng shui commands give the rules of traditional
+schools, not predictions. Docs: https://nhatnguyet.org/en/ma-nguon-mo"""
 
 # ── Bề rộng hiển thị ─────────────────────────────────────────────────────
 
@@ -360,7 +372,7 @@ def render_zi_wei(chart: Dict, decades: Optional[List[Dict]] = None, year: Optio
 # ── Bảng ─────────────────────────────────────────────────────────────────
 
 def table(header: Optional[List[str]], rows: List[List[List[str]]], color: bool,
-          widths: Optional[List[int]] = None) -> str:
+          widths: Optional[List[int]] = None, ruled: bool = False) -> str:
     n = len(header) if header else len(rows[0]) if rows else 0
     if widths is None:
         widths = [max([display_width(header[c]) if header else 0]
@@ -376,7 +388,9 @@ def table(header: Optional[List[str]], rows: List[List[List[str]]], color: bool,
     if header:
         out.append(k("│") + k("│").join(" " + fit_line([(header[c], "bold")], widths[c], color) + " " for c in range(n)) + k("│"))
         out.append(border("├", "┼", "┤"))
-    for r in rows:
+    for j, r in enumerate(rows):
+        if ruled and j > 0:
+            out.append(border("├", "┼", "┤"))
         hgt = max(1, max(len(x) for x in r))
         for i in range(hgt):
             out.append(k("│") + k("│").join(
@@ -490,6 +504,261 @@ def render_festivals(year: int, items: List[Dict], lang: str, color: bool = Fals
     return paint("%s %d (%d)" % (u["fest"], year, len(items)), "title", color) + "\n" + table(None, rows, color)
 
 
+# ── Kinh Dịch và phong thuỷ ──────────────────────────────────────────────
+
+UI2: Dict[str, Dict[str, str]] = {
+    "vi": {
+        "hexTitle": "QUẺ", "english": "Tiếng Anh", "chinese": "Chữ Hán", "pinyin": "Pinyin", "vietnamese": "Tiếng Việt",
+        "upper": "Quái trên", "lower": "Quái dưới", "palace": "Cung", "worldResp": "Hào Thế, Ứng", "mutual": "Quẻ hỗ",
+        "opposite": "Quẻ thác", "reverse": "Quẻ tổng", "judgment": "Lời quẻ (Chu Dịch)", "world": "Thế", "response": "Ứng",
+        "castTitle": "GIEO QUẺ", "coins": "ba đồng xu", "plum": "Mai Hoa", "lines": "hào", "moving": "Hào động", "none": "không",
+        "najiaTitle": "LỤC HÀO (NẠP GIÁP)", "day": "ngày", "month": "tháng", "voidL": "không vong", "line": "Hào",
+        "spirit": "Lục thú", "relation": "Lục thân", "stemBranch": "Can chi", "monthState": "Nguyệt lệnh", "marks": "Ghi chú",
+        "voidMark": "không vong", "monthBreak": "nguyệt phá", "dailyTitle": "QUẺ TRỊ NGÀY (QUÁI KHÍ)", "hexagram": "Quẻ",
+        "cycle": "Thứ tự trong vòng", "of60": "trên 60", "ruling": "Hào trị ngày", "dayIn": "Ngày thứ",
+        "solarTerm": "Tiết khí", "cardinal": "Quẻ tứ chính", "solstice": "Đông chí", "change": "Đổi quẻ trong ngày",
+        "kuaTitle": "CUNG PHI (BÁT TRẠCH)", "lunarYear": "năm âm", "male": "nam", "female": "nữ", "kua": "Cung phi",
+        "direction": "Hướng", "degrees": "Độ", "star": "Sao", "good": "tốt", "bad": "xấu",
+        "fsTitle": "PHI TINH HUYỀN KHÔNG", "period": "vận", "year": "năm", "sitting": "tọa", "facing": "hướng",
+        "fsLegend": "Mỗi cung: sao sơn, sao hướng; dòng dưới là sao vận. Nam ở trên.", "gate": "Thành môn",
+        "primary": "chính", "secondary": "phụ", "usable": "dùng được", "notUsable": "không dùng được",
+        "noPattern": "không có cách đặc biệt", "lubanTitle": "THƯỚC LỖ BAN", "ruler": "Thước", "sector": "Cung",
+        "subSector": "Cung nhỏ", "goodBad": "Tốt xấu", "nearest": "Số đẹp gần nhất", "gloss": "",
+    },
+    "en": {
+        "hexTitle": "HEXAGRAM", "english": "English", "chinese": "Chinese", "pinyin": "Pinyin", "vietnamese": "Vietnamese",
+        "upper": "Upper trigram", "lower": "Lower trigram", "palace": "Palace", "worldResp": "World, response",
+        "mutual": "Nuclear", "opposite": "Opposite", "reverse": "Reversed", "judgment": "Judgment (Zhou Yi)",
+        "world": "world", "response": "response", "castTitle": "CAST", "coins": "three coins", "plum": "Plum Blossom",
+        "lines": "lines", "moving": "Moving lines", "none": "none", "najiaTitle": "SIX LINES (NAJIA) CHART", "day": "day",
+        "month": "month", "voidL": "void", "line": "Line", "spirit": "Spirit", "relation": "Relation",
+        "stemBranch": "Stem branch", "monthState": "Month", "marks": "Marks", "voidMark": "void",
+        "monthBreak": "month break", "dailyTitle": "DAILY HEXAGRAM (GUA QI)", "hexagram": "Hexagram",
+        "cycle": "Place in the cycle", "of60": "of 60", "ruling": "Ruling line", "dayIn": "Day of the hexagram",
+        "solarTerm": "Solar term", "cardinal": "Cardinal hexagram", "solstice": "Winter solstice",
+        "change": "Change during the day", "kuaTitle": "LIFE GUA (EIGHT MANSIONS)", "lunarYear": "lunar year",
+        "male": "male", "female": "female", "kua": "Kua number", "direction": "Direction", "degrees": "Degrees",
+        "star": "Star", "good": "favorable", "bad": "unfavorable", "fsTitle": "FLYING STAR CHART (XUAN KONG)",
+        "period": "period", "year": "year", "sitting": "sitting", "facing": "facing",
+        "fsLegend": "Each palace: mountain star, facing star; below, the period star. South at the top.",
+        "gate": "Castle gate", "primary": "primary", "secondary": "secondary", "usable": "usable",
+        "notUsable": "not usable", "noPattern": "no special pattern", "lubanTitle": "LUBAN RULERS", "ruler": "Ruler",
+        "sector": "Sector", "subSector": "Sub-sector", "goodBad": "Good or bad", "nearest": "Nearest good lengths",
+        "gloss": "Literal meaning",
+    },
+    "zh": {
+        "hexTitle": "卦", "english": "英文", "chinese": "汉字", "pinyin": "拼音", "vietnamese": "越南文", "upper": "上卦",
+        "lower": "下卦", "palace": "宫", "worldResp": "世、应", "mutual": "互卦", "opposite": "错卦", "reverse": "综卦",
+        "judgment": "卦辞（周易）", "world": "世", "response": "应", "castTitle": "起卦", "coins": "三钱法",
+        "plum": "梅花易数", "lines": "爻", "moving": "动爻", "none": "无", "najiaTitle": "六爻纳甲", "day": "日",
+        "month": "月", "voidL": "空亡", "line": "爻", "spirit": "六兽", "relation": "六亲", "stemBranch": "干支",
+        "monthState": "月令", "marks": "备注", "voidMark": "空亡", "monthBreak": "月破", "dailyTitle": "值日卦（卦气）",
+        "hexagram": "卦", "cycle": "卦气序", "of60": "共60", "ruling": "值日爻", "dayIn": "本卦第几日",
+        "solarTerm": "节气", "cardinal": "四正卦", "solstice": "冬至", "change": "日内换卦", "kuaTitle": "命卦（八宅）",
+        "lunarYear": "农历年", "male": "男", "female": "女", "kua": "命卦", "direction": "方位", "degrees": "度数",
+        "star": "星", "good": "吉", "bad": "凶", "fsTitle": "玄空飞星盘", "period": "运", "year": "年", "sitting": "坐",
+        "facing": "向", "fsLegend": "每宫：山星、向星；下行为运星。上南下北。", "gate": "城门", "primary": "正城门",
+        "secondary": "副城门", "usable": "可用", "notUsable": "不可用", "noPattern": "无特殊格局", "lubanTitle": "鲁班尺",
+        "ruler": "尺", "sector": "大格", "subSector": "小格", "goodBad": "吉凶", "nearest": "最近吉数", "gloss": "",
+    },
+}
+
+_HAO_DUONG = "━━━━━━━"
+_HAO_AM = "━━━ ━━━"
+
+
+def _ui2(lang: str) -> Dict[str, str]:
+    return UI2.get(lang, UI2["en"])
+
+
+def _so(x) -> str:
+    """Số in như JavaScript in: 80 chứ không 80.0."""
+    if isinstance(x, float) and x.is_integer():
+        return str(int(x))
+    return str(x)
+
+
+def _vach(yang: bool) -> str:
+    return _HAO_DUONG if yang else _HAO_AM
+
+
+def _dau_dong(v: int) -> str:
+    return "○" if v == 9 else "×" if v == 6 else " "
+
+
+def _cot(header: List[str], rows: List[List[str]], color: bool, indent: str = "  ") -> List[str]:
+    """Cột thẳng theo bề rộng hiển thị, cách nhau hai dấu cách, dòng đầu in đậm."""
+    w = [max([display_width(h)] + [display_width(r[c]) for r in rows]) for c, h in enumerate(header)]
+
+    def dong(r: List[str]) -> str:
+        return "  ".join(x if c == len(r) - 1 else x + " " * (w[c] - display_width(x)) for c, x in enumerate(r)).rstrip()
+
+    return [indent + paint(dong(header), "bold", color)] + [indent + dong(r) for r in rows]
+
+
+def _ten_que(h: Dict) -> str:
+    return "%d %s %s" % (h["number"], h["symbol"], h["name"])
+
+
+def render_hexagram(h: Dict, related: Dict, color: bool = False) -> str:
+    u = _ui2(h["lang"])
+    out = [paint("%s %d %s %s" % (u["hexTitle"], h["number"], h["symbol"], h["name"]), "title", color)]
+    for i in range(5, -1, -1):
+        dau = u["world"] if i + 1 == h["world"] else u["response"] if i + 1 == h["response"] else ""
+        out.append("  %s  %d%s" % (_vach(h["lines"][i]), i + 1, "  " + paint(dau, "dim", color) if dau else ""))
+
+    def quai(t: Dict) -> str:
+        return "%s %s (%s)" % (t["symbol"], t["name"], t["image"])
+
+    rows = [
+        [[u["english"]], [h["nameEn"]]], [[u["chinese"]], [h["nameHan"]]], [[u["pinyin"]], [h["pinyin"]]],
+        [[u["vietnamese"]], [h["nameVi"]]], [[u["upper"]], [quai(h["upper"])]], [[u["lower"]], [quai(h["lower"])]],
+        [[u["palace"]], ["%s (%s) · %s" % (h["palace"]["name"], h["palace"]["element"], h["palace"]["generationName"])]],
+        [[u["worldResp"]], ["%d, %d" % (h["world"], h["response"])]],
+        [[u["mutual"]], [_ten_que(related["mutual"])]], [[u["opposite"]], [_ten_que(related["opposite"])]],
+        [[u["reverse"]], [_ten_que(related["reverse"])]],
+    ]
+    if related.get("judgment"):
+        rows.append([[u["judgment"]], [related["judgment"]]])
+    out.append(table(None, rows, color))
+    return "\n".join(out)
+
+
+def render_cast(c: Dict, color: bool = False) -> str:
+    u = _ui2(c["lang"])
+    cach = u["plum"] if c["method"] == "plum-blossom" else u["coins"]
+    out = [paint(u["castTitle"], "title", color) + "  %s · %s %s" % (cach, u["lines"], " ".join(str(x) for x in c["lines"]))]
+    for i in range(5, -1, -1):
+        v = c["lines"][i]
+        phai = "   " + _vach(c["changed"]["lines"][i]) if c["changed"] else ""
+        out.append("  %s %s  %d%s" % (_vach(v in (7, 9)), paint(_dau_dong(v), "yellow", color), i + 1, phai))
+    out.append("  " + paint(_ten_que(c["primary"]), "bold", color)
+               + (" → " + paint(_ten_que(c["changed"]), "bold", color) if c["changed"] else ""))
+    out.append("  %s: %s" % (u["moving"], ", ".join(str(x) for x in c["moving"]) if c["moving"] else u["none"]))
+    return "\n".join(out)
+
+
+def render_six_lines(ch: Dict, color: bool = False) -> str:
+    u = _ui2(ch["lang"])
+    sep = "、" if ch["lang"] == "zh" else ", "
+    p = ch["palace"]
+    out = [
+        paint(u["najiaTitle"], "title", color) + "  %s · %s %s · %s %s · %s %s" % (
+            ch["date"], u["day"], ch["day"], u["month"], ch["month"], u["voidL"], sep.join(ch["void"])),
+        "  %s%s · %s %s (%s) · %s" % (_ten_que(ch["hexagram"]), " → " + _ten_que(ch["changed"]) if ch["changed"] else "",
+                                       u["palace"], p["name"], p["element"], p["generationName"]),
+        "",
+    ]
+    rows = []
+    for l in reversed(ch["lines"]):
+        dau = [x for x in (u["world"] if l["world"] else "", u["response"] if l["response"] else "",
+                           u["voidMark"] if l["void"] else "", u["monthBreak"] if l["monthBreak"] else "") if x]
+        rows.append([
+            str(l["position"]),
+            _vach(l["yang"]) + " " + (("○" if l["yang"] else "×") if l["moving"] else " "),
+            l["spirit"], l["relation"],
+            "%s%s%s %s" % (l["stem"], "" if ch["lang"] == "zh" else " ", l["branch"], l["element"]),
+            l["monthState"], sep.join(dau),
+        ])
+    out += _cot([u["line"], "", u["spirit"], u["relation"], u["stemBranch"], u["monthState"], u["marks"]], rows, color)
+    dong = [l for l in ch["lines"] if l["moving"] and l["changed"]]
+    if dong:
+        out += ["", "  " + paint(u["moving"], "bold", color)]
+        for l in dong:
+            k = l["changed"]
+            out.append("  %d  %s %s %s → %s %s %s" % (l["position"], l["branch"], l["element"], l["relation"],
+                                                    k["branch"], k["element"], k["relation"]))
+    return "\n".join(out)
+
+
+def render_daily_hexagram(r: Dict, color: bool = False) -> str:
+    u = _ui2(r["lang"])
+    rows = [
+        [[u["hexagram"]], [_ten_que(r["hexagram"])]],
+        [[u["cycle"]], ["%d %s · %s" % (r["cycleIndex"], u["of60"], r["role"])]],
+        [[u["ruling"]], [str(r["rulingLine"])]],
+        [[u["dayIn"]], [str(r["dayInHexagram"])]],
+        [[u["solarTerm"]], [r["solarTerm"]]],
+        [[u["cardinal"]], ["%s · %s %d" % (_ten_que(r["cardinal"]["hexagram"]), u["line"], r["cardinal"]["line"])]],
+        [[u["solstice"]], ["%s %s" % (r["solstice"]["date"], r["solstice"]["time"])]],
+    ]
+    if r["change"]:
+        k = r["change"]
+        rows.append([[u["change"]], ["%s %s → %s" % (k["time"], _ten_que(k["before"]), _ten_que(k["after"]))]])
+    return paint(u["dailyTitle"], "title", color) + "  %s\n" % r["date"] + table(None, rows, color)
+
+
+def render_life_gua(g: Dict, lang: str, color: bool = False) -> str:
+    u = _ui2(lang)
+    sinh = "%s · " % g["birthDate"] if g["birthDate"] else ""
+    t = g["trigram"]
+    out = [
+        paint(u["kuaTitle"], "title", color) + "  %s%s · %s %d" % (sinh, u[g["gender"]], u["lunarYear"], g["lunarYear"]),
+        "  %s %s · %s %s (%s) · %s · %s" % (u["kua"], paint(str(g["number"]), "bold", color), t["symbol"], t["name"],
+                                            t["image"], g["groupName"], g["element"]),
+    ]
+    if g.get("note"):
+        out.append("  " + paint(g["note"], "dim", color))
+    rows = []
+    for d in g["directions"]:
+        r = [[d["directionName"]], ["%s°-%s°" % (_so(d["from"]), _so(d["to"]))],
+             ["%s %s" % (d["starName"], d["han"]) if lang == "en" and d["starName"] != d["han"] else d["starName"]]]
+        if lang == "en":
+            r.append([d["gloss"]])
+        r.append([u["good"] if d["favorable"] else u["bad"]])
+        rows.append(r)
+    head = [u["direction"], u["degrees"], u["star"]] + ([u["gloss"]] if lang == "en" else []) + [u["goodBad"]]
+    out.append(table(head, rows, color))
+    return "\n".join(out)
+
+
+def render_flying_stars(c: Dict, lang: str, color: bool = False) -> str:
+    u = _ui2(lang)
+    nam = " · %s %d" % (u["year"], c["year"]) if c["year"] is not None else ""
+    out = [
+        paint(u["fsTitle"], "title", color) + "  %s %d%s · %s %s (%s) · %s %s (%s)" % (
+            u["period"], c["period"], nam, u["sitting"], c["sitting"]["name"], c["sitting"]["directionName"],
+            u["facing"], c["facing"]["name"], c["facing"]["directionName"]),
+        "  " + (c["patternName"] if c["patternName"] is not None else u["noPattern"]),
+    ]
+
+    def cung(n: int) -> Dict:
+        return c["palaces"][n - 1]
+
+    rows = [[[cung(n)["directionName"], "%d  %d" % (cung(n)["mountain"], cung(n)["facing"]), str(cung(n)["base"])]
+             for n in hang] for hang in c["grid"]]
+    w = max([9] + [display_width(p["directionName"]) for p in c["palaces"]])
+    out.append(table(None, rows, color, [w, w, w], True))
+    out.append(paint(u["fsLegend"], "dim", color))
+    for g in c["castleGates"]:
+        out.append("%s (%s): %s, %s" % (u["gate"], u["primary"] if g["primary"] else u["secondary"],
+                                       cung(g["palace"])["directionName"], u["usable"] if g["usable"] else u["notUsable"]))
+    return "\n".join(out)
+
+
+def render_luban(rs: List[Dict], lang: str, color: bool = False) -> str:
+    u = _ui2(lang)
+
+    # Chữ Hán in một lối: giản thể (nameZh), như mọi màn khác; tên đã là chữ Hán thì không in lại.
+    def kem_han(name: str, zh: str) -> str:
+        return name if name == zh else "%s %s" % (name, zh)
+
+    def nho(s: Optional[Dict]) -> List[str]:
+        if not s:
+            return ["-"]
+        return [kem_han(s["name"], s["nameZh"]), s["nameEn"]] if lang == "en" else [kem_han(s["name"], s["nameZh"])]
+
+    rows = [[
+        [r["rulerName"]],
+        [kem_han(r["sector"]["name"], r["sector"]["nameZh"])],
+        nho(r["subSector"]),
+        [u["good"] if r["auspicious"] else u["bad"]],
+        [", ".join(_so(x["lengthCm"]) for x in r["nearestAuspicious"]) + " cm" if r["nearestAuspicious"] else "-"],
+    ] for r in rs]
+    return (paint(u["lubanTitle"], "title", color) + "  %s cm\n" % _so(rs[0]["lengthCm"])
+            + table([u["ruler"], u["sector"], u["subSector"], u["goodBad"], u["nearest"]], rows, color, None, lang == "en"))
+
+
 # ── Chạy lệnh ────────────────────────────────────────────────────────────
 
 # Mọi tên công cụ MCP cũng là bí danh của lệnh tương ứng (cast_ziwei, solar_terms...).
@@ -499,10 +768,17 @@ ALIAS = {"ziwei": "ziwei", "zi-wei": "ziwei", "zi_wei": "ziwei", "cast_ziwei": "
          "am-lich": "lunar", "solar": "solar", "duong": "solar", "terms": "terms", "solar-terms": "terms",
          "solar_terms": "terms", "tietkhi": "terms", "hours": "hours", "auspicious_hours": "hours",
          "auspicious-hours": "hours", "gio-hoang-dao": "hours", "numerology": "numerology",
-         "than-so-hoc": "numerology", "festivals": "festivals", "le-hoi": "festivals", "lehoi": "festivals"}
+         "than-so-hoc": "numerology", "festivals": "festivals", "le-hoi": "festivals", "lehoi": "festivals",
+         "hexagram": "hexagram", "i-ching": "hexagram", "iching": "hexagram", "kinh-dich": "hexagram",
+         "cast": "cast", "najia": "cast", "six-lines": "cast", "six_lines_chart": "cast", "liu-yao": "cast",
+         "luc-hao": "cast", "daily-hexagram": "daily-hexagram", "daily_hexagram": "daily-hexagram",
+         "que-ngay": "daily-hexagram", "kua": "kua", "life-gua": "kua", "life_gua": "kua", "cung-phi": "kua",
+         "flying-stars": "flying-stars", "flying-star": "flying-stars", "flying_star_chart": "flying-stars",
+         "phi-tinh": "flying-stars", "luban": "luban", "luban_ruler": "luban", "lo-ban": "luban"}
 # Cờ lựa chọn phái: tên cờ (kebab-case) và khoá của schools.
 _SCHOOL_FLAGS = ("fire-bell", "leap-month", "transformations", "heavenly-kitchen", "injury-messenger", "zi-hour")
-_CO_GIA_TRI = {"lang", "country", "name", "year", "today", "tz", "svg", "theme", "terms", *_SCHOOL_FLAGS}
+_CO_GIA_TRI = {"lang", "country", "name", "year", "today", "tz", "svg", "theme", "terms", "lines", "date", "period",
+               "facing", "sitting", "ruler", *_SCHOOL_FLAGS}
 
 
 def _schools_from(flags: Dict[str, object], keys: Sequence[str]) -> Optional[Dict[str, str]]:
@@ -517,6 +793,22 @@ def _schools_from(flags: Dict[str, object], keys: Sequence[str]) -> Optional[Dic
         r[re.sub(r"-(\w)", lambda m: m.group(1).upper(), f)] = v
     return r or None
 _GIOI = re.compile(r"^(male|female|m|f|nam|nữ|nu)$", re.I)
+
+
+def _hom_nay() -> str:
+    """Hôm nay theo đồng hồ máy, YYYY-MM-DD (lệnh cast khi không có --date)."""
+    import datetime
+    return datetime.date.today().isoformat()
+
+
+def _son_hay_do(v):
+    """Độ (số) hay tên sơn (chuỗi) của --facing, --sitting."""
+    if not isinstance(v, str):
+        return None
+    if re.match(r"^-?\d+(\.\d+)?$", v):
+        f = float(v)
+        return int(f) if f.is_integer() else f
+    return v
 
 
 def parse_args(argv: Sequence[str]) -> Tuple[str, List[str], Dict[str, object]]:
@@ -640,6 +932,57 @@ def run(argv: Sequence[str], color: bool = False, width: int = 88, write_file=No
             return en.festivals_ics(int(p[0]), lang=lang)[:-1]
         items = en.festivals(int(p[0]), lang=lang)
         return _dump(items) if js else render_festivals(int(p[0]), items, lang, color, width)
+    if cmd == "hexagram":
+        can(1, "hexagram <number|name>")
+        vao = " ".join(p)
+        h = iching.hexagram(int(vao) if re.match(r"^\d+$", vao) else vao, lang=lang, terms=terms)
+        rel = {"mutual": iching.mutual(h["number"], lang=lang, terms=terms),
+               "opposite": iching.opposite(h["number"], lang=lang, terms=terms),
+               "reverse": iching.reverse(h["number"], lang=lang, terms=terms)}
+        t = iching.text(h["number"])
+        ghi_svg(lambda: iching.render_hexagram_svg(h, theme=theme, lang=lang))
+        if js:
+            return _dump({"hexagram": h, **rel, "text": t})
+        return render_hexagram(h, dict(rel, judgment=t["judgment"]["zh"]), color)
+    if cmd == "cast":
+        lines = [int(x) for x in re.sub(r"[\s,]", "", flags["lines"])] if isinstance(flags.get("lines"), str) else None
+        cast = iching.cast_coins(lines=lines, lang=lang, terms=terms)
+        chart = iching.najia(cast, date=flags["date"] if isinstance(flags.get("date"), str) else _hom_nay(),
+                             lang=lang, terms=terms)
+        ghi_svg(lambda: iching.render_hexagram_svg(cast, theme=theme, lang=lang))
+        if js:
+            return _dump({"cast": cast, "chart": chart})
+        return render_cast(cast, color) + "\n\n" + render_six_lines(chart, color)
+    if cmd == "daily-hexagram":
+        can(1, "daily-hexagram <YYYY-MM-DD>")
+        r = iching.daily_hexagram(p[0], lang=lang, terms=terms)
+        ghi_svg(lambda: iching.render_hexagram_svg(r["hexagram"], theme=theme, lang=lang))
+        return _dump(r) if js else render_daily_hexagram(r, color)
+    if cmd == "kua":
+        can(2, "kua <YYYY-MM-DD|lunar year> <male|female>")
+        g = fengshui.life_gua(int(p[0]) if re.match(r"^\d{1,4}$", p[0]) else p[0], p[1], lang=lang, terms=terms)
+        ghi_svg(lambda: fengshui.render_compass_svg(gua=g, lang=lang, terms=terms, theme=theme))
+        return _dump(g) if js else render_life_gua(g, lang, color)
+    if cmd == "flying-stars":
+        def so(v):
+            return int(v) if isinstance(v, str) else None
+        if flags.get("period") is None and flags.get("year") is None:
+            raise ValueError("usage: nhatnguyet flying-stars --period <1-9> --facing <mountain|degrees>")
+        c = fengshui.flying_star_chart(period=so(flags.get("period")), year=so(flags.get("year")),
+                                       facing=_son_hay_do(flags.get("facing")), sitting=_son_hay_do(flags.get("sitting")),
+                                       lang=lang, terms=terms)
+        ghi_svg(lambda: fengshui.render_flying_star_svg(c, theme=theme, lang=lang, terms=terms))
+        return _dump(c) if js else render_flying_stars(c, lang, color)
+    if cmd == "luban":
+        can(1, "luban <cm> [--ruler luban|clear-opening|dinglan]")
+        f = float(p[0])
+        length = int(f) if f.is_integer() else f
+        one = isinstance(flags.get("ruler"), str)
+        rulers = [flags["ruler"]] if one else [r["ruler"] for r in fengshui.luban_rulers()]
+        rs = [fengshui.luban_ruler(length, ruler=r, lang=lang, terms=terms) for r in rulers]
+        if js:
+            return _dump(rs[0] if one else rs)
+        return render_luban(rs, lang, color)
     raise ValueError('unknown command "%s". Try: nhatnguyet --help' % cmd)
 
 

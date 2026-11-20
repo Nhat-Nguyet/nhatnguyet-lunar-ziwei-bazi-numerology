@@ -135,6 +135,16 @@ from 1900 to 2100 (see `doi-chieu/README.md`).
 `castZiWei` and `castBaZi` always use the Vietnamese calendar; the iztro
 layer takes `country` like the calendar functions.
 
+## I Ching and feng shui
+
+`@nhatnguyet/iching` and `@nhatnguyet/fengshui` (and `nhatnguyet.iching`,
+`nhatnguyet.fengshui` in Python) have no `schools` option: each follows one
+method of the engine and its documentation says where other books differ.
+I Ching (the Eight Palaces of Jing Fang, najia, the six spirits, the Gua Qi
+calendar of Meng Xi): [iching.md](iching.md). Feng shui (the year boundary of
+the life gua, the order of the Eight Mansions stars, Shen school flying stars,
+the Luban sectors): [fengshui.md](fengshui.md).
+
 ## How to pass them
 
 TypeScript:

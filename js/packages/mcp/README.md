@@ -1,16 +1,18 @@
 # @nhatnguyet/mcp
 
 An [MCP](https://modelcontextprotocol.io) server that gives AI assistants a
-deterministic calculator for the Vietnamese, Chinese, Korean and Japanese
+deterministic calculator for the Chinese, Korean, Japanese and Vietnamese
 lunisolar calendars, the 24 solar terms, Zi Wei Dou Shu (Tử Vi), BaZi (Four
-Pillars), Pythagorean numerology and Vietnamese festivals.
+Pillars), Pythagorean numerology, Vietnamese festivals, the I Ching (hexagrams,
+the Six Lines najia chart, the Gua Qi daily hexagram) and the feng shui rules
+of traditional schools (Eight Mansions life gua, Xuan Kong flying stars, Luban
+rulers).
 
 Language models should not compute lunar dates, stem-branch pillars or star
 positions in their heads: these depend on new-moon and solar-term instants to
 the minute and on conventions (time zone, leap months, the Tý hour). This server
 runs the [Nhat Nguyet](https://nhatnguyet.org) libraries locally, checked
-against 17,291 core test vectors (18,819 including school options and
-auspicious hours) and NASA / IMCCE data. No network access, no
+against 17,291 core test vectors (28,586 including school options, auspicious hours, I Ching and feng shui) and NASA / IMCCE data. No network access, no
 API key.
 
 - **Vietnam time (UTC+7) by default.** Pass `country` for the Chinese (`CN`,
@@ -19,7 +21,8 @@ API key.
 - **The Tý hour runs 23:00 to 00:59.** For Zi Wei a birth from 23:00 to midnight
   keeps the date entered; for BaZi the day pillar turns at 23:00.
 - **Facts, not readings.** Results are computed data; the assistant writes any
-  interpretation itself. Each result names its source:
+  interpretation itself. The I Ching and feng shui tools give the rules of
+  traditional schools, not predictions. Each result names its source:
   `Data: Nhat Nguyet (nhatnguyet.org)`.
 
 ## Install
@@ -88,12 +91,13 @@ or from a terminal:
 
 ## Tools
 
-All tools are read-only. `lang` is `en` (default), `vi` or `zh` (simplified
+Fourteen tools, all read-only. `lang` is `en` (default), `vi` or `zh` (simplified
 Chinese); dates are `YYYY-MM-DD`, times `HH:MM` (24 h). With `lang` `en`,
 `terms` says how to write stems, branches and the Four Transformations:
 `pinyin` (default, `Geng Wu`, `Hua Ji`), `han` (`庚午`, `化忌`) or `vi`
 (`Canh Ngọ`, `Hóa Kỵ`). Tool names match the command line (`nhatnguyet ziwei`
-is `cast_ziwei`); the older name `cast_zi_wei` still works as an alias.
+is `cast_ziwei`, `nhatnguyet kua` is `life_gua`); the older name `cast_zi_wei`
+still works as an alias.
 
 | Tool | Input | Output |
 |---|---|---|
@@ -104,6 +108,12 @@ is `cast_ziwei`); the older name `cast_zi_wei` still works as an alias.
 | `numerology` | `name`, `birth_date`, `today`, `lang`, `detail` | markdown profile (core numbers, personal cycles, pinnacles, challenges, grid), then JSON |
 | `festivals` | `year`, `month`, `lang` | Vietnamese festivals with a fixed lunar or Gregorian date and their Gregorian dates that year (JSON) |
 | `render_chart_svg` | `kind` (`ziwei`, `bazi`, `numerology`; `zi_wei` also accepted) and the inputs of that tool, `theme` (`light`, `dark`) | a self-contained SVG string |
+| `hexagram` | `hexagram` (King Wen number or a name in English, pinyin, Chinese or Vietnamese), `lang`, `terms` | names, trigrams, Eight Palaces palace, world and response lines, nuclear, opposite and reversed hexagrams, the Zhou Yi text with Legge's 1882 translation (JSON) |
+| `six_lines_chart` | `lines` (six values 6 to 9, bottom first; omit for a random three-coin cast), `date`, `lang`, `terms` | the cast and its Six Lines (najia) chart: stems, branches, elements, six relations, six spirits, world and response, void, month state (JSON) |
+| `daily_hexagram` | `date`, `lang`, `terms` | the Gua Qi hexagram of the day, its ruling line, the cardinal hexagram, a change of hexagram during the day (JSON) |
+| `life_gua` | `birth_date` or `lunar_year`, `gender`, `lang`, `terms` | Eight Mansions Kua number, trigram, group, element, the eight directions and their stars (JSON) |
+| `flying_star_chart` | `period` (1 to 9) or `year`, `facing` or `sitting` (degrees or one of the 24 mountains), `lang`, `terms` | Xuan Kong mountain, facing and period stars of the nine palaces, their roles, the pattern, castle gates (JSON) |
+| `luban_ruler` | `length`, `unit` (`cm` default, `mm`), `ruler` (`clear-opening`, `luban`, `dinglan`; default all three), `lang`, `terms` | sector, sub-sector, good or bad group, nearest good lengths (JSON) |
 
 Example: asked "what is my Zi Wei chart, born 19 September 1990 at 8 pm, male?",
 an assistant calls `cast_ziwei` with `{"date": "1990-09-19", "time": "20:00",
@@ -135,5 +145,6 @@ await createServer().connect(new StdioServerTransport());
 
 ## License
 
-MIT. Festival data from the open dataset `le-hoi-viet-nam` (CC BY 4.0).
+MIT. Festival data from the open dataset `le-hoi-viet-nam` (CC BY 4.0); the
+Zhou Yi text and Legge's translation are in the public domain.
 Source: <https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology>.

@@ -2,8 +2,9 @@
 
 `nhatnguyet/SKILL.md` is an [Agent Skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview):
 it tells an assistant to compute lunar dates, solar terms, stem-branch pillars,
-Zi Wei Dou Shu and BaZi charts, numerology numbers and Vietnamese festival
-dates with the Nhat Nguyet tools instead of estimating them, which tool to call
+Zi Wei Dou Shu and BaZi charts, numerology numbers, Vietnamese festival
+dates, I Ching hexagrams and Six Lines charts and the feng shui rules of
+traditional schools with the Nhat Nguyet tools instead of estimating them, which tool to call
 and which conventions to state (Vietnam time UTC+7, the Tý hour, Start of Spring
 for BaZi years).
 

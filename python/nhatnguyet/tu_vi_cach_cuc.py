@@ -301,6 +301,27 @@ _GOI_QUAN_LOC = (8, ("Quan Lộc", "Quan Lộc", "官禄宫"))
 _GOI_DIEN_TRACH = (9, ("Điền Trạch", "Điền Trạch", "田宅宫"))
 
 
+# Bậc của tứ sát theo bảng miếu vượng mười hai cung của Toàn thư (quyển 2, cuối
+# mục 安身命例): M 庙, Đ 得地, L 利益, H 落陷; ô rỗng là cung sao không tới. Chỉ
+# dùng cho cách cục của Toàn thư; lá số không in bậc các sao này.
+_SAT_TINH_DIA_TOAN_THU: Dict[str, Tuple[str, ...]] = {
+    "Kình Dương": ("H", "M", "", "H", "M", "", "H", "M", "", "H", "M", ""),
+    "Đà La": ("", "M", "H", "", "M", "H", "", "M", "H", "", "M", "H"),
+    "Hỏa Tinh": ("H", "Đ", "M", "L", "H", "Đ", "M", "L", "H", "Đ", "M", "L"),
+    "Linh Tinh": ("H", "Đ", "M", "L", "H", "Đ", "M", "L", "H", "Đ", "M", "L"),
+}
+
+# Tứ sát (四殺) theo thứ tự in trong dòng điều kiện.
+_TU_SAT_TOAN_THU = (("Kình Dương", "擎羊"), ("Đà La", "陀罗"), ("Hỏa Tinh", "火星"), ("Linh Tinh", "铃星"))
+
+
+def _noi_ten_ba(vi: List[str], zh: List[str]) -> Ba:
+    """Nối tên sao: "A, B và C", "A, B and C", "A、B、C"."""
+    def noi(ds: List[str], cuoi: str) -> str:
+        return ds[0] if len(ds) == 1 else ", ".join(ds[:-1]) + cuoi + ds[-1]
+    return (noi(vi, " và "), noi(vi, " and "), "、".join(zh))
+
+
 def _co_hoa_tai(la_so: Dict, pos: int, hoa: str) -> bool:
     return any(s.get("tuHoa", "") == hoa for s in la_so["cung"][mod(pos, 12)]["sao"])
 
@@ -359,6 +380,11 @@ def _cach_cuc_toan_thu(la_so: Dict) -> List[Dict]:
 
     tai = _sao_tai_vi_tri(la_so, menh)
     p_menh = mod(menh, 12)
+    # Cung Mệnh rồi cung Thân cho các chú văn nói "身命"; Thân trùng Mệnh thì một lần.
+    than_menh = [(p_menh, ("Mệnh", "Mệnh", "命宫"))]
+    p_than = mod(la_so["cungThan"], 12)
+    if p_than != p_menh:
+        than_menh.append((p_than, ("Thân", "Thân", "身宫")))
 
     # ── 定富局 ──
 
@@ -473,6 +499,15 @@ def _cach_cuc_toan_thu(la_so: Dict) -> List[Dict]:
             "The Mệnh palace sits at Sửu, with Thái Dương and Thái Âm together at Mùi facing it",
             "命安丑宫，太阳、太阴同在未宫来照",
         ))
+    # 刑囚夾印：天刑廉貞同臨身命主武勇之人。(Thiên Hình, Liêm Trinh ở Mệnh hay Thân)
+    for pos, ba in than_menh:
+        if _co_du(_sao_tai_vi_tri(la_so, pos), "Thiên Hình", "Liêm Trinh"):
+            them(NHOM_DINH_QUY, "Hình Tù giáp Ấn", "刑囚夹印", "刑囚夾印", "天刑廉贞同临身命主武勇之人。", pos, True, (
+                "Thiên Hình và Liêm Trinh cùng toạ thủ cung " + ba[0],
+                "Thiên Hình and Liêm Trinh both sit in the " + ba[1] + " palace",
+                "天刑、廉贞同坐" + ba[2],
+            ))
+            break
     # 科權祿拱：ba hóa ở tam phương tứ chính (mục 文職論 của Toàn thư).
     if (_tam_phuong_co_hoa(la_so, menh, "Hóa Khoa") and _tam_phuong_co_hoa(la_so, menh, "Hóa Quyền")
             and _tam_phuong_co_hoa(la_so, menh, "Hóa Lộc")):
@@ -481,6 +516,14 @@ def _cach_cuc_toan_thu(la_so: Dict) -> List[Dict]:
             "Hóa Khoa, Hóa Quyền and Hóa Lộc all sit in the Mệnh palace or its triangle and opposite",
             "化科、化权、化禄皆在命宫或其三方四正",
         ))
+    # 貪火相逢：謂二星守命同居廟旺是也。Tham Lang theo bảng lá số, Hỏa Tinh theo bảng Toàn thư.
+    if "Tham Lang" in tai and "Hỏa Tinh" in tai and _sang_mieu_vuong("Tham Lang", p_menh):
+        if _SAT_TINH_DIA_TOAN_THU["Hỏa Tinh"][p_menh] in ("M", "V"):
+            them(NHOM_DINH_QUY, "Tham Hỏa tương phùng", "贪火相逢", "貪火相逢", "谓二星守命同居庙旺是也。", menh, True, (
+                "Tham Lang và Hỏa Tinh cùng toạ thủ cung Mệnh, cả hai miếu hay vượng: Tham Lang theo bảng miếu hãm của lá số, Hỏa Tinh theo bảng mười hai cung của Toàn thư (miếu ở Dần, Ngọ, Tuất)",
+                "Tham Lang and Hỏa Tinh both sit in the Mệnh palace, both at the exalted or strong grade: Tham Lang by the chart's strength table, Hỏa Tinh by the twelve-palace table of the Tử Vi Đẩu Số Toàn Thư (exalted at Dần, Ngọ, Tuất)",
+                "贪狼、火星同坐命宫，且皆庙旺：贪狼按本命盘的庙陷表，火星按《全书》十二宫表（寅、午、戌庙）",
+            ))
     # 武曲守垣：武守命卯宮是也，餘不是。
     if p_menh == 3 and "Vũ Khúc" in tai:
         them(NHOM_DINH_QUY, "Vũ Khúc thủ viên", "武曲守垣", "武曲守垣", "武守命卯宫是也，余不是。", menh, False, (
@@ -555,6 +598,24 @@ def _cach_cuc_toan_thu(la_so: Dict) -> List[Dict]:
             "Phá Quân toạ thủ cung Mệnh ở vị trí hãm theo bảng miếu hãm của lá số",
             "Phá Quân sits in the Mệnh palace at a weak position by the chart's strength table",
             "破军坐守命宫，按本命盘的庙陷表落陷",
+        ))
+    # 君子在野：謂四殺守身命而言臨陷地是也。(một hay nhiều sát tinh hãm ở Mệnh, Thân)
+    for pos, ba in than_menh:
+        tai_g = _sao_tai_vi_tri(la_so, pos)
+        vi: List[str] = []
+        zh: List[str] = []
+        for ten, ten_zh in _TU_SAT_TOAN_THU:
+            if ten in tai_g and _SAT_TINH_DIA_TOAN_THU[ten][pos] == "H":
+                vi.append(ten)
+                zh.append(ten_zh)
+        if not vi:
+            continue
+        ds = _noi_ten_ba(vi, zh)
+        dong_tu = ("cùng toạ thủ", "sit", "同坐") if len(vi) > 1 else ("toạ thủ", "sits", "坐守")
+        them(NHOM_DINH_BAN_TIEN, "Quân tử tại dã", "君子在野", "君子在野", "谓四杀守身命而言临陷地是也。", pos, True, (
+            ds[0] + " " + dong_tu[0] + " cung " + ba[0] + ", ở bậc hãm theo bảng mười hai cung của Toàn thư (tứ sát là Kình Dương, Đà La, Hỏa Tinh, Linh Tinh)",
+            ds[1] + " " + dong_tu[1] + " in the " + ba[1] + " palace at the weak grade by the twelve-palace table of the Tử Vi Đẩu Số Toàn Thư (the four malefics are Kình Dương, Đà La, Hỏa Tinh and Linh Tinh)",
+            ds[2] + dong_tu[2] + ba[2] + "，按《全书》十二宫表落陷（四杀为擎羊、陀罗、火星、铃星）",
         ))
     # 兩重華蓋：謂祿存化祿坐命遇空劫是也。
     if ("Lộc Tồn" in tai and _co_hoa_tai(la_so, menh, "Hóa Lộc")

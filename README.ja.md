@@ -1,8 +1,8 @@
 <h1 align="center">Nhat Nguyet</h1>
 
 <p align="center">
-  <b>ベトナムの旧暦は中国の旧暦ではありません。広く使われているライブラリは、1900年から2100年のうち 2,724日でベトナム旧暦の日付を誤ります。</b><br>
-  正しい暦で計算する紫微斗数、四柱推命、数秘術、祭礼、吉時を JavaScript、Python、MCP で · 古典を書名と章つきで引用する解釈つきの公開命盤 360万件 · 出力は English、Tiếng Việt、中文 · 共通テストベクター 17,291件
+  <b>JavaScript と Python のための太陰太陽暦、紫微斗数、四柱推命、数秘術、易経、風水。天文学的に正確で、国ごとに計算し、どの言語でも同じ答えを返します。</b><br>
+  朔と二十四節気を1900年から2100年まで NASA と IMCCE に照合 · 中国、韓国、日本、ベトナムほか7つの国と地域の旧暦 · AI アシスタント向け MCP サーバー · 古典を書名と章つきで引用する解釈つきの公開命盤 360万件 · 出力は English、中文、Tiếng Việt · 共通テストベクター 17,291件（全体で 28,586件）
 </p>
 
 <p align="center">
@@ -45,21 +45,28 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country` の既定値は `"VN"`（ベトナム、UTC+7）で、このプロジェクトの出発点となった暦です。`castZiWei` も同じオプションを受け取ります。ほかの10の国と地域は[旧暦](#旧暦と吉時)に載せています。
 
 **Python**（3.9 以上、標準ライブラリのみ）：結果は同じで、SVG もバイト単位で一致します。
 
@@ -71,14 +78,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **コマンドライン**：`npx` を使えばインストール不要です。`pip install nhatnguyet` の後なら `nhatnguyet ...` で実行できます。
@@ -179,7 +186,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-ほかのコマンド：`bazi`、`lunar`、`solar`、`terms`、`numerology`、`festivals`（`--ics` でカレンダーファイルを出力）、`hours`。オプションは `--lang vi|zh`、`--json`、`--svg chart.svg`、それに下記の流派オプションです。すべてのオプションを載せた英語版 API リファレンス：[docs/api-en.md](./docs/api-en.md)。
+ほかのコマンド：`bazi`、`lunar`、`solar`、`terms`、`numerology`、`festivals`（`--ics` でカレンダーファイルを出力）、`hours`、`hexagram`、`cast`（六爻）、`daily-hexagram`、`kua`、`flying-stars`、`luban`。オプションは `--lang vi|zh`、`--json`、`--svg chart.svg`、それに下記の流派オプションです。すべてのオプションを載せた英語版 API リファレンス：[docs/api-en.md](./docs/api-en.md)。
 
 ## 目次
 
@@ -197,23 +204,24 @@ Vietnamese calendar (UTC+7).
 
 ## 信頼できる理由
 
-**科学性は方法にあり、予測にはありません。** 暦は天文学であり、1900年から2100年にわたって NASA と IMCCE に照合しています。
+**暦は天文学であり、指定した国について計算します。** 東アジアの太陰太陽暦は規則を共有していても、時計は共有していません。月は現地時間で朔のある日に始まるため、北京、ソウル、ハノイでは月や年の始まりが別の日になることがあります。本ライブラリは国ごとにその国の時間帯で計算し、天文計算を1900年から2100年にわたって NASA と IMCCE に照合しています。
 
 | 検証項目 | 結果 |
 |---|---|
 | NASA と比べた朔（2,474回） | 平均 0.9分遅れ、最大 3.9分 |
 | NASA の朔と IMCCE の節気から再構築した旧暦の月 | 2,461か月中 2,459か月が一致（残る2か月は朔が真夜中から1分以内） |
 | IMCCE と比べた節気（4,824回） | 平均 0.27分のずれ、最大 0.9分（分単位に丸め）、すべての節気が正しい日付 |
-| ベトナム（UTC+7）と中国（UTC+8）、同じ規則 | 2,814日とテトの日付 10回が異なる |
+| ハノイ（UTC+7）と北京（UTC+8）、同じ規則 | 2,814日と旧正月の日付 10回が異なる |
+| ソウル（UTC+9）と北京（UTC+8）、同じ規則 | 2,818日と旧正月の日付 11回が異なる |
 
 - **技術論文**：[Computing the Vietnamese lunisolar calendar](./docs/paper/paper.pdf)（PDF）では、計算方法、誤差の内訳、NASA、IMCCE、JPL DE440 との照合、そしてベトナムと中国の暦が異なる日ごとの説明を示しています。論文中の数値はすべて `docs/paper/reproduce.sh` で再計算されます。
-- **共通テストベクター**：[`ca-kiem/`](./ca-kiem) には、[nhatnguyet.org](https://nhatnguyet.org) を動かす参照エンジンが生成した **中核の 17,291件のケース**（入力 `vao`、期待される出力 `ra`）が入っています。内訳は暦 14,936件、紫微斗数の命盤 777件、四柱推命の命盤 777件、数秘術のプロフィール 600件、祭礼の年 201件で、さらに流派オプション用の 432件と吉時の 1,096日分があります（合計 18,819件）。TypeScript 版と Python 版は、プッシュのたびにそのすべてに合格しています。
+- **共通テストベクター**：[`ca-kiem/`](./ca-kiem) には、[nhatnguyet.org](https://nhatnguyet.org) を動かす参照エンジンが生成した **中核の 17,291件のケース**（入力 `vao`、期待される出力 `ra`）が入っています。内訳は暦 14,936件、紫微斗数の命盤 777件、四柱推命の命盤 777件、数秘術のプロフィール 600件、祭礼の年 201件で、さらに流派オプション用の 432件、吉時の 1,096日分、易経の 6,684件、風水の 3,083件があります（合計 28,586件）。TypeScript 版と Python 版は、プッシュのたびにそのすべてに合格しています。
 - **テトの歴史**：[`history/`](./history/README.md) には、1900年から2100年の毎年のテトを UTC+7 と UTC+8 で載せ、ベトナムが実際に使った暦と、記録のある年にはそれぞれの出典を添えています。
-- **正直な範囲**：紫微斗数、四柱推命、数秘術は伝統的な流派の規則であり、科学的に検証されたものではありません。健康、金銭、法律に関する判断には使わないでください。流派によって説が分かれる箇所では、どの規則に従っているかを明示し、切り替えられるようにしています（[流派オプション](#流派オプション)）。
+- **正直な範囲**：科学性は方法にあり、予測にはありません。紫微斗数、四柱推命、数秘術、易経、風水は伝統的な流派の規則であり、科学的に検証されたものではありません。健康、金銭、法律に関する判断には使わないでください。流派によって説が分かれる箇所では、どの規則に従っているかを明示し、切り替えられるようにしています（[流派オプション](#流派オプション)）。
 
 ### 他のライブラリとの比較
 
-[iztro](https://github.com/SylarLong/iztro) と [lunar-javascript](https://github.com/6tail/lunar-javascript) は丁寧に作られ、広く使われているライブラリです。どちらも実装している範囲、つまり北京時間（UTC+8）による中国の暦としては正確です。ベトナムは同じ規則をハノイ時間（UTC+7）で使います。1900年から2100年の毎日を比較した結果は次のとおりです（[doi-chieu/](./doi-chieu/README.md)、`node chay.mjs` で再現できます）。
+[iztro](https://github.com/SylarLong/iztro) と [lunar-javascript](https://github.com/6tail/lunar-javascript) は丁寧に作られ、広く使われているライブラリです。どちらも実装している範囲、つまり北京時間（UTC+8）による中国の暦としては正確です。ほかの国に使うと、北京の日付が返ります。最もはっきりした例がベトナムで、同じ規則をハノイ時間（UTC+7）で使います。1900年から2100年の毎日を比較した結果は次のとおりです（[doi-chieu/](./doi-chieu/README.md)、`node chay.mjs` で再現できます）。
 
 | | 結果 |
 |---|---:|
@@ -235,20 +243,22 @@ Vietnamese calendar (UTC+7).
 
 ## インストール
 
-バージョン 0.3.0。JavaScript パッケージは TypeScript の型定義付きの ESM で、外部の依存関係はありません（MCP サーバーだけは SDK と zod を使います）。Python パッケージは標準ライブラリのみを使います。
+バージョン 0.4.0。JavaScript パッケージは TypeScript の型定義付きの ESM で、外部の依存関係はありません（MCP サーバーだけは SDK と zod を使います）。Python パッケージは標準ライブラリのみを使います。
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | パッケージ | 別名での公開 | 機能 |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | ベトナム、中国、韓国、日本ほか7地域の旧暦と新暦の変換、干支、分単位の二十四節気、二十八宿、納音、吉時 |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 中国、韓国、日本、ベトナムほか7つの国と地域の旧暦と新暦の変換、干支、分単位の二十四節気、二十八宿、納音、吉時 |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 紫微斗数：十二宮、星の廟旺利陥、四化、旬空と截空（Tuần、Triệt）、大限と流年、流曜、古典の原文を添えた格局、流派オプション、SVG、LLM 向けテキスト、iztro 互換のレイヤー |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | 四柱推命：節気による四柱、蔵干、通変星（十神）、神殺、大運、小運、SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | ピタゴラス式数秘術（ライフパス数、ディスティニー数、ソウル数、ピナクル、チャレンジ、パーソナルイヤー）、声調記号付きのベトナム語氏名に対応、SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | ベトナムの祭礼 206件と任意の年の日付、省、民族、開催地、iCalendar 出力 |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | 易経：64卦の英語、ピンイン、漢字、ベトナム語の名称、八宮、互卦と之卦、三枚の硬貨による立卦と梅花易数、六爻（納甲）、卦気による日の卦、周易の原文とレッグによる1882年の英訳。SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | 伝統的な流派の風水の規則：八宅の本命卦と宅卦、二十四山、玄空飛星盤、年の九星、魯班尺。羅盤と飛星盤の SVG |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | 命盤をターミナルのグリッド、JSON、SVG、iCalendar で出力。Python の `nhatnguyet` と同じコマンド |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | AI アシスタント向けの MCP サーバー |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | ウェブコンポーネント 5個 |
@@ -272,9 +282,9 @@ pip install nhatnguyet
 
 ### 旧暦と吉時
 
-`@nhatnguyet/lunar` の `toLunar`、`toSolar`、`solarTerms`、`auspiciousHours`（Python では `to_lunar`、`to_solar`、`solar_terms`、`auspicious_hours`）。`country` を渡さない限り、暦はベトナムのもの（UTC+7）です。渡せるのは、中国、台湾、香港、マカオ、シンガポール、マレーシア、インドネシア、フィリピン（UTC+8）、韓国、日本（UTC+9）です。
+`@nhatnguyet/lunar` の `toLunar`、`toSolar`、`solarTerms`、`auspiciousHours`（Python では `to_lunar`、`to_solar`、`solar_terms`、`auspicious_hours`）。`country` で暦を選びます。中国（`CN`）、台湾（`TW`）、香港（`HK`）、マカオ（`MO`）、シンガポール（`SG`）、マレーシア（`MY`）、インドネシア（`ID`）、フィリピン（`PH`）は UTC+8、韓国（`KR`）、日本（`JP`）は UTC+9、ベトナム（`VN`、既定）は UTC+7 です。時間単位の `timeZone` も使えます。コマンドライン（`--country`）、MCP サーバー、ウィジェットも同じコードを受け取ります。
 
-`auspiciousHours` は1日の十二時辰を、ベトナムの暦書の表記どおり、吉の黄道（hoàng đạo）か凶の黒道（hắc đạo）かのフラグと、その時を司る神とともに返します（コマンドラインでは `nhatnguyet hours`、MCP ツールでは `auspicious_hours`）。
+`auspiciousHours` は1日の十二時辰を、中国とベトナムの暦書の表記どおり、吉の黄道（hoàng đạo）か凶の黒道（hắc đạo）かのフラグと、その時を司る神とともに返します（コマンドラインでは `nhatnguyet hours`、MCP ツールでは `auspicious_hours`）。
 
 ```js
 import { auspiciousHours } from "@nhatnguyet/lunar";
@@ -348,7 +358,7 @@ print(quanshu["notes"][-1])
 
 ### 祭礼
 
-`@nhatnguyet/festivals` の `festivals(year)` は、データセットにある 206件のうち旧暦または新暦の日付が固定された 164件の祭礼を、1900年から2100年の任意の年について返します（残る 42件は主催者が毎年日付を決めます）。各祭礼には、2025年の34省の地図による省、説明に記載がある場合はその祭礼を担う民族、そして開催地が付きます。座標は出典がある場合にのみ付きます。`group`、`scope`、`level` はどの言語でも英語のコードです。`festivalsIcs(year)` は、祭礼ごとに終日の予定を1件ずつ入れた iCalendar（RFC 5545）ファイルを書き出します。
+`@nhatnguyet/festivals` はベトナムの祭礼のデータセットです。その `festivals(year)` は、データセットにある 206件のうち旧暦または新暦の日付が固定された 164件の祭礼を、1900年から2100年の任意の年について返します（残る 42件は主催者が毎年日付を決めます）。各祭礼には、2025年の34省の地図による省、説明に記載がある場合はその祭礼を担う民族、そして開催地が付きます。座標は出典がある場合にのみ付きます。`group`、`scope`、`level` はどの言語でも英語のコードです。`festivalsIcs(year)` は、祭礼ごとに終日の予定を1件ずつ入れた iCalendar（RFC 5545）ファイルを書き出します。
 
 ```js
 import { writeFileSync } from "node:fs";
@@ -377,6 +387,83 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 同じファイルはコマンドラインでも作れます：`nhatnguyet festivals 2027 --ics > vn.ics`。
 
+### 易経
+
+`@nhatnguyet/iching` の `hexagram`、`castCoins`、`castFromNumbers`（梅花易数）、`najia`、`dailyHexagram`（Python では `nhatnguyet.iching`）。卦は文王の卦序の番号、六本の爻、または英語、ピンイン、漢字、ベトナム語の名前で指定できます。六爻（納甲）は各爻の干支、六親、六獣、世と応、空亡、月令による旺衰を出します。日の卦は漢の孟喜の卦気説に従います。`text(n)` はパブリックドメインの周易の原文と、ジェームズ・レッグによる1882年の英訳です。方法と出典：[docs/iching.md](./docs/iching.md)。
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### 風水
+
+`@nhatnguyet/fengshui` の `lifeGua`、`houseGua`、`flyingStarChart`、`annualStars`、`lubanRuler`（Python では `nhatnguyet.fengshui`）：八宅の本命卦（年の区切りはベトナム時間のテト）、沈氏玄空の1運から9運の飛星盤、年の九星、二十四山、3種類の魯班尺、それに羅盤と飛星盤の SVG。これは流派が定める規則であり、検証された効果ではありません。書物によって説が分かれる箇所：[docs/fengshui.md](./docs/fengshui.md)。
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## データセット
 
 CC BY 4.0 です。クレジットを表記すれば、商用製品にも AI の学習にも使えます。
@@ -391,7 +478,7 @@ CC BY 4.0 です。クレジットを表記すれば、商用製品にも AI の
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 知識単位 143件（核となる数、周期の数、人生のテーマ）、一節 195件 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | パブリックドメインの古典 373点（約350作品）、7,265万字、全文 | テキスト 147 MB、Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 易経の対訳セグメント 1,328件：漢文と、パブリックドメインの英訳（952件）および仏訳（376件） | |
-| [用語集](./du-lieu/terminology/README.md) | ベトナム語、繁体字と簡体字の中国語、ピンイン、英語による用語 428件。ライブラリが出力するすべての名称を収録 | |
+| [用語集](./du-lieu/terminology/README.md) | ベトナム語、繁体字と簡体字の中国語、ピンイン、英語による用語 672件。ライブラリが出力するすべての名称を収録 | |
 | [AI 評価セット](./ai-eval/README.md) | 英語、ベトナム語、中国語の計算問題 1,520問（旧暦の日付、テト、四柱、命盤）、うち 626問（41%）は難しいケース | |
 | [テト 1900年から2100年](./history/README.md) | 201年分の UTC+7 と UTC+8 のテト、実際に使われた暦と出典付き | |
 | [暦と文化のデータセット 33件](https://nhatnguyet.org/en/du-lieu) | 1900年から2100年の太陰太陽暦、節気、六十四卦、タロット78枚、祭礼206件、祭祀祈祷文456篇など。CSV、JSON、Parquet、[DOI](https://doi.org/10.5281/zenodo.23009396) 付き | |
@@ -422,7 +509,7 @@ print(len(books), sum(books["characters"]))
 
 言語モデルに旧暦の日付や星の位置を頭の中で割り出させるべきではありません。数値を渡す方法は4つあります。
 
-- **MCP サーバー**：ローカルで動作し、ツールは `lunar_convert`、`solar_terms`、`auspicious_hours`、`cast_ziwei`、`cast_bazi`、`numerology`、`festivals`、`render_chart_svg`（流派オプションに対応）。`claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`。Claude Desktop、Cursor、VS Code での設定方法：[js/packages/mcp](./js/packages/mcp/README.md)。
+- **MCP サーバー**：ローカルで動作し、ツールは `lunar_convert`、`solar_terms`、`auspicious_hours`、`cast_ziwei`、`cast_bazi`、`numerology`、`festivals`、`render_chart_svg`（流派オプションに対応）、`hexagram`、`six_lines_chart`、`daily_hexagram`、`life_gua`、`flying_star_chart`、`luban_ruler`。`claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`。Claude Desktop、Cursor、VS Code での設定方法：[js/packages/mcp](./js/packages/mcp/README.md)。
 - **Agent Skill**：推測せずにツールを呼び出すようアシスタントに指示します：[skills/](./skills/README.md)。
 - **`chartToText`**（Python では `chart_to_text`）：命盤をプロンプト用の簡潔な Markdown に変換します。
 
@@ -488,7 +575,7 @@ nhatnguyet.org では iframe で埋め込む 14種のウィジェット（用語
 
 ## iztro からの移行
 
-`@nhatnguyet/ziwei/iztro` は iztro と**互換**です。`astro.bySolar` と `astro.byLunar` は同じ引数を受け取り、iztro の `FunctionalAstrolabe` と同じ形の JSON を返します。6つの表示言語とメソッド（`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`、`use()` など）も同じですが、計算はベトナム暦で行います（`{ country: "CN" }` で北京時間）。
+`@nhatnguyet/ziwei/iztro` は iztro と**互換**です。`astro.bySolar` と `astro.byLunar` は同じ引数を受け取り、iztro の `FunctionalAstrolabe` と同じ形の JSON を返します。6つの表示言語とメソッド（`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`、`use()` など）も同じですが、計算は渡した国の暦で行います（`{ country: "CN" }` なら iztro と同じ北京時間、既定はベトナム）。
 
 ```diff
 - import { astro } from "iztro";
@@ -500,9 +587,9 @@ iztro と 2,006件のホロスコープで比較すると、大限、年齢、�
 ## よくある質問
 
 <details>
-<summary><b>ベトナムの旧暦はなぜ中国の旧暦と違うのですか？</b></summary>
+<summary><b>同じ日の旧暦の日付が、中国、韓国、ベトナムで異なることがあるのはなぜですか？</b></summary>
 
-規則は同じで、時計が違います。月は朔の日に始まり、その日付は現地時間で決まります。朔が世界時（UT）の16時から17時の間に起きると、ハノイでは真夜中前、北京では真夜中過ぎになるため、ベトナムでは月が1日早く始まります。1985年のテトは丸1か月ずれています（ベトナムは1月21日、中国は2月20日）。閏月の入る年が異なるためです。
+規則は同じで、時計が違います。月は朔の日に始まり、その日付は現地時間で決まります。朔が世界時（UT）の16時から17時の間に起きると、ハノイでは真夜中前、北京では真夜中過ぎになるため、ベトナムでは月が1日早く始まります。朔が UT の15時から16時の間なら、ソウルと東京では真夜中過ぎになるため、そこでは月が1日遅く始まります。1985年のテトは丸1か月ずれています（ベトナムは1月21日、中国は2月20日）。閏月の入る年が異なるためです。
 </details>
 
 <details>

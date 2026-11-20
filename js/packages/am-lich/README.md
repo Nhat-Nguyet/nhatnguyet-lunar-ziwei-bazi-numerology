@@ -1,7 +1,8 @@
 # @nhatnguyet/am-lich
 
-**Vietnamese lunar calendar for JavaScript and TypeScript**, plus the Chinese,
-Korean and Japanese lunisolar calendars: lunar and Gregorian date conversion,
+**Chinese, Korean, Japanese and Vietnamese lunisolar calendars for JavaScript
+and TypeScript**, country-aware (11 countries and regions, Vietnam by default):
+lunar and Gregorian date conversion,
 the sexagenary cycle (can chi, 干支), the 24 solar terms to the minute, the 28
 lunar mansions and nạp âm. Zero dependencies, runs in the browser and Node.
 

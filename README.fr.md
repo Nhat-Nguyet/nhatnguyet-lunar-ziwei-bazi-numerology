@@ -1,8 +1,8 @@
 <h1 align="center">Nhat Nguyet</h1>
 
 <p align="center">
-  <b>Le calendrier lunaire vietnamien n'est pas le calendrier chinois : les bibliothèques courantes donnent une date lunaire vietnamienne fausse pour 2 724 jours entre 1900 et 2100.</b><br>
-  Zi Wei Dou Shu, BaZi, numérologie, fêtes et heures fastes sur le bon calendrier, en JavaScript, en Python et via MCP · 3,6 millions de thèmes ouverts dont les lectures citent les classiques, livre et chapitre · résultats en English, Tiếng Việt, 中文 · 17 291 vecteurs de test partagés
+  <b>Calendrier luni-solaire, Zi Wei Dou Shu, BaZi, numérologie, Yi Jing et feng shui pour JavaScript et Python : précis sur le plan astronomique, attentif au pays, et la même réponse dans chaque langue.</b><br>
+  Nouvelles lunes et termes solaires vérifiés par rapport à la NASA et à l'IMCCE de 1900 à 2100 · les calendriers lunaires de la Chine, de la Corée, du Japon, du Vietnam et de 7 autres pays et régions · serveur MCP pour les assistants IA · 3,6 millions de thèmes ouverts dont les lectures citent les classiques, livre et chapitre · résultats en English, 中文 et Tiếng Việt · 17 291 vecteurs de test partagés (28 586 au total)
 </p>
 
 <p align="center">
@@ -45,21 +45,30 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country` vaut `"VN"` par défaut (Vietnam, UTC+7), le calendrier dont le projet
+est parti ; `castZiWei` l'accepte aussi. Les dix autres pays et régions sont
+listés dans [Calendrier lunaire](#calendrier-lunaire-et-heures-fastes).
 
 **Python** (3.9+, bibliothèque standard uniquement) : mêmes résultats, même SVG à l'octet près.
 
@@ -71,14 +80,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **Ligne de commande** : sans installation avec `npx`, ou `nhatnguyet ...` après `pip install nhatnguyet`.
@@ -179,7 +188,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-Autres commandes : `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` pour un fichier de calendrier), `hours` ; `--lang vi|zh`, `--json`, `--svg chart.svg`, et les options d'école décrites plus bas. API complète en anglais, avec toutes les options : [docs/api-en.md](./docs/api-en.md).
+Autres commandes : `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` (`--ics` pour un fichier de calendrier), `hours`, `hexagram`, `cast` (tableau des six lignes), `daily-hexagram`, `kua`, `flying-stars`, `luban` ; `--lang vi|zh`, `--json`, `--svg chart.svg`, et les options d'école décrites plus bas. API complète en anglais, avec toutes les options : [docs/api-en.md](./docs/api-en.md).
 
 ## Sommaire
 
@@ -197,16 +206,21 @@ Autres commandes : `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals` 
 
 ## Pourquoi lui faire confiance
 
-**La science est dans la méthode, pas dans les prédictions.** Le calendrier
-relève de l'astronomie, et il est vérifié par rapport à la NASA et à l'IMCCE de
-1900 à 2100 :
+**Le calendrier relève de l'astronomie, calculé pour le pays demandé.** Les
+calendriers luni-solaires d'Asie de l'Est partagent leurs règles mais pas leur
+horloge : un mois commence le jour de la nouvelle lune en heure locale, si bien
+que Pékin, Séoul et Hanoï peuvent commencer un mois, voire une année, à des
+jours différents. La bibliothèque calcule chaque pays sur son propre fuseau
+horaire et vérifie l'astronomie par rapport à la NASA et à l'IMCCE de 1900 à
+2100 :
 
 | Vérification | Résultat |
 |---|---|
 | Nouvelles lunes par rapport à la NASA (2 474) | 0,9 min de retard en moyenne, 3,9 min au maximum |
 | Mois lunaires reconstruits à partir des nouvelles lunes de la NASA et des termes solaires de l'IMCCE | 2 459 sur 2 461 concordent (pour les deux autres, la nouvelle lune tombe à moins d'une minute de minuit) |
 | Termes solaires par rapport à l'IMCCE (4 824) | 0,27 min d'écart en moyenne, 0,9 min au maximum (arrondi à la minute), chaque terme tombe le bon jour |
-| Vietnam (UTC+7) et Chine (UTC+8), mêmes règles | 2 814 jours et 10 dates du Tết diffèrent |
+| Hanoï (UTC+7) et Pékin (UTC+8), mêmes règles | 2 814 jours et 10 dates du Nouvel An diffèrent |
+| Séoul (UTC+9) et Pékin (UTC+8), mêmes règles | 2 818 jours et 11 dates du Nouvel An diffèrent |
 
 - **Article technique** : [Computing the Vietnamese lunisolar calendar](./docs/paper/paper.pdf)
   (PDF) présente la méthode, le budget d'erreur, la vérification par rapport à
@@ -217,14 +231,15 @@ relève de l'astronomie, et il est vérifié par rapport à la NASA et à l'IMCC
   (entrée `vao`, sortie attendue `ra`) générés par le moteur de référence qui
   fait tourner [nhatnguyet.org](https://nhatnguyet.org) : 14 936 cas de
   calendrier, 777 thèmes Zi Wei, 777 thèmes BaZi, 600 profils numérologiques et
-  201 années de fêtes, plus 432 cas pour les options d'école et 1 096 jours
-  d'heures fastes (18 819 au total). TypeScript et Python les passent tous à
+  201 années de fêtes, plus 432 cas pour les options d'école, 1 096 jours
+  d'heures fastes, 6 684 cas de Yi Jing et 3 083 cas de feng shui (28 586 au
+  total). TypeScript et Python les passent tous à
   chaque push.
 - **Histoire du Tết** : [`history/`](./history/README.md) donne le Tết de chaque
   année de 1900 à 2100 en UTC+7 et en UTC+8, avec le calendrier réellement
   utilisé au Vietnam et une source pour chaque année documentée.
-- **Périmètre honnête** : le Zi Wei Dou Shu, le BaZi et la numérologie sont les
-  règles d'écoles traditionnelles, pas une science validée ; ne les utilisez pas
+- **Périmètre honnête** : la science est dans la méthode, pas dans les prédictions. Le Zi Wei Dou Shu, le BaZi, la numérologie, le Yi Jing et
+  le feng shui sont les règles d'écoles traditionnelles, pas une science validée ; ne les utilisez pas
   pour des décisions de santé, d'argent ou d'ordre juridique. Là où les écoles
   divergent, la bibliothèque indique la règle qu'elle suit et vous laisse en
   changer ([options d'école](#options-décole)).
@@ -234,8 +249,9 @@ relève de l'astronomie, et il est vérifié par rapport à la NASA et à l'IMCC
 [iztro](https://github.com/SylarLong/iztro) et
 [lunar-javascript](https://github.com/6tail/lunar-javascript) sont des
 bibliothèques soignées et largement utilisées, et toutes deux sont exactes pour
-ce qu'elles implémentent : le calendrier chinois à l'heure de Pékin (UTC+8). Le
-Vietnam applique les mêmes règles à l'heure de Hanoï (UTC+7). Comparaison sur
+ce qu'elles implémentent : le calendrier chinois à l'heure de Pékin (UTC+8).
+Employées pour un autre pays, elles donnent la date de Pékin. Le Vietnam en est
+le cas le plus net : mêmes règles, heure de Hanoï (UTC+7). Comparaison sur
 chaque jour de 1900 à 2100 ([doi-chieu/](./doi-chieu/README.md), reproductible
 avec `node chay.mjs`) :
 
@@ -278,22 +294,24 @@ chinois.
 
 ## Installation
 
-Version 0.3.0. Les paquets JavaScript sont en ESM, avec types TypeScript et sans
+Version 0.4.0. Les paquets JavaScript sont en ESM, avec types TypeScript et sans
 dépendance externe (seul le serveur MCP a besoin de son SDK et de zod) ; le
 paquet Python n'utilise que la bibliothèque standard.
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | Paquet | Aussi publié sous | Rôle |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Conversion entre calendrier lunaire et calendrier grégorien pour le Vietnam, la Chine, la Corée, le Japon et 7 autres régions ; troncs et branches ; 24 termes solaires à la minute près ; 28 demeures lunaires ; na yin ; heures fastes |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | Conversion entre calendrier lunaire et calendrier grégorien pour la Chine, la Corée, le Japon, le Vietnam et 7 autres pays et régions ; troncs et branches ; 24 termes solaires à la minute près ; 28 demeures lunaires ; na yin ; heures fastes |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | Zi Wei Dou Shu : 12 palais, éclat des étoiles, Quatre Transformations, Xun Kong et Jie Kong (Tuần, Triệt), périodes décennales et annuelles, étoiles de transit, configurations accompagnées de la ligne classique d'origine, options d'école ; SVG ; texte pour les LLM ; couche compatible avec iztro |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | BaZi : quatre piliers selon les termes solaires, troncs cachés, Dix Dieux, étoiles symboliques, piliers de chance, petites périodes ; SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | Numérologie pythagoricienne (chemin de vie, expression, élan de l'âme, sommets, défis, année personnelle), noms vietnamiens avec diacritiques ; SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 206 fêtes vietnamiennes avec leur date pour n'importe quelle année, provinces, groupes ethniques, lieux ; export iCalendar |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | Yi Jing : les 64 hexagrammes avec leurs noms en anglais, en pinyin, en chinois et en vietnamien, les huit palais, hexagrammes nucléaires et mutés, tirage à trois pièces et Fleur de prunier, tableau des six lignes (najia), hexagramme du jour selon le gua qi, texte du Zhou Yi avec la traduction de Legge (1882) ; SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | Règles du feng shui des écoles traditionnelles : gua de naissance (nombre Kua) et gua de la maison des Huit Demeures, 24 montagnes, cartes des étoiles volantes du Xuan Kong, étoiles annuelles, règles de Luban ; SVG de la boussole et des étoiles volantes |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | Thèmes sous forme de grilles dans le terminal, en JSON, en SVG ou en iCalendar ; les mêmes commandes que `nhatnguyet` en Python |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | Serveur MCP pour les assistants IA |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | 5 composants web |
@@ -325,13 +343,16 @@ ou le sino-vietnamien).
 
 `toLunar`, `toSolar`, `solarTerms` et `auspiciousHours` dans
 `@nhatnguyet/lunar` (`to_lunar`, `to_solar`, `solar_terms`,
-`auspicious_hours` en Python). Le calendrier est celui du Vietnam (UTC+7),
-sauf si vous passez `country` : Chine, Taïwan, Hong Kong, Macao, Singapour,
-Malaisie, Indonésie, Philippines (UTC+8) ; Corée, Japon (UTC+9).
+`auspicious_hours` en Python). `country` choisit le calendrier :
+Chine (`CN`), Taïwan (`TW`), Hong Kong (`HK`), Macao (`MO`), Singapour (`SG`),
+Malaisie (`MY`), Indonésie (`ID`), Philippines (`PH`) à UTC+8 ; Corée (`KR`),
+Japon (`JP`) à UTC+9 ; Vietnam (`VN`, par défaut) à UTC+7 ; ou `timeZone` en
+heures. La ligne de commande (`--country`), le serveur MCP et les widgets
+acceptent les mêmes codes.
 
 `auspiciousHours` donne les douze heures doubles d'une journée, avec
 l'indication faste (hoàng đạo) ou néfaste (hắc đạo) et l'esprit qui y préside,
-telles que les impriment les almanachs vietnamiens (ligne de commande
+telles que les impriment les almanachs chinois et vietnamiens (ligne de commande
 `nhatnguyet hours`, outil MCP `auspicious_hours`) :
 
 ```js
@@ -427,7 +448,8 @@ maîtres 11, 22 et 33.
 
 ### Fêtes
 
-`festivals(year)` dans `@nhatnguyet/festivals` donne les 164 fêtes à date
+`@nhatnguyet/festivals` est un jeu de données des fêtes vietnamiennes.
+`festivals(year)` donne les 164 fêtes à date
 lunaire ou grégorienne fixe pour n'importe quelle année de 1900 à 2100, sur les
 206 du jeu de données (les 42 autres sont datées chaque année par leurs
 organisateurs). Chacune a sa province sur la carte de 2025 à 34 provinces, le
@@ -464,6 +486,98 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 Le même fichier en ligne de commande : `nhatnguyet festivals 2027 --ics > vn.ics`.
 
+### Yi Jing
+
+`hexagram`, `castCoins`, `castFromNumbers` (Fleur de prunier), `najia` et
+`dailyHexagram` dans `@nhatnguyet/iching` (`nhatnguyet.iching` en Python). Un
+hexagramme se donne par son numéro dans l'ordre du roi Wen, ses six lignes ou
+son nom en anglais, en pinyin, en chinois ou en vietnamien. Le tableau des six
+lignes donne pour chaque ligne son tronc et sa branche, sa relation, son esprit,
+le monde et la réponse, le vide et l'état du mois ; l'hexagramme du jour suit le
+calendrier gua qi de Meng Xi, sous les Han ; `text(n)` est le texte du Zhou Yi,
+du domaine public, avec la traduction anglaise de James Legge (1882). Méthode et
+sources : [docs/iching.md](./docs/iching.md).
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### Feng shui
+
+`lifeGua`, `houseGua`, `flyingStarChart`, `annualStars` et `lubanRuler` dans
+`@nhatnguyet/fengshui` (`nhatnguyet.fengshui` en Python) : le gua de naissance
+des Huit Demeures, dont l'année change au Tết, heure du Vietnam, les cartes des
+étoiles volantes du Xuan Kong selon l'école Shen pour les périodes 1 à 9, les
+étoiles annuelles, les 24 montagnes et les trois règles de Luban, avec des SVG
+de la boussole et des étoiles volantes. Ce sont les règles qu'une école énonce,
+pas des effets vérifiés ; là où les livres divergent :
+[docs/fengshui.md](./docs/fengshui.md).
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## Jeux de données
 
 Sous CC BY 4.0, utilisables dans des produits commerciaux et pour
@@ -479,7 +593,7 @@ l'entraînement d'IA, avec attribution.
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 unités (nombres principaux, nombres de cycle, thèmes de vie), 195 passages | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 textes classiques du domaine public (environ 350 œuvres), 72,7 millions de caractères, texte intégral | 147 Mo de texte, 70 Mo en Parquet |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1 328 segments alignés du Yi King : chinois classique avec des traductions anglaises (952) et françaises (376) du domaine public | |
-| [Terminologie](./du-lieu/terminology/README.md) | 428 termes en vietnamien, en chinois traditionnel et simplifié, en pinyin et en anglais, tous les noms que produisent les bibliothèques | |
+| [Terminologie](./du-lieu/terminology/README.md) | 672 termes en vietnamien, en chinois traditionnel et simplifié, en pinyin et en anglais, tous les noms que produisent les bibliothèques | |
 | [Jeu d'évaluation IA](./ai-eval/README.md) | 1 520 questions calculées en anglais, vietnamien et chinois (dates lunaires, Tết, piliers, thèmes), dont 626 (41 %) sont des cas difficiles | |
 | [Le Tết de 1900 à 2100](./history/README.md) | Le Tết en UTC+7 et en UTC+8 sur 201 années, avec le calendrier réellement utilisé et les sources | |
 | [33 jeux de données sur le calendrier et la culture](https://nhatnguyet.org/en/du-lieu) | calendrier luni-solaire de 1900 à 2100, termes solaires, 64 hexagrammes, 78 cartes de tarot, 206 fêtes, 456 prières rituelles... en CSV, JSON et Parquet, avec un [DOI](https://doi.org/10.5281/zenodo.23009396) | |
@@ -535,7 +649,9 @@ la position des étoiles. Quatre façons de leur fournir les chiffres :
 
 - **Serveur MCP**, exécuté en local, avec les outils `lunar_convert`,
   `solar_terms`, `auspicious_hours`, `cast_ziwei`, `cast_bazi`, `numerology`,
-  `festivals`, `render_chart_svg` (options d'école comprises) :
+  `festivals`, `render_chart_svg` (options d'école comprises), `hexagram`,
+  `six_lines_chart`, `daily_hexagram`, `life_gua`, `flying_star_chart`,
+  `luban_ruler` :
   `claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`. Configuration pour
   Claude Desktop, Cursor et VS Code : [js/packages/mcp](./js/packages/mcp/README.md).
 - **Agent Skill** qui demande à un assistant d'appeler les outils au lieu de
@@ -622,8 +738,8 @@ sans étape de build, Node, Python) et quatre modèles à copier :
 `astro.byLunar` prennent les mêmes paramètres et renvoient un JSON de même
 forme que le `FunctionalAstrolabe` d'iztro, avec ses six langues d'affichage et
 ses méthodes (`palace()`, `star()`, `surroundedPalaces()`, `horoscope()`,
-`fliesTo()`, `use()`...), mais calculé sur le calendrier vietnamien
-(`{ country: "CN" }` pour l'heure de Pékin).
+`fliesTo()`, `use()`...), calculé sur le calendrier du pays passé
+(`{ country: "CN" }` pour l'heure de Pékin, comme iztro ; le Vietnam par défaut).
 
 ```diff
 - import { astro } from "iztro";
@@ -645,12 +761,14 @@ complète : [docs/chuyen-tu-iztro.md](./docs/chuyen-tu-iztro.md).
 ## FAQ
 
 <details>
-<summary><b>Pourquoi le calendrier lunaire vietnamien diffère-t-il du calendrier chinois ?</b></summary>
+<summary><b>Pourquoi un même jour peut-il avoir une date lunaire différente en Chine, en Corée et au Vietnam ?</b></summary>
 
 Mêmes règles, horloge différente. Un mois commence le jour de la nouvelle lune,
 et ce jour se décide en heure locale. Quand une nouvelle lune tombe entre
 16 h 00 et 17 h 00 UT, il est encore avant minuit à Hanoï mais déjà après
-minuit à Pékin : le mois commence donc un jour plus tôt au Vietnam. Le Tết 1985
+minuit à Pékin : le mois commence donc un jour plus tôt au Vietnam ;
+entre 15 h 00 et 16 h 00 UT, il est déjà après minuit à Séoul et à Tokyo, où le
+mois commence un jour plus tard. Le Tết 1985
 tombe à un mois entier d'écart (le 21 janvier au Vietnam, le 20 février en
 Chine), parce que le mois intercalaire tombe une année différente.
 </details>

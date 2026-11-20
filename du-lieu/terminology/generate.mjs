@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Sinh bộ thuật ngữ ba thứ tiếng (terminology.csv, terminology.json, bảng đếm
 // trong README.md) TỪ CHÍNH BẢNG CỦA THƯ VIỆN: tên Việt, Anh, Trung lấy từ
-// các bảng đã xuất của gói (am-lich, tu-vi, bat-tu, than-so-hoc, le-hoi), là
+// các bảng đã xuất của gói (am-lich, tu-vi, bat-tu, than-so-hoc, le-hoi,
+// iching, fengshui), là
 // bản chép của lõi tính Go. Không gõ tay tên nào thư viện đã có; chữ Hán phồn
 // thể và pinyin có dấu thanh ghép từng chữ theo han-readings.json (bảng chữ soát
 // tay; tên phồn thể của chính thư viện hay của iztro zh-TW được ưu tiên).
@@ -24,6 +25,9 @@ import * as BT from "../../js/packages/bat-tu/src/index.ts";
 import * as TSH from "../../js/packages/than-so-hoc/src/index.ts";
 import { NHAN_IZTRO, IZTRO_VERSION } from "../../js/packages/tu-vi/src/iztro-nhan.ts";
 import { voidName } from "../../js/packages/tu-vi/src/ten-en.ts";
+import * as YI from "../../js/packages/iching/src/index.ts";
+import { LUC_THAN, LUC_THU, TEN_QUE, TRANG_THAI, VAI_TRO_QUAI_KHI, VI_TRI_CUNG } from "../../js/packages/iching/src/data.ts";
+import * as FS from "../../js/packages/fengshui/src/index.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -66,6 +70,21 @@ export const CATEGORIES = {
   "bazi-symbolic-star": "Symbolic stars (thần sát, 神煞) the BaZi library looks up.",
   "numerology-number": "Names of the numerology numbers (Pythagorean method).",
   "festival-category": "Category codes of the Vietnamese festival dataset (le-hoi-viet-nam).",
+  "iching-trigram": "The eight trigrams (bát quái, 八卦), numbered in the Fu Xi order (Qian 1 ... Kun 8).",
+  "iching-hexagram": "The 64 hexagrams (quẻ, 卦) in the King Wen order.",
+  "iching-palace-generation": "Place of a hexagram in its Eight Palaces (bát cung, 八宫) palace, after Jing Fang; it sets the world line.",
+  "iching-six-relation": "The six relations (lục thân, 六亲) of a Six Lines chart, by the palace element; five names.",
+  "iching-six-spirit": "The six spirits (lục thú, 六兽) of a Six Lines chart, starting from the day stem.",
+  "iching-month-state": "Seasonal state of a line under the month branch (nguyệt lệnh, 月令).",
+  "iching-gua-qi-role": "Rank of a hexagram in its solar month in the Gua Qi (quái khí, 卦气) calendar of Meng Xi.",
+  "fengshui-eight-mansions-star": "The eight stars of the Eight Mansions school (Bát Trạch, 八宅), four favorable and four unfavorable.",
+  "fengshui-group": "East and west groups of the Eight Mansions school (đông tứ, tây tứ).",
+  "fengshui-mountain": "The 24 mountains (nhị thập tứ sơn, 二十四山) of the compass, 15 degrees each.",
+  "fengshui-nine-star": "The nine stars (cửu tinh, 九星) of the Lo Shu, used by the Xuan Kong flying star school.",
+  "fengshui-star-qi": "Role of a star in a 20-year period of the Xuan Kong school (vượng, sinh, thoái, sát, tử).",
+  "fengshui-flying-star-pattern": "Named patterns of a Xuan Kong flying star chart.",
+  "fengshui-luban-sector": "Sectors of the three Luban rulers (thước Lỗ Ban, 鲁班尺): 52.2 cm clear-opening, 42.9 cm Luban, 38.8 cm Dinglan.",
+  "fengshui-luban-sub-sector": "Sub-sectors (cung nhỏ) of the 52.2 cm clear-opening and 42.9 cm Luban rulers, five and four per sector; the 38.8 cm Dinglan ruler has none.",
 };
 
 // ---------------------------------------------------------------- tiện ích
@@ -169,7 +188,7 @@ class Builder {
     r.en_alt_source = alt.map((a) => a[1]).join("|");
     delete r.alt;
     delete r.iztro;
-    if (r.zh) {
+    if (r.zh && !e.pinyin) {
       const hp = hanAndPinyin(r.zh, this.missing);
       if (hp) {
         if (!r.han) r.han = (e.iztro !== false && lookupIztro(r.category, r.zh)?.tw) || hp.han;
@@ -481,10 +500,22 @@ export function buildGlossary() {
     });
   }
   // Cách cục: tên Việt, giản thể, phồn thể đọc từ mã nguồn của hai tệp nhận diện.
-  for (const [i, p] of readPatterns().entries()) {
+  // Pinyin ghép từng chữ theo han-readings.json, trừ tên có chữ đọc khác cách
+  // đọc chung của bảng: 相 trong 相逢 là xiāng (bảng giữ xiàng của 天相).
+  const PATTERN_PINYIN = { "Tham Hỏa tương phùng": "tān huǒ xiāng féng" };
+  // Mã thuật ngữ đánh số theo thứ tự trong nhóm, nên cách thêm sau (lõi tính
+  // 2.3.0) xếp cuối nhóm để mã của các cách đã phát hành không đổi.
+  const PATTERN_ADDED_LATER = ["Hình Tù giáp Ấn", "Tham Hỏa tương phùng", "Quân tử tại dã"];
+  const patterns = readPatterns();
+  const patternOrder = [
+    ...patterns.filter((p) => !PATTERN_ADDED_LATER.includes(p.vi)),
+    ...PATTERN_ADDED_LATER.map((vi) => patterns.find((p) => p.vi === vi)).filter(Boolean),
+  ];
+  for (const [i, p] of patternOrder.entries()) {
     const hanFix = TV.PATTERN_HAN_FIX[p.vi];
     b.add({
       category: "ziwei-pattern", vi: p.vi, zh: hanFix ? hanFix[0] : p.zh, han: hanFix ? hanFix[1] : p.han,
+      ...(PATTERN_PINYIN[p.vi] ? { pinyin: PATTERN_PINYIN[p.vi] } : {}),
       en: TV.PATTERN_EN[p.vi],
       alt: [[p.vi, 'terms: "vi" (Sino-Vietnamese)']],
       iztro: false,
@@ -583,6 +614,215 @@ export function buildGlossary() {
     });
   });
 
+  // ---- Kinh Dịch: tên đọc từ chính lớp tiếng Anh của gói iching ở ba thứ
+  // tiếng; chữ phồn thể và pinyin có dấu của quẻ, quái là của chính gói.
+  const ba = (f) => ({ en: f("en"), vi: f("vi"), zh: f("zh") });
+  const SRC_YI = "iching/src/en.ts (trigram, allHexagrams), data.ts";
+  for (let n = 1; n <= 8; n++) {
+    const t = ba((lang) => YI.trigram(n, { lang }));
+    b.add({
+      category: "iching-trigram", vi: t.vi.name, zh: t.zh.name, han: t.en.nameHan, pinyin: t.en.pinyin, en: t.en.name,
+      alt: [[t.en.image, "trigram image (field image)"]],
+      code: String(n),
+      definition_en: `Trigram ${n} of 8 in the Fu Xi order ${t.en.symbol}: image ${t.en.image}, element ${t.en.element}, direction ${t.en.direction}.`,
+      definition_vi: `Quái thứ ${n} trong 8 theo thứ tự Tiên Thiên ${t.vi.symbol}: tượng ${t.vi.image}, hành ${t.vi.element}, hướng ${t.vi.direction}.`,
+      definition_zh: `先天八卦第${n}位${t.zh.symbol}，象${t.zh.image}，五行属${t.zh.element}，方位${t.zh.direction}。`,
+      iztro: false,
+      note: 'English output is pinyin without tones (terms: "pinyin"); the image is the usual English name.',
+      source: SRC_YI,
+    });
+  }
+  {
+    const all = ba((lang) => YI.allHexagrams({ lang }));
+    all.en.forEach((h, i) => {
+      const v = all.vi[i];
+      const z = all.zh[i];
+      b.add({
+        category: "iching-hexagram", vi: h.nameVi, vi_alt: [TEN_QUE[h.number][0]], zh: h.nameZh, han: h.nameHan, pinyin: h.pinyin, en: h.nameEn,
+        code: String(h.number),
+        definition_en: `Hexagram ${h.number} ${h.symbol}: ${h.upper.name} (${h.upper.image}) over ${h.lower.name} (${h.lower.image}); palace ${h.palace.name}, ${h.palace.generationName.toLowerCase()}.`,
+        definition_vi: `Quẻ ${h.number} ${h.symbol}: ${v.upper.name} (${v.upper.image}) trên ${v.lower.name} (${v.lower.image}); cung ${v.palace.name}, ${v.palace.generationName.toLowerCase()}.`,
+        definition_zh: `第${h.number}卦${h.symbol}，上${z.upper.name}${z.upper.image}下${z.lower.name}${z.lower.image}，属${z.palace.name}宫${z.palace.generationName}。`,
+        iztro: false,
+        note: `Lines bottom first ${h.binary} (1 yang). vi_alt is the short Vietnamese name, without the two images.`,
+        source: SRC_YI + " (TEN_QUE)",
+      });
+    });
+  }
+  VI_TRI_CUNG.forEach(([vi, en, zh], i) => {
+    b.add({
+      category: "iching-palace-generation", vi, zh, en, code: String(i), iztro: false,
+      note: `World line ${[6, 1, 2, 3, 4, 5, 4, 3][i]}; the response line is three lines away.`,
+      source: "iching/src/data.ts (VI_TRI_CUNG, THE_THEO_VI_TRI)",
+    });
+  });
+  Object.entries(LUC_THAN).forEach(([vi, [en, zh]]) => {
+    b.add({
+      category: "iching-six-relation", vi, zh, en, code: YI.RELATION_CODES[vi], iztro: false,
+      note: "Relation of the line element to the palace element (relationCode in every lang).",
+      source: "iching/src/data.ts (LUC_THAN), en.ts (RELATION_CODES)",
+    });
+  });
+  LUC_THU.forEach(([vi, en, zh], i) => {
+    b.add({
+      category: "iching-six-spirit", vi, zh, en, code: String(i), iztro: false,
+      note: "Spirit of the bottom line by the day stem (KHOI_LUC_THU), then upward in this order; spiritIndex in every lang.",
+      source: "iching/src/data.ts (LUC_THU)",
+    });
+  });
+  Object.entries(TRANG_THAI).forEach(([vi, [en, zh]]) => {
+    b.add({
+      category: "iching-month-state", vi, zh, en, code: YI.MONTH_STATE_CODES[vi], iztro: false,
+      note: "The English name is also the code (monthStateCode).",
+      source: "iching/src/data.ts (TRANG_THAI), en.ts (MONTH_STATE_CODES)",
+    });
+  });
+  VAI_TRO_QUAI_KHI.forEach(([vi, en, zh], i) => {
+    b.add({
+      category: "iching-gua-qi-role", vi, zh, en, code: String(i), iztro: false,
+      note: "The five hexagrams of a solar month take these ranks in turn (dailyHexagram role).",
+      source: "iching/src/data.ts (VAI_TRO_QUAI_KHI)",
+    });
+  });
+
+  // ---- Phong thuỷ: tên đọc từ lớp tiếng Anh của gói fengshui.
+  {
+    const dirs = ba((lang) => FS.eightDirections(1, { lang }));
+    const byStar = (ds) => Object.fromEntries(ds.map((d) => [d.star, d]));
+    const vi = byStar(dirs.vi);
+    const zh = byStar(dirs.zh);
+    ["sheng-qi", "tian-yi", "yan-nian", "fu-wei", "huo-hai", "liu-sha", "wu-gui", "jue-ming"].forEach((id) => {
+      const d = byStar(dirs.en)[id];
+      b.add({
+        category: "fengshui-eight-mansions-star", vi: vi[id].starName, zh: zh[id].starName, en: d.starName,
+        alt: [[d.gloss, "gloss: a literal translation of the characters"]],
+        code: id, iztro: false,
+        note: (d.favorable ? "Favorable." : "Unfavorable.") + " The English name is pinyin: the stars have no fixed English translation.",
+        source: "fengshui/src/en.ts (eightDirections, STAR_GLOSS)",
+      });
+    });
+  }
+  for (const [kua, id] of [[1, "east"], [2, "west"]]) {
+    const g = ba((lang) => FS.lifeGua(1990, kua === 1 ? "male" : "female", { lang }));
+    if (g.en.group !== id) throw new Error("group of the 1990 gua changed: " + g.en.group);
+    b.add({
+      category: "fengshui-group", vi: g.vi.groupName, zh: g.zh.groupName, en: g.en.groupName, code: id, iztro: false,
+      note: id === "east" ? "Kua numbers 1, 3, 4, 9 (Kan, Zhen, Xun, Li)." : "Kua numbers 2, 6, 7, 8 (Kun, Qian, Dui, Gen).",
+      source: "fengshui/src/en.ts (lifeGua groupName)",
+    });
+  }
+  {
+    const m = ba((lang) => FS.mountains24({ lang }));
+    m.en.forEach((x, i) => {
+      b.add({
+        category: "fengshui-mountain", vi: m.vi[i].name, zh: m.zh[i].name, en: x.name, code: x.id, iztro: false,
+        definition_en: `${x.from}° to ${x.to}°, centered on ${x.center}°; ${x.kind}, in the ${x.trigramName} trigram (${x.directionName.toLowerCase()}).`,
+        definition_vi: `Từ ${x.from}° tới ${x.to}°, giữa ${x.center}°; thuộc quái ${m.vi[i].trigramName} (${m.vi[i].directionName}).`,
+        definition_zh: `${x.from}°至${x.to}°，正中${x.center}°，属${m.zh[i].trigramName}卦（${m.zh[i].directionName}）。`,
+        note: `Three Cycles dragon: ${x.dragon}; Xuan Kong polarity: ${x.xuanKongPolarity} (other schools differ).`,
+        source: "fengshui/src/en.ts (mountains24)",
+      });
+    });
+  }
+  {
+    const s9 = ba((lang) => FS.nineStars({ lang }));
+    s9.en.forEach((x, i) => {
+      b.add({
+        category: "fengshui-nine-star", vi: s9.vi[i].name, zh: s9.zh[i].name, en: x.name, code: String(x.number), iztro: false,
+        note: `Element ${x.element}.`,
+        source: "fengshui/src/en.ts (nineStars)",
+      });
+    });
+  }
+  {
+    // Năm vai của sao trong vận 9: sao 9 vượng, 1 và 2 sinh, 8 thoái, 3 tới 7 sát hay tử.
+    const seen = new Set();
+    for (const star of [9, 1, 8, 5, 3]) {
+      const q = ba((lang) => FS.starQi(9, star, { lang }));
+      if (seen.has(q.en.qi)) continue;
+      seen.add(q.en.qi);
+      b.add({
+        category: "fengshui-star-qi", vi: q.vi.name, zh: q.zh.name, en: q.en.name, code: q.en.qi, iztro: false,
+        note: "Prosperous: the period star; growing: the next two; retreating: the last one; then killing and dead (starQi). Some books count one growing star.",
+        source: "fengshui/src/en.ts (starQi)",
+      });
+    }
+    if (seen.size !== 5) throw new Error("expected five star roles, got " + [...seen].join(", "));
+  }
+  {
+    const found = new Map();
+    for (let period = 1; period <= 9; period++) {
+      for (const m of FS.mountains24()) {
+        const c = ba((lang) => FS.flyingStarChart({ period, sitting: m.id }, { lang }));
+        if (c.en.pattern && !found.has(c.en.pattern)) found.set(c.en.pattern, c);
+      }
+    }
+    for (const id of ["prosperous-sitting-facing", "reversed", "double-facing", "double-sitting"]) {
+      const c = found.get(id);
+      if (!c) throw new Error("pattern never met: " + id);
+      b.add({
+        category: "fengshui-flying-star-pattern", vi: c.vi.patternName, zh: c.zh.patternName, en: c.en.patternName, code: id, iztro: false,
+        note: "Read from where the period star lands among the mountain and facing stars (flyingStarChart pattern).",
+        source: "fengshui/src/en.ts (flyingStarChart)",
+      });
+    }
+  }
+  {
+    const r = ba((lang) => FS.lubanRulers({ lang }));
+    const rows = new Map();
+    r.en.forEach((ruler, i) => {
+      ruler.sectors.forEach((x, k) => {
+        const key = x.han;
+        if (!rows.has(key)) rows.set(key, { en: x, vi: r.vi[i].sectors[k], zh: r.zh[i].sectors[k], rulers: [] });
+        rows.get(key).rulers.push(`${ruler.name} (${x.auspicious ? "good" : "bad"})`);
+      });
+    });
+    for (const x of rows.values()) {
+      b.add({
+        category: "fengshui-luban-sector", vi: x.vi.name, zh: x.zh.name, han: x.en.han, en: x.en.name, iztro: false,
+        note: `On the ${x.rulers.join(", ")}.`,
+        source: "fengshui/src/thuoc-lo-ban.ts (BANG_THUOC via lubanRulers)",
+      });
+    }
+    // Cung nhỏ: mỗi chữ Hán một dòng (Tấn bửu và Tiến bảo cùng chữ 进宝: một dòng, tên kia ở vi_alt).
+    // Pinyin có dấu ghép từng chữ theo han-readings.json, rồi soát với pinyin
+    // không dấu của thư viện; chữ đa âm đọc khác bảng chữ thì đổi theo DA_AM.
+    const DA_AM = { "长:zhang": "zhǎng" };
+    const bo = (p) => p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ü/g, "v");
+    const subs = new Map();
+    r.en.forEach((ruler, i) => {
+      ruler.sectors.forEach((x, k) => {
+        x.subSectors.forEach((y, j) => {
+          if (!subs.has(y.nameZh)) subs.set(y.nameZh, { en: y, vi: r.vi[i].sectors[k].subSectors[j], zh: r.zh[i].sectors[k].subSectors[j], at: [] });
+          subs.get(y.nameZh).at.push(`${x.pinyin} (${x.auspicious ? "good" : "bad"}) on the ${ruler.name}`);
+        });
+      });
+    });
+    for (const x of subs.values()) {
+      const chars = [...x.en.nameZh];
+      const lib = x.en.pinyin.toLowerCase().split(" ");
+      let han = "";
+      const py = [];
+      chars.forEach((c, i) => {
+        const doc = CHARS[c];
+        if (!doc) {
+          b.missing.add(c);
+          return;
+        }
+        han += doc[0];
+        const am = bo(doc[1]) === lib[i] ? doc[1] : DA_AM[`${c}:${lib[i]}`];
+        if (!am) throw new Error(`pinyin of ${c} in ${x.en.nameZh}: library ${lib[i]}, han-readings.json ${doc[1]}`);
+        py.push(am);
+      });
+      b.add({
+        category: "fengshui-luban-sub-sector", vi: x.vi.name, zh: x.zh.name, han, pinyin: py.join(" "), en: x.en.name,
+        alt: [[x.en.nameEn, "gloss: a literal translation of the characters"]], iztro: false,
+        note: `In sector ${x.at.join("; ")}. The English name is pinyin; the gloss is the field nameEn.`,
+        source: "fengshui/src/thuoc-lo-ban.ts (TEN_CUNG_NHO via lubanRulers)",
+      });
+    }
+  }
+
   return b;
 }
 
@@ -637,7 +877,7 @@ export function toJson(rows) {
   return JSON.stringify(
     {
       name: "nhatnguyet/terminology",
-      title: "Nhat Nguyet terminology: Vietnamese, Chinese and English names of calendar, Zi Wei Dou Shu, BaZi and numerology terms",
+      title: "Nhat Nguyet terminology: Vietnamese, Chinese and English names of calendar, Zi Wei Dou Shu, BaZi, numerology, I Ching and feng shui terms",
       license: "CC-BY-4.0",
       attribution: "Data: Nhat Nguyet (nhatnguyet.org)",
       generator: "du-lieu/terminology/generate.mjs",

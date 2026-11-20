@@ -1,0 +1,595 @@
+{
+ "mon": "fengshui",
+ "ghiChu": "Băm SHA-256 của hình SVG do bản TypeScript vẽ; bản Python phải ra cùng băm.",
+ "ca": [
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "576118b03a1d1e9492be548d17a1c16d85065fea445093df3d635c206a526dc9"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "f3598d499f1871ce2d301d407a4d57c82e68c44840e32be432ab92cd05ed9ff5"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "1c43f69667cc8e692514ce49d3b7602dddf33c7d2b23dcf53fa35d8edcbb15d9"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "bacef4f4b9e334f8354d079a29d3fc03a47eb0bda28bb2c218e4cf80c7afb25d"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "83e18fa0b7e80504179c110805f342dac15446f054447016ef413bb7754087c5"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "3f4cbf1c8b3747153f04846e23a3c84f30475fee9f6541796c0c933efa42df13"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "a8a2d01b8f7837ef2ea432c26786c010054aaa75fe151900db7e79299f45edfb"
+  },
+  {
+   "vao": {
+    "hinh": "compass"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "81cbb37981b3746f4612f09dd89faae3dd21e5286a8be7860011876c6d010852"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "df4bebd90143a6f2b3702fac4cb08c940c63c618c1e71d95245462f46ece4f46"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "bfe6a4cfc7784f1b2b204ab94f926e54f7f1710e5d623b69e4d2339d0bf0755f"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "a9976d4d60fc11a3c9ce8401675146ab8bd1493d2b3bb8a2d719f122244c3d2d"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "b7a22d421db0f7804108efaf217263c0e2334954a92a98b0c065a0b0c32158eb"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "6000ebdee7444558d47b0c7fe4935769bfd624bebd55f5e28c27e349d5d252c4"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "83731c8afd7be9c42c85a18e7d3142332320147b9b14be47f0ae2c60ffd69a4b"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "02469f9c2b153c069926ed66e04dd438fac67fba59ae1fa18770a0a7ec928ea8"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "lifeGua": [
+     "1990-09-19",
+     "female"
+    ],
+    "facing": 180
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "cba652aa0410ea55d965e1c6258a59d28b7e537995e4bfbf32491ab0710d1368"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "515eb2c22a0edc6a61994e9ed3f5b38419caeacbcfbf15943321365c8e67e2a6"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "fda858695878fbb6a256863d8eeb8d3bbff0d7f79fc04c4162772b1baca806c0"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "d4eb67a35fed34cfe7ef3d6afcd125fa10901e4feb937819fd50ebf0386223c9"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "69e3717cd096d44bb1b401212d8a070875c2b06bd47d2cc7b4e63c5825f2533a"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "6c0b14b3c3744330b057f9e014ba8d5d7e9647ffe3b4c3a1a92c782bf053edc3"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "81888563cd825ec44fc2b089a4f6c55a90267da150575b108cc4db22c5f98cfa"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "f5ebc7bf40a51493e39d7a7e11598ad19e95931f7edddf9f1fe34c753736dff2"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "houseSitting": "Càn",
+    "orientation": "north-up"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "70d1d717b80597e2fa159eef8ee809064c46ec09865abb4bee708bd51a0bd820"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "bad2a50e05f429403b3a1774f8bb798c5fc49dcd48677d34e7f26d6ffb067216"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "7d268dd8fcf600e9144b3df16ce0506be23e67fcdc81b26a76bc5acedd8b4a63"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "e9926f9f43afc87ee3c805e71bdc0bfc4adc3a57af2d6d1327dd323ffb469267"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "405f40e4e6012174c296439c57e4d94aa922edeaa30a97ffeb51f491518a6db2"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "ea3040b51b52a77631623930bcfef273d83d47c17f0232d5f491bc0f211113c9"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "77f2c1d862ec83a82f8d55124fec1dbc06b874755f0c0e2884772e07d8361131"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "409793a211d32e255337395c62f6ff6fdba08ae066aa06fd44dc8f1881b728db"
+  },
+  {
+   "vao": {
+    "hinh": "compass",
+    "gua": 3,
+    "facing": "Tốn"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "a344ceb61a71ec7f8905e327171d7cdaee8bf33037c9c3d67d025a936681d781"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "9c234c8bfbbbbd39122912516c260acb67b5a763d9391e890d3776788d1d15c4"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "4545c57941ff1c8e60e5ad2c4136e4ed35d9a047e46b1b5c6d9a85293ddec8e3"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "fad77defab15b1297d6219aad5494d9866d41b7191ff53a29c704fab2561f00e"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "33772acb49b7422eb0425ffa3d31c9e977bae9634fd366c7cc7915b91b228a7a"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "06dacb99f8433088b5fdec86446382eec0fc507ba5042374df06daf8c3d0a6b7"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "8de9f5f0da1ee3fea7497d267700c9706dfe929f6409285dd5ffc5b00aac1736"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "44cfce1c8d0dbcfed2717605f3da6a0a13257be6ed0e59b0bb79e821bd3aeca8"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 9,
+    "facing": "Ngọ"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "f403f6e00e22dbbb5001e35a09852a5758234a799f01b81c5c321bcdd980fd6e"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "177d4f4aa8b7d9752af0bea4141def566b8e55ef9b233dfc29f03210b5adb2a5"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "8b2d372709a4d8b76e5e17b087088d49e1f413bcac77eef217a8b0ac7c926767"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "349c83b5d91d25f9fe28a32d85775eb52eca69d727ee7246e75b155fb0cc1a40"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "57064d7bb97814cf12035abcbc975175f5efe76b27d2aeed52732d9bc5494bcd"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "15fa871d15480db910265dc98fae2cc571c3806752739506a0bc0c95630b4303"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "29058e238c1f5c43df0f3974bf4190f5bf432e4c2c54abaa2a67e8774289952c"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "a24a4bffd436075e667a428e86fdb201eec52c201a634a19846e728d85ecd71c"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "period": 8,
+    "facing": 37
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "07058e1240331e096820e0da09aedae96a6d0e434506ba3332cb9dbafbd6bb4c"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "de08e4a6f09491245a01e14547195326c6803392ea265824519f35eec2810ad2"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "978eb692ed0ca1015330f38ffffaa3b98bf614e009616361ba76795defd05f0d"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "360016afac54a2aed155138c7ef1699cb0680d9a1c4a971ee89f56c97571fcf1"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "aa97e3075d5395dd0dea9ce26bdb6708d2c9634eb4fced7575214fcc1548ee68"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "0058ebcc2af56e7bd97d53b40a3247a507a244d6d0f570e8bf30055805767bb7"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "b2513f83eb5ca4a06859e49cd938b902b0b976a06cc974dcf2e19f4785567511"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "en",
+   "terms": "han",
+   "theme": "light",
+   "sha256": "c0223914059cbcdc713df79d1c63ebaa3b5ab33868d42648246e8e4feb684efa"
+  },
+  {
+   "vao": {
+    "hinh": "chart",
+    "year": 1990,
+    "sitting": "Tân"
+   },
+   "lang": "en",
+   "terms": "vi",
+   "theme": "light",
+   "sha256": "7ab00e7597ac398f489d7706a50f409a275e470b87c3b21b62950619d171f203"
+  }
+ ]
+}

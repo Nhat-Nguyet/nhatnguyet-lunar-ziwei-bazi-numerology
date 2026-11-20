@@ -7,6 +7,8 @@
     "typedoc/bat-tu.ts",
     "typedoc/than-so-hoc.ts",
     "typedoc/le-hoi.ts",
+    "typedoc/iching.ts",
+    "typedoc/fengshui.ts",
     "typedoc/cli.ts"
   ],
   "tsconfig": "tsconfig.typedoc.json",

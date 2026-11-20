@@ -1,7 +1,7 @@
 {
   "name": "@nhatnguyet/ziwei",
-  "version": "0.3.0",
-  "description": "Zi Wei Dou Shu (Purple Star Astrology, 紫微斗数) charts on the Vietnamese or Chinese calendar: palaces, stars, Four Transformations, decade luck, patterns, SVG, iztro-compatible data. English-named alias of @nhatnguyet/tu-vi.",
+  "version": "0.4.0",
+  "description": "Zi Wei Dou Shu (Purple Star Astrology, 紫微斗数) charts on the calendar of your country (China, Taiwan, Korea, Vietnam...): palaces, stars, Four Transformations, decade luck, patterns, SVG, iztro-compatible data. English-named alias of @nhatnguyet/tu-vi.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
   "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
@@ -27,8 +27,9 @@
     "紫微排盘",
     "四化",
     "lunar calendar",
+    "chinese metaphysics",
+    "자미두수",
     "nhat nguyet",
-    "vietnam",
     "vietnamese",
     "typescript",
     "no external dependencies"
@@ -53,7 +54,7 @@
     "iztro.js"
   ],
   "dependencies": {
-    "@nhatnguyet/tu-vi": "^0.3.0"
+    "@nhatnguyet/tu-vi": "^0.4.0"
   },
   "repository": {
     "type": "git",

@@ -16,6 +16,63 @@ release passes all of them in TypeScript and in Python.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-20
+
+Every release passes all 17,291 core test vectors in `ca-kiem/` (28,586
+including school options, auspicious hours, I Ching and feng shui) in
+TypeScript and in Python.
+
+### Added
+
+- `@nhatnguyet/iching` and the Python module `nhatnguyet.iching`: the 64
+  hexagrams with names in English, pinyin, Chinese and Vietnamese, the eight
+  trigrams, the Eight Palaces with world and response lines, nuclear,
+  opposite, reversed and changed hexagrams, three-coin and Plum Blossom
+  casting, the Six Lines (najia) chart of a day, the daily hexagram of the Han
+  Gua Qi calendar, the public domain Zhou Yi text with James Legge's 1882
+  translation, and an SVG drawing (`renderHexagramSvg`). Checked against the 6,684
+  vectors of `ca-kiem/iching.json`; method and sources in
+  [docs/iching.md](docs/iching.md).
+- `@nhatnguyet/fengshui` and `nhatnguyet.fengshui`: the Eight Mansions life gua
+  (Kua number) and house gua, the 24 mountains, Xuan Kong flying star charts
+  for periods 1 to 9 with castle gates, annual stars, the three Luban rulers
+  (sectors and sub-sectors with pinyin and a literal English gloss), and SVG drawings of the compass and of a flying star chart. These are the
+  rules of traditional schools, not verified effects. Checked against the 3,083
+  vectors of `ca-kiem/fengshui.json`; where the books disagree:
+  [docs/fengshui.md](docs/fengshui.md).
+- Python: `hexagram`, `cast_coins`, `cast_from_numbers`, `najia`,
+  `daily_hexagram`, `render_hexagram_svg`, `life_gua`, `house_gua`,
+  `mountain_at`, `find_mountain`, `flying_star_chart`, `annual_stars`,
+  `period_of`, `luban_ruler`, `render_compass_svg` and `render_flying_star_svg`
+  import from `nhatnguyet`.
+- Command line (npm and Python, the same output byte for byte):
+  `nhatnguyet hexagram <number|name>`, `cast` (a three-coin cast, random or
+  given with `--lines`, and its Six Lines chart for `--date`),
+  `daily-hexagram <date>`, `kua <date|lunar year> <male|female>`,
+  `flying-stars` (`--period` or `--year`, `--facing` or `--sitting` as a
+  mountain or in degrees) and `luban <cm>` (`--ruler`); `--svg` writes a
+  drawing for every one of them except `luban`.
+- MCP server: tools `hexagram`, `six_lines_chart`, `daily_hexagram`,
+  `life_gua`, `flying_star_chart` and `luban_ruler` (fourteen tools in all).
+- Terminology: 241 terms in 15 new categories (the eight trigrams, the 64
+  hexagrams, Eight Palaces generations, six relations, six spirits, month
+  states, Gua Qi ranks, Eight Mansions stars, east and west groups, the 24
+  mountains, the nine stars, star roles, flying star patterns, Luban ruler
+  sectors and sub-sectors), 669 terms in all. The check that every name the libraries output
+  is in the glossary covers both new packages.
+- The Agent Skill (`skills/nhatnguyet`) knows the new tools and commands.
+
+### Changed
+
+- Engine 2.3.0 (was 2.2.0 in 0.3.0). Zi Wei recognizes three more patterns of
+  the *Zi Wei Dou Shu Quan Shu* tables, which need the stars placed since
+  0.3.0: Punishment and Prisoner Flanking the Seal (刑囚夾印), Wolf and Fire
+  Meeting (貪火相逢) and Gentleman in the Wilds (君子在野), each with the book's
+  line and `hasVariants`; how they read the book is in the `@nhatnguyet/tu-vi`
+  README. In `ca-kiem/` only the pattern lists of `tu-vi.json` and
+  `tu-vi-phai.json` and the engine version of every file change. The
+  terminology adds the three names (672 terms).
+
 ## [0.3.0] - 2026-11-19
 
 Engine 2.2.0 (was 2.0.1 in 0.2.0). Every release passes all 17,291 core test
@@ -269,7 +326,8 @@ First release.
 - Zero runtime dependencies; TypeScript runs in Node.js and browsers, Python
   needs only the standard library (3.9 or newer).
 
-[Unreleased]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/releases/tag/v0.1.0

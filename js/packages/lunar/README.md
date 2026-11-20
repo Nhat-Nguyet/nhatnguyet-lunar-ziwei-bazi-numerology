@@ -1,8 +1,10 @@
 # @nhatnguyet/lunar
 
-The Vietnamese lunar calendar (Hanoi time, UTC+7) and the Chinese, Korean and
-Japanese ones: lunar and Gregorian dates, stems and branches, the 24 solar
-terms to the minute, auspicious hours. No external dependencies, TypeScript types,
+Chinese, Korean, Japanese and Vietnamese lunisolar calendars, country-aware:
+the same day can be a different lunar date in Beijing, Seoul and Hanoi time,
+and `country` picks the calendar of 11 countries and regions (Vietnam, UTC+7,
+by default). Lunar and Gregorian dates, stems and branches, the 24 solar terms
+to the minute, auspicious hours. No external dependencies, TypeScript types,
 Node 18+ and browsers.
 
 ## Install

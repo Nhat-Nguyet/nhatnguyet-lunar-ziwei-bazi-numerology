@@ -1,6 +1,6 @@
 ---
 name: nhatnguyet
-description: Use when a question needs a lunar (âm lịch, 农历) date, Tết or Chinese New Year date, a solar term (tiết khí, 节气), a stem-branch (can chi, 干支) of a year, month, day or hour, a Zi Wei Dou Shu (Tử Vi, 紫微斗数) chart, a BaZi (Bát Tự, Four Pillars, 八字) chart, Pythagorean numerology numbers or the date of a Vietnamese festival. Computes them with the Nhat Nguyet libraries (CLI, JS, Python or MCP) instead of estimating, with the Vietnamese calendar (UTC+7) by default.
+description: Use when a question needs a lunar (âm lịch, 农历) date, Tết or Chinese New Year date, a solar term (tiết khí, 节气), a stem-branch (can chi, 干支) of a year, month, day or hour, a Zi Wei Dou Shu (Tử Vi, 紫微斗数) chart, a BaZi (Bát Tự, Four Pillars, 八字) chart, Pythagorean numerology numbers, the date of a Vietnamese festival, an I Ching hexagram, Six Lines (najia) chart or hexagram of the day, or a feng shui rule (Kua number, flying star chart, Luban ruler). Computes them with the Nhat Nguyet libraries (CLI, JS, Python or MCP) instead of estimating, with the Vietnamese calendar (UTC+7) by default.
 ---
 
 # Nhat Nguyet: compute, do not estimate
@@ -16,8 +16,10 @@ Run one of the tools below and read its output.**
 Use the first one available:
 
 1. **MCP tools** (if the `nhatnguyet` server is connected): `lunar_convert`,
-   `solar_terms`, `cast_ziwei` (older name `cast_zi_wei`), `cast_bazi`,
-   `numerology`, `festivals`, `render_chart_svg`.
+   `solar_terms`, `auspicious_hours`, `cast_ziwei` (older name `cast_zi_wei`),
+   `cast_bazi`, `numerology`, `festivals`, `render_chart_svg`, `hexagram`,
+   `six_lines_chart`, `daily_hexagram`, `life_gua`, `flying_star_chart`,
+   `luban_ruler`.
 2. **Command line** (Node.js 18+ or Python 3.9+), always with `--json` so you
    read structured data:
 
@@ -30,6 +32,12 @@ Use the first one available:
    npx -y @nhatnguyet/cli bazi 1990-09-19 20:00 female --json      # time may be omitted when unknown
    npx -y @nhatnguyet/cli numerology "Nguyen Van An" 1990-09-19 --today 2026-11-19 --json
    npx -y @nhatnguyet/cli festivals 2027 --json
+   npx -y @nhatnguyet/cli hexagram Peace --json                    # one of the 64 hexagrams
+   npx -y @nhatnguyet/cli cast --lines 987678 --date 2026-11-19 --json   # a cast and its Six Lines chart
+   npx -y @nhatnguyet/cli daily-hexagram 2026-11-19 --json         # Gua Qi hexagram of the day
+   npx -y @nhatnguyet/cli kua 1990-09-19 female --json             # Eight Mansions life gua
+   npx -y @nhatnguyet/cli flying-stars --period 9 --facing wu --json
+   npx -y @nhatnguyet/cli luban 80 --json                          # 80 cm on the three Luban rulers
    ```
 
    The Python package gives the same output: `pip install nhatnguyet`, then
@@ -82,6 +90,11 @@ If the person gave only a lunar birth date, convert it with `solar` first.
   Canh, Tân, Nhâm; brightness tables). The results follow the version most used
   in Vietnam; the `notes` and `raw.caveat` fields say so.
 - **Vietnam's fourth zodiac animal is the Cat**, elsewhere the Rabbit.
+- **I Ching and feng shui results are the rules of traditional schools**, not
+  predictions or verified effects. A cast needs the six line values the person
+  got (6 to 9, bottom line first); do not invent a cast for them. The Kua number
+  turns at the lunar New Year; books that turn it at the Start of Spring give
+  another gua to people born between the two dates.
 
 ## 4. Reading and quoting the results
 

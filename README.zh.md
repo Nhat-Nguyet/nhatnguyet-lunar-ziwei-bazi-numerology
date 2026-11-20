@@ -1,8 +1,8 @@
 <h1 align="center">Nhat Nguyet</h1>
 
 <p align="center">
-  <b>越南农历不是中国农历：常用的库在 1900 至 2100 年间有 2,724 天给出错误的越南农历日期。</b><br>
-  在正确的历法上排紫微斗数、八字、数字命理，查节庆与黄道吉时，支持 JavaScript、Python 和 MCP · 360 万份公开命盘，论断引用古籍并注明书名与篇章 · 结果有 English、Tiếng Việt、中文 · 17,291 组共享测试用例
+  <b>面向 JavaScript 与 Python 的农历（阴阳历）、紫微斗数、八字、数字命理、易经与风水：天文精确，按国家计算，每种语言给出同一个答案。</b><br>
+  朔与节气在 1900 至 2100 年间与 NASA 和 IMCCE 核对 · 支持中国、韩国、日本、越南及另外 7 个国家和地区的农历 · 供 AI 助手使用的 MCP 服务器 · 360 万份公开命盘，论断引用古籍并注明书名与篇章 · 结果有 English、中文、Tiếng Việt · 17,291 组共享测试用例（共 28,586 组）
 </p>
 
 <p align="center">
@@ -45,21 +45,28 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country` 默认为 `"VN"`（越南，UTC+7），即本项目最初所用的历法；`castZiWei` 也接受该选项。其余十个国家和地区见[农历](#农历与黄道吉时)。
 
 **Python**（3.9 及以上，仅用标准库）：结果相同，生成的 SVG 逐字节相同。
 
@@ -71,14 +78,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **命令行**：用 `npx` 免安装运行；`pip install nhatnguyet` 后也可直接用 `nhatnguyet ...`。
@@ -179,7 +186,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-其他命令：`bazi`、`lunar`、`solar`、`terms`、`numerology`、`festivals`（`--ics` 输出日历文件）、`hours`；`--lang vi|zh`、`--json`、`--svg chart.svg`，以及下文的流派选项。英文 API 及全部参数见 [docs/api-en.md](./docs/api-en.md)。
+其他命令：`bazi`、`lunar`、`solar`、`terms`、`numerology`、`festivals`（`--ics` 输出日历文件）、`hours`、`hexagram`、`cast`（六爻）、`daily-hexagram`、`kua`、`flying-stars`、`luban`；`--lang vi|zh`、`--json`、`--svg chart.svg`，以及下文的流派选项。英文 API 及全部参数见 [docs/api-en.md](./docs/api-en.md)。
 
 ## 目录
 
@@ -197,23 +204,24 @@ Vietnamese calendar (UTC+7).
 
 ## 为何可信
 
-**科学性在于方法，而不在于预测。** 历法是天文计算，在 1900 至 2100 年范围内与 NASA 和 IMCCE 核对：
+**历法是天文计算，并按所问的国家计算。** 东亚各地的阴阳历规则相同，钟表不同：农历月从当地时间朔所在的那一天开始，所以北京、首尔和河内可能在不同的日子开始一个月，甚至一年。本库按各国自己的时区计算，并在 1900 至 2100 年范围内与 NASA 和 IMCCE 核对天文数据：
 
 | 检验 | 结果 |
 |---|---|
 | 朔与 NASA 对比（2,474 次） | 平均晚 0.9 分钟，最多 3.9 分钟 |
 | 用 NASA 朔与 IMCCE 节气重建的农历月 | 2,461 个月中 2,459 个一致（其余两个的朔在午夜前后一分钟内） |
 | 节气与 IMCCE 对比（4,824 个） | 平均偏差 0.27 分钟，最多 0.9 分钟（取整到分钟），日期全部正确 |
-| 越南（UTC+7）与中国（UTC+8），规则相同 | 2,814 天、10 个春节日期不同 |
+| 河内（UTC+7）与北京（UTC+8），规则相同 | 2,814 天、10 个春节日期不同 |
+| 首尔（UTC+9）与北京（UTC+8），规则相同 | 2,818 天、11 个春节日期不同 |
 
 - **技术论文**：[越南阴阳历的计算](./docs/paper/paper.pdf)（PDF）给出方法、误差预算、与 NASA、IMCCE 和 JPL DE440 的核对，并逐一解释越南与中国农历不同的每一天。文中每个数字都由 `docs/paper/reproduce.sh` 重新计算。
-- **共享测试用例**：[`ca-kiem/`](./ca-kiem) 收录 **17,291 组核心测试用例**（输入 `vao`，期望输出 `ra`），由驱动 [nhatnguyet.org](https://nhatnguyet.org) 的参考引擎生成：历法 14,936 组、紫微命盘 777 个、八字命盘 777 个、数字命理档案 600 份、节庆年份 201 个，另有流派选项 432 组与黄道吉时 1,096 天（共 18,819 组）。TypeScript 与 Python 版本每次推送都全部通过。
+- **共享测试用例**：[`ca-kiem/`](./ca-kiem) 收录 **17,291 组核心测试用例**（输入 `vao`，期望输出 `ra`），由驱动 [nhatnguyet.org](https://nhatnguyet.org) 的参考引擎生成：历法 14,936 组、紫微命盘 777 个、八字命盘 777 个、数字命理档案 600 份、节庆年份 201 个，另有流派选项 432 组、黄道吉时 1,096 天、易经 6,684 组与风水 3,083 组（共 28,586 组）。TypeScript 与 Python 版本每次推送都全部通过。
 - **春节史**：[`history/`](./history/README.md) 列出 1900 至 2100 年每一年在 UTC+7 与 UTC+8 下的春节，注明越南当年实际使用的历法，有文献记载的年份均附出处。
-- **如实说明范围**：紫微斗数、八字与数字命理是传统流派的规则，未经科学验证；请勿用于健康、财务或法律决定。各派有分歧之处，本库写明所依规则，并允许切换（[流派选项](#流派选项)）。
+- **如实说明范围**：科学性在于方法，而不在于预测。紫微斗数、八字、数字命理、易经与风水是传统流派的规则，未经科学验证；请勿用于健康、财务或法律决定。各派有分歧之处，本库写明所依规则，并允许切换（[流派选项](#流派选项)）。
 
 ### 与其他库对比
 
-[iztro](https://github.com/SylarLong/iztro) 和 [lunar-javascript](https://github.com/6tail/lunar-javascript) 都是严谨、广泛使用的库，对于它们所实现的内容也都正确：按北京时间（UTC+8）计算的中国农历。越南采用相同规则，但按河内时间（UTC+7）计算。逐日对比 1900 至 2100 年（[doi-chieu/](./doi-chieu/README.md)，可用 `node chay.mjs` 复现）：
+[iztro](https://github.com/SylarLong/iztro) 和 [lunar-javascript](https://github.com/6tail/lunar-javascript) 都是严谨、广泛使用的库，对于它们所实现的内容也都正确：按北京时间（UTC+8）计算的中国农历。用于其他国家时，它们给出的是北京的日期。越南是最明显的例子：规则相同，但按河内时间（UTC+7）计算。逐日对比 1900 至 2100 年（[doi-chieu/](./doi-chieu/README.md)，可用 `node chay.mjs` 复现）：
 
 | | 结果 |
 |---|---:|
@@ -235,20 +243,22 @@ Vietnamese calendar (UTC+7).
 
 ## 安装
 
-版本 0.3.0。JavaScript 包为 ESM，附 TypeScript 类型，无外部依赖（仅 MCP 服务器需要其 SDK 与 zod）；Python 包仅用标准库。
+版本 0.4.0。JavaScript 包为 ESM，附 TypeScript 类型，无外部依赖（仅 MCP 服务器需要其 SDK 与 zod）；Python 包仅用标准库。
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | 包 | 另以此名发布 | 功能 |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 越南、中国、韩国、日本及另外 7 个地区的公农历互换；干支；二十四节气精确到分钟；二十八宿；纳音；黄道吉时 |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 中国、韩国、日本、越南及另外 7 个国家和地区的公农历互换；干支；二十四节气精确到分钟；二十八宿；纳音；黄道吉时 |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 紫微斗数：十二宫、星曜庙旺、四化、旬空截空、大限与流年、流曜、附古籍原句的格局、流派选项；SVG 绘图；供大语言模型使用的文本；iztro 兼容层 |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | 八字：按节气排四柱、藏干、十神、神煞、大运、小运；SVG 绘图 |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | 毕达哥拉斯数字命理（生命灵数、天赋数、灵魂数、巅峰数、挑战数、个人年），支持带声调的越南语姓名；SVG 绘图 |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 206 个越南节庆及其任意年份的日期、所在省份、民族、举办地点；导出 iCalendar |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | 易经：64 卦的英文、拼音、汉字与越南文名称，八宫，互卦与变卦，三钱法与梅花易数起卦，六爻纳甲，卦气值日卦，周易原文附理雅各 1882 年英译；SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | 传统流派的风水规则：八宅命卦与宅卦、二十四山、玄空飞星盘、年飞星、鲁班尺；罗盘与飞星盘 SVG |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | 在终端以方格显示命盘，或输出 JSON、SVG、iCalendar；命令与 Python 版的 `nhatnguyet` 相同 |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | 供 AI 助手使用的 MCP 服务器 |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | 5 个网页组件 |
@@ -272,9 +282,9 @@ pip install nhatnguyet
 
 ### 农历与黄道吉时
 
-`@nhatnguyet/lunar` 中的 `toLunar`、`toSolar`、`solarTerms` 与 `auspiciousHours`（Python 为 `to_lunar`、`to_solar`、`solar_terms`、`auspicious_hours`）。默认使用越南历法（UTC+7），也可传 `country`：中国、台湾、香港、澳门、新加坡、马来西亚、印度尼西亚、菲律宾（UTC+8）；韩国、日本（UTC+9）。
+`@nhatnguyet/lunar` 中的 `toLunar`、`toSolar`、`solarTerms` 与 `auspiciousHours`（Python 为 `to_lunar`、`to_solar`、`solar_terms`、`auspicious_hours`）。`country` 选择历法：中国（`CN`）、台湾（`TW`）、香港（`HK`）、澳门（`MO`）、新加坡（`SG`）、马来西亚（`MY`）、印度尼西亚（`ID`）、菲律宾（`PH`）用 UTC+8；韩国（`KR`）、日本（`JP`）用 UTC+9；越南（`VN`，默认）用 UTC+7；也可用 `timeZone` 直接给出时区（小时）。命令行（`--country`）、MCP 服务器和网页组件接受相同的代码。
 
-`auspiciousHours` 按越南历书的印法给出一天的十二时辰，标明黄道（hoàng đạo）或黑道（hắc đạo）及值神（命令行 `nhatnguyet hours`，MCP 工具 `auspicious_hours`）：
+`auspiciousHours` 按中国和越南历书的印法给出一天的十二时辰，标明黄道（hoàng đạo）或黑道（hắc đạo）及值神（命令行 `nhatnguyet hours`，MCP 工具 `auspicious_hours`）：
 
 ```js
 import { auspiciousHours } from "@nhatnguyet/lunar";
@@ -348,7 +358,7 @@ print(quanshu["notes"][-1])
 
 ### 节庆
 
-`@nhatnguyet/festivals` 中的 `festivals(year)` 给出数据集 206 个节庆里日期固定（农历或公历）的 164 个在 1900 至 2100 年任意一年的日期（其余 42 个由主办方逐年定日）。每个节庆都附所在省份（按 2025 年的 34 个省级行政区）、描述中写明时的所属民族，以及举办地点，仅在有来源给出时附坐标。`group`、`scope`、`level` 在各语言中都是英文代码。`festivalsIcs(year)` 生成 iCalendar（RFC 5545）文件，每个节庆一个全天事件。
+`@nhatnguyet/festivals` 是越南节庆数据集，其中的 `festivals(year)` 给出数据集 206 个节庆里日期固定（农历或公历）的 164 个在 1900 至 2100 年任意一年的日期（其余 42 个由主办方逐年定日）。每个节庆都附所在省份（按 2025 年的 34 个省级行政区）、描述中写明时的所属民族，以及举办地点，仅在有来源给出时附坐标。`group`、`scope`、`level` 在各语言中都是英文代码。`festivalsIcs(year)` 生成 iCalendar（RFC 5545）文件，每个节庆一个全天事件。
 
 ```js
 import { writeFileSync } from "node:fs";
@@ -377,6 +387,83 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 同一个文件也可用命令行生成：`nhatnguyet festivals 2027 --ics > vn.ics`。
 
+### 易经
+
+`@nhatnguyet/iching` 中的 `hexagram`、`castCoins`、`castFromNumbers`（梅花易数）、`najia` 与 `dailyHexagram`（Python 为 `nhatnguyet.iching`）。卦可用文王卦序号、六爻或英文、拼音、汉字、越南文名称指定。六爻纳甲给出每一爻的干支、六亲、六兽、世应、空亡与月令旺衰；值日卦依汉代孟喜的卦气法；`text(n)` 为属于公有领域的周易原文，附理雅各（James Legge）1882 年英译。方法与出处：[docs/iching.md](./docs/iching.md)。
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### 风水
+
+`@nhatnguyet/fengshui` 中的 `lifeGua`、`houseGua`、`flyingStarChart`、`annualStars` 与 `lubanRuler`（Python 为 `nhatnguyet.fengshui`）：八宅命卦（以越南时间的春节换年）、沈氏玄空一至九运飞星盘、年飞星、二十四山与三种鲁班尺，并可绘制罗盘与飞星盘 SVG。这些是流派所立的规则，并非经过验证的效果；各书分歧之处见 [docs/fengshui.md](./docs/fengshui.md)。
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## 数据集
 
 CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。
@@ -391,7 +478,7 @@ CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 个单元（核心数字、周期数字、人生主题），195 段原文 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 篇公有领域古籍全文（约 350 部作品），7,265 万字符 | 纯文本 147 MB，Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 1,328 段对齐的《易经》文本：文言原文配公有领域的英文（952 段）与法文（376 段）译文 | |
-| [术语表](./du-lieu/terminology/README.md) | 428 个术语，含越南文、繁体与简体中文、拼音和英文，涵盖各库输出的全部名称 | |
+| [术语表](./du-lieu/terminology/README.md) | 672 个术语，含越南文、繁体与简体中文、拼音和英文，涵盖各库输出的全部名称 | |
 | [AI 评测集](./ai-eval/README.md) | 1,520 道计算题，有英文、越南文、中文（农历日期、春节、四柱、命盘），其中 626 道（41%）为难题 | |
 | [1900 至 2100 年春节](./history/README.md) | 201 年在 UTC+7 与 UTC+8 下的春节，附实际使用的历法与出处 | |
 | [33 个历法与文化数据集](https://nhatnguyet.org/zh/du-lieu) | 1900 至 2100 年阴阳历、节气、六十四卦、78 张塔罗牌、206 个节庆、456 篇祭文……CSV、JSON、Parquet 格式，附 [DOI](https://doi.org/10.5281/zenodo.23009396) | |
@@ -422,7 +509,7 @@ print(len(books), sum(books["characters"]))
 
 大语言模型不应心算农历日期或星曜位置。以下四种方式可以把真实数据交给它们：
 
-- **MCP 服务器**，本地运行，工具有 `lunar_convert`、`solar_terms`、`auspicious_hours`、`cast_ziwei`、`cast_bazi`、`numerology`、`festivals`、`render_chart_svg`（含流派选项）：`claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`。Claude Desktop、Cursor、VS Code 的配置见 [js/packages/mcp](./js/packages/mcp/README.md)。
+- **MCP 服务器**，本地运行，工具有 `lunar_convert`、`solar_terms`、`auspicious_hours`、`cast_ziwei`、`cast_bazi`、`numerology`、`festivals`、`render_chart_svg`（含流派选项）、`hexagram`、`six_lines_chart`、`daily_hexagram`、`life_gua`、`flying_star_chart`、`luban_ruler`：`claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`。Claude Desktop、Cursor、VS Code 的配置见 [js/packages/mcp](./js/packages/mcp/README.md)。
 - **Agent Skill**，让助手调用工具而不是猜测：[skills/](./skills/README.md)。
 - **`chartToText`**（Python 中为 `chart_to_text`）把命盘转成简洁的 Markdown，便于放进提示词：
 
@@ -488,7 +575,7 @@ nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、�
 
 ## 从 iztro 迁移
 
-`@nhatnguyet/ziwei/iztro` 与 iztro **兼容**：`astro.bySolar` 和 `astro.byLunar` 接受相同参数，返回与 iztro 的 `FunctionalAstrolabe` 结构相同的 JSON，保留六种显示语言及其方法（`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`、`use()`……），但按越南农历计算（传 `{ country: "CN" }` 则用北京时间）。
+`@nhatnguyet/ziwei/iztro` 与 iztro **兼容**：`astro.bySolar` 和 `astro.byLunar` 接受相同参数，返回与 iztro 的 `FunctionalAstrolabe` 结构相同的 JSON，保留六种显示语言及其方法（`palace()`、`star()`、`surroundedPalaces()`、`horoscope()`、`fliesTo()`、`use()`……），按所传国家的农历计算（传 `{ country: "CN" }` 则与 iztro 一样用北京时间；默认为越南）。
 
 ```diff
 - import { astro } from "iztro";
@@ -500,9 +587,9 @@ nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、�
 ## 常见问题
 
 <details>
-<summary><b>为什么越南农历与中国农历不同？</b></summary>
+<summary><b>为什么同一天在中国、韩国和越南的农历日期可能不同？</b></summary>
 
-规则相同，钟表不同。农历月从朔所在的那一天开始，而"哪一天"按当地时间判断。朔落在世界时 16 点到 17 点之间时，河内尚未过午夜，北京已过午夜，于是越南的月份早一天开始。1985 年春节相差整整一个月（越南 1 月 21 日，中国 2 月 20 日），因为闰月落在不同的年份。
+规则相同，钟表不同。农历月从朔所在的那一天开始，而"哪一天"按当地时间判断。朔落在世界时 16 点到 17 点之间时，河内尚未过午夜，北京已过午夜，于是越南的月份早一天开始；落在 15 点到 16 点之间时，首尔和东京已过午夜，那里的月份晚一天开始。1985 年春节相差整整一个月（越南 1 月 21 日，中国 2 月 20 日），因为闰月落在不同的年份。
 </details>
 
 <details>

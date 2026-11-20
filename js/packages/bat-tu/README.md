@@ -6,7 +6,7 @@ time, with the month pillar changing at the solar terms (not at the lunar
 month), hidden stems, the Ten Gods (十神), the twelve life stages, nine
 symbolic stars (神煞) with the variant readings of different books, the
 conception pillar, the life palace, 10-year luck pillars and minor periods.
-Names in Vietnamese, English and Chinese.
+Names in English, Chinese and Vietnamese.
 
 [![npm](https://img.shields.io/npm/v/@nhatnguyet/bat-tu.svg)](https://www.npmjs.com/package/@nhatnguyet/bat-tu)
 [![license: MIT](https://img.shields.io/badge/license-MIT-1f6f6b.svg)](./LICENSE)

@@ -1,0 +1,71 @@
+{
+  "name": "@nhatnguyet/fengshui",
+  "version": "0.4.0",
+  "description": "Feng shui rules of traditional schools for JS/TS: Eight Mansions life gua (Kua number) and house gua, the 24 mountains, Xuan Kong flying star charts for periods 1 to 9, annual stars, Luban rulers, compass and flying star SVG. Port of the Nhat Nguyet engine, checked by test vectors.",
+  "license": "MIT",
+  "author": "Nhat Nguyet (https://nhatnguyet.org)",
+  "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
+  "keywords": [
+    "feng shui",
+    "fengshui",
+    "kua number",
+    "life gua",
+    "eight mansions",
+    "ba zhai",
+    "bat trach",
+    "flying stars",
+    "xuan kong",
+    "huyen khong",
+    "24 mountains",
+    "luopan",
+    "compass",
+    "luban ruler",
+    "lo ban",
+    "phong thuy",
+    "phong thủy",
+    "风水",
+    "八宅",
+    "玄空飞星",
+    "鲁班尺",
+    "chinese metaphysics",
+    "nhat nguyet",
+    "vietnamese",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --conditions=source --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@nhatnguyet/am-lich": "^0.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology.git",
+    "directory": "js/packages/fengshui"
+  },
+  "bugs": {
+    "url": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

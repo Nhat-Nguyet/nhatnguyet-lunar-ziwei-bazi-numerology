@@ -26,4 +26,4 @@ export * from "./ve-svg.ts";
 export * from "./van-ban.ts";
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.2.0";
+export const PHIEN_BAN_DONG_CO = "2.3.0";

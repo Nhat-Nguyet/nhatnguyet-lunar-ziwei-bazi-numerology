@@ -12,6 +12,7 @@
 import { convertTerms } from "@nhatnguyet/am-lich";
 import type { Terms } from "@nhatnguyet/am-lich";
 import { CHINH_TINH_NAME_EN, PHU_TINH_NAME_EN, TEN_CUNG_THEO_OFFSET, TU_VUNG_SAO } from "./du-lieu.ts";
+import { SAO_PHU_THEM } from "./sao-phu-them.ts";
 
 /**
  * Tên tiếng Anh của sao, sửa so với bảng của lõi:
@@ -67,10 +68,13 @@ export const PATTERN_EN: Readonly<Record<string, string>> = {
   "Quyền Lộc sinh phùng": "Power and Prosperity Met at Birth",
   "Dương Nhận nhập miếu": "Sword Ram in Its Temple",
   "Cự Cơ cư Mão": "Giant Gate and Mechanism at Mao",
+  "Hình Tù giáp Ấn": "Punishment and Prisoner Flanking the Seal",
+  "Tham Hỏa tương phùng": "Wolf and Fire Meeting",
   "Sinh bất phùng thời": "Born at the Wrong Time",
   "Lộc phùng lưỡng sát": "Prosperity Meeting Two Killers",
   "Mã lạc không vong": "Horse Falling into the Void",
   "Nhất sinh cô bần": "Lonely and Poor All Life",
+  "Quân tử tại dã": "Gentleman in the Wilds",
   "Lưỡng trùng Hoa Cái": "Double Canopy",
 };
 
@@ -93,6 +97,7 @@ function bangSao(): Record<string, string> {
   for (const [vi, en] of Object.entries(CHINH_TINH_NAME_EN)) b[vi] = starEn(vi, en);
   for (const [vi, en] of Object.entries(PHU_TINH_NAME_EN)) b[vi] = starEn(vi, en);
   for (const [vi, v] of Object.entries(TU_VUNG_SAO)) b[vi] = starEn(vi, v.en);
+  for (const s of SAO_PHU_THEM) b[s.ten] ??= starEn(s.ten, s.en);
   b["Thái Tuế"] = "Grand Duke";
   return b;
 }
@@ -107,6 +112,8 @@ function bangThay(terms: Terms): Record<string, string> {
   b["in Mệnh"] = "in the Life palace";
   b["occupies Mệnh"] = "occupies the Life palace";
   b["of Mệnh"] = "of the Life palace";
+  // Cung Thân (身宮): chữ "Thân" đứng một mình là chi Thân, nên đổi cả cụm.
+  b["the Thân palace"] = "the Body palace";
   b["Tử Vi Đẩu Số Toàn Thư"] = "Zi Wei Dou Shu Quan Shu";
   b["Tân Biên"] = "the Xin Bian";
   b["Sát Phá Liêm Tham"] = "the Killings-Breaker-Purity-Wolf group";

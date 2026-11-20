@@ -1,6 +1,6 @@
 # @nhatnguyet/widgets
 
-> **English:** Vietnamese lunar calendar web components that run entirely in the browser: today's date, a month grid, auspicious hours, a Tết countdown and a date converter. No server, no framework, no tracking. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)).
+> **English:** Lunar calendar web components for the Chinese, Korean, Japanese and Vietnamese calendars (Vietnam by default, `country` to switch) that run entirely in the browser: today's date, a month grid, auspicious hours, a Tết countdown and a date converter. No server, no framework, no tracking. By Nhat Nguyet ([nhatnguyet.org](https://nhatnguyet.org)).
 
 Five Custom Elements with their own Shadow DOM styles. The numbers come from
 [`@nhatnguyet/am-lich`](https://www.npmjs.com/package/@nhatnguyet/am-lich), the

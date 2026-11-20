@@ -1,11 +1,10 @@
 # @nhatnguyet/cli
 
-**Zi Wei Dou Shu, BaZi, numerology and the Vietnamese, Chinese, Korean and
-Japanese lunar calendars in your terminal.** Charts print as grids, or as JSON
-and SVG. English by default, Vietnamese and Chinese with `--lang`. Runs
+**Zi Wei Dou Shu, BaZi, numerology, the Chinese, Korean, Japanese and
+Vietnamese lunar calendars, the I Ching and feng shui rules in your terminal.**
+Charts print as grids, or as JSON and SVG. English by default, Vietnamese and Chinese with `--lang`. Runs
 locally with the [Nhat Nguyet](https://nhatnguyet.org/en/ma-nguon-mo)
-libraries, checked against 17,291 core test vectors (18,819 including school options and
-auspicious hours) and NASA, IMCCE data.
+libraries, checked against 17,291 core test vectors (28,586 including school options, auspicious hours, I Ching and feng shui) and NASA, IMCCE data.
 
 ```bash
 npx @nhatnguyet/cli lunar 1985-01-21 --country CN
@@ -47,18 +46,28 @@ nhatnguyet terms <year> [--country ...]
 nhatnguyet hours <YYYY-MM-DD>     auspicious and inauspicious double hours of a day
 nhatnguyet numerology "<full name>" <YYYY-MM-DD> [--today YYYY-MM-DD]
 nhatnguyet festivals <year> [--ics]
+nhatnguyet hexagram <number|name>  one of the 64 hexagrams ("11", "Peace", "泰", "Thai")
+nhatnguyet cast [--lines 987678] [--date YYYY-MM-DD]
+                                  three-coin cast (random without --lines, bottom line
+                                  first) and its Six Lines (najia) chart for the date
+nhatnguyet daily-hexagram <YYYY-MM-DD>  hexagram ruling the day (Gua Qi calendar)
+nhatnguyet kua <YYYY-MM-DD|lunar year> <male|female>  Eight Mansions life gua
+nhatnguyet flying-stars --period 9 --facing <mountain|degrees>
+                                  Xuan Kong chart (or --year 2026, --sitting ...)
+nhatnguyet luban <cm> [--ruler luban|clear-opening|dinglan]  Luban rulers
 ```
 
 Each command also answers to the name of the matching MCP tool: `cast_ziwei`
 (and the older `cast_zi_wei`, `zi_wei`), `cast_bazi`, `lunar_convert`,
-`solar_terms`.
+`solar_terms`, `auspicious_hours`, `six_lines_chart`, `daily_hexagram`,
+`life_gua`, `flying_star_chart`, `luban_ruler`.
 
 | Option | Meaning |
 |---|---|
 | `--lang en\|vi\|zh` | language of the result (default `en`) |
 | `--terms pinyin\|han\|vi` | English only: stems, branches, the Four Transformations as pinyin (default, `Geng Wu`, `Hua Ji`), Chinese characters or Sino-Vietnamese |
 | `--json` | print JSON instead of text |
-| `--svg <file>` | also write the chart as SVG (`ziwei`, `bazi`, `numerology`) |
+| `--svg <file>` | also write the chart as SVG (`ziwei`, `bazi`, `numerology`, `hexagram`, `cast`, `daily-hexagram`, `kua` as a compass, `flying-stars`) |
 | `--ics` | `festivals`: print an iCalendar (`.ics`) file instead |
 | `--theme dark` | dark SVG |
 | `--no-color` | no ANSI colors (also when `NO_COLOR` is set or output is not a terminal) |
@@ -81,6 +90,39 @@ nhatnguyet numerology "Nguyen Van An" 1990-09-19 --today 2026-11-19
 nhatnguyet hours 2027-02-06                                   # the twelve double hours of Tết 2027
 nhatnguyet festivals 2027 --ics > festivals-2027.ics          # the year's festivals for a calendar app
 nhatnguyet ziwei 1990-09-19 20:00 male --svg chart.svg --theme dark
+nhatnguyet hexagram Peace                                     # names, trigrams, palace, the Zhou Yi judgment
+nhatnguyet cast --lines 987678 --date 2026-11-19              # a cast made by hand and its Six Lines chart
+nhatnguyet daily-hexagram 2026-11-19                          # the Gua Qi hexagram of the day
+nhatnguyet kua 1990-09-19 female --svg compass.svg            # life gua, eight directions, a compass drawing
+nhatnguyet luban 80                                           # 80 cm on the three Luban rulers
+```
+
+The I Ching and feng shui commands print the rules of traditional schools, not
+predictions. A Xuan Kong chart, south at the top:
+
+```bash
+nhatnguyet flying-stars --period 9 --facing wu
+```
+
+```text
+FLYING STAR CHART (XUAN KONG)  period 9 · sitting Zi (North) · facing Wu (South)
+  Double Stars at Sitting
+┌───────────┬───────────┬───────────┐
+│ Southeast │ South     │ Southwest │
+│ 6  3      │ 1  8      │ 8  1      │
+│ 8         │ 4         │ 6         │
+├───────────┼───────────┼───────────┤
+│ East      │ Center    │ West      │
+│ 7  2      │ 5  4      │ 3  6      │
+│ 7         │ 9         │ 2         │
+├───────────┼───────────┼───────────┤
+│ Northeast │ North     │ Northwest │
+│ 2  7      │ 9  9      │ 4  5      │
+│ 3         │ 5         │ 1         │
+└───────────┴───────────┴───────────┘
+Each palace: mountain star, facing star; below, the period star. South at the top.
+Castle gate (primary): Southeast, not usable
+Castle gate (secondary): Southwest, not usable
 ```
 
 A full `ziwei` output is in the
@@ -91,5 +133,5 @@ For AI assistants, the same calculations are available as an MCP server:
 ## License
 
 MIT. Please credit `Data: Nhat Nguyet (nhatnguyet.org)` when you show results
-to users. Zi Wei Dou Shu, BaZi and numerology are traditional systems, not
-validated science.
+to users. Zi Wei Dou Shu, BaZi, numerology, the I Ching and feng shui are
+traditional systems, not validated science.

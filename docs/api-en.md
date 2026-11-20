@@ -310,6 +310,48 @@ season around `date`). `festivalsIcs(year, { lang })` (Python
 the same list as iCalendar: all-day events over the season, stable UIDs
 `<id>-<year>@nhatnguyet.org`, the dataset credit in X-WR-CALDESC.
 
+## I Ching: `@nhatnguyet/iching`
+
+```ts
+import { hexagram, mutual, castCoins, najia, dailyHexagram, text } from "@nhatnguyet/iching";
+
+hexagram(11).name;                         // "Peace"
+hexagram("泰", { lang: "vi" }).name;       // "Địa Thiên Thái"
+mutual("Peace").name;                      // "The Marrying Maiden"
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+cast.moving;                               // [1, 4]
+najia(cast, { date: "2026-11-19" }).lines[0].relation;   // "Offspring"
+dailyHexagram("2026-11-19").hexagram.name;               // "Biting Through"
+text(11).judgment.zh;                      // "泰：小往大來，吉亨。"
+```
+
+A hexagram is a King Wen number, six lines bottom first, or a name in English,
+pinyin, Chinese or Vietnamese. Casting, the Six Lines (najia) chart, the Gua Qi
+daily hexagram and the public domain Zhou Yi text with Legge's 1882
+translation are described in [iching.md](iching.md). Python
+`nhatnguyet.iching` (`hexagram`, `cast_coins`, `najia`, `daily_hexagram`), CLI
+`nhatnguyet hexagram`, `cast`, `daily-hexagram`, MCP tools `hexagram`,
+`six_lines_chart`, `daily_hexagram`.
+
+## Feng shui: `@nhatnguyet/fengshui`
+
+```ts
+import { lifeGua, flyingStarChart, annualStars, lubanRuler } from "@nhatnguyet/fengshui";
+
+lifeGua("1990-09-19", "female").number;                   // 8
+lifeGua("1990-09-19", "female").directions[0].starName;   // "Sheng Qi"
+flyingStarChart({ period: 9, facing: "wu" }).pattern;     // "double-sitting"
+annualStars(2026).center;                                 // 1
+lubanRuler(80).nearestAuspicious.map((x) => x.lengthCm);  // [69.7, 80.5]
+```
+
+These are the rules of traditional schools (Eight Mansions, Xuan Kong flying
+stars of the Shen school, the Luban rulers), not verified effects. The life gua
+turns at the lunar New Year, Vietnam time; where the schools disagree, see
+[fengshui.md](fengshui.md). Python `nhatnguyet.fengshui` (`life_gua`,
+`flying_star_chart`, `luban_ruler`...), CLI `nhatnguyet kua`, `flying-stars`,
+`luban`, MCP tools `life_gua`, `flying_star_chart`, `luban_ruler`.
+
 ## Python
 
 Same functions in snake_case, keyword arguments, same result keys:
@@ -445,6 +487,11 @@ nhatnguyet hours 2027-02-06                    # auspicious and inauspicious dou
 nhatnguyet numerology "Nguyen Van An" 1990-09-19 --today 2026-11-19
 nhatnguyet festivals 2027 --lang vi
 nhatnguyet ziwei 1990-09-19 20:00 male --svg chart.svg --theme dark
+nhatnguyet hexagram Peace
+nhatnguyet cast --lines 987678 --date 2026-11-19  # a cast made by hand and its Six Lines chart
+nhatnguyet kua 1990-09-19 female --svg compass.svg
+nhatnguyet flying-stars --period 9 --facing wu
+nhatnguyet luban 80
 ```
 
 ```text
@@ -490,8 +537,10 @@ AUSPICIOUS HOURS  2027-02-06 · Day Bing Chen
 
 `--json` prints JSON (without `raw`), `--lang en|vi|zh` picks the language,
 `--terms pinyin|han|vi` how English writes stems and branches, `--svg <file>`
-also writes the chart as SVG (ziwei, bazi, numerology). The MCP tool names
-work as command aliases too (`cast_ziwei`, `cast_bazi`, `lunar_convert`,
-`solar_terms`, `auspicious_hours`; the older `cast_zi_wei`, `zi_wei` as well).
+also writes the chart as SVG (ziwei, bazi, numerology, hexagram, cast,
+daily-hexagram, kua, flying-stars). The MCP tool names work as command aliases
+too (`cast_ziwei`, `cast_bazi`, `lunar_convert`, `solar_terms`,
+`auspicious_hours`, `six_lines_chart`, `daily_hexagram`, `life_gua`,
+`flying_star_chart`, `luban_ruler`; the older `cast_zi_wei`, `zi_wei` as well).
 Colors are used only on a terminal and are turned off by `NO_COLOR` or
 `--no-color`.

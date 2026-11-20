@@ -1,5 +1,6 @@
 """Nhat Nguyet: Zi Wei Dou Shu, BaZi, numerology, Vietnamese/Chinese/Korean/
-Japanese lunar calendar and Vietnamese festivals (Python port of the Go core).
+Japanese lunar calendar, Vietnamese festivals, the I Ching and the feng shui
+rules of traditional schools (Python port of the Go core).
 
 English API (named arguments, clock times, results in ``lang``)::
 
@@ -11,7 +12,14 @@ Other English functions: ``auspicious_hours``, ``solar_terms``, ``day_pillar``,
 English-named modules mirror the npm packages: ``nhatnguyet.lunar``,
 ``nhatnguyet.ziwei``, ``nhatnguyet.bazi``, ``nhatnguyet.numerology``,
 ``nhatnguyet.festivals`` (the last two are also callable as the function of
-the same name).
+the same name), ``nhatnguyet.iching`` and ``nhatnguyet.fengshui``.
+
+I Ching: ``hexagram``, ``cast_coins``, ``cast_from_numbers``, ``najia``,
+``daily_hexagram``, ``render_hexagram_svg`` (the rest in ``nhatnguyet.iching``).
+Feng shui: ``life_gua``, ``house_gua``, ``mountain_at``, ``find_mountain``,
+``flying_star_chart``, ``annual_stars``, ``period_of``, ``luban_ruler``,
+``render_compass_svg``, ``render_flying_star_svg`` (the rest in
+``nhatnguyet.fengshui``).
 
 SVG: ``zi_wei_svg(chart)``, ``bazi_svg(chart)``, ``numerology_svg(result)``
 (or ``render_chart_svg`` and friends on the raw Vietnamese-keyed objects).
@@ -53,14 +61,25 @@ from .van_ban import bazi_to_text, chart_to_text, numerology_to_text, zi_wei_to_
 # cùng tên (xem _bi_danh.py).
 from . import bazi, festivals, lunar, numerology, ziwei  # noqa: F401,E402
 
-__version__ = "0.3.0"
+# Kinh Dịch và phong thuỷ: hai mô-đun tên tiếng Anh như hai gói npm
+# @nhatnguyet/iching, @nhatnguyet/fengshui; các hàm chính nạp lên gốc gói.
+from . import fengshui, iching  # noqa: F401,E402
+from .iching import (  # noqa: F401,E402
+    cast_coins, cast_from_numbers, daily_hexagram, hexagram, najia, render_hexagram_svg,
+)
+from .fengshui import (  # noqa: F401,E402
+    annual_stars, find_mountain, flying_star_chart, house_gua, life_gua, luban_ruler, mountain_at, period_of,
+    render_compass_svg, render_flying_star_svg,
+)
+
+__version__ = "0.4.0"
 # Phiên bản lõi tính Go mà bộ ca kiểm đã sinh ra (phienBanDongCo).
-PHIEN_BAN_DONG_CO = "2.2.0"
+PHIEN_BAN_DONG_CO = "2.3.0"
 
 __all__ = [
     "am_lich", "than_so_hoc", "tu_vi", "bat_tu", "le_hoi", "en", "__version__", "PHIEN_BAN_DONG_CO",
     # bí danh tiếng Anh (mô-đun)
-    "lunar", "ziwei", "bazi",
+    "lunar", "ziwei", "bazi", "iching", "fengshui",
     # Zi Wei
     "cast_zi_wei", "decade_luck", "yearly_luck", "yearly_stars", "find_patterns", "school_note",
     "horoscope", "palace_of", "star_of", "surrounding_palaces", "flanking_palaces", "palace_has",
@@ -83,4 +102,9 @@ __all__ = [
     "bat_tu_ve_svg", "than_so_hoc_ve_svg", "tu_vi_ve_svg",
     "render_chart_svg", "ve_la_so_svg", "render_bazi_svg", "ve_bat_tu_svg",
     "render_numerology_svg", "ve_than_so_hoc_svg",
+    # Kinh Dịch
+    "hexagram", "cast_coins", "cast_from_numbers", "najia", "daily_hexagram", "render_hexagram_svg",
+    # phong thuỷ
+    "life_gua", "house_gua", "mountain_at", "find_mountain", "flying_star_chart", "annual_stars", "period_of",
+    "luban_ruler", "render_compass_svg", "render_flying_star_svg",
 ]

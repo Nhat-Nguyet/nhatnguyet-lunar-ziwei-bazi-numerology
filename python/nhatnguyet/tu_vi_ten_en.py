@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Dict, Tuple
 
 from .tu_vi_du_lieu import CHINH_TINH_NAME_EN, PHU_TINH_NAME_EN, TEN_CUNG_THEO_OFFSET, TEN_SAO_PHU_MOI_BA_THU
+from .tu_vi_sao_phu_them import SAO_PHU_THEM
 
 # Đà La 陀羅 "Spinning Top" (lõi: Spinning Camel); Thiên Tướng 天相 "Celestial
 # Minister" (lõi: Celestial General); Thiên Việt 天鉞 "Celestial Halberd"
@@ -56,10 +57,13 @@ PATTERN_EN: Dict[str, str] = {
     "Quyền Lộc sinh phùng": "Power and Prosperity Met at Birth",
     "Dương Nhận nhập miếu": "Sword Ram in Its Temple",
     "Cự Cơ cư Mão": "Giant Gate and Mechanism at Mao",
+    "Hình Tù giáp Ấn": "Punishment and Prisoner Flanking the Seal",
+    "Tham Hỏa tương phùng": "Wolf and Fire Meeting",
     "Sinh bất phùng thời": "Born at the Wrong Time",
     "Lộc phùng lưỡng sát": "Prosperity Meeting Two Killers",
     "Mã lạc không vong": "Horse Falling into the Void",
     "Nhất sinh cô bần": "Lonely and Poor All Life",
+    "Quân tử tại dã": "Gentleman in the Wilds",
     "Lưỡng trùng Hoa Cái": "Double Canopy",
 }
 
@@ -82,6 +86,8 @@ def _bang_sao() -> Dict[str, str]:
     for vi, v in TEN_SAO_PHU_MOI_BA_THU.items():
         if vi != "Thiên Tài":
             b[vi] = star_en(vi, v[0])
+    for vi, en, _zh, _nhom in SAO_PHU_THEM:
+        b.setdefault(vi, star_en(vi, en))
     b["Thái Tuế"] = "Grand Duke"
     return b
 
@@ -97,6 +103,8 @@ def _bang_thay(terms: str) -> Dict[str, str]:
     b["in Mệnh"] = "in the Life palace"
     b["occupies Mệnh"] = "occupies the Life palace"
     b["of Mệnh"] = "of the Life palace"
+    # Cung Thân (身宮): chữ "Thân" đứng một mình là chi Thân, nên đổi cả cụm.
+    b["the Thân palace"] = "the Body palace"
     b["Tử Vi Đẩu Số Toàn Thư"] = "Zi Wei Dou Shu Quan Shu"
     b["Tân Biên"] = "the Xin Bian"
     b["Sát Phá Liêm Tham"] = "the Killings-Breaker-Purity-Wolf group"

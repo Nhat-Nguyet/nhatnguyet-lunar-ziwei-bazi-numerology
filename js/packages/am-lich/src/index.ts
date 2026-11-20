@@ -14,4 +14,4 @@ export { AUSPICIOUS_SPIRITS, HOUR_SPIRIT_PINYIN, auspiciousHours } from "./gio-h
 export type { AuspiciousHour, AuspiciousHoursResult } from "./gio-hoang-dao.ts";
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.2.0";
+export const PHIEN_BAN_DONG_CO = "2.3.0";

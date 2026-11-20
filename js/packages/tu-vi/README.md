@@ -6,8 +6,9 @@ and hour: element phase (cục), Life and Body palaces, the 14 major stars and
 the minor stars, star brightness, the Four Transformations (四化, Tứ Hóa), Tuần
 and Triệt, 10-year periods, yearly periods, transiting stars and the chart
 patterns of the classic *Zi Wei Dou Shu Quan Shu* (紫微斗数全书), with the
-original Chinese text. Star and palace names in Vietnamese, English and
-Chinese.
+original Chinese text. Star and palace names in English, Chinese and
+Vietnamese; the lunar date follows the calendar of the country you pass
+(Vietnam by default).
 
 [![npm](https://img.shields.io/npm/v/@nhatnguyet/tu-vi.svg)](https://www.npmjs.com/package/@nhatnguyet/tu-vi)
 [![license: MIT](https://img.shields.io/badge/license-MIT-1f6f6b.svg)](./LICENSE)
@@ -134,6 +135,16 @@ The gender must be `"Nam"` or `"Nữ"`; invalid input throws an `Error`.
   (auspicious) or `tap-dieu` (minor). Hỏa Tinh and Linh Tinh follow Tân Biên:
   Hỏa forward and Linh backward for a yang-year man or yin-year woman, the
   reverse otherwise; the Toàn Thư counts both forward.
+- Patterns of the Quan Shu tables follow the book's own line under each name
+  (`chuVan`); `hasVariants` marks those that other books read differently.
+  Since engine 2.3.0 three of them use the stars above: 刑囚夾印 (Thiên Hình
+  and Liêm Trinh together in the Life or Body palace; later books read 刑 as
+  Kình Dương and add Thiên Tướng), 貪火相逢 (Tham Lang and Hỏa Tinh in the
+  Life palace, both exalted or strong: Tham Lang by the chart's brightness,
+  Hỏa Tinh by the Quan Shu's twelve-palace table, so only at Tuất; that table
+  alone would also allow Ngọ) and 君子在野 (any of Kình Dương, Đà La, Hỏa
+  Tinh, Linh Tinh weak by that table in the Life or Body palace; some books
+  read the weak star as the Life palace's major star).
 - Not placed: stars found only in Chinese texts (Thiên Vu, Thiên Nguyệt, Âm
   Sát, yearly Phi Liêm, monthly Giải Thần), yearly Văn Xương, yearly Văn Khúc.
 - The package returns the calculation and names in three languages; it does not

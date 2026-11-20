@@ -3,7 +3,8 @@
 # @nhatnguyet/cli
 
 The text renderers behind the `nhatnguyet` command line: Zi Wei grid, BaZi,
-lunar date, solar terms, numerology and festival tables, with terminal width
+lunar date, solar terms, numerology and festival tables, hexagrams, Six
+Lines charts, life gua, flying star charts and Luban rulers, with terminal width
 handling for CJK text. Command reference: the
 [package README](https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/tree/main/js/packages/cli#readme).
 
@@ -308,6 +309,177 @@ Festivals of a year as a table: date, fixed date, name.
 | ------ | ------ |
 | `year` | `number` |
 | `list` | [`Festival`](le-hoi.md#festival)[] |
+| `lang` | `Lang` |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderHexagram()
+
+```ts
+function renderHexagram(
+   h, 
+   related, 
+   opts?
+): string;
+```
+
+One hexagram: bars, names, trigrams, palace, related hexagrams and the Zhou Yi judgment.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `h` | [`Hexagram`](iching.md#hexagram) |
+| `related` | \{ `mutual`: [`Hexagram`](iching.md#hexagram); `opposite`: [`Hexagram`](iching.md#hexagram); `reverse`: [`Hexagram`](iching.md#hexagram); `judgment?`: `string`; \} |
+| `related.mutual` | [`Hexagram`](iching.md#hexagram) |
+| `related.opposite` | [`Hexagram`](iching.md#hexagram) |
+| `related.reverse` | [`Hexagram`](iching.md#hexagram) |
+| `related.judgment?` | `string` |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderCast()
+
+```ts
+function renderCast(c, opts?): string;
+```
+
+A cast: the primary and changed hexagrams side by side, then the moving lines.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `c` | [`Cast`](iching.md#cast) |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderSixLines()
+
+```ts
+function renderSixLines(ch, opts?): string;
+```
+
+The Six Lines (najia) chart: one row per line, top line first, then what the moving lines change into.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `ch` | [`SixLinesChart`](iching.md#sixlineschart) |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderDailyHexagram()
+
+```ts
+function renderDailyHexagram(r, opts?): string;
+```
+
+The hexagram of a day by the Gua Qi calendar.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `r` | [`DailyHexagram`](iching.md#dailyhexagram) |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderLifeGua()
+
+```ts
+function renderLifeGua(
+   g, 
+   lang, 
+   opts?
+): string;
+```
+
+Eight Mansions life gua and its eight directions.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `g` | [`LifeGua`](fengshui.md#lifegua) |
+| `lang` | `Lang` |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderFlyingStars()
+
+```ts
+function renderFlyingStars(
+   c, 
+   lang, 
+   opts?
+): string;
+```
+
+A flying star chart as the 3x3 Lo Shu grid, south on top.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `c` | [`FlyingStarChart`](fengshui.md#flyingstarchart) |
+| `lang` | `Lang` |
+| `opts?` | [`RenderOptions`](#renderoptions) |
+
+#### Returns
+
+`string`
+
+***
+
+### renderLuban()
+
+```ts
+function renderLuban(
+   rs, 
+   lang, 
+   opts?
+): string;
+```
+
+A length read on one or more Luban rulers.
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `rs` | [`LubanResult`](fengshui.md#lubanresult)[] |
 | `lang` | `Lang` |
 | `opts?` | [`RenderOptions`](#renderoptions) |
 

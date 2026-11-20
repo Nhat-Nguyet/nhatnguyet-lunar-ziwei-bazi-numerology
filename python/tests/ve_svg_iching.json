@@ -1,0 +1,426 @@
+{
+ "mon": "iching",
+ "ghiChu": "Băm SHA-256 của hình SVG do bản TypeScript vẽ; bản Python phải ra cùng băm.",
+ "ca": [
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "87ff0366f5bd1a22a2d7857f0ed1bb6cde3b45031c1d349eeb1105f2f50bbfad"
+  },
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "a8ea8b58432e631d69d940ecf1deca40c33d3d855a108c17b09dced8d53c1584"
+  },
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "4b9f90c09390e94cdfce8af5c89e3703bf71af3d0041cb065923a2b0c7fd4ef4"
+  },
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "97cdf74eae55ff3774020e6a0c1483b287b3bb116c4352dd954f0766230fe7cd"
+  },
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "795c725aae55cb10ff496860d332a784094704c3760af71bf462a007bcca2f74"
+  },
+  {
+   "vao": {
+    "n": 1
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "106fab7eb53e95b0430127ecdca4b812e2b70d924e7c1e4bd8d2375fcf7c34fb"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "a06df0009274c8aaa47b069aad67899b9634ff53cb26387f8a11d41f875b6b67"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "7768b5c44d8acb1ec54a98c489d73e9d3d17b616e999be25791e8f3a46483f9c"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "23c86c0e8a7fc77956e4a508192111d005ee3aa282d321b46d1e63265b629483"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "c62d2b1a8e05f96f3e34ec3d256a30235eb3bc319a4adc6aca53fbe12254eacf"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "e56572eff81abbcbb33929dbb41b8ce92d2069b69e827d8784e31563953062ab"
+  },
+  {
+   "vao": {
+    "n": 9
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "7a1a724063505fdb77bc894802b4925d46ece60bd9f6b076503233db60665bec"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "01f78aba6e6d54bc818d9ea4230f93e70be9e213fe6ab6b7f842d453f6425dd4"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "1ba3074868c542c634b9c19d68e9a5b9b4c5754f910e9f5790b8de89f5d41313"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "16b3c643f76cb1c09f649cd8f93a5780001687817b2534130608f3dbaffa498c"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "084d59be59e223dc3cb92e57bcfcfbf30a54555bcc4a336bd04945d299ff885e"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "0ef43c289f20899de11f5c2464398731868fcae2a1cd31f4ef5959bd7623a884"
+  },
+  {
+   "vao": {
+    "lines": [
+     9,
+     8,
+     7,
+     6,
+     7,
+     8
+    ]
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "16fd7f0ed49e9af23b30dc55bf45c35c639194569ecf217ea01f2f2afdb5fc02"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "7552026905c2df0bc57b63f9ae3fff994dbb7f282b70ae0665456cf10bb744c1"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "2e7b97256c9300f2d9aa8f99a7ec561fa94160ee51eae2894516c862b1fdcd81"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "34ac6134af2236517730171dabe8153d797b073782cdf906287571f5d06187d8"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "95dc7c6cfba6aaa934cfde05ca6898a23cad0a6c17f0255fa9ba60405dad9029"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "59847a48b2a0fb3d3c6a4bfd62890e54667ab8922b6cf715e82a83fa46879958"
+  },
+  {
+   "vao": {
+    "lines": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "8ca7d8114650b0628f2aadfbb16290acaae18b9ef0935e3e172c18a48794efbc"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "ee853f9e7d0aaf72ae6063f3c07b2aeffe09cb229c141d96a414f5aee6a9ab37"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "2c61b0e296d2ac2fbfdbefb2f20608a115d9f56b327a6a8a088dd087151353b2"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "7e105ef66d6e1893ece4c478cf43ccf50515cd17ee03e41c93fd80fdd325fa38"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "071d5bae3e9c902087266f50e58c542e850915bbce6d4a5ad23613c534198d5b"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "9314e5a694712e5c79f15dd0991dc4512e279f0cf3dfa560da3b56da891a3f7f"
+  },
+  {
+   "vao": {
+    "lines": [
+     7,
+     8,
+     9,
+     7,
+     8,
+     7
+    ]
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "fd42f4353ccb985605e8cbf3f3dd3e1a0931a0e02b93ea798009dc5fea1b297b"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "vi",
+   "theme": "light",
+   "sha256": "8029f76d61509f12b382653da465f9417cdbd778fa611e6244d87af00f8d2f36"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "vi",
+   "theme": "dark",
+   "sha256": "f6665c62f95fbf74aa75580af70322efd2e1c08f57bb3111c8b8ccf4b4b498b1"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "en",
+   "theme": "light",
+   "sha256": "d9a0400677baa8a021fa9b44770aace179da763dcdb26ed7f3aa4b2b36ad0136"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "en",
+   "theme": "dark",
+   "width": 390,
+   "sha256": "02c591b1f13b8a3f292c31c0bce0eff892b03a8119f57f1d98a0740adb6fe7f4"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "zh",
+   "theme": "light",
+   "sha256": "5dc9df8398bcc5f48720449ea66039d270e1b1ffbca28b929311c1b45917f75d"
+  },
+  {
+   "vao": {
+    "n": 64
+   },
+   "lang": "zh",
+   "theme": "dark",
+   "sha256": "d99c12b584a310460767f32191f5e022c50240abfee111fd17ffbd1d9c02b359"
+  }
+ ]
+}

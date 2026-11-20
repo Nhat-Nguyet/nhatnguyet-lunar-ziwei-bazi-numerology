@@ -1,8 +1,8 @@
 <h1 align="center">Nhat Nguyet</h1>
 
 <p align="center">
-  <b>베트남 음력은 중국 음력이 아닙니다. 널리 쓰이는 라이브러리는 1900~2100년 중 2,724일에 베트남 음력 날짜를 틀리게 냅니다.</b><br>
-  올바른 역법 위에서 계산하는 자미두수, 사주팔자, 수비학, 축제, 길한 시진을 JavaScript, Python, MCP로 · 고전을 책 이름과 장까지 밝혀 인용하는 풀이가 달린 공개 명반 360만 개 · 결과는 English, Tiếng Việt, 中文 · 공용 테스트 벡터 17,291개
+  <b>JavaScript와 Python을 위한 음양력, 자미두수, 사주팔자, 수비학, 주역, 풍수: 천문학적으로 정확하고, 나라별로 계산하며, 어떤 언어에서도 같은 답을 냅니다.</b><br>
+  합삭과 절기를 1900~2100년에 걸쳐 NASA와 IMCCE로 검증 · 중국, 한국, 일본, 베트남 외 7개 나라와 지역의 음력 · AI 어시스턴트용 MCP 서버 · 고전을 책 이름과 장까지 밝혀 인용하는 풀이가 달린 공개 명반 360만 개 · 결과는 English, 中文, Tiếng Việt · 공용 테스트 벡터 17,291개(전체 28,586개)
 </p>
 
 <p align="center">
@@ -45,21 +45,30 @@ import { writeFileSync } from "node:fs";
 import { castZiWei } from "@nhatnguyet/ziwei";
 import { toLunar } from "@nhatnguyet/lunar";
 
-const chart = castZiWei({ name: "Nguyen Van An", date: "1990-09-19", time: "20:00", gender: "male" });
+const chart = castZiWei({ date: "1990-09-19", time: "20:00", gender: "male" });
 const life = chart.palaces[chart.lifePalace];
 console.log(chart.bureau.name, "|", life.name, life.branch, "|", life.stars[0].name, life.stars[0].brightness);
 writeFileSync("chart.svg", chart.toSvg());   // the chart image above
 
-// Same day, two calendars: Tết in Vietnam, still the 12th month in China
-const vn = toLunar("1985-01-21");
-const cn = toLunar("1985-01-21", { country: "CN" });
-console.log(vn.day, vn.month, vn.year, vn.yearName, "|", cn.day, cn.month, cn.year, cn.yearName);
+// The same day can be a different lunar date in Beijing, Seoul and Hanoi time
+for (const date of ["2027-02-06", "2030-02-02"]) {
+  const lunar = ["CN", "KR", "VN"].map((country) => {
+    const d = toLunar(date, { country });
+    return `${country} ${d.year}-${d.month}-${d.day}`;
+  });
+  console.log(date, "|", lunar.join(" | "));
+}
 ```
 
 ```text
 Earth Five | Life Palace Hai | Moon Exalted
-1 1 1985 Yi Chou | 1 12 1984 Jia Zi
+2027-02-06 | CN 2027-1-1 | KR 2026-12-30 | VN 2027-1-1
+2030-02-02 | CN 2029-12-30 | KR 2029-12-30 | VN 2030-1-1
 ```
+
+`country`의 기본값은 `"VN"`(베트남, UTC+7)으로, 이 프로젝트가 출발한 역법입니다.
+`castZiWei`도 같은 옵션을 받습니다. 나머지 10개 나라와 지역은
+[음력](#음력과-길한-시진)에 정리했습니다.
 
 **Python** (3.9 이상, 표준 라이브러리만 사용): 결과가 같고, SVG도 바이트 단위까지 똑같습니다.
 
@@ -71,14 +80,14 @@ pip install nhatnguyet
 ```python
 from nhatnguyet import cast_zi_wei, to_lunar, zi_wei_svg
 
-chart = cast_zi_wei(name="Nguyen Van An", date="1990-09-19", time="20:00", gender="male")
+chart = cast_zi_wei(date="1990-09-19", time="20:00", gender="male")
 life = chart["palaces"][chart["lifePalace"]]
 print(chart["bureau"]["name"], "|", life["name"], life["branch"], "|", life["stars"][0]["name"], life["stars"][0]["brightness"])
 open("chart.svg", "w", encoding="utf-8").write(zi_wei_svg(chart))
 
-vn = to_lunar("1985-01-21")
-cn = to_lunar("1985-01-21", country="CN")
-print(vn["day"], vn["month"], vn["year"], vn["yearName"], "|", cn["day"], cn["month"], cn["year"], cn["yearName"])
+for date in ["2027-02-06", "2030-02-02"]:
+    lunar = [f"{c} {d['year']}-{d['month']}-{d['day']}" for c in ("CN", "KR", "VN") for d in [to_lunar(date, country=c)]]
+    print(date, "|", " | ".join(lunar))
 ```
 
 **명령줄**: `npx`를 쓰면 설치가 필요 없고, `pip install nhatnguyet` 후에는 `nhatnguyet ...`로 실행합니다.
@@ -179,7 +188,7 @@ Vietnamese calendar (UTC+7).
 
 </details>
 
-다른 명령: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals`(달력 파일은 `--ics`), `hours`. 옵션은 `--lang vi|zh`, `--json`, `--svg chart.svg`, 그리고 아래의 학파 옵션. 모든 옵션을 담은 영문 API 문서: [docs/api-en.md](./docs/api-en.md).
+다른 명령: `bazi`, `lunar`, `solar`, `terms`, `numerology`, `festivals`(달력 파일은 `--ics`), `hours`, `hexagram`, `cast`(육효), `daily-hexagram`, `kua`, `flying-stars`, `luban`. 옵션은 `--lang vi|zh`, `--json`, `--svg chart.svg`, 그리고 아래의 학파 옵션. 모든 옵션을 담은 영문 API 문서: [docs/api-en.md](./docs/api-en.md).
 
 ## 목차
 
@@ -197,15 +206,19 @@ Vietnamese calendar (UTC+7).
 
 ## 믿을 수 있는 이유
 
-**과학은 예측이 아니라 방법에 있습니다.** 역법은 천문학이며, 1900~2100년에 걸쳐
-NASA와 IMCCE로 검증했습니다.
+**역법은 천문학이며, 묻는 나라에 맞춰 계산합니다.** 동아시아의 음양력은 규칙은 같아도
+시계는 다릅니다. 한 달은 현지 시간으로 합삭이 있는 날에 시작하므로, 베이징, 서울,
+하노이는 한 달이나 한 해를 서로 다른 날에 시작할 수 있습니다. 이 라이브러리는 나라마다
+그 나라의 시간대로 계산하고, 천문 계산을 1900~2100년에 걸쳐 NASA와 IMCCE로
+검증했습니다.
 
 | 검증 항목 | 결과 |
 |---|---|
 | NASA 대비 합삭(2,474회) | 평균 0.9분 늦음, 최대 3.9분 |
 | NASA 합삭과 IMCCE 절기로 재구성한 음력 월 | 2,461개월 중 2,459개월 일치(나머지 둘은 합삭이 자정에서 1분 이내) |
 | IMCCE 대비 절기(4,824회) | 평균 0.27분 차이, 최대 0.9분(분 단위 반올림), 모든 절기가 올바른 날짜 |
-| 베트남(UTC+7)과 중국(UTC+8), 같은 규칙 | 2,814일과 설날 10번이 다름 |
+| 하노이(UTC+7)와 베이징(UTC+8), 같은 규칙 | 2,814일과 설날 10번이 다름 |
+| 서울(UTC+9)과 베이징(UTC+8), 같은 규칙 | 2,818일과 설날 11번이 다름 |
 
 - **기술 논문**: [베트남 음양력 계산](./docs/paper/paper.pdf)(PDF)은 계산 방법, 오차
   예산, NASA, IMCCE, JPL DE440 대비 검증, 그리고 베트남과 중국 역법이 다른 날
@@ -215,12 +228,13 @@ NASA와 IMCCE로 검증했습니다.
   [nhatnguyet.org](https://nhatnguyet.org)를 구동하는 기준 엔진이 생성한 **핵심 케이스
   17,291개**(입력 `vao`, 기대 출력 `ra`)가 들어 있습니다. 역법 케이스 14,936개,
   자미두수 명반 777개, 사주팔자 명반 777개, 수비학 프로필 600개, 축제 연도 201개,
-  그리고 학파 옵션 케이스 432개와 길한 시진 1,096일(모두 18,819개)입니다. TypeScript와 Python은 푸시할 때마다 이 모두를
+  그리고 학파 옵션 케이스 432개, 길한 시진 1,096일, 주역 케이스 6,684개,
+  풍수 케이스 3,083개(모두 28,586개)입니다. TypeScript와 Python은 푸시할 때마다 이 모두를
   통과합니다.
 - **설날의 역사**: [`history/`](./history/README.md)에는 1900~2100년 모든 해의
   UTC+7과 UTC+8 기준 설날이, 베트남이 실제로 쓴 역법, 그리고 문서로 확인되는 해마다의
   출처와 함께 실려 있습니다.
-- **정직한 범위**: 자미두수, 사주팔자, 수비학은 전통 학파의 규칙이며 과학적으로
+- **정직한 범위**: 과학은 예측이 아니라 방법에 있습니다. 자미두수, 사주팔자, 수비학, 주역, 풍수는 전통 학파의 규칙이며 과학적으로
   검증되지 않았습니다. 건강, 재정, 법률 결정에 사용하지 마십시오. 학파마다 견해가
   갈리는 부분은 어떤 규칙을 따르는지 밝히고, 바꿔 쓸 수 있게 했습니다
   ([학파 옵션](#학파-옵션)).
@@ -230,7 +244,7 @@ NASA와 IMCCE로 검증했습니다.
 [iztro](https://github.com/SylarLong/iztro)와
 [lunar-javascript](https://github.com/6tail/lunar-javascript)는 꼼꼼하게 만들어져 널리
 쓰이는 라이브러리이며, 둘 다 구현한 범위, 즉 베이징 시간(UTC+8) 기준 중국 역법으로는
-정확합니다. 베트남은 같은 규칙을 하노이 시간(UTC+7)으로 적용합니다. 1900~2100년의
+정확합니다. 다른 나라에 쓰면 베이징의 날짜가 나옵니다. 가장 뚜렷한 예가 베트남으로, 같은 규칙을 하노이 시간(UTC+7)으로 적용합니다. 1900~2100년의
 모든 날을 비교한 결과입니다([doi-chieu/](./doi-chieu/README.md), `node chay.mjs`로
 재현 가능).
 
@@ -268,22 +282,24 @@ iztro)는 직후로 계산해 29일에 시작됩니다. 위에서 말한 자정 
 
 ## 설치
 
-버전 0.3.0. JavaScript 패키지는 TypeScript 타입을 갖춘 ESM이며 외부 의존성이 없고(MCP 서버만
+버전 0.4.0. JavaScript 패키지는 TypeScript 타입을 갖춘 ESM이며 외부 의존성이 없고(MCP 서버만
 SDK와 zod를 씁니다),
 Python 패키지는 표준 라이브러리만 사용합니다.
 
 ```bash
-npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals
+npm i @nhatnguyet/lunar @nhatnguyet/ziwei @nhatnguyet/bazi @nhatnguyet/numerology @nhatnguyet/festivals @nhatnguyet/iching @nhatnguyet/fengshui
 pip install nhatnguyet
 ```
 
 | 패키지 | 다른 이름 | 기능 |
 |---|---|---|
-| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 베트남, 중국, 한국, 일본 외 7개 지역의 음력과 양력 변환, 간지, 분 단위 24절기, 28수, 납음, 길한 시진 |
+| [`@nhatnguyet/lunar`](./js/packages/am-lich) | `@nhatnguyet/am-lich` | 중국, 한국, 일본, 베트남 외 7개 나라와 지역의 음력과 양력 변환, 간지, 분 단위 24절기, 28수, 납음, 길한 시진 |
 | [`@nhatnguyet/ziwei`](./js/packages/tu-vi) | `@nhatnguyet/tu-vi` | 자미두수: 12궁, 별의 밝기, 사화, 순공과 절공(Tuần, Triệt), 대한과 유년, 유성, 고전 원문을 곁들인 격국, 학파 옵션, SVG, LLM용 텍스트, iztro 호환 계층 |
 | [`@nhatnguyet/bazi`](./js/packages/bat-tu) | `@nhatnguyet/bat-tu` | 사주팔자: 절기 기준 사주, 지장간, 십신, 신살, 대운, 소운, SVG |
 | [`@nhatnguyet/numerology`](./js/packages/than-so-hoc) | `@nhatnguyet/than-so-hoc` | 피타고라스 수비학(생명수, 표현수, 영혼수, 정점수, 도전수, 개인년수), 성조 부호가 있는 베트남어 이름 지원, SVG |
 | [`@nhatnguyet/festivals`](./js/packages/le-hoi) | `@nhatnguyet/le-hoi` | 베트남 축제 206개와 어느 해든 그 해의 날짜, 성(省), 민족, 개최 장소, iCalendar 내보내기 |
+| [`@nhatnguyet/iching`](./js/packages/iching) | | 주역: 64괘의 영어, 병음, 한자, 베트남어 이름, 팔궁, 호괘와 지괘, 세 동전 작괘와 매화역수, 육효(납갑) 판, 괘기에 따른 일진 괘, 주역 원문과 레그(Legge)의 1882년 영역; SVG |
+| [`@nhatnguyet/fengshui`](./js/packages/fengshui) | | 전통 학파의 풍수 규칙: 팔택 본명괘(Kua 번호)와 택괘, 24산, 현공 비성반, 연 비성, 노반척; 나경과 비성반 SVG |
 | [`@nhatnguyet/cli`](./js/packages/cli) | | 명반을 터미널 격자, JSON, SVG, iCalendar로 출력, Python의 `nhatnguyet`와 같은 명령 |
 | [`@nhatnguyet/mcp`](./js/packages/mcp) | | AI 어시스턴트용 MCP 서버 |
 | [`@nhatnguyet/widgets`](./js/packages/widgets) | | 웹 컴포넌트 5개 |
@@ -313,12 +329,14 @@ pip install nhatnguyet
 ### 음력과 길한 시진
 
 `@nhatnguyet/lunar`의 `toLunar`, `toSolar`, `solarTerms`, `auspiciousHours`(Python은
-`to_lunar`, `to_solar`, `solar_terms`, `auspicious_hours`). `country`를 넘기지 않으면
-베트남 역법(UTC+7)입니다. 그 밖에 중국, 대만, 홍콩, 마카오, 싱가포르, 말레이시아,
-인도네시아, 필리핀(UTC+8), 한국, 일본(UTC+9)을 지원합니다.
+`to_lunar`, `to_solar`, `solar_terms`, `auspicious_hours`). `country`로 역법을 고릅니다.
+중국(`CN`), 대만(`TW`), 홍콩(`HK`), 마카오(`MO`), 싱가포르(`SG`), 말레이시아(`MY`),
+인도네시아(`ID`), 필리핀(`PH`)은 UTC+8, 한국(`KR`), 일본(`JP`)은 UTC+9, 베트남(`VN`,
+기본값)은 UTC+7입니다. 시간 단위의 `timeZone`도 쓸 수 있습니다. 명령줄(`--country`),
+MCP 서버, 위젯도 같은 코드를 받습니다.
 
 `auspiciousHours`는 하루의 12시진을 길한 시진(hoàng đạo, 황도) 또는 흉한 시진(hắc đạo,
-흑도) 표시와 그 시진을 맡은 신(神)과 함께, 베트남 역서에 인쇄되는 그대로 돌려줍니다
+흑도) 표시와 그 시진을 맡은 신(神)과 함께, 중국과 베트남 역서에 인쇄되는 그대로 돌려줍니다
 (명령줄은 `nhatnguyet hours`, MCP 도구는 `auspicious_hours`).
 
 ```js
@@ -408,7 +426,7 @@ print(quanshu["notes"][-1])
 
 ### 축제
 
-`@nhatnguyet/festivals`의 `festivals(year)`는 데이터셋의 축제 206개 가운데 음력이나
+`@nhatnguyet/festivals`는 베트남 축제 데이터셋입니다. `festivals(year)`는 데이터셋의 축제 206개 가운데 음력이나
 양력으로 날짜가 고정된 164개를 1900~2100년의 어느 해에 대해서든 돌려줍니다(나머지
 42개는 주최 측이 해마다 날짜를 정합니다). 각 축제에는 2025년 기준 34개 성(省) 지도상의
 성, 설명에 나와 있는 경우 그 축제를 지내는 민족, 그리고 개최 장소가 있으며, 좌표는
@@ -443,6 +461,92 @@ open("vietnam-festivals-2027.ics", "w", encoding="utf-8", newline="").write(fest
 
 명령줄에서 같은 파일 만들기: `nhatnguyet festivals 2027 --ics > vn.ics`.
 
+### 주역
+
+`@nhatnguyet/iching`의 `hexagram`, `castCoins`, `castFromNumbers`(매화역수),
+`najia`, `dailyHexagram`(Python에서는 `nhatnguyet.iching`). 괘는 문왕 괘서 번호,
+여섯 효, 또는 영어, 병음, 한자, 베트남어 이름으로 지정합니다. 육효 판은 각 효의
+간지, 육친, 육수, 세와 응, 공망, 월령에 따른 왕쇠를 줍니다. 일진 괘는 한나라
+맹희의 괘기설을 따르고, `text(n)`은 퍼블릭 도메인인 주역 원문과 제임스 레그의
+1882년 영역입니다. 방법과 출처: [docs/iching.md](./docs/iching.md).
+
+```js
+import { castCoins, najia, dailyHexagram } from "@nhatnguyet/iching";
+
+// a cast recorded by hand: line values bottom first (6 and 9 are moving lines)
+const cast = castCoins({ lines: [9, 8, 7, 6, 7, 8] });
+const chart = najia(cast, { date: "2026-11-19" });
+console.log(cast.primary.name, "->", cast.changed.name, "| moving", cast.moving.join(", "));
+for (const l of [...chart.lines].reverse()) {
+  const mark = l.world ? " (world)" : l.response ? " (response)" : "";
+  console.log(`${l.position} ${l.stem} ${l.branch} ${l.element} ${l.relation} / ${l.spirit}${mark}`);
+}
+console.log("Daily hexagram:", dailyHexagram("2026-11-19").hexagram.name);
+```
+
+```text
+After Completion -> Influence | moving 1, 4
+6 Wu Zi Water Sibling / Azure Dragon (response)
+5 Wu Xu Earth Officer/Ghost / Dark Warrior
+4 Wu Shen Metal Parent / White Tiger
+3 Ji Hai Water Sibling / Soaring Snake (world)
+2 Ji Chou Earth Officer/Ghost / Hooked Chen
+1 Ji Mao Wood Offspring / Vermilion Bird
+Daily hexagram: Biting Through
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.iching import cast_coins, najia, daily_hexagram
+
+cast = cast_coins(lines=[9, 8, 7, 6, 7, 8])
+chart = najia(cast, date="2026-11-19")
+print(cast["primary"]["name"], "->", cast["changed"]["name"], "| moving", ", ".join(map(str, cast["moving"])))
+for l in reversed(chart["lines"]):
+    mark = " (world)" if l["world"] else " (response)" if l["response"] else ""
+    print(f"{l['position']} {l['stem']} {l['branch']} {l['element']} {l['relation']} / {l['spirit']}{mark}")
+print("Daily hexagram:", daily_hexagram("2026-11-19")["hexagram"]["name"])
+```
+
+### 풍수
+
+`@nhatnguyet/fengshui`의 `lifeGua`, `houseGua`, `flyingStarChart`,
+`annualStars`, `lubanRuler`(Python에서는 `nhatnguyet.fengshui`): 베트남 시간
+설날에 해가 바뀌는 팔택 본명괘, 심씨 현공파의 1운부터 9운까지 비성반, 연 비성,
+24산, 세 가지 노반척, 그리고 나경과 비성반 SVG. 이는 학파가 정한 규칙일 뿐
+검증된 효과가 아닙니다. 책마다 다른 부분: [docs/fengshui.md](./docs/fengshui.md).
+
+```js
+import { lifeGua, flyingStarChart, lubanRuler } from "@nhatnguyet/fengshui";
+
+const g = lifeGua("1990-09-19", "female");
+console.log("Kua", g.number, g.trigram.name, g.groupName, "|", g.directions.filter((d) => d.favorable).map((d) => `${d.directionName} ${d.starName}`).join(", "));
+const c = flyingStarChart({ period: 9, facing: "wu" });
+const stars = c.grid.map((row) => row.map((n) => `${c.palaces[n - 1].mountain}${c.palaces[n - 1].facing}`).join(" "));
+console.log(c.patternName, "| mountain and facing stars, south on top:", stars.join(" / "));
+const r = lubanRuler(80);
+console.log(r.rulerName, r.sector.name, r.auspicious ? "good" : "bad", "| nearest good:", r.nearestAuspicious.map((x) => x.lengthCm).join(", "), "cm");
+```
+
+```text
+Kua 8 Gen West group | Southwest Sheng Qi, Northwest Tian Yi, West Yan Nian, Northeast Fu Wei
+Double Stars at Sitting | mountain and facing stars, south on top: 63 18 81 / 72 54 36 / 27 99 45
+42.9cm Luban rule Hai bad | nearest good: 69.7, 80.5 cm
+```
+
+<!-- run: same-output -->
+```python
+from nhatnguyet.fengshui import life_gua, flying_star_chart, luban_ruler
+
+g = life_gua("1990-09-19", "female")
+print("Kua", g["number"], g["trigram"]["name"], g["groupName"], "|", ", ".join(f"{d['directionName']} {d['starName']}" for d in g["directions"] if d["favorable"]))
+c = flying_star_chart(period=9, facing="wu")
+stars = [" ".join(f"{c['palaces'][n - 1]['mountain']}{c['palaces'][n - 1]['facing']}" for n in row) for row in c["grid"]]
+print(c["patternName"], "| mountain and facing stars, south on top:", " / ".join(stars))
+r = luban_ruler(80)
+print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad", "| nearest good:", ", ".join(str(x["lengthCm"]) for x in r["nearestAuspicious"]), "cm")
+```
+
 ## 데이터셋
 
 CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수 있습니다.
@@ -457,7 +561,7 @@ CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 단위 143개(핵심 수, 주기 수, 삶의 주제), 구절 195개 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 퍼블릭 도메인 고전 373종(약 350개 작품), 7,265만 자, 전문 | 텍스트 147 MB, Parquet 70 MB |
 | [`nhatnguyet/classical-parallel`](https://huggingface.co/datasets/nhatnguyet/classical-parallel) | 역경의 정렬된 구간 1,328개: 한문 원문과 퍼블릭 도메인 영어 번역(952개), 프랑스어 번역(376개) | |
-| [용어집](./du-lieu/terminology/README.md) | 베트남어, 번체와 간체 중국어, 병음, 영어로 된 용어 428개, 라이브러리가 출력하는 모든 이름 | |
+| [용어집](./du-lieu/terminology/README.md) | 베트남어, 번체와 간체 중국어, 병음, 영어로 된 용어 672개, 라이브러리가 출력하는 모든 이름 | |
 | [AI 평가 세트](./ai-eval/README.md) | 영어, 베트남어, 중국어로 된 계산 문제 1,520개(음력 날짜, 설날, 사주, 명반), 그중 626개(41%)는 어려운 사례 | |
 | [설날 1900~2100](./history/README.md) | 201년 동안의 UTC+7과 UTC+8 기준 설날, 실제로 쓰인 역법과 출처 포함 | |
 | [역법과 문화 데이터셋 33종](https://nhatnguyet.org/en/du-lieu) | 1900~2100년 음양력, 절기, 64괘, 타로 78장, 축제 206개, 제례 기도문 456편... CSV, JSON, Parquet, [DOI](https://doi.org/10.5281/zenodo.23009396) 부여 | |
@@ -506,7 +610,8 @@ print(len(books), sum(books["characters"]))
 
 - **MCP 서버**: 로컬에서 실행되며, 도구는 `lunar_convert`, `solar_terms`,
   `auspicious_hours`, `cast_ziwei`, `cast_bazi`, `numerology`, `festivals`,
-  `render_chart_svg`입니다(학파 옵션 포함).
+  `render_chart_svg`(학파 옵션 포함), `hexagram`, `six_lines_chart`,
+  `daily_hexagram`, `life_gua`, `flying_star_chart`, `luban_ruler`입니다.
   `claude mcp add nhatnguyet -- npx -y @nhatnguyet/mcp`. Claude Desktop, Cursor,
   VS Code 설정 방법: [js/packages/mcp](./js/packages/mcp/README.md).
 - **Agent Skill**: 어시스턴트가 추측하지 말고 도구를 호출하도록 안내합니다:
@@ -590,7 +695,8 @@ HTML 페이지, Node, Python)와 복사해 쓰는 템플릿 4개가 있습니다
 `astro.byLunar`는 같은 매개변수를 받아 iztro의 `FunctionalAstrolabe`와 같은 구조의
 JSON을 돌려주며, 여섯 가지 표시 언어와 메서드(`palace()`, `star()`,
 `surroundedPalaces()`, `horoscope()`, `fliesTo()`, `use()`...)도 갖추고 있습니다.
-계산은 베트남 역법으로 합니다(`{ country: "CN" }`이면 베이징 시간).
+계산은 넘긴 나라의 역법으로 합니다(`{ country: "CN" }`이면 iztro처럼 베이징 시간,
+기본값은 베트남).
 
 ```diff
 - import { astro } from "iztro";
@@ -607,11 +713,13 @@ iztro와 운세 2,006건을 비교하면 대한, 나이, 유년의 궁과 유년
 ## 자주 묻는 질문
 
 <details>
-<summary><b>베트남 음력은 왜 중국 음력과 다른가요?</b></summary>
+<summary><b>같은 날의 음력 날짜가 중국, 한국, 베트남에서 다를 수 있는 이유는 무엇인가요?</b></summary>
 
 규칙은 같고 시계가 다릅니다. 한 달은 합삭이 있는 날에 시작하며, 그 날짜는 현지
 시간으로 정합니다. 합삭이 세계시(UT) 16시에서 17시 사이에 일어나면 하노이에서는 자정
-전, 베이징에서는 자정 후가 되므로 베트남에서는 달이 하루 일찍 시작합니다. 1985년
+전, 베이징에서는 자정 후가 되므로 베트남에서는 달이 하루 일찍 시작합니다.
+합삭이 UT 15시에서 16시 사이면 서울과 도쿄에서는 자정 후가 되므로 그곳에서는 달이
+하루 늦게 시작합니다. 1985년
 설날은 꼬박 한 달 차이가 납니다(베트남 1월 21일, 중국 2월 20일). 윤달이 드는 해가
 다르기 때문입니다.
 </details>

@@ -114,6 +114,8 @@ function sourceCounts() {
   const core = ["am-lich", "tu-vi", "bat-tu", "than-so-hoc", "le-hoi"].reduce((a, k) => a + n(k), 0);
   const schools = n("tu-vi-phai") + n("bat-tu-phai");
   const hours = n("auspicious-hours");
+  const iching = n("iching");
+  const fengshui = n("fengshui");
   const fest = json("du-lieu/le-hoi-viet-nam.json");
   const dated = new Set();
   for (const c of ca("le-hoi")) for (const r of c.ra ?? []) if (r.ngay) dated.add(r.id);
@@ -130,7 +132,9 @@ function sourceCounts() {
     core,
     schools,
     hours,
-    all: core + schools + hours,
+    iching,
+    fengshui,
+    all: core + schools + hours + iching + fengshui,
     festivals: fest.length,
     fixed: dated.size,
     other: fest.length - dated.size,
@@ -146,11 +150,11 @@ const FACTS = [
   ["terminology", /\| (\S+) terms in Vietnamese/, [C.terms]],
   ["AI evaluation questions", /\| (\S+) computed questions in English/, [C.questions]],
   ["AI evaluation hard cases", /(\S+) of them \((\d+)%\) hard cases/, [C.hard, `${C.hardPct}`]],
-  ["test vectors, intro", /(\S+) shared test vectors\s*\n/, [C.core]],
+  ["test vectors, intro", /(\S+) shared test vectors \((\S+) in all\)\s*\n/, [C.core, C.all]],
   ["test vectors, badge", /test%20vectors-(\d+)%2C(\d+)-/, [String(C.core).slice(0, -3), String(C.core).slice(-3)]],
   ["test vectors, core", /holds \*\*(\S+) core cases\*\*/, [C.core]],
-  ["test vectors, by suite", /: (\S+) calendar cases, (\S+) Zi\s+Wei charts, (\S+) BaZi charts, (\S+) numerology profiles and (\S+) festival years,\s+plus (\S+) cases for the school options and (\S+) days of auspicious hours\s+\((\S+) in all\)/,
-    [C.calendar, C.ziwei, C.bazi, C.numerology, C.festivalYears, C.schools, C.hours, C.all]],
+  ["test vectors, by suite", /: (\S+) calendar cases, (\S+) Zi\s+Wei charts, (\S+) BaZi charts, (\S+) numerology profiles and (\S+) festival years,\s+plus (\S+) cases for the school options, (\S+) days of auspicious hours, (\S+)\s+I Ching cases and (\S+) feng shui cases \((\S+) in all\)/,
+    [C.calendar, C.ziwei, C.bazi, C.numerology, C.festivalYears, C.schools, C.hours, C.iching, C.fengshui, C.all]],
   ["test vectors, port challenge", /pass all (\S+) test vectors/, [C.core]],
   ["festivals, install table", /\| (\S+) Vietnamese festivals with their dates/, [C.festivals]],
   ["festivals, fixed dates", /gives the (\S+) festivals with a\s+fixed lunar or Gregorian date for any year from 1900 to 2100, out of (\S+) in\s+the dataset \(the other (\S+) are dated/,

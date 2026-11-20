@@ -1,7 +1,7 @@
 {
   "name": "@nhatnguyet/lunar",
-  "version": "0.3.0",
-  "description": "Vietnamese lunar calendar (also Chinese, Korean, Japanese), sexagenary cycle, 24 solar terms within 1 minute of IMCCE, 28 lunar mansions. English-named alias of @nhatnguyet/am-lich.",
+  "version": "0.4.0",
+  "description": "Chinese, Korean, Japanese and Vietnamese lunisolar calendar, country-aware (11 countries and regions): lunar dates, sexagenary cycle, 24 solar terms within 1 minute of IMCCE, 28 lunar mansions. English-named alias of @nhatnguyet/am-lich.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
   "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
@@ -35,6 +35,9 @@
     "干支",
     "二十四节气",
     "越南农历",
+    "korean calendar",
+    "음력",
+    "旧暦",
     "nhat nguyet",
     "vietnam",
     "vietnamese",
@@ -55,7 +58,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.3.0"
+    "@nhatnguyet/am-lich": "^0.4.0"
   },
   "repository": {
     "type": "git",

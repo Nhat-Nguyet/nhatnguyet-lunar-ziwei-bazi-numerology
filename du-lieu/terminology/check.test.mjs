@@ -23,6 +23,8 @@ import * as BT from "../../js/packages/bat-tu/src/index.ts";
 import * as TSH from "../../js/packages/than-so-hoc/src/index.ts";
 import * as LH from "../../js/packages/le-hoi/src/index.ts";
 import { festivals } from "../../js/packages/le-hoi/src/en.ts";
+import * as YI from "../../js/packages/iching/src/index.ts";
+import * as FS from "../../js/packages/fengshui/src/index.ts";
 import { generate } from "./generate.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -171,12 +173,66 @@ function collectFestivals() {
   assert.ok(LH.DANH_SACH_LE_HOI.length > 0);
 }
 
+function collectIChing() {
+  const cases = JSON.parse(readFileSync(path.join(ROOT, "ca-kiem/iching.json"), "utf8")).ca;
+  const que = (lang, where, h) => {
+    if (!h) return;
+    collect(lang, where, h.name, h.upper.name, h.lower.name, h.palace.name, h.palace.generationName);
+  };
+  for (const lang of LANGS) {
+    for (let n = 1; n <= 8; n++) collect(lang, "trigram()", YI.trigram(n, { lang }).name);
+    for (const h of YI.allHexagrams({ lang })) que(lang, "allHexagrams()", h);
+    cases.forEach(({ vao }, i) => {
+      const date = vao.yyyy ? `${vao.yyyy}-${String(vao.mm).padStart(2, "0")}-${String(vao.dd).padStart(2, "0")}` : null;
+      if (vao.op === "najia") {
+        const c = YI.najia(vao.lines, { date, lang });
+        que(lang, "najia().hexagram", c.hexagram);
+        que(lang, "najia().changed", c.changed);
+        for (const l of c.lines) {
+          collect(lang, "najia().lines", l.relation, l.spirit, l.monthState, l.stem, l.branch, l.element);
+          if (l.changed) collect(lang, "najia().lines[].changed", l.changed.relation, l.changed.branch, l.changed.element);
+        }
+      } else if (vao.op === "daily" && i % 11 === 0) {
+        const d = YI.dailyHexagram(date, { lang });
+        que(lang, "dailyHexagram()", d.hexagram);
+        collect(lang, "dailyHexagram()", d.role, d.solarTerm);
+      }
+    });
+  }
+}
+
+function collectFengShui() {
+  for (const lang of LANGS) {
+    for (let y = 1990; y < 1999; y++) {
+      for (const gender of ["male", "female"]) {
+        const g = FS.lifeGua(y, gender, { lang });
+        collect(lang, "lifeGua()", g.trigram.name, g.groupName, g.element);
+        for (const d of g.directions) collect(lang, "lifeGua().directions", d.starName);
+      }
+    }
+    for (const m of FS.mountains24({ lang })) collect(lang, "mountains24()", m.name, m.trigramName, m.trigramElement);
+    for (const s of FS.nineStars({ lang })) collect(lang, "nineStars()", s.name, s.element);
+    for (let period = 1; period <= 9; period++) {
+      for (let star = 1; star <= 9; star++) collect(lang, "starQi()", FS.starQi(period, star, { lang }).name);
+      for (const m of FS.mountains24()) collect(lang, "flyingStarChart().patternName", FS.flyingStarChart({ period, sitting: m.id }, { lang }).patternName);
+    }
+    for (const r of FS.lubanRulers({ lang })) {
+      for (const x of r.sectors) {
+        collect(lang, "lubanRulers().sectors", x.name);
+        for (const y of x.subSectors) collect(lang, "lubanRulers().subSectors", y.name);
+      }
+    }
+  }
+}
+
 test("every name the libraries output is in the glossary", () => {
   collectCalendar();
   collectZiWei();
   collectBaZi();
   collectNumerology();
   collectFestivals();
+  collectIChing();
+  collectFengShui();
   const missing = [];
   for (const lang of LANGS) {
     for (const [t, where] of EMITTED[lang]) if (!SET[lang].has(t)) missing.push(`${lang}: ${JSON.stringify(t)} (${where})`);

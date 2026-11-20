@@ -1,7 +1,7 @@
 {
   "name": "@nhatnguyet/cli",
-  "version": "0.3.0",
-  "description": "Command line for Nhat Nguyet: Zi Wei Dou Shu chart as a 4x4 grid, BaZi, Vietnamese/Chinese/Korean/Japanese lunar calendar, numerology, Vietnamese festivals. English, Vietnamese, Chinese. Nhat Nguyet (nhatnguyet.org)",
+  "version": "0.4.0",
+  "description": "Command line for Nhat Nguyet: Zi Wei Dou Shu chart as a 4x4 grid, BaZi, Chinese/Korean/Japanese/Vietnamese lunar calendar, numerology, I Ching hexagrams and Six Lines charts, feng shui life gua, flying stars and Luban rulers, Vietnamese festivals. English, Chinese, Vietnamese. Nhat Nguyet (nhatnguyet.org)",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
   "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
@@ -16,7 +16,14 @@
     "vietnamese lunar calendar",
     "chinese calendar",
     "numerology",
-    "terminal"
+    "terminal",
+    "i ching",
+    "hexagram",
+    "najia",
+    "feng shui",
+    "flying stars",
+    "kua number",
+    "korean calendar"
   ],
   "type": "module",
   "bin": {
@@ -41,11 +48,13 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.3.0",
-    "@nhatnguyet/bat-tu": "^0.3.0",
-    "@nhatnguyet/le-hoi": "^0.3.0",
-    "@nhatnguyet/than-so-hoc": "^0.3.0",
-    "@nhatnguyet/tu-vi": "^0.3.0"
+    "@nhatnguyet/am-lich": "^0.4.0",
+    "@nhatnguyet/bat-tu": "^0.4.0",
+    "@nhatnguyet/fengshui": "^0.4.0",
+    "@nhatnguyet/iching": "^0.4.0",
+    "@nhatnguyet/le-hoi": "^0.4.0",
+    "@nhatnguyet/than-so-hoc": "^0.4.0",
+    "@nhatnguyet/tu-vi": "^0.4.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

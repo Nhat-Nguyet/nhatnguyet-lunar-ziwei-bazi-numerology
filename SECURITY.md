@@ -8,8 +8,8 @@ number.
 
 | Version | Supported |
 |---|---|
-| 0.3.x | Yes |
-| 0.2.x and older | No, please upgrade |
+| 0.4.x | Yes |
+| 0.3.x and older | No, please upgrade |
 
 ## Reporting a vulnerability
 
@@ -30,8 +30,9 @@ you prefer not to be named.
 
 In scope:
 
-- the libraries in `js/packages/` and `python/` (for example, input that makes
-  a function hang, crash the process or use unbounded memory);
+- the libraries in `js/packages/` and `python/`, including `@nhatnguyet/iching`
+  and `@nhatnguyet/fengshui` (for example, input that makes a function hang,
+  crash the process or use unbounded memory);
 - `@nhatnguyet/cli` and the `nhatnguyet` command (for example, writing files
   outside the path given to `--svg`);
 - `@nhatnguyet/mcp` (for example, a tool call that reads or writes files, or

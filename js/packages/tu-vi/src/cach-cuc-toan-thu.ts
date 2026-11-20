@@ -6,6 +6,8 @@
 // tính đã an. Ba chữ chú văn không định nghĩa nên cách dùng chúng mang
 // coDiBan: "空亡" đọc là cung có Tuần hoặc Triệt; "吉星" là lục cát tinh, Lộc
 // Tồn hay sao mang Hóa Lộc, Quyền, Khoa; "祿" là Lộc Tồn hay sao mang Hóa Lộc.
+// Ba cách cần Thiên Hình, Hỏa Tinh, Linh Tinh (刑囚夾印, 貪火相逢, 君子在野)
+// có từ lõi tính 2.3.0; cách đọc và dị bản ghi ở bản Go.
 
 import { DIA_CHI, mod } from "./phu-thuoc.ts";
 import { CHINH_TINH_DIGNITY } from "./du-lieu.ts";
@@ -81,6 +83,29 @@ const MO_TA_NHOM: Readonly<Record<string, BaNgonNgu>> = {
 /** Lục cát tinh cộng Lộc Tồn: tập "吉星" của các chú văn nói "遇吉". */
 const CAT_TINH_TOAN_THU = ["Tả Phù", "Hữu Bật", "Văn Xương", "Văn Khúc", "Thiên Khôi", "Thiên Việt", "Lộc Tồn"];
 
+/**
+ * Bậc của tứ sát theo bảng miếu vượng mười hai cung của Toàn thư (quyển 2,
+ * cuối mục 安身命例): M 庙, Đ 得地, L 利益, H 落陷; ô rỗng là cung sao không
+ * tới. Chỉ dùng cho cách cục của Toàn thư; lá số không in bậc các sao này.
+ */
+const SAT_TINH_DIA_TOAN_THU: Readonly<Record<string, readonly string[]>> = {
+  "Kình Dương": ["H", "M", "", "H", "M", "", "H", "M", "", "H", "M", ""],
+  "Đà La": ["", "M", "H", "", "M", "H", "", "M", "H", "", "M", "H"],
+  "Hỏa Tinh": ["H", "Đ", "M", "L", "H", "Đ", "M", "L", "H", "Đ", "M", "L"],
+  "Linh Tinh": ["H", "Đ", "M", "L", "H", "Đ", "M", "L", "H", "Đ", "M", "L"],
+};
+
+/** Tứ sát (四殺) theo thứ tự in trong dòng điều kiện. */
+const TU_SAT_TOAN_THU: ReadonlyArray<readonly [string, string]> = [
+  ["Kình Dương", "擎羊"], ["Đà La", "陀罗"], ["Hỏa Tinh", "火星"], ["Linh Tinh", "铃星"],
+];
+
+/** Nối tên sao: "A, B và C", "A, B and C", "A、B、C". */
+function noiTenBa(vi: string[], zh: string[]): BaNgonNgu {
+  const noi = (ds: string[], cuoi: string) => (ds.length === 1 ? ds[0] : ds.slice(0, -1).join(", ") + cuoi + ds[ds.length - 1]);
+  return { vi: noi(vi, " và "), en: noi(vi, " and "), zh: zh.join("、") };
+}
+
 function coHoaTai(ls: LaSoTuVi, pos: number, hoa: string): boolean {
   return ls.cung[mod(pos, 12)].sao.some((s) => s.tuHoa === hoa);
 }
@@ -151,6 +176,10 @@ export function cachCucToanThu(ls: LaSoTuVi): CachCuc[] {
   };
   const tai = saoTaiViTri(ls, menh);
   const pMenh = mod(menh, 12);
+  // Cung Mệnh rồi cung Thân cho các chú văn nói "身命"; Thân trùng Mệnh thì một lần.
+  const thanMenh: { pos: number; ba: BaNgonNgu }[] = [{ pos: pMenh, ba: { vi: "Mệnh", en: "Mệnh", zh: "命宫" } }];
+  const pThan = mod(ls.cungThan, 12);
+  if (pThan !== pMenh) thanMenh.push({ pos: pThan, ba: { vi: "Thân", en: "Thân", zh: "身宫" } });
 
   // ── 定富局 ──
 
@@ -285,6 +314,17 @@ export function cachCucToanThu(ls: LaSoTuVi): CachCuc[] {
       zh: "命安丑宫，太阳、太阴同在未宫来照",
     });
   }
+  // 刑囚夾印：天刑廉貞同臨身命主武勇之人。(Thiên Hình, Liêm Trinh ở Mệnh hay Thân)
+  for (const g of thanMenh) {
+    if (coDu(saoTaiViTri(ls, g.pos), "Thiên Hình", "Liêm Trinh")) {
+      them(NHOM_DINH_QUY, "Hình Tù giáp Ấn", "刑囚夹印", "刑囚夾印", "天刑廉贞同临身命主武勇之人。", g.pos, true, {
+        vi: "Thiên Hình và Liêm Trinh cùng toạ thủ cung " + g.ba.vi,
+        en: "Thiên Hình and Liêm Trinh both sit in the " + g.ba.en + " palace",
+        zh: "天刑、廉贞同坐" + g.ba.zh,
+      });
+      break;
+    }
+  }
   // 科權祿拱：ba hóa ở tam phương tứ chính (mục 文職論 của Toàn thư).
   if (tamPhuongCoHoa(ls, menh, "Hóa Khoa") && tamPhuongCoHoa(ls, menh, "Hóa Quyền") && tamPhuongCoHoa(ls, menh, "Hóa Lộc")) {
     them(NHOM_DINH_QUY, "Khoa Quyền Lộc củng", "科权禄拱", "科權祿拱", "又得三方四正科权禄拱", menh, true, {
@@ -292,6 +332,17 @@ export function cachCucToanThu(ls: LaSoTuVi): CachCuc[] {
       en: "Hóa Khoa, Hóa Quyền and Hóa Lộc all sit in the Mệnh palace or its triangle and opposite",
       zh: "化科、化权、化禄皆在命宫或其三方四正",
     });
+  }
+  // 貪火相逢：謂二星守命同居廟旺是也。Tham Lang theo bảng lá số, Hỏa Tinh theo bảng Toàn thư.
+  if (tai.has("Tham Lang") && tai.has("Hỏa Tinh") && sangMieuVuong("Tham Lang", pMenh)) {
+    const d = SAT_TINH_DIA_TOAN_THU["Hỏa Tinh"][pMenh];
+    if (d === "M" || d === "V") {
+      them(NHOM_DINH_QUY, "Tham Hỏa tương phùng", "贪火相逢", "貪火相逢", "谓二星守命同居庙旺是也。", menh, true, {
+        vi: "Tham Lang và Hỏa Tinh cùng toạ thủ cung Mệnh, cả hai miếu hay vượng: Tham Lang theo bảng miếu hãm của lá số, Hỏa Tinh theo bảng mười hai cung của Toàn thư (miếu ở Dần, Ngọ, Tuất)",
+        en: "Tham Lang and Hỏa Tinh both sit in the Mệnh palace, both at the exalted or strong grade: Tham Lang by the chart's strength table, Hỏa Tinh by the twelve-palace table of the Tử Vi Đẩu Số Toàn Thư (exalted at Dần, Ngọ, Tuất)",
+        zh: "贪狼、火星同坐命宫，且皆庙旺：贪狼按本命盘的庙陷表，火星按《全书》十二宫表（寅、午、戌庙）",
+      });
+    }
   }
   // 武曲守垣：武守命卯宮是也，餘不是。
   if (pMenh === 3 && tai.has("Vũ Khúc")) {
@@ -378,6 +429,26 @@ export function cachCucToanThu(ls: LaSoTuVi): CachCuc[] {
       vi: "Phá Quân toạ thủ cung Mệnh ở vị trí hãm theo bảng miếu hãm của lá số",
       en: "Phá Quân sits in the Mệnh palace at a weak position by the chart's strength table",
       zh: "破军坐守命宫，按本命盘的庙陷表落陷",
+    });
+  }
+  // 君子在野：謂四殺守身命而言臨陷地是也。(một hay nhiều sát tinh hãm ở Mệnh, Thân)
+  for (const g of thanMenh) {
+    const taiG = saoTaiViTri(ls, g.pos);
+    const vi: string[] = [];
+    const zh: string[] = [];
+    for (const [ten, tenZh] of TU_SAT_TOAN_THU) {
+      if (taiG.has(ten) && SAT_TINH_DIA_TOAN_THU[ten][g.pos] === "H") {
+        vi.push(ten);
+        zh.push(tenZh);
+      }
+    }
+    if (vi.length === 0) continue;
+    const ds = noiTenBa(vi, zh);
+    const dongTu: BaNgonNgu = vi.length > 1 ? { vi: "cùng toạ thủ", en: "sit", zh: "同坐" } : { vi: "toạ thủ", en: "sits", zh: "坐守" };
+    them(NHOM_DINH_BAN_TIEN, "Quân tử tại dã", "君子在野", "君子在野", "谓四杀守身命而言临陷地是也。", g.pos, true, {
+      vi: ds.vi + " " + dongTu.vi + " cung " + g.ba.vi + ", ở bậc hãm theo bảng mười hai cung của Toàn thư (tứ sát là Kình Dương, Đà La, Hỏa Tinh, Linh Tinh)",
+      en: ds.en + " " + dongTu.en + " in the " + g.ba.en + " palace at the weak grade by the twelve-palace table of the Tử Vi Đẩu Số Toàn Thư (the four malefics are Kình Dương, Đà La, Hỏa Tinh and Linh Tinh)",
+      zh: ds.zh + dongTu.zh + g.ba.zh + "，按《全书》十二宫表落陷（四杀为擎羊、陀罗、火星、铃星）",
     });
   }
   // 兩重華蓋：謂祿存化祿坐命遇空劫是也。

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "node --conditions=source --test \"packages/*/test/**/*.test.ts\"",
-    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi -w @nhatnguyet/widgets && npm run build -w @nhatnguyet/cli -w @nhatnguyet/mcp",
+    "build": "npm run build -w @nhatnguyet/am-lich && npm run build -w @nhatnguyet/than-so-hoc -w @nhatnguyet/le-hoi -w @nhatnguyet/bat-tu -w @nhatnguyet/tu-vi -w @nhatnguyet/fengshui -w @nhatnguyet/iching -w @nhatnguyet/widgets && npm run build -w @nhatnguyet/cli -w @nhatnguyet/mcp",
     "docs": "typedoc --options typedoc.json"
   },
   "devDependencies": {

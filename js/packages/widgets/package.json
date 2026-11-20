@@ -1,7 +1,7 @@
 {
   "name": "@nhatnguyet/widgets",
-  "version": "0.3.0",
-  "description": "Vietnamese lunar calendar web components (Custom Elements): today's date, month grid, auspicious hours, Tết countdown, date converter. Run in the browser with no server. Nhat Nguyet (nhatnguyet.org)",
+  "version": "0.4.0",
+  "description": "Lunar calendar web components (Custom Elements) for the Chinese, Korean, Japanese and Vietnamese calendars: today's date, month grid, auspicious hours, Lunar New Year countdown, date converter. Run in the browser with no server. Nhat Nguyet (nhatnguyet.org)",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
   "homepage": "https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/tree/main/widgets",
@@ -15,7 +15,9 @@
     "tet countdown",
     "auspicious hours",
     "gio hoang dao",
-    "农历"
+    "农历",
+    "chinese calendar",
+    "korean calendar"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -49,7 +51,7 @@
     "test": "node --conditions=source --test \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.3.0"
+    "@nhatnguyet/am-lich": "^0.4.0"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",

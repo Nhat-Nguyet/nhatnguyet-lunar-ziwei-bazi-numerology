@@ -8,7 +8,7 @@
 // Balliett (1917): sách ấy rút gọn riêng ngày, tháng, năm trước khi cộng.
 
 /** Phiên bản động cơ tính của bản Go mà gói này chuyển ngữ theo. */
-export const PHIEN_BAN_DONG_CO = "2.2.0";
+export const PHIEN_BAN_DONG_CO = "2.3.0";
 
 const SO_CHU = new Set([11, 22, 33]);
 

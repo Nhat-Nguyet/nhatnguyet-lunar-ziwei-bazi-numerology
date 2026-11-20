@@ -1,7 +1,7 @@
 {
   "name": "@nhatnguyet/mcp",
-  "version": "0.3.0",
-  "description": "MCP server for Nhat Nguyet: deterministic Vietnamese/Chinese lunar calendar, solar terms, Zi Wei Dou Shu (Tử Vi), BaZi, numerology and Vietnamese festivals for AI assistants. No network, Vietnam time (UTC+7) by default.",
+  "version": "0.4.0",
+  "description": "MCP server for Nhat Nguyet: deterministic lunar calendar for China, Korea, Japan, Vietnam and 7 more countries and regions, solar terms, Zi Wei Dou Shu, BaZi, numerology, I Ching hexagrams and Six Lines charts, feng shui life gua, flying stars and Luban rulers, Vietnamese festivals, for AI assistants. No network; Vietnam time (UTC+7) unless country is set.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
   "homepage": "https://nhatnguyet.org/en/ma-nguon-mo",
@@ -21,6 +21,11 @@
     "bazi",
     "four pillars",
     "numerology",
+    "i ching",
+    "hexagram",
+    "feng shui",
+    "flying stars",
+    "korean calendar",
     "nhat nguyet"
   ],
   "type": "module",
@@ -46,11 +51,13 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.2",
-    "@nhatnguyet/am-lich": "^0.3.0",
-    "@nhatnguyet/bat-tu": "^0.3.0",
-    "@nhatnguyet/le-hoi": "^0.3.0",
-    "@nhatnguyet/than-so-hoc": "^0.3.0",
-    "@nhatnguyet/tu-vi": "^0.3.0",
+    "@nhatnguyet/am-lich": "^0.4.0",
+    "@nhatnguyet/bat-tu": "^0.4.0",
+    "@nhatnguyet/fengshui": "^0.4.0",
+    "@nhatnguyet/iching": "^0.4.0",
+    "@nhatnguyet/le-hoi": "^0.4.0",
+    "@nhatnguyet/than-so-hoc": "^0.4.0",
+    "@nhatnguyet/tu-vi": "^0.4.0",
     "zod": "4.6.7"
   },
   "devDependencies": {

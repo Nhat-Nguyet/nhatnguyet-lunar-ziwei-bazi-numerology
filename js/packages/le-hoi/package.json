@@ -1,6 +1,6 @@
 {
   "name": "@nhatnguyet/le-hoi",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Vietnamese festival and holiday calendar for JS/TS: 206 festivals (Tết, Hùng Kings, Mid-Autumn, temple and ethnic festivals) in Vietnamese, English and Chinese, with lunar to Gregorian dates for any year 1900 to 2100, provinces, ethnic groups, sourced venue coordinates and iCalendar export.",
   "license": "MIT",
   "author": "Nhat Nguyet (https://nhatnguyet.org)",
@@ -54,7 +54,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@nhatnguyet/am-lich": "^0.3.0"
+    "@nhatnguyet/am-lich": "^0.4.0"
   },
   "repository": {
     "type": "git",
