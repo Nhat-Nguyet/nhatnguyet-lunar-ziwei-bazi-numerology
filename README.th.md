@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="กรณีทดสอบ: 17,291" src="https://img.shields.io/badge/test%20vectors-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="การตรวจสอบอัตโนมัติ" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="โค้ด: MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="ข้อมูล: CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="ข้อมูล: CC BY 4.0, คำอธิบาย CC BY-NC 4.0" src="https://img.shields.io/badge/data-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -548,14 +548,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## ชุดข้อมูล
 
-CC BY 4.0 ใช้ในผลิตภัณฑ์เชิงพาณิชย์และใช้ฝึก AI ได้ โดยต้องระบุแหล่งที่มา
+ข้อมูลปฏิทิน คำศัพท์ กรณีทดสอบ และตำราโบราณอยู่ภายใต้ CC BY 4.0 ใช้ในผลิตภัณฑ์เชิงพาณิชย์และใช้ฝึก AI ได้ โดยต้องระบุแหล่งที่มา ส่วนชุดข้อมูลคำอธิบายและชุดความรู้ (`*-readings`, `*-knowledge`) อยู่ภายใต้ CC BY-NC 4.0 ตั้งแต่ 20 พฤศจิกายน 2026 ใช้เพื่อการวิจัยและงานที่ไม่ใช่เชิงพาณิชย์ได้อย่างอิสระโดยระบุแหล่งที่มา หากต้องการใช้เชิงพาณิชย์ โปรดติดต่อ lienhe@nhatnguyet.org เวอร์ชันที่เผยแพร่ก่อนวันดังกล่าวยังคงเป็น CC BY 4.0
 
 | ชุดข้อมูล | เนื้อหา | ขนาด |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | ดวงจื่อเหวย 1,761,936 ดวงพร้อมคำทำนาย: ทุกวันตั้งแต่ปี 1900 ถึง 2100 × 12 ชั่วยาม × 2 เพศ | 10.37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | ดวงปาจื้อ 1,761,936 ดวงพร้อมคำทำนาย ในช่วงเดียวกัน | 1.56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | โปรไฟล์ศาสตร์ตัวเลข 73,414 รายการ หนึ่งรายการต่อหนึ่งวันเกิด | 0.08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | หน่วยความรู้ 2,787 หน่วย (ดาวหนึ่งดวงในเรือนหนึ่ง รูปแบบดวงหนึ่ง...) พร้อมข้อความของเว็บไซต์สามภาษา และข้อความจากตำราโบราณ 885 ตอน | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | ดวงจื่อเหวย 1,761,936 ดวงพร้อมคำทำนาย: ทุกวันตั้งแต่ปี 1900 ถึง 2100 × 12 ชั่วยาม × 2 เพศ | 6.83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | ดวงปาจื้อ 1,761,936 ดวงพร้อมคำทำนาย ในช่วงเดียวกัน | 1.26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | โปรไฟล์ศาสตร์ตัวเลข 73,414 รายการ หนึ่งรายการต่อหนึ่งวันเกิด | 0.07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | หน่วยความรู้ 2,790 หน่วย (ดาวหนึ่งดวงในเรือนหนึ่ง รูปแบบดวงหนึ่ง...) พร้อมข้อความของเว็บไซต์สามภาษา และข้อความจากตำราโบราณ 894 ตอน | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 973 หน่วย (ธาตุประจำวันตามเดือน เสาวันและชั่วยาม สิบเทพ...) ข้อความจากตำราโบราณ 1,589 ตอน | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 หน่วย (เลขหลัก เลขวัฏจักร หัวข้อชีวิต) 195 ตอน | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | ตำราโบราณที่เป็นสาธารณสมบัติ 373 ฉบับ (ราว 350 ผลงาน) 72.7 ล้านตัวอักษร ฉบับเต็ม | ข้อความ 147 MB, Parquet 70 MB |
@@ -565,13 +565,13 @@ CC BY 4.0 ใช้ในผลิตภัณฑ์เชิงพาณิช�
 | [Tết 1900 ถึง 2100](./history/README.md) | วัน Tết ที่ UTC+7 และ UTC+8 ตลอด 201 ปี พร้อมปฏิทินที่ใช้จริงและแหล่งอ้างอิง | |
 | [ชุดข้อมูลปฏิทินและวัฒนธรรม 33 ชุด](https://nhatnguyet.org/en/du-lieu) | ปฏิทินจันทรคติสุริยคติปี 1900 ถึง 2100, ฤดูกาลย่อย, 64 เฮกซะแกรม, ไพ่ทาโรต์ 78 ใบ, เทศกาล 206 งาน, บทสวดบูชา 456 บท... ในรูปแบบ CSV, JSON, Parquet พร้อม [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
-ชุดข้อมูลคำทำนายทั้งสามชุดรวมกันได้ **3,597,286 ดวง 12.02 GB หลังบีบอัด**
+ชุดข้อมูลคำทำนายทั้งสามชุดรวมกันได้ **3,597,286 ดวง 8.16 GB หลังบีบอัด**
 แบ่งเป็นสามส่วน ได้แก่ ดวงแบบมีโครงสร้างพร้อม ID ของคำทำนาย (`charts/`, 1.55 GB)
-ข้อความเต็มที่ประกอบสำเร็จแยกตามภาษา (`assembled/<system>/<en|vi|zh>/`, 10.42 GB)
+ข้อความเต็มที่ประกอบสำเร็จแยกตามภาษา (`assembled/<system>/<en|vi|zh>/`, 6.56 GB)
 และคลังข้อความที่เก็บคำทำนาย ข้อความจากตำราโบราณ และบทความแต่ละรายการไว้เพียงครั้งเดียว
 (`store/`, 0.04 GB) คำทำนายอ้างอิงตำราโบราณโดยระบุชื่อเล่มและบท แต่ละไฟล์คือหนึ่งปีเกิด
 **เมื่อคลายการบีบอัดแล้วจะมีขนาดใหญ่มาก** (ข้อความซ้ำกันข้ามดวง
-ข้อความจื่อเหวยแบบประกอบสำเร็จของปีเดียวมีขนาดราว 2.7 GB ต่อภาษา)
+ข้อความจื่อเหวยแบบประกอบสำเร็จของปีเดียวมีขนาดราว 0.8 GB ต่อภาษา)
 จึงควรอ่านแบบสตรีมหรือดาวน์โหลดทีละปี
 
 ชุดข้อมูลความรู้คือฉบับกระชับ หนึ่งแถวต่อหนึ่งหน่วย ใช้ ID ข้อความเดียวกับชุดคำทำนาย
@@ -742,8 +742,10 @@ iztro ในเรื่อง Fire และ Bell สี่การแปร�
 <details>
 <summary><b>นำข้อมูลไปฝึกโมเดล AI ได้ไหม</b></summary>
 
-ได้ รวมถึงการใช้เชิงพาณิชย์ ภายใต้ CC BY 4.0 โดยระบุแหล่งที่มาว่า "Data: Nhat Nguyet
-(nhatnguyet.org)"
+ได้ ข้อมูลปฏิทิน คำศัพท์ กรณีทดสอบ และตำราโบราณใช้เชิงพาณิชย์ได้ภายใต้ CC BY 4.0
+ส่วนชุดข้อมูลคำอธิบายและชุดความรู้อยู่ภายใต้ CC BY-NC 4.0 ใช้กับงานวิจัยและโมเดล
+ที่ไม่ใช่เชิงพาณิชย์ได้อย่างอิสระ การใช้เชิงพาณิชย์ต้องขออนุญาต (lienhe@nhatnguyet.org)
+โดยระบุแหล่งที่มาว่า "Data: Nhat Nguyet (nhatnguyet.org)"
 </details>
 
 <details>
@@ -767,7 +769,8 @@ iztro ในเรื่อง Fire และ Bell สี่การแปร�
 | ส่วน | สัญญาอนุญาต |
 |---|---|
 | โค้ด | [MIT](./LICENSE) |
-| ข้อมูล คำทำนาย กรณีทดสอบ | [CC BY 4.0](./DATA-LICENSE): ใช้เชิงพาณิชย์และใช้ฝึก AI ได้ โดยต้องระบุแหล่งที่มา |
+| ข้อมูลปฏิทิน คำศัพท์ กรณีทดสอบ | [CC BY 4.0](./DATA-LICENSE): ใช้เชิงพาณิชย์และใช้ฝึก AI ได้ โดยต้องระบุแหล่งที่มา |
+| ชุดข้อมูลคำอธิบายและชุดความรู้ (`*-readings`, `*-knowledge`) | [CC BY-NC 4.0](./DATA-LICENSE) ตั้งแต่ 20 พฤศจิกายน 2026: ใช้ที่ไม่ใช่เชิงพาณิชย์ได้โดยระบุแหล่งที่มา ใช้เชิงพาณิชย์ต้องขออนุญาต เวอร์ชันก่อนหน้ายังคงเป็น CC BY 4.0 |
 | ตำราโบราณ | ต้นฉบับเป็นสาธารณสมบัติ ส่วนการแปลงเป็นดิจิทัลและการทำความสะอาดข้อความอยู่ภายใต้ CC BY 4.0 |
 
 ข้อความระบุแหล่งที่มา: `Data: Nhat Nguyet (nhatnguyet.org)` พร้อมลิงก์เมื่อทำได้
@@ -786,4 +789,4 @@ iztro ในเรื่อง Fire และ Bell สี่การแปร�
 
 เว็บไซต์: [nhatnguyet.org](https://nhatnguyet.org) · อีเมล: lienhe@nhatnguyet.org
 
-<p align="center"><sub>ข้อมูล: Nhat Nguyet (nhatnguyet.org) · โค้ด MIT · ข้อมูล CC BY 4.0</sub></p>
+<p align="center"><sub>ข้อมูล: Nhat Nguyet (nhatnguyet.org) · โค้ด MIT · ข้อมูล CC BY 4.0 · คำอธิบาย CC BY-NC 4.0</sub></p>

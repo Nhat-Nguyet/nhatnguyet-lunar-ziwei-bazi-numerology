@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="Ca kiểm: 17.291" src="https://img.shields.io/badge/ca%20ki%E1%BB%83m-17.291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="Kiểm tự động" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="Mã: MIT" src="https://img.shields.io/badge/m%C3%A3-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="Dữ liệu: CC BY 4.0" src="https://img.shields.io/badge/d%E1%BB%AF%20li%E1%BB%87u-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="Dữ liệu: CC BY 4.0, lời luận CC BY-NC 4.0" src="https://img.shields.io/badge/d%E1%BB%AF%20li%E1%BB%87u-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -554,14 +554,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## Bộ dữ liệu
 
-CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI, chỉ cần ghi nguồn.
+Dữ liệu lịch, thuật ngữ, ca kiểm và văn bản cổ theo CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI, chỉ cần ghi nguồn. Các bộ lời luận và tri thức (`*-readings`, `*-knowledge`) theo CC BY-NC 4.0 từ 20/11/2026: dùng tự do cho nghiên cứu và mục đích phi thương mại, có ghi nguồn; dùng thương mại xin phép qua lienhe@nhatnguyet.org. Bản phát hành trước ngày ấy giữ CC BY 4.0.
 
 | Bộ | Nội dung | Cỡ |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1.761.936 lá Tử Vi có lời luận: mọi ngày từ 1900 tới 2100 × 12 giờ × 2 giới | 10,37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1.761.936 lá Bát Tự có lời luận, cùng khoảng ngày | 1,56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73.414 hồ sơ thần số học, mỗi ngày sinh một hồ sơ | 0,08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2.787 đơn vị tri thức (một sao ở một cung, một cách cục...) kèm lời của site bằng ba thứ tiếng và 885 đoạn sách cổ | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1.761.936 lá Tử Vi có lời luận: mọi ngày từ 1900 tới 2100 × 12 giờ × 2 giới | 6,83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1.761.936 lá Bát Tự có lời luận, cùng khoảng ngày | 1,26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73.414 hồ sơ thần số học, mỗi ngày sinh một hồ sơ | 0,07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2.790 đơn vị tri thức (một sao ở một cung, một cách cục...) kèm lời của site bằng ba thứ tiếng và 894 đoạn sách cổ | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 973 đơn vị (nhật chủ theo tháng, trụ ngày và giờ, thập thần...), 1.589 đoạn sách cổ | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 đơn vị (các số chính, số theo chu kỳ, chủ đề đời sống), 195 đoạn sách | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 văn bản cổ thuộc phạm vi công cộng (khoảng 350 tác phẩm), 72,7 triệu ký tự, toàn văn | 147 MB chữ, 70 MB Parquet |
@@ -571,12 +571,12 @@ CC BY 4.0, dùng được cho sản phẩm thương mại và huấn luyện AI,
 | [Tết 1900 tới 2100](./history/README.md) | Tết theo UTC+7 và UTC+8 của 201 năm, kèm lịch thực sự dùng và nguồn | |
 | [33 bộ lịch pháp và văn hoá](https://nhatnguyet.org/du-lieu) | âm dương lịch 1900 tới 2100, tiết khí, 64 quẻ, 78 lá Tarot, 206 lễ hội, 456 bài văn cúng... dạng CSV, JSON, Parquet, có [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
-Ba bộ lời luận cộng lại **3.597.286 lá, 12,02 GB nén**, chia ba phần: lá số có
+Ba bộ lời luận cộng lại **3.597.286 lá, 8,16 GB nén**, chia ba phần: lá số có
 cấu trúc kèm mã lời luận (`charts/`, 1,55 GB), toàn văn ghép sẵn theo từng ngôn
-ngữ (`assembled/<system>/<en|vi|zh>/`, 10,42 GB) và kho chữ nơi mỗi lời luận, câu sách,
+ngữ (`assembled/<system>/<en|vi|zh>/`, 6,56 GB) và kho chữ nơi mỗi lời luận, câu sách,
 bài viết chỉ lưu một lần (`store/`, 0,04 GB). Lời luận trích sách cổ kèm tên
 sách và chương. Mỗi năm sinh một tệp. **Giải nén ra rất lớn** (chữ lặp giữa các
-lá: một năm Tử Vi ghép sẵn chừng 2,7 GB mỗi ngôn ngữ), nên đọc theo dòng hoặc
+lá: một năm Tử Vi ghép sẵn chừng 0,8 GB mỗi ngôn ngữ), nên đọc theo dòng hoặc
 tải từng năm.
 
 Bộ tri thức là bản gọn: mỗi đơn vị một dòng, cùng mã chữ với bộ lời luận, các
@@ -752,8 +752,10 @@ thì trụ tháng khác đi ở khoảng một phần tư số ngày (24,3% từ
 <details>
 <summary><b>Có được dùng dữ liệu để huấn luyện mô hình AI không?</b></summary>
 
-Được, kể cả cho mục đích thương mại, theo CC BY 4.0. Chỉ cần ghi "Dữ liệu: Nhật
-Nguyệt (nhatnguyet.org)".
+Được. Dữ liệu lịch, thuật ngữ, ca kiểm và văn bản cổ dùng được cả cho mục đích
+thương mại theo CC BY 4.0. Các bộ lời luận và tri thức theo CC BY-NC 4.0: tự do
+cho nghiên cứu và mô hình phi thương mại, dùng thương mại thì xin phép
+(lienhe@nhatnguyet.org). Ghi nguồn "Dữ liệu: Nhật Nguyệt (nhatnguyet.org)".
 </details>
 
 <details>
@@ -778,7 +780,8 @@ Swift, C#...) và qua trọn 17.291 ca kiểm trong [`ca-kiem/`](./ca-kiem). Đ�
 | Phần | Giấy phép |
 |---|---|
 | Mã nguồn | [MIT](./LICENSE) |
-| Dữ liệu, lời luận, ca kiểm | [CC BY 4.0](./DATA-LICENSE): được dùng thương mại và huấn luyện AI, phải ghi nguồn |
+| Dữ liệu lịch, thuật ngữ, ca kiểm | [CC BY 4.0](./DATA-LICENSE): được dùng thương mại và huấn luyện AI, phải ghi nguồn |
+| Bộ lời luận và bộ tri thức (`*-readings`, `*-knowledge`) | [CC BY-NC 4.0](./DATA-LICENSE) từ 20/11/2026: dùng phi thương mại có ghi nguồn, dùng thương mại xin phép; bản phát hành trước giữ CC BY 4.0 |
 | Văn bản cổ | Nguyên bản thuộc phạm vi công cộng; phần số hoá và làm sạch theo CC BY 4.0 |
 
 Dòng ghi nguồn: `Dữ liệu: Nhật Nguyệt (nhatnguyet.org)`, kèm liên kết khi có
@@ -797,4 +800,4 @@ dẫn phần mềm (phương pháp tính lịch nằm ở [bài báo kỹ thuậ
 
 Trang web: [nhatnguyet.org](https://nhatnguyet.org) · Thư: lienhe@nhatnguyet.org
 
-<p align="center"><sub>Dữ liệu: Nhật Nguyệt (nhatnguyet.org) · Mã MIT · Dữ liệu CC BY 4.0</sub></p>
+<p align="center"><sub>Dữ liệu: Nhật Nguyệt (nhatnguyet.org) · Mã MIT · Dữ liệu CC BY 4.0 · Lời luận CC BY-NC 4.0</sub></p>

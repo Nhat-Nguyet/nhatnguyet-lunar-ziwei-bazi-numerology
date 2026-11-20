@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="Test vectors: 17,291" src="https://img.shields.io/badge/test%20vectors-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="Checks" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="Code: MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="Data: CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="Data: CC BY 4.0, readings CC BY-NC 4.0" src="https://img.shields.io/badge/data-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -564,14 +564,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## Datasets
 
-CC BY 4.0, usable for commercial products and AI training with credit.
+Calendar data, terminology, test vectors and classical texts are CC BY 4.0, usable for commercial products and AI training with credit. The reading and knowledge datasets (`*-readings`, `*-knowledge`) are CC BY-NC 4.0 from 20 November 2026: free for research and non-commercial use with credit; for commercial use, ask at lienhe@nhatnguyet.org. Releases before that date keep CC BY 4.0.
 
 | Dataset | Contents | Size |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1,761,936 Zi Wei charts with readings: every day 1900 to 2100 × 12 hours × 2 genders | 10.37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1,761,936 BaZi charts with readings, same range | 1.56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73,414 numerology profiles, one per birth date | 0.08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2,787 knowledge units (a star in a palace, a pattern...) with the site's text in three languages and 885 classical passages | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1,761,936 Zi Wei charts with readings: every day 1900 to 2100 × 12 hours × 2 genders | 6.83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1,761,936 BaZi charts with readings, same range | 1.26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73,414 numerology profiles, one per birth date | 0.07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2,790 knowledge units (a star in a palace, a pattern...) with the site's text in three languages and 894 classical passages | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 973 units (day master by month, day pillar and hour, Ten Gods...), 1,589 classical passages | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 units (core numbers, cycle numbers, life topics), 195 passages | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 public domain classical texts (about 350 works), 72.7 million characters, full text | 147 MB text, 70 MB Parquet |
@@ -581,13 +581,13 @@ CC BY 4.0, usable for commercial products and AI training with credit.
 | [Tết 1900 to 2100](./history/README.md) | Tết at UTC+7 and UTC+8 for 201 years, with the calendar actually used and sources | |
 | [33 calendar and culture datasets](https://nhatnguyet.org/en/du-lieu) | lunisolar calendar 1900 to 2100, solar terms, 64 hexagrams, 78 Tarot cards, 206 festivals, 456 ritual prayers... CSV, JSON, Parquet, with a [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
-The three reading datasets total **3,597,286 charts, 12.02 GB compressed**, in
+The three reading datasets total **3,597,286 charts, 8.16 GB compressed**, in
 three parts: structured charts with reading IDs (`charts/`, 1.55 GB), full text
-prebuilt per language (`assembled/<system>/<en|vi|zh>/`, 10.42 GB) and the text store
+prebuilt per language (`assembled/<system>/<en|vi|zh>/`, 6.56 GB) and the text store
 where each reading, classical quote and article is kept once (`store/`,
 0.04 GB). Readings quote the classics with book and chapter. Files are one per
 birth year. **Uncompressed they are very large** (the text repeats across
-charts: one year of prebuilt Zi Wei text is about 2.7 GB per language), so
+charts: one year of prebuilt Zi Wei text is about 0.8 GB per language), so
 stream them or download a year at a time.
 
 The knowledge datasets are the compact version: one row per unit, with the
@@ -767,8 +767,10 @@ pillar on about a quarter of all days (24.3% from 1900 to 2100).
 <details>
 <summary><b>Can I use the data to train an AI model?</b></summary>
 
-Yes, including commercially, under CC BY 4.0. Credit "Data: Nhat Nguyet
-(nhatnguyet.org)".
+Yes. Calendar data, terminology, test vectors and classical texts allow it
+commercially under CC BY 4.0. The reading and knowledge datasets are CC BY-NC
+4.0: free for research and non-commercial models, commercial use by permission
+(lienhe@nhatnguyet.org). Credit "Data: Nhat Nguyet (nhatnguyet.org)".
 </details>
 
 <details>
@@ -793,7 +795,8 @@ Read `vao`, compare with `ra`; the rules are in
 | Part | License |
 |---|---|
 | Code | [MIT](./LICENSE) |
-| Data, readings, test vectors | [CC BY 4.0](./DATA-LICENSE): commercial use and AI training allowed, credit required |
+| Calendar data, terminology, test vectors | [CC BY 4.0](./DATA-LICENSE): commercial use and AI training allowed, credit required |
+| Reading and knowledge datasets (`*-readings`, `*-knowledge`) | [CC BY-NC 4.0](./DATA-LICENSE) from 20 November 2026: non-commercial use with credit, commercial use by permission; earlier releases stay CC BY 4.0 |
 | Classical texts | Public domain originals; the digitization and cleaning are CC BY 4.0 |
 
 Credit line: `Data: Nhat Nguyet (nhatnguyet.org)`, with a link where possible.
@@ -812,4 +815,4 @@ software (the calendar method is in the [technical paper](./docs/paper/paper.pdf
 
 Website: [nhatnguyet.org](https://nhatnguyet.org) · Email: lienhe@nhatnguyet.org
 
-<p align="center"><sub>Data: Nhat Nguyet (nhatnguyet.org) · Code MIT · Data CC BY 4.0</sub></p>
+<p align="center"><sub>Data: Nhat Nguyet (nhatnguyet.org) · Code MIT · Data CC BY 4.0 · Readings CC BY-NC 4.0</sub></p>

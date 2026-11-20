@@ -1,6 +1,6 @@
 {
   "dataset": "nhatnguyet/ziwei-knowledge",
-  "engine_version": "2.2.0",
+  "engine_version": "2.3.0",
   "tables": [
     {
       "table": "major-star-in-palace",
@@ -40,34 +40,34 @@
     },
     {
       "table": "pattern",
-      "rows": 34,
-      "rows_with_site_text": 34,
-      "rows_with_classical": 28,
-      "classical_links": 77,
-      "distinct_passages": 77,
-      "description": "One row per named chart pattern the engine recognises: the site's description, the annotation of the Tử Vi Đẩu Số Toàn Thư where it lists the pattern, and the classical passages under the pattern's name."
+      "rows": 37,
+      "rows_with_site_text": 37,
+      "rows_with_classical": 31,
+      "classical_links": 86,
+      "distinct_passages": 86,
+      "description": "One row per named chart pattern the engine recognizes: the site's description, the annotation of the Tử Vi Đẩu Số Toàn Thư where it lists the pattern, and the classical passages under the pattern's name."
     }
   ],
   "distinct_site_texts": 696,
-  "distinct_passages": 885,
+  "distinct_passages": 894,
   "books": [
     {
       "book_title": "紫微斗数全书 (Tử Vi Đẩu Số Toàn Thư)",
       "author_vi": "truyền thống quy cho 陈抟 (陈希夷, Trần Đoàn) soạn; 罗洪先 (La Hồng Tiên) đề tựa năm 嘉靖庚戌 (1550) và biên",
       "author_en": "traditionally attributed to Chen Tuan (Chen Xiyi); preface (Jiajing gengxu year, 1550) and editing by Luo Hongxian",
-      "passages": 874
+      "passages": 882
     },
     {
       "book_title": "新鋟希夷陈先生紫微斗数全书（明南阳堂刊本） (Tử Vi Đẩu Số Toàn Thư, bản khắc Minh Nam Dương Đường: lời chú Cốt Tủy Phú và các bài luận cách)",
       "author_vi": "truyền thống quy cho 陈抟; 潘希尹 bổ tập",
       "author_en": "traditionally attributed to Chen Tuan; supplemented by Pan Xiyin",
-      "passages": 11
+      "passages": 12
     }
   ],
-  "passages_with_author_en": 885,
+  "passages_with_author_en": 894,
   "passages_without_author_en": 0,
   "public_domain_passages_in_store": 1502,
-  "public_domain_passages_linked": 847,
+  "public_domain_passages_linked": 853,
   "rules": 3,
   "omitted_tables_no_content": [],
   "scan": {

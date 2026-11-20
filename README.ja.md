@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="テストベクター：17,291件" src="https://img.shields.io/badge/test%20vectors-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="自動チェック" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="コード：MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="データ：CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="データ：CC BY 4.0、解釈 CC BY-NC 4.0" src="https://img.shields.io/badge/data-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -466,14 +466,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## データセット
 
-CC BY 4.0 です。クレジットを表記すれば、商用製品にも AI の学習にも使えます。
+暦データ、用語、テストベクター、古典は CC BY 4.0 です。クレジットを表記すれば、商用製品にも AI の学習にも使えます。解釈と知識のデータセット（`*-readings`、`*-knowledge`）は 2026 年 11 月 20 日から CC BY-NC 4.0 です。研究と非商用の利用はクレジット表記で自由に使え、商用利用は lienhe@nhatnguyet.org にご相談ください。それ以前のリリースは CC BY 4.0 のままです。
 
 | データセット | 内容 | サイズ |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 解釈付きの紫微斗数の命盤 1,761,936件：1900年から2100年の毎日 × 12時辰 × 2つの性別 | 10.37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 解釈付きの四柱推命の命盤 1,761,936件、範囲は同じ | 1.56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 数秘術のプロフィール 73,414件、生年月日ごとに1件 | 0.08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 知識単位 2,787件（宮に入る星、格局など）、サイトの3言語のテキストと古典の一節 885件 | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 解釈付きの紫微斗数の命盤 1,761,936件：1900年から2100年の毎日 × 12時辰 × 2つの性別 | 6.83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 解釈付きの四柱推命の命盤 1,761,936件、範囲は同じ | 1.26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 数秘術のプロフィール 73,414件、生年月日ごとに1件 | 0.07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 知識単位 2,790件（宮に入る星、格局など）、サイトの3言語のテキストと古典の一節 894件 | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 知識単位 973件（月ごとの日主、日柱と時、通変星など）、古典の一節 1,589件 | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 知識単位 143件（核となる数、周期の数、人生のテーマ）、一節 195件 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | パブリックドメインの古典 373点（約350作品）、7,265万字、全文 | テキスト 147 MB、Parquet 70 MB |
@@ -483,7 +483,7 @@ CC BY 4.0 です。クレジットを表記すれば、商用製品にも AI の
 | [テト 1900年から2100年](./history/README.md) | 201年分の UTC+7 と UTC+8 のテト、実際に使われた暦と出典付き | |
 | [暦と文化のデータセット 33件](https://nhatnguyet.org/en/du-lieu) | 1900年から2100年の太陰太陽暦、節気、六十四卦、タロット78枚、祭礼206件、祭祀祈祷文456篇など。CSV、JSON、Parquet、[DOI](https://doi.org/10.5281/zenodo.23009396) 付き | |
 
-3つの解釈データセットは合計 **3,597,286件の命盤、圧縮後 12.02 GB** で、3つの部分からなります。解釈 ID 付きの構造化命盤（`charts/`、1.55 GB）、言語ごとに組み立て済みの全文（`assembled/<system>/<en|vi|zh>/`、10.42 GB）、そして各解釈、古典の引用、記事を1回だけ格納するテキストストア（`store/`、0.04 GB）です。解釈は書名と章を明記して古典を引用します。ファイルは生まれ年ごとに1つです。**展開するとかなり大きくなります**（テキストが命盤をまたいで繰り返されるためで、紫微斗数の組み立て済みテキストは 1年分で1言語あたり約 2.7 GB）。ストリーミングで読むか、1年ずつダウンロードしてください。
+3つの解釈データセットは合計 **3,597,286件の命盤、圧縮後 8.16 GB** で、3つの部分からなります。解釈 ID 付きの構造化命盤（`charts/`、1.55 GB）、言語ごとに組み立て済みの全文（`assembled/<system>/<en|vi|zh>/`、6.56 GB）、そして各解釈、古典の引用、記事を1回だけ格納するテキストストア（`store/`、0.04 GB）です。解釈は書名と章を明記して古典を引用します。ファイルは生まれ年ごとに1つです。**展開するとかなり大きくなります**（テキストが命盤をまたいで繰り返されるためで、紫微斗数の組み立て済みテキストは 1年分で1言語あたり約 0.8 GB）。ストリーミングで読むか、1年ずつダウンロードしてください。
 
 知識データセットはコンパクト版です。1単位1行で、解釈と同じテキスト ID、解釈エンジンがその単位について参照するパブリックドメインの一節、規則 ID を持ちます。古典の内訳は、漢文 306点、英語 36点、フランス語 20点、ベトナム語 11点です。分野別では易経と占術 192点、信仰と儀礼 24点、ベトナムの歴史と文化 22点、数秘術 21点、三式 20点、暦と日選び 19点、四柱推命と命理 17点、風水 16点、仏教 14点、人相 13点、占星術とタロット 7点、紫微斗数 6点、その他 2点。うち 38点は OCR テキストで、`ocr` フラグが付いています。各テキストにはパブリックドメインである根拠を示す `pd_basis` フィールドがあります。所有者の方針により、`sach-co` は各テキストを書名と著者ではなく中立的なコード（`sc-0416`）で示します。知識データセットと解釈のテキストストアは、引用するすべての一節に書名と著者を付けています。
 
@@ -607,7 +607,7 @@ iztro と 2,006件のホロスコープで比較すると、大限、年齢、�
 <details>
 <summary><b>このデータを AI モデルの学習に使えますか？</b></summary>
 
-はい、商用を含めて CC BY 4.0 のもとで使えます。「Data: Nhat Nguyet (nhatnguyet.org)」とクレジットを表記してください。
+はい。暦データ、用語、テストベクター、古典は CC BY 4.0 のもとで商用にも使えます。解釈と知識のデータセットは CC BY-NC 4.0 で、研究と非商用のモデルには自由に使え、商用利用には許諾が必要です（lienhe@nhatnguyet.org）。「Data: Nhat Nguyet (nhatnguyet.org)」とクレジットを表記してください。
 </details>
 
 <details>
@@ -627,7 +627,8 @@ iztro と 2,006件のホロスコープで比較すると、大限、年齢、�
 | 対象 | ライセンス |
 |---|---|
 | コード | [MIT](./LICENSE) |
-| データ、解釈、テストベクター | [CC BY 4.0](./DATA-LICENSE)：商用利用と AI 学習が可能、クレジット表記が必須 |
+| 暦データ、用語、テストベクター | [CC BY 4.0](./DATA-LICENSE)：商用利用と AI 学習が可能、クレジット表記が必須 |
+| 解釈と知識のデータセット（`*-readings`、`*-knowledge`） | 2026 年 11 月 20 日から [CC BY-NC 4.0](./DATA-LICENSE)：非商用はクレジット表記で利用可、商用は許諾制。以前のリリースは CC BY 4.0 のまま |
 | 古典 | 原文はパブリックドメイン。デジタル化と校訂は CC BY 4.0 |
 
 クレジット表記：`Data: Nhat Nguyet (nhatnguyet.org)`。可能であればリンクを添えてください。Nhat Nguyet の名称とロゴは、これらのライセンスの対象外です。ソフトウェアを引用する場合は次のとおりです（暦の計算方法は[技術論文](./docs/paper/paper.pdf)にあります）。
@@ -644,4 +645,4 @@ iztro と 2,006件のホロスコープで比較すると、大限、年齢、�
 
 ウェブサイト：[nhatnguyet.org](https://nhatnguyet.org) · メール：lienhe@nhatnguyet.org
 
-<p align="center"><sub>データ：Nhat Nguyet (nhatnguyet.org) · コード MIT · データ CC BY 4.0</sub></p>
+<p align="center"><sub>データ：Nhat Nguyet (nhatnguyet.org) · コード MIT · データ CC BY 4.0 · 解釈 CC BY-NC 4.0</sub></p>

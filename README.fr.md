@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="Vecteurs de test : 17 291" src="https://img.shields.io/badge/test%20vectors-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="Vérifications" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="Code : MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="Données : CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="Données : CC BY 4.0, interprétations CC BY-NC 4.0" src="https://img.shields.io/badge/data-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -580,15 +580,20 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## Jeux de données
 
-Sous CC BY 4.0, utilisables dans des produits commerciaux et pour
-l'entraînement d'IA, avec attribution.
+Les données de calendrier, la terminologie, les vecteurs de test et les textes
+classiques sont sous CC BY 4.0, utilisables dans des produits commerciaux et
+pour l'entraînement d'IA, avec attribution. Les jeux d'interprétations et de
+connaissances (`*-readings`, `*-knowledge`) sont sous CC BY-NC 4.0 depuis le
+20 novembre 2026 : libres pour la recherche et les usages non commerciaux, avec
+attribution ; pour un usage commercial, écrivez à lienhe@nhatnguyet.org. Les
+versions publiées avant cette date restent sous CC BY 4.0.
 
 | Jeu de données | Contenu | Taille |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1 761 936 thèmes Zi Wei avec interprétations : chaque jour de 1900 à 2100 × 12 heures × 2 sexes | 10,37 Go |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1 761 936 thèmes BaZi avec interprétations, même période | 1,56 Go |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73 414 profils numérologiques, un par date de naissance | 0,08 Go |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2 787 unités de connaissance (une étoile dans un palais, une configuration...) avec le texte du site en trois langues et 885 passages classiques | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1 761 936 thèmes Zi Wei avec interprétations : chaque jour de 1900 à 2100 × 12 heures × 2 sexes | 6,83 Go |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1 761 936 thèmes BaZi avec interprétations, même période | 1,26 Go |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73 414 profils numérologiques, un par date de naissance | 0,07 Go |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2 790 unités de connaissance (une étoile dans un palais, une configuration...) avec le texte du site en trois langues et 894 passages classiques | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 973 unités (maître du jour selon le mois, pilier du jour et heure, Dix Dieux...), 1 589 passages classiques | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 unités (nombres principaux, nombres de cycle, thèmes de vie), 195 passages | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 textes classiques du domaine public (environ 350 œuvres), 72,7 millions de caractères, texte intégral | 147 Mo de texte, 70 Mo en Parquet |
@@ -599,14 +604,14 @@ l'entraînement d'IA, avec attribution.
 | [33 jeux de données sur le calendrier et la culture](https://nhatnguyet.org/en/du-lieu) | calendrier luni-solaire de 1900 à 2100, termes solaires, 64 hexagrammes, 78 cartes de tarot, 206 fêtes, 456 prières rituelles... en CSV, JSON et Parquet, avec un [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
 Les trois jeux de données d'interprétations totalisent **3 597 286 thèmes,
-12,02 Go compressés**, en trois parties : les thèmes structurés avec les
+8,16 Go compressés**, en trois parties : les thèmes structurés avec les
 identifiants d'interprétation (`charts/`, 1,55 Go), le texte intégral
-préassemblé par langue (`assembled/<system>/<en|vi|zh>/`, 10,42 Go) et le magasin de
+préassemblé par langue (`assembled/<system>/<en|vi|zh>/`, 6,56 Go) et le magasin de
 textes, où chaque interprétation, citation classique et article n'est conservé
 qu'une seule fois (`store/`, 0,04 Go). Les interprétations citent les
 classiques avec le livre et le chapitre. Il y a un fichier par année de
 naissance. **Décompressés, ils sont très volumineux** (le texte se répète d'un
-thème à l'autre : une année de texte Zi Wei préassemblé pèse environ 2,7 Go par
+thème à l'autre : une année de texte Zi Wei préassemblé pèse environ 0,8 Go par
 langue), lisez-les donc en flux ou téléchargez-les une année à la fois.
 
 Les jeux de données de connaissances en sont la version compacte : une ligne
@@ -794,8 +799,12 @@ mois différent pour environ un quart des jours (24,3 % de 1900 à 2100).
 <details>
 <summary><b>Puis-je utiliser les données pour entraîner un modèle d'IA ?</b></summary>
 
-Oui, y compris à des fins commerciales, sous CC BY 4.0. Créditez « Data: Nhat
-Nguyet (nhatnguyet.org) ».
+Oui. Les données de calendrier, la terminologie, les vecteurs de test et les
+textes classiques le permettent aussi à des fins commerciales, sous CC BY 4.0.
+Les jeux d'interprétations et de connaissances sont sous CC BY-NC 4.0 : libres
+pour la recherche et les modèles non commerciaux, usage commercial sur
+autorisation (lienhe@nhatnguyet.org). Créditez « Data: Nhat Nguyet
+(nhatnguyet.org) ».
 </details>
 
 <details>
@@ -822,7 +831,8 @@ Lisez `vao`, comparez avec `ra` ; les règles se trouvent dans
 | Partie | Licence |
 |---|---|
 | Code | [MIT](./LICENSE) |
-| Données, interprétations, vecteurs de test | [CC BY 4.0](./DATA-LICENSE) : usage commercial et entraînement d'IA autorisés, attribution obligatoire |
+| Données de calendrier, terminologie, vecteurs de test | [CC BY 4.0](./DATA-LICENSE) : usage commercial et entraînement d'IA autorisés, attribution obligatoire |
+| Jeux d'interprétations et de connaissances (`*-readings`, `*-knowledge`) | [CC BY-NC 4.0](./DATA-LICENSE) depuis le 20 novembre 2026 : usage non commercial avec attribution, usage commercial sur autorisation ; les versions antérieures restent sous CC BY 4.0 |
 | Textes classiques | Originaux dans le domaine public ; la numérisation et le nettoyage sont sous CC BY 4.0 |
 
 Ligne d'attribution : `Data: Nhat Nguyet (nhatnguyet.org)`, avec un lien
@@ -842,4 +852,4 @@ décrite dans l'[article technique](./docs/paper/paper.pdf)) :
 
 Site web : [nhatnguyet.org](https://nhatnguyet.org) · E-mail : lienhe@nhatnguyet.org
 
-<p align="center"><sub>Données : Nhat Nguyet (nhatnguyet.org) · Code MIT · Données CC BY 4.0</sub></p>
+<p align="center"><sub>Données : Nhat Nguyet (nhatnguyet.org) · Code MIT · Données CC BY 4.0 · Interprétations CC BY-NC 4.0</sub></p>

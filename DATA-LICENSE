@@ -1,11 +1,28 @@
-The data (ca-kiem/, du-lieu/, ai-eval/, the reading datasets, the passage store,
-the digitized classics) is released under the Creative Commons Attribution 4.0
-International license (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+The data in this repository and in the Nhat Nguyet datasets on Hugging Face is
+released under two Creative Commons licenses.
+
+1. CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/): the calendar and
+   reference data (du-lieu/ except du-lieu/knowledge/), the test vectors
+   (ca-kiem/), the evaluation sets (ai-eval/), the comparison data (doi-chieu/),
+   the passage store and the digitized classics. Commercial use and AI training
+   are allowed, with attribution.
+
+2. CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/), from
+   20 November 2026: the reading datasets (nhatnguyet/ziwei-readings,
+   nhatnguyet/bazi-readings, nhatnguyet/numerology-readings) and the knowledge
+   datasets (du-lieu/knowledge/, nhatnguyet/*-knowledge). These carry the
+   interpretation text written for nhatnguyet.org. Non-commercial use, including
+   research and non-commercial AI training, is allowed with attribution. For
+   commercial use, ask at lienhe@nhatnguyet.org. Copies of these datasets
+   obtained from releases published before 20 November 2026 remain under
+   CC BY 4.0. A small number of sentences in them are worded differently from
+   the same text on nhatnguyet.org, so that copies can be recognized.
 
 Attribution: "Data: Nhat Nguyet (nhatnguyet.org)", with a link to
 https://nhatnguyet.org where practicable.
 
-The original texts of the classics are in the public domain. Their
+The original texts of the classics are in the public domain, including the
+classical passages inside the reading and knowledge datasets. Their
 digitization, segmentation, linking to charts and alignment with printed
 editions are the work of Nhat Nguyet and are released under CC BY 4.0.
 
@@ -13,14 +30,29 @@ The name and marks of Nhat Nguyet are trademarks and are not licensed.
 
 ---
 
-Dữ liệu (thư mục ca-kiem/, du-lieu/, ai-eval/, các bộ lời luận, kho câu sách, sách cổ
-số hóa) phát hành theo giấy phép Creative Commons Attribution 4.0 International
-(CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+Dữ liệu trong repo này và trong các bộ dữ liệu Nhật Nguyệt trên Hugging Face
+phát hành theo hai giấy phép Creative Commons.
+
+1. CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/): dữ liệu lịch và
+   tra cứu (du-lieu/ trừ du-lieu/knowledge/), ca kiểm (ca-kiem/), bộ đánh giá
+   (ai-eval/), dữ liệu đối chiếu (doi-chieu/), kho câu sách và sách cổ số hoá.
+   Được dùng thương mại và huấn luyện AI, có ghi nguồn.
+
+2. CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/), từ
+   20/11/2026: các bộ lời luận (nhatnguyet/ziwei-readings,
+   nhatnguyet/bazi-readings, nhatnguyet/numerology-readings) và các bộ tri thức
+   (du-lieu/knowledge/, nhatnguyet/*-knowledge). Các bộ này mang lời luận viết
+   cho nhatnguyet.org. Được dùng phi thương mại, kể cả nghiên cứu và huấn luyện
+   AI phi thương mại, có ghi nguồn. Dùng thương mại xin phép qua
+   lienhe@nhatnguyet.org. Bản đã lấy từ các lượt phát hành trước 20/11/2026 giữ
+   giấy phép CC BY 4.0. Vài câu trong các bộ này được viết khác chữ so với câu
+   cùng nghĩa trên nhatnguyet.org để nhận ra bản chép.
 
 Ghi nguồn: "Dữ liệu: Nhật Nguyệt (nhatnguyet.org)", kèm liên kết
 https://nhatnguyet.org khi có thể.
 
-Nguyên văn sách cổ thuộc phạm vi công cộng. Phần số hóa, chia đoạn, gắn với
-lá số và đối chiếu bản in do Nhật Nguyệt làm, theo CC BY 4.0.
+Nguyên văn sách cổ thuộc phạm vi công cộng, kể cả các đoạn sách cổ nằm trong bộ
+lời luận và bộ tri thức. Phần số hóa, chia đoạn, gắn với lá số và đối chiếu bản
+in do Nhật Nguyệt làm, theo CC BY 4.0.
 
 Tên và dấu Nhật Nguyệt là thương hiệu, không nằm trong giấy phép này.

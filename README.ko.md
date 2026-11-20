@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="테스트 벡터: 17,291개" src="https://img.shields.io/badge/test%20vectors-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="자동 검사" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="코드: MIT" src="https://img.shields.io/badge/code-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="데이터: CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="데이터: CC BY 4.0, 해석 CC BY-NC 4.0" src="https://img.shields.io/badge/data-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -549,14 +549,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## 데이터셋
 
-CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수 있습니다.
+역법 데이터, 용어, 테스트 벡터, 고전 문헌은 CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수 있습니다. 해석과 지식 데이터셋(`*-readings`, `*-knowledge`)은 2026년 11월 20일부터 CC BY-NC 4.0입니다. 연구와 비상업적 용도는 출처 표기로 자유롭게 쓸 수 있고, 상업적 이용은 lienhe@nhatnguyet.org로 문의해 주세요. 그 이전 릴리스는 CC BY 4.0을 유지합니다.
 
 | 데이터셋 | 내용 | 크기 |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 해석이 담긴 자미두수 명반 1,761,936건: 1900~2100년의 모든 날 × 12시진 × 2개 성별 | 10.37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 해석이 담긴 사주팔자 명반 1,761,936건, 같은 범위 | 1.56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 수비학 프로필 73,414건, 생년월일마다 1건 | 0.08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 지식 단위 2,787개(궁에 든 별, 격국 등)와 3개 언어로 된 사이트 텍스트, 고전 구절 885개 | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 해석이 담긴 자미두수 명반 1,761,936건: 1900~2100년의 모든 날 × 12시진 × 2개 성별 | 6.83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 해석이 담긴 사주팔자 명반 1,761,936건, 같은 범위 | 1.26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 수비학 프로필 73,414건, 생년월일마다 1건 | 0.07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 지식 단위 2,790개(궁에 든 별, 격국 등)와 3개 언어로 된 사이트 텍스트, 고전 구절 894개 | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 단위 973개(월별 일간, 일주와 시, 십신 등), 고전 구절 1,589개 | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 단위 143개(핵심 수, 주기 수, 삶의 주제), 구절 195개 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 퍼블릭 도메인 고전 373종(약 350개 작품), 7,265만 자, 전문 | 텍스트 147 MB, Parquet 70 MB |
@@ -566,12 +566,12 @@ CC BY 4.0이며, 출처를 표기하면 상업용 제품과 AI 학습에 쓸 수
 | [설날 1900~2100](./history/README.md) | 201년 동안의 UTC+7과 UTC+8 기준 설날, 실제로 쓰인 역법과 출처 포함 | |
 | [역법과 문화 데이터셋 33종](https://nhatnguyet.org/en/du-lieu) | 1900~2100년 음양력, 절기, 64괘, 타로 78장, 축제 206개, 제례 기도문 456편... CSV, JSON, Parquet, [DOI](https://doi.org/10.5281/zenodo.23009396) 부여 | |
 
-세 해석 데이터셋은 모두 합쳐 **명반 3,597,286건, 압축 시 12.02 GB**이며 세 부분으로
+세 해석 데이터셋은 모두 합쳐 **명반 3,597,286건, 압축 시 8.16 GB**이며 세 부분으로
 나뉩니다. 해석 ID가 붙은 구조화된 명반(`charts/`, 1.55 GB), 언어별로 미리 결합한
-전문(`assembled/<system>/<en|vi|zh>/`, 10.42 GB), 그리고 각 해석, 고전 인용, 아티클을 한 번씩만
+전문(`assembled/<system>/<en|vi|zh>/`, 6.56 GB), 그리고 각 해석, 고전 인용, 아티클을 한 번씩만
 저장하는 텍스트 저장소(`store/`, 0.04 GB)입니다. 해석은 서명과 편명을 밝혀 고전을
 인용합니다. 파일은 출생 연도마다 하나입니다. **압축을 풀면 매우 큽니다**(텍스트가
-명반마다 반복되기 때문으로, 자미두수 결합본 텍스트는 1년치가 언어당 약 2.7 GB). 스트리밍으로
+명반마다 반복되기 때문으로, 자미두수 결합본 텍스트는 1년치가 언어당 약 0.8 GB). 스트리밍으로
 읽거나 한 해씩 내려받으세요.
 
 지식 데이터셋은 압축판입니다. 단위마다 한 행이며, 해석과 같은 텍스트 ID, 해석 엔진이 그
@@ -744,8 +744,10 @@ iztro와 운세 2,006건을 비교하면 대한, 나이, 유년의 궁과 유년
 <details>
 <summary><b>이 데이터로 AI 모델을 학습시켜도 되나요?</b></summary>
 
-네, 상업적 용도를 포함해 CC BY 4.0에 따라 가능합니다. "Data: Nhat Nguyet
-(nhatnguyet.org)"으로 출처를 표기해 주세요.
+네. 역법 데이터, 용어, 테스트 벡터, 고전 문헌은 CC BY 4.0에 따라 상업적으로도
+쓸 수 있습니다. 해석과 지식 데이터셋은 CC BY-NC 4.0으로, 연구와 비상업 모델에는
+자유롭게 쓸 수 있고 상업적 이용은 허락이 필요합니다(lienhe@nhatnguyet.org).
+"Data: Nhat Nguyet (nhatnguyet.org)"으로 출처를 표기해 주세요.
 </details>
 
 <details>
@@ -769,7 +771,8 @@ iztro와 운세 2,006건을 비교하면 대한, 나이, 유년의 궁과 유년
 | 구분 | 라이선스 |
 |---|---|
 | 코드 | [MIT](./LICENSE) |
-| 데이터, 해석, 테스트 벡터 | [CC BY 4.0](./DATA-LICENSE): 상업적 이용과 AI 학습 가능, 출처 표기 필수 |
+| 역법 데이터, 용어, 테스트 벡터 | [CC BY 4.0](./DATA-LICENSE): 상업적 이용과 AI 학습 가능, 출처 표기 필수 |
+| 해석과 지식 데이터셋(`*-readings`, `*-knowledge`) | 2026년 11월 20일부터 [CC BY-NC 4.0](./DATA-LICENSE): 비상업적 이용은 출처 표기, 상업적 이용은 허락 필요. 이전 릴리스는 CC BY 4.0 유지 |
 | 고전 문헌 | 원문은 퍼블릭 도메인, 디지털화와 교감 작업은 CC BY 4.0 |
 
 출처 표기 문구: `Data: Nhat Nguyet (nhatnguyet.org)`, 가능하면 링크를 함께 답니다.
@@ -788,4 +791,4 @@ Nhat Nguyet 이름과 로고는 이 라이선스들의 대상이 아닙니다. �
 
 웹사이트: [nhatnguyet.org](https://nhatnguyet.org) · 이메일: lienhe@nhatnguyet.org
 
-<p align="center"><sub>데이터: Nhat Nguyet (nhatnguyet.org) · 코드 MIT · 데이터 CC BY 4.0</sub></p>
+<p align="center"><sub>데이터: Nhat Nguyet (nhatnguyet.org) · 코드 MIT · 데이터 CC BY 4.0 · 해석 CC BY-NC 4.0</sub></p>

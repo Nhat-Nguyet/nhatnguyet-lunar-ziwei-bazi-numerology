@@ -28,7 +28,7 @@
   <a href="./ca-kiem"><img alt="测试用例：17,291" src="https://img.shields.io/badge/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B-17%2C291-2e7d32.svg"></a>
   <a href="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml"><img alt="自动检查" src="https://github.com/Nhat-Nguyet/nhatnguyet-lunar-ziwei-bazi-numerology/actions/workflows/kiem.yml/badge.svg?branch=main"></a>
   <a href="./LICENSE"><img alt="代码：MIT" src="https://img.shields.io/badge/%E4%BB%A3%E7%A0%81-MIT-1f6f6b.svg"></a>
-  <a href="./DATA-LICENSE"><img alt="数据：CC BY 4.0" src="https://img.shields.io/badge/%E6%95%B0%E6%8D%AE-CC%20BY%204.0-1f6f6b.svg"></a>
+  <a href="./DATA-LICENSE"><img alt="数据：CC BY 4.0，论述 CC BY-NC 4.0" src="https://img.shields.io/badge/%E6%95%B0%E6%8D%AE-CC%20BY%20%2F%20BY--NC-1f6f6b.svg"></a>
   <a href="https://doi.org/10.5281/zenodo.24358013"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.24358013.svg"></a>
 </p>
 
@@ -466,14 +466,14 @@ print(r["rulerName"], r["sector"]["name"], "good" if r["auspicious"] else "bad",
 
 ## 数据集
 
-CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。
+历法数据、术语、测试用例与古籍采用 CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。论述与知识数据集（`*-readings`、`*-knowledge`）自 2026 年 11 月 20 日起采用 CC BY-NC 4.0：研究与非商业用途注明出处即可自由使用；商业用途请联系 lienhe@nhatnguyet.org。此前发布的版本仍为 CC BY 4.0。
 
 | 数据集 | 内容 | 大小 |
 |---|---|---:|
-| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1,761,936 个附论断的紫微命盘：1900 至 2100 年每一天 × 12 时辰 × 2 种性别 | 10.37 GB |
-| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1,761,936 个附论断的八字命盘，范围相同 | 1.56 GB |
-| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73,414 份数字命理档案，每个出生日期一份 | 0.08 GB |
-| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2,787 个知识单元（某星在某宫、某个格局……），附本站三种语言的文字与 885 段古籍原文 | |
+| [`nhatnguyet/ziwei-readings`](https://huggingface.co/datasets/nhatnguyet/ziwei-readings) | 1,761,936 个附论断的紫微命盘：1900 至 2100 年每一天 × 12 时辰 × 2 种性别 | 6.83 GB |
+| [`nhatnguyet/bazi-readings`](https://huggingface.co/datasets/nhatnguyet/bazi-readings) | 1,761,936 个附论断的八字命盘，范围相同 | 1.26 GB |
+| [`nhatnguyet/numerology-readings`](https://huggingface.co/datasets/nhatnguyet/numerology-readings) | 73,414 份数字命理档案，每个出生日期一份 | 0.07 GB |
+| [`nhatnguyet/ziwei-knowledge`](https://huggingface.co/datasets/nhatnguyet/ziwei-knowledge) | 2,790 个知识单元（某星在某宫、某个格局……），附本站三种语言的文字与 894 段古籍原文 | |
 | [`nhatnguyet/bazi-knowledge`](https://huggingface.co/datasets/nhatnguyet/bazi-knowledge) | 973 个单元（按月论日主、日柱与时辰、十神……），1,589 段古籍原文 | |
 | [`nhatnguyet/numerology-knowledge`](https://huggingface.co/datasets/nhatnguyet/numerology-knowledge) | 143 个单元（核心数字、周期数字、人生主题），195 段原文 | |
 | [`nhatnguyet/sach-co`](https://huggingface.co/datasets/nhatnguyet/sach-co) | 373 篇公有领域古籍全文（约 350 部作品），7,265 万字符 | 纯文本 147 MB，Parquet 70 MB |
@@ -483,7 +483,7 @@ CC BY 4.0 许可，注明出处即可用于商业产品和 AI 训练。
 | [1900 至 2100 年春节](./history/README.md) | 201 年在 UTC+7 与 UTC+8 下的春节，附实际使用的历法与出处 | |
 | [33 个历法与文化数据集](https://nhatnguyet.org/zh/du-lieu) | 1900 至 2100 年阴阳历、节气、六十四卦、78 张塔罗牌、206 个节庆、456 篇祭文……CSV、JSON、Parquet 格式，附 [DOI](https://doi.org/10.5281/zenodo.23009396) | |
 
-三个论断数据集合计 **3,597,286 个命盘，压缩后 12.02 GB**，分为三部分：附论断编号的结构化命盘（`charts/`，1.55 GB）、按语言预先拼好的全文（`assembled/<system>/<en|vi|zh>/`，10.42 GB），以及每条论断、古籍引文、文章只存一次的文本库（`store/`，0.04 GB）。论断引用古籍时注明书名与章节。每个出生年份一个文件。**解压后体积非常大**（命盘之间文字重复：紫微一年的预拼全文每种语言约 2.7 GB），请用流式读取或按年下载。
+三个论断数据集合计 **3,597,286 个命盘，压缩后 8.16 GB**，分为三部分：附论断编号的结构化命盘（`charts/`，1.55 GB）、按语言预先拼好的全文（`assembled/<system>/<en|vi|zh>/`，6.56 GB），以及每条论断、古籍引文、文章只存一次的文本库（`store/`，0.04 GB）。论断引用古籍时注明书名与章节。每个出生年份一个文件。**解压后体积非常大**（命盘之间文字重复：紫微一年的预拼全文每种语言约 0.8 GB），请用流式读取或按年下载。
 
 知识数据集是精简版：每个单元一行，文本编号与论断数据集相同，附论断引擎为该单元查找的公有领域古籍段落，以及规则编号。古籍：文言 306 篇、英文 36 篇、法文 20 篇、越南文 11 篇；按主题：易经与卜筮 192、信仰与礼俗 24、越南历史与文化 22、数字命理 21、三式 20、历法与择日 19、八字与命理 17、风水 16、佛教 14、相术 13、占星与塔罗 7、紫微 6、其他 2。其中 38 篇为光学字符识别文本，带 `ocr` 标记。每篇均有 `pd_basis` 字段，说明其属于公有领域的依据。按项目方的选择，`sach-co` 用中性编号（`sc-0416`）而非书名与作者标识每篇文本；知识数据集与论断文本库则为引用的每段文字注明书名与作者。
 
@@ -607,7 +607,7 @@ nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、�
 <details>
 <summary><b>可以用这些数据训练 AI 模型吗？</b></summary>
 
-可以，包括商业用途，按 CC BY 4.0。只需注明"数据：Nhat Nguyet (nhatnguyet.org)"。
+可以。历法数据、术语、测试用例与古籍按 CC BY 4.0 可用于商业用途。论述与知识数据集采用 CC BY-NC 4.0：研究与非商业模型可自由使用，商业用途须经许可（lienhe@nhatnguyet.org）。请注明"数据：Nhat Nguyet (nhatnguyet.org)"。
 </details>
 
 <details>
@@ -627,7 +627,8 @@ nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、�
 | 部分 | 许可 |
 |---|---|
 | 代码 | [MIT](./LICENSE) |
-| 数据、论断、测试用例 | [CC BY 4.0](./DATA-LICENSE)：允许商业使用与 AI 训练，须注明出处 |
+| 历法数据、术语、测试用例 | [CC BY 4.0](./DATA-LICENSE)：允许商业使用与 AI 训练，须注明出处 |
+| 论述与知识数据集（`*-readings`、`*-knowledge`） | 自 2026 年 11 月 20 日起 [CC BY-NC 4.0](./DATA-LICENSE)：非商业使用须注明出处，商业使用须经许可；此前版本仍为 CC BY 4.0 |
 | 古籍 | 原文属公有领域；数字化与清理部分采用 CC BY 4.0 |
 
 署名格式：`数据：Nhat Nguyet (nhatnguyet.org)`，尽可能附上链接。Nhat Nguyet 的名称与标志不在上述许可范围内。引用本软件（历法方法见[技术论文](./docs/paper/paper.pdf)）：
@@ -644,4 +645,4 @@ nhatnguyet.org 另有 14 个以 iframe 嵌入的小组件（术语、吉日、�
 
 网站：[nhatnguyet.org](https://nhatnguyet.org) · 邮箱：lienhe@nhatnguyet.org
 
-<p align="center"><sub>数据：Nhat Nguyet (nhatnguyet.org) · 代码 MIT · 数据 CC BY 4.0</sub></p>
+<p align="center"><sub>数据：Nhat Nguyet (nhatnguyet.org) · 代码 MIT · 数据 CC BY 4.0 · 论述 CC BY-NC 4.0</sub></p>

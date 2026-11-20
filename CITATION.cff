@@ -32,7 +32,8 @@ abstract: >-
   Hanoi and Beijing time give a different lunar date on 2,814 of those 73,414
   days, Seoul and Beijing time on 2,818; a library that computes only the
   Chinese calendar gives the wrong Vietnamese date on 2,724. Code is MIT;
-  data, readings and test vectors are CC BY 4.0.
+  calendar data and test vectors are CC BY 4.0; the reading and knowledge
+  datasets are CC BY-NC 4.0 from 20 November 2026.
 keywords:
   - zi wei dou shu
   - tu vi
