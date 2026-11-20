@@ -52,9 +52,10 @@ and the website nhatnguyet.org (report those to the same email address).
 The Python package is published from GitHub Actions with PyPI trusted
 publishing and attestations from 0.3.0 on. The release workflow publishes the
 npm packages with
-[npm provenance](https://docs.npmjs.com/generating-provenance-statements); for
-0.3.0 the npm trusted publisher was not yet accepted, so the 13 npm packages of
-0.3.0 were published by hand from the `v0.3.0` tag and carry no provenance, like
-0.1.0 and 0.2.0. Provenance on npm starts with the next release. The packages have no
+[npm provenance](https://docs.npmjs.com/generating-provenance-statements) once
+the npm account accepts it; until then (0.3.0 and 0.4.0) the npm packages are
+published by hand from the release tag (`v0.3.0`, `v0.4.0`) and carry no
+provenance, like 0.1.0 and 0.2.0. Each release note says how it was published.
+The packages have no
 third-party runtime dependencies, except `@nhatnguyet/mcp`, which depends on
 the MCP SDK and zod at exact versions.
