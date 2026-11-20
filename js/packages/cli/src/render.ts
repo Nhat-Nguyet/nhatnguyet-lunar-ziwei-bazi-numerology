@@ -34,6 +34,11 @@ export function charWidth(cp: number): number {
   if ((cp >= 0x300 && cp <= 0x36f) || (cp >= 0x200b && cp <= 0x200f) || cp === 0xfe0f) return 0;
   if (
     (cp >= 0x1100 && cp <= 0x115f) ||
+    // Trigrams, digrams, hexagrams: Wide from Unicode 16. Fixed here so the
+    // output does not depend on which Unicode version a runtime ships.
+    (cp >= 0x2630 && cp <= 0x2637) ||
+    (cp >= 0x268a && cp <= 0x268f) ||
+    (cp >= 0x4dc0 && cp <= 0x4dff) ||
     (cp >= 0x2e80 && cp <= 0x303e) ||
     (cp >= 0x3041 && cp <= 0x33ff) ||
     (cp >= 0x3400 && cp <= 0x4dbf) ||

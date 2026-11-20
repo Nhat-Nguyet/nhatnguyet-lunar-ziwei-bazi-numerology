@@ -74,6 +74,12 @@ def char_width(ch: str) -> int:
     """Terminal columns of one character: 2 for wide (CJK), 0 for combining marks."""
     if unicodedata.combining(ch) or ch in "​‌‍‎‏️":
         return 0
+    cp = ord(ch)
+    # Trigrams, digrams, hexagrams are Wide from Unicode 16; Python before 3.14
+    # ships Unicode 15 where they are Neutral. Fixed so every Python agrees with
+    # the TypeScript CLI.
+    if 0x2630 <= cp <= 0x2637 or 0x268A <= cp <= 0x268F or 0x4DC0 <= cp <= 0x4DFF:
+        return 2
     return 2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
 
 
